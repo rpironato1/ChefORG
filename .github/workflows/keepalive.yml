@@ -1,0 +1,30 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Executa todo dia às 08:00 UTC (05:00 BRT)
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Permite execução manual
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chamar Keep-Alive
+        run: |
+          response=$(curl -s -X POST "https://ybefpjodbvfhfcvqsxkl.supabase.co/functions/v1/keep-alive" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"source": "github-actions", "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}')
+          
+          echo "Resposta da função keep-alive:"
+          echo $response
+          
+          # Verifica se a resposta contém "success": true
+          if echo "$response" | grep -q '"success": true'; then
+            echo "✅ Keep-alive executado com sucesso!"
+          else
+            echo "❌ Erro na execução do keep-alive"
+            echo "Resposta: $response"
+            exit 1
+          fi 

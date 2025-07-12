@@ -1,0 +1,181 @@
+// src/lib/api/reservations.ts
+import { supabase, Database } from '../supabase';
+import { handleApiError, createSuccessResponse, ApiResponse } from './index';
+
+type Reservation = Database['public']['Tables']['reservations']['Row'];
+type ReservationInsert = Database['public']['Tables']['reservations']['Insert'];
+type User = Database['public']['Tables']['users']['Row'];
+
+/**
+ * Cria uma nova reserva. (Fluxo 3.1)
+ * Se houver mesa, associa. Se não, entra na fila.
+ */
+export const createReservation = async (
+  details: Omit<ReservationInsert, 'id' | 'created_at' | 'status' | 'qr_code' | 'pin' | 'user_id'> & { nome_cliente: string; cpf?: string; }
+): Promise<ApiResponse<Reservation>> => {
+  try {
+    const { nome_cliente, cpf, telefone_contato } = details;
+
+    // 1. Encontrar ou criar o usuário
+    let userId: string;
+    const { data: existingUser } = await supabase
+      .from('users')
+      .select('id')
+      .or(`cpf.eq.${cpf},telefone.eq.${telefone_contato}`)
+      .single();
+
+    if (existingUser) {
+      userId = existingUser.id;
+    } else {
+      const { data: newUser, error: userError } = await supabase
+        .from('users')
+        .insert({
+          nome: nome_cliente,
+          cpf: cpf,
+          telefone: telefone_contato,
+          role: 'cliente',
+        })
+        .select('id')
+        .single();
+      
+      if (userError) throw userError;
+      userId = newUser.id;
+    }
+
+    // 2. Criar a reserva associada ao usuário
+    const reservationData: ReservationInsert = {
+      ...details,
+      user_id: userId,
+      status: 'confirmada',
+    };
+
+    const { data, error } = await supabase
+      .from('reservations')
+      .insert(reservationData)
+      .select()
+      .single();
+
+    if (error) throw error;
+    
+    return createSuccessResponse(data, 'Reserva criada com sucesso!');
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Busca uma reserva pelo seu QR Code. (Fluxo 3.2.1)
+ */
+export const getReservationByQR = async (qrCode: string): Promise<ApiResponse<Reservation & { user: User | null }>> => {
+  try {
+    const { data, error } = await supabase
+      .from('reservations')
+      .select(`
+        *,
+        user:users(*)
+      `)
+      .eq('qr_code', qrCode)
+      .single();
+
+    if (error) throw error;
+    return createSuccessResponse(data);
+  } catch (error) {
+    return handleApiError(error, 'Reserva não encontrada.');
+  }
+};
+
+/**
+ * Busca todas as reservas, opcionalmente filtrando por data.
+ * Ideal para o Painel da Recepção.
+ */
+export const getAllReservations = async (date?: string): Promise<ApiResponse<Reservation[]>> => {
+    try {
+        let query = supabase.from('reservations').select('*').order('data_hora', { ascending: true });
+
+        if (date) {
+            // Filtra para o dia inteiro
+            query = query.gte('data_hora', `${date}T00:00:00Z`).lte('data_hora', `${date}T23:59:59Z`);
+        }
+
+        const { data, error } = await query;
+
+        if (error) throw error;
+        return createSuccessResponse(data);
+    } catch (error) {
+        return handleApiError(error);
+    }
+};
+
+/**
+ * Realiza o check-in de uma reserva, alocando uma mesa e gerando um PIN. (Fluxo 3.2.3)
+ */
+export const checkInReservation = async (reservationId: number, tableId: number): Promise<ApiResponse<{ pin: string }>> => {
+  try {
+    const pin = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Inicia uma transação para garantir consistência
+    const { error: transactionError } = await supabase.rpc('check_in_reservation', {
+      p_reservation_id: reservationId,
+      p_table_id: tableId,
+      p_pin: pin
+    });
+
+    if (transactionError) throw transactionError;
+
+    // Notificar cliente sobre a mesa e o PIN
+    // Ex: await sendWhatsAppNotification(telefone, `Sua mesa é a ${numeroMesa}. Use o PIN: ${pin}`);
+
+    return createSuccessResponse({ pin }, 'Check-in realizado com sucesso!');
+  } catch (error) {
+    return handleApiError(error, 'Falha ao realizar o check-in.');
+  }
+};
+
+/**
+ * Cancela uma reserva.
+ */
+export const cancelReservation = async (reservationId: number): Promise<ApiResponse<Reservation>> => {
+    try {
+        const { data, error } = await supabase
+            .from('reservations')
+            .update({ status: 'cancelada' })
+            .eq('id', reservationId)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        // Se uma mesa estava associada, liberá-la
+        if (data.table_id) {
+            await supabase.from('tables').update({ status: 'livre' }).eq('id', data.table_id);
+        }
+
+        return createSuccessResponse(data, 'Reserva cancelada.');
+    } catch (error) {
+        return handleApiError(error);
+    }
+};
+
+/**
+ * Aloca uma mesa para um cliente na fila de espera e gera um PIN.
+ */
+export const allocateTableToWaitingClient = async (
+  reservationId: number,
+  tableId: number
+): Promise<ApiResponse<{ pin: string }>> => {
+  try {
+    // Esta função é muito similar ao check-in, então podemos reusar a mesma lógica de RPC
+    const { data, error } = await supabase.rpc('check_in_reservation', {
+      p_reservation_id: reservationId,
+      p_table_id: tableId,
+      p_pin: Math.floor(100000 + Math.random() * 900000).toString(),
+    });
+
+    if (error) throw error;
+
+    // O RPC retorna o PIN gerado
+    return createSuccessResponse({ pin: data }, 'Mesa alocada com sucesso!');
+  } catch (error) {
+    return handleApiError(error, 'Falha ao alocar mesa.');
+  }
+};
