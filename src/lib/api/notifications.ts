@@ -21,10 +21,10 @@ export const sendNotification = async (
 
     const { data, error } = await supabase.functions.invoke('send-notification', {
       body: { to: formattedTo, body },
-    });
+    }) as { data: any; error: any };
 
     if (error) throw error;
-    if (data.error) throw new Error(data.error);
+    if (data?.error) throw new Error(data.error);
 
     return createSuccessResponse(data);
   } catch (error) {
