@@ -115,8 +115,8 @@ class OptimizedQueryBuilder<T extends TableName> {
         if (this.orderConfig) {
           const { column, ascending } = this.orderConfig;
           data = [...data].sort((a, b) => {
-            const aVal = a[column];
-            const bVal = b[column];
+            const aVal = (a as any)[column];
+            const bVal = (b as any)[column];
             const comparison = aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
             return ascending ? comparison : -comparison;
           });

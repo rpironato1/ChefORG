@@ -46,6 +46,7 @@ function App() {
         <Route path="/mesa/:numeroMesa/feedback" element={<Feedback />} />
 
         {/* Autenticação */}
+        <Route path="/login" element={<Login />} />
         <Route path="/admin/login" element={<Login />} />
 
         {/* Área Administrativa - Protegida */}

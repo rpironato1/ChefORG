@@ -135,7 +135,7 @@ function Cardapio() {
                     </span>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <Clock className="h-4 w-4" />
-                      <span>{item.tempo_preparacao} min</span>
+                      <span>{item.tempo_preparo} min</span>
                     </div>
                   </div>
                 </div>

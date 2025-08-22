@@ -23,7 +23,7 @@ export const createPayment = async (
       status: 'pendente', // O status inicial é sempre pendente
     };
 
-    const insertResult = await supabase
+    const insertResult = await (supabase as any)
       .from('payments')
       .insert(paymentData);
 

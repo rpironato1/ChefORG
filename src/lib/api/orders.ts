@@ -40,7 +40,7 @@ export const createOrder = async (
       // totais podem ser calculados por triggers no DB ou aqui
     };
 
-    const insertResult = await supabase
+    const insertResult = await (supabase as any)
       .from('orders')
       .insert(orderInsertData);
 
@@ -64,7 +64,7 @@ export const createOrder = async (
 
     // 2. Associar os itens ao pedido recém-criado
     const itemsWithOrderId = items.map(item => ({ ...item, order_id: order.id }));
-    const { error: itemsError } = await supabase
+    const { error: itemsError } = await (supabase as any)
       .from('order_items')
       .insert(itemsWithOrderId);
 
@@ -89,7 +89,7 @@ export const createOrder = async (
  */
 export const updateOrderStatus = async (orderId: number, status: OrderStatus): Promise<ApiResponse<Order>> => {
   try {
-    const updateResult = await supabase
+    const updateResult = await (supabase as any)
       .from('orders')
       .update({ status })
       .eq('id', orderId);
@@ -113,7 +113,7 @@ export const updateOrderStatus = async (orderId: number, status: OrderStatus): P
 
     // Se o pedido for pago, iniciar o processo de liberação da mesa
     if (status === 'pago' && data.table_id) {
-      await supabase
+      await (supabase as any)
         .from('tables')
         .update({ status: 'limpeza', pin: null, pedido_atual_id: null })
         .eq('id', data.table_id);

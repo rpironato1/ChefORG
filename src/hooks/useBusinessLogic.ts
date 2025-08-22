@@ -438,7 +438,7 @@ export const useTempoEstimado = () => {
     
     const temposPorItem = pedido.itens.map(item => {
       const menuItem = itensMenu.find(m => m.id === item.menuItemId);
-      return menuItem ? menuItem.tempoPreparacao * item.quantidade : 10;
+      return menuItem ? menuItem.tempo_preparo * item.quantidade : 10;
     });
     
     // Tempo máximo (considerando preparo paralelo)

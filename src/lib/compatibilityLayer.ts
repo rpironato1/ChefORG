@@ -16,10 +16,9 @@ export const createCompatibleQuery = <T extends TableName>(table: T) => {
       const compatibleQuery = {
         // Promise-like methods
         then: query.then.bind(query),
-        catch: (handler: Function) => query.then(
-          result => result,
-          error => handler(error)
-        ),
+        catch: (handler: (error: any) => any) => query.then(
+          (result: any) => result
+        ).catch(handler),
         
         // Query builder methods that return promises
         eq: (column: string, value: any) => {

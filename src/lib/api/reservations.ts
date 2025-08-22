@@ -28,7 +28,7 @@ export const createReservation = async (
       status: 'confirmada' as const,
     };
 
-    const insertResult = await supabase
+    const insertResult = await (supabase as any)
       .from('reservations')
       .insert(reservationData);
 
@@ -68,7 +68,7 @@ export const getReservationByQR = async (qrCode: string): Promise<ApiResponse<Re
         user:users(*)
       `)
       .eq('qr_code', qrCode)
-      .single();
+      .single() as any;
 
     if (error) throw error;
     return createSuccessResponse(data || null);
@@ -83,11 +83,11 @@ export const getReservationByQR = async (qrCode: string): Promise<ApiResponse<Re
  */
 export const getAllReservations = async (date?: string): Promise<ApiResponse<Reservation[]>> => {
     try {
-        const query = supabase.from('reservations').select('*').order('data_hora', { ascending: true });
+        let query = supabase.from('reservations').select('*').order('data_hora', { ascending: true });
 
         if (date) {
             // Filtra para o dia inteiro - using optimized localStorage query
-            query.gte('data_hora', `${date}T00:00:00Z`).lte('data_hora', `${date}T23:59:59Z`);
+            query = query.gte('data_hora', `${date}T00:00:00Z`).lte('data_hora', `${date}T23:59:59Z`);
         }
 
         const { data, error } = await query;
@@ -107,7 +107,7 @@ export const checkInReservation = async (reservationId: number, tableId: number)
     const pin = Math.floor(100000 + Math.random() * 900000).toString();
 
     // Inicia uma transação para garantir consistência (optimized for localStorage)
-    const { data, error: transactionError } = await supabase.rpc('check_in_reservation', {
+    const { error: transactionError } = await supabase.rpc('check_in_reservation', {
       p_reservation_id: reservationId,
       p_table_id: tableId,
       p_pin: pin
@@ -134,7 +134,7 @@ export const cancelReservation = async (reservationId: number): Promise<ApiRespo
             .update({ status: 'cancelada' })
             .eq('id', reservationId)
             .select()
-            .single();
+            .single() as any;
 
         if (error) throw error;
 

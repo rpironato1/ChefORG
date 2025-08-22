@@ -17,7 +17,7 @@ export const createFeedback = async (
       .from('feedback')
       .select('id')
       .eq('order_id', details.order_id)
-      .single();
+      .single() as any;
 
     if (existingError && existingError.code !== 'PGRST116') {
       throw existingError;
@@ -27,7 +27,7 @@ export const createFeedback = async (
     }
 
     // Inserir o novo feedback
-    const insertResult = await supabase
+    const insertResult = await (supabase as any)
       .from('feedback')
       .insert(details);
 
@@ -67,7 +67,7 @@ export const getFeedbackByOrder = async (orderId: number): Promise<ApiResponse<F
       .from('feedback')
       .select('*')
       .eq('order_id', orderId)
-      .single();
+      .single() as any;
     
     if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
         throw error;

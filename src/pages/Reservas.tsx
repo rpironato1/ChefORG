@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Plus, Edit, Trash2, Calendar, Clock, Users, Phone } from 'lucide-react';
 
 interface Reserva {
@@ -54,7 +54,8 @@ const mockReservas: Reserva[] = [
 ];
 
 function Reservas() {
-  const [reservas, setReservas] = useState<Reserva[]>(mockReservas);
+  const [reservas] = useState<Reserva[]>(mockReservas);
+  // const [setReservas] = useState<Reserva[]>(mockReservas); // Para futuro uso com API
   const [selectedStatus, setSelectedStatus] = useState<string>('todas');
   const [selectedReserva, setSelectedReserva] = useState<Reserva | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

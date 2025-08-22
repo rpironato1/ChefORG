@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
-import { Download, Calendar, TrendingUp, DollarSign, Users, ShoppingCart } from 'lucide-react';
+import { Download, TrendingUp, DollarSign, Users, ShoppingCart } from 'lucide-react';
 
 const mockVendasData = [
   { name: 'Jan', vendas: 12000, pedidos: 150 },
