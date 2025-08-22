@@ -32,10 +32,11 @@ export const createOrder = async (
     // Simulando a transação no lado do cliente:
 
     // 1. Criar o registro do pedido principal
-    const orderInsertData: OrderInsert = {
+    const orderInsertData = {
       table_id: tableId,
-      user_id: userId,
       status: 'confirmado',
+      customer_name: 'Cliente',
+      total: 0
       // totais podem ser calculados por triggers no DB ou aqui
     };
 
