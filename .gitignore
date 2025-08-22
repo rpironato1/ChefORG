@@ -5,3 +5,7 @@
 /PROGRESSO.md
 /supabase-dashboard-functions.md
 node_modules
+
+# Test coverage
+coverage
+*.tsbuildinfo

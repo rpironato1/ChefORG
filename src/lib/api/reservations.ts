@@ -14,15 +14,18 @@ export const createReservation = async (
   details: Omit<ReservationInsert, 'id' | 'created_at' | 'status' | 'qr_code' | 'pin' | 'user_id'> & { nome_cliente: string; cpf?: string; }
 ): Promise<ApiResponse<Reservation>> => {
   try {
-    const { nome_cliente, cpf, cliente_telefone } = details;
-
     // Note: Simplified version - not creating user associations
     // In a full implementation, would find or create user here
 
     // 2. Criar a reserva
     const reservationData = {
-      ...details,
-      status: 'confirmada',
+      cliente_nome: details.cliente_nome,
+      cliente_cpf: details.cliente_cpf, 
+      cliente_telefone: details.cliente_telefone,
+      data_hora: details.data_hora,
+      numero_convidados: details.numero_convidados,
+      restricoes: details.restricoes,
+      status: 'confirmada' as const,
     };
 
     const insertResult = await supabase
