@@ -1,12 +1,8 @@
-// Updated supabase.ts to use localStorage for testing
-import { localStorageClient } from './localStorage';
+// Updated supabase.ts to use optimized localStorage with compatibility layer
+import { compatibleSupabase } from './compatibilityLayer';
 
-// Remove real Supabase credentials for testing
-// const supabaseUrl = 'https://ybefpjodbvfhfcvqsxkl.supabase.co'
-// const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InliZWZwam9kYnZmaGZjdnFzeGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2MDczOTksImV4cCI6MjA1NDE4MzM5OX0.1LqcZgLMqvQNYvUraNWJnNp3xMUG3yY8nfZfKJH3XVY'
-
-// Use localStorage client instead of real Supabase
-export const supabase = localStorageClient;
+// Use optimized localStorage client with Supabase-compatible interface
+export const supabase = compatibleSupabase;
 
 // Enhanced Database types to include missing tables
 export type Database = {

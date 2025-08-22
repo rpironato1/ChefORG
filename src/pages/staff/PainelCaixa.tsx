@@ -117,9 +117,9 @@ const PainelCaixa: React.FC = () => {
                 ) : (
                     <div className="grid grid-cols-2 gap-2">
                         <button onClick={() => handleRegistrarPagamento('dinheiro')} className="p-3 bg-green-500 text-white rounded-md hover:bg-green-600">Dinheiro</button>
-                        <button onClick={() => handleRegistrarPagamento('cartao_credito')} className="p-3 bg-orange-500 text-white rounded-md hover:bg-orange-600">Crédito</button>
-                        <button onClick={() => handleRegistrarPagamento('cartao_debito')} className="p-3 bg-sky-500 text-white rounded-md hover:bg-sky-600">Débito</button>
+                        <button onClick={() => handleRegistrarPagamento('cartao')} className="p-3 bg-orange-500 text-white rounded-md hover:bg-orange-600">Cartão</button>
                         <button onClick={() => handleRegistrarPagamento('pix')} className="p-3 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">PIX Manual</button>
+                        <button onClick={() => handleRegistrarPagamento('apple_pay')} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-600">Apple Pay</button>
                     </div>
                 )}
               </div>

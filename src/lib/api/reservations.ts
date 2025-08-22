@@ -71,7 +71,7 @@ export const getReservationByQR = async (qrCode: string): Promise<ApiResponse<Re
       .single();
 
     if (error) throw error;
-    return createSuccessResponse(data);
+    return createSuccessResponse(data || null);
   } catch (error) {
     return handleApiError(error, 'Reserva não encontrada.');
   }
@@ -83,17 +83,17 @@ export const getReservationByQR = async (qrCode: string): Promise<ApiResponse<Re
  */
 export const getAllReservations = async (date?: string): Promise<ApiResponse<Reservation[]>> => {
     try {
-        let query = supabase.from('reservations').select('*').order('data_hora', { ascending: true });
+        const query = supabase.from('reservations').select('*').order('data_hora', { ascending: true });
 
         if (date) {
-            // Filtra para o dia inteiro
-            query = query.gte('data_hora', `${date}T00:00:00Z`).lte('data_hora', `${date}T23:59:59Z`);
+            // Filtra para o dia inteiro - using optimized localStorage query
+            query.gte('data_hora', `${date}T00:00:00Z`).lte('data_hora', `${date}T23:59:59Z`);
         }
 
         const { data, error } = await query;
 
         if (error) throw error;
-        return createSuccessResponse(data);
+        return createSuccessResponse(data || []);
     } catch (error) {
         return handleApiError(error);
     }
@@ -106,12 +106,12 @@ export const checkInReservation = async (reservationId: number, tableId: number)
   try {
     const pin = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // Inicia uma transação para garantir consistência
-    const { error: transactionError } = await supabase.rpc('check_in_reservation', {
+    // Inicia uma transação para garantir consistência (optimized for localStorage)
+    const { data, error: transactionError } = await supabase.rpc('check_in_reservation', {
       p_reservation_id: reservationId,
       p_table_id: tableId,
       p_pin: pin
-    });
+    }) as { data: any; error: any };
 
     if (transactionError) throw transactionError;
 
@@ -139,11 +139,11 @@ export const cancelReservation = async (reservationId: number): Promise<ApiRespo
         if (error) throw error;
 
         // Se uma mesa estava associada, liberá-la
-        if (data.table_id) {
-            await supabase.from('tables').update({ status: 'livre' }).eq('id', data.table_id);
+        if (data?.mesa_id) {
+            await supabase.from('tables').update({ status: 'livre' }).eq('id', data.mesa_id);
         }
 
-        return createSuccessResponse(data, 'Reserva cancelada.');
+        return createSuccessResponse(data || null, 'Reserva cancelada.');
     } catch (error) {
         return handleApiError(error);
     }
@@ -162,7 +162,7 @@ export const allocateTableToWaitingClient = async (
       p_reservation_id: reservationId,
       p_table_id: tableId,
       p_pin: Math.floor(100000 + Math.random() * 900000).toString(),
-    });
+    }) as { data: any; error: any };
 
     if (error) throw error;
 

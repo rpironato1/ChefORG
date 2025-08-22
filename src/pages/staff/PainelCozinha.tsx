@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Clock, ChefHat, Bell, Loader2, AlertTriangle } from 'lucide-react';
+import { ChefHat, Bell, Loader2, AlertTriangle } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { getOrdersByStatus, updateOrderStatus, OrderWithItems } from '../../lib/api/orders';
 import { Database } from '../../lib/supabase'; // Ajuste o caminho se necessário

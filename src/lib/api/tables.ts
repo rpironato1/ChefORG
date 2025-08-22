@@ -16,7 +16,7 @@ export const getAllTables = async (): Promise<ApiResponse<Table[]>> => {
       .order('numero', { ascending: true });
 
     if (error) throw error;
-    return createSuccessResponse(data);
+    return createSuccessResponse(data || []);
   } catch (error) {
     return handleApiError(error);
   }
@@ -35,7 +35,7 @@ export const getTableByQR = async (qrCode: string): Promise<ApiResponse<Table>> 
       .single();
 
     if (error) throw error;
-    return createSuccessResponse(data);
+    return createSuccessResponse(data || null);
   } catch (error) {
     return handleApiError(error, 'Mesa não encontrada.');
   }

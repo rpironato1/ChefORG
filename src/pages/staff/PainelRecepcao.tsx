@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { TabelaResponsiva } from '../../components/ui/TabelaResponsiva';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import TabelaResponsiva from '../../components/ui/TabelaResponsiva';
 import Modal from '../../components/ui/Modal';
 import { useToast } from '../../components/ui/Toast';
 import { Loader2, AlertTriangle } from 'lucide-react';
 import { getAllTables } from '../../lib/api/tables';
 import { getAllReservations, allocateTableToWaitingClient } from '../../lib/api/reservations';
 import { sendNotification } from '../../lib/api/notifications';
-import { Database } from '@/lib/supabase';
+import { Database } from '../../lib/supabase';
 
 type Table = Database['public']['Tables']['tables']['Row'];
 type Reservation = Database['public']['Tables']['reservations']['Row'] & { users?: { telefone: string | null } };
