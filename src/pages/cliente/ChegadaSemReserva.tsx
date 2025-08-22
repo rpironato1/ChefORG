@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Users, Clock, Utensils, AlertCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Users, Clock, Utensils, AlertCircle, CheckCircle, Phone, User } from 'lucide-react';
 import { useApp } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
+import { MobileInput } from '../../mobile/components/forms/MobileInput';
+import { MobileTextArea } from '../../mobile/components/forms/MobileTextArea';
+import { MobileButton } from '../../mobile/components/forms/MobileButton';
 
 interface FormData {
   nome: string;
@@ -241,37 +244,27 @@ function ChegadaSemReserva() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Nome para a Mesa *
-              </label>
-              <input
-                type="text"
-                value={formData.nome}
-                onChange={(e) => handleInputChange('nome', e.target.value)}
-                className="input-field"
-                placeholder="Nome completo"
-                required
-              />
-            </div>
+            <MobileInput
+              label="Nome para a Mesa"
+              type="text"
+              value={formData.nome}
+              onChange={(e) => handleInputChange('nome', e.target.value)}
+              placeholder="Nome completo"
+              leftIcon={<User className="w-5 h-5" />}
+              required
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                WhatsApp/Telefone *
-              </label>
-              <input
-                type="tel"
-                value={formData.telefone}
-                onChange={(e) => handleInputChange('telefone', formatTelefone(e.target.value))}
-                className="input-field"
-                placeholder="(11) 99999-9999"
-                maxLength={15}
-                required
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Será usado para notificar quando a mesa estiver pronta
-              </p>
-            </div>
+            <MobileInput
+              label="WhatsApp/Telefone"
+              type="tel"
+              value={formData.telefone}
+              onChange={(e) => handleInputChange('telefone', formatTelefone(e.target.value))}
+              placeholder="(11) 99999-9999"
+              maxLength={15}
+              leftIcon={<Phone className="w-5 h-5" />}
+              helperText="Será usado para notificar quando a mesa estiver pronta"
+              required
+            />
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -280,7 +273,7 @@ function ChegadaSemReserva() {
               <select
                 value={formData.pessoas}
                 onChange={(e) => handleInputChange('pessoas', parseInt(e.target.value))}
-                className="input-field"
+                className="w-full h-12 px-4 text-base border border-gray-300 rounded-lg bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
                 required
               >
                 {Array.from({ length: 12 }, (_, i) => i + 1).map(num => (
@@ -291,29 +284,24 @@ function ChegadaSemReserva() {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Observações
-              </label>
-              <textarea
-                value={formData.observacoes}
-                onChange={(e) => handleInputChange('observacoes', e.target.value)}
-                className="input-field h-20 resize-none"
-                placeholder="Alguma preferência ou necessidade especial..."
-              />
-            </div>
+            <MobileTextArea
+              label="Observações"
+              value={formData.observacoes}
+              onChange={(e) => handleInputChange('observacoes', e.target.value)}
+              placeholder="Alguma preferência ou necessidade especial..."
+              resize="none"
+            />
 
-            <button
+            <MobileButton
               type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
-                isSubmitting
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-primary-600 text-white hover:bg-primary-700'
-              }`}
+              variant="primary"
+              size="lg"
+              fullWidth
+              loading={isSubmitting}
+              leftIcon={<Users className="w-5 h-5" />}
             >
-              {isSubmitting ? 'Adicionando à Fila...' : 'Entrar na Fila de Espera'}
-            </button>
+              {isSubmitting ? 'Adicionando...' : 'Entrar na Fila'}
+            </MobileButton>
           </form>
 
           {/* Informações Adicionais */}
