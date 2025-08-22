@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Plus, Edit, Trash2, User, Mail, Phone, Calendar } from 'lucide-react';
 
 interface Funcionario {
@@ -68,7 +68,7 @@ const mockFuncionarios: Funcionario[] = [
 const cargos = ['Todos', 'garcom', 'cozinheiro', 'gerente', 'caixa'];
 
 function Funcionarios() {
-  const [funcionarios, setFuncionarios] = useState<Funcionario[]>(mockFuncionarios);
+  const [funcionarios] = useState<Funcionario[]>(mockFuncionarios);
   const [selectedCargo, setSelectedCargo] = useState('Todos');
   const [selectedFuncionario, setSelectedFuncionario] = useState<Funcionario | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
