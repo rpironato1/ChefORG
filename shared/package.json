@@ -1,0 +1,28 @@
+{
+  "name": "@cheforg/shared",
+  "version": "1.0.0",
+  "description": "Shared logic and components for ChefORG web and mobile apps",
+  "main": "index.ts",
+  "types": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types/index.ts",
+    "./api": "./api/index.ts",
+    "./utils": "./utils/index.ts",
+    "./constants": "./constants/index.ts",
+    "./ui": "./ui/index.ts"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.23",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  }
+}
