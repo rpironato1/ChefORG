@@ -1,5 +1,5 @@
 // src/components/ui/CheckoutForm.tsx
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Loader2 } from 'lucide-react';
 

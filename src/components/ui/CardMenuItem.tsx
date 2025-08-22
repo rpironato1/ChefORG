@@ -1,4 +1,3 @@
-import React from 'react';
 import { Clock, Plus, Minus } from 'lucide-react';
 import { MenuItem } from '../../types';
 
@@ -17,7 +16,7 @@ function CardMenuItem({
   quantidade = 0,
   onAdicionar,
   onRemover,
-  onQuantidadeChange,
+  // onQuantidadeChange, // Commented out as it's unused
   showControles = false,
   disabled = false
 }: CardMenuItemProps) {
@@ -30,12 +29,6 @@ function CardMenuItem({
   const handleRemover = () => {
     if (onRemover && quantidade > 0 && !disabled) {
       onRemover(item);
-    }
-  };
-
-  const handleQuantidadeChange = (novaQuantidade: number) => {
-    if (onQuantidadeChange && novaQuantidade >= 0 && !disabled) {
-      onQuantidadeChange(item, novaQuantidade);
     }
   };
 
