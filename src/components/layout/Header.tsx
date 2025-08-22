@@ -1,4 +1,3 @@
-import React from 'react';
 import { Bell, User, Search } from 'lucide-react';
 
 function Header() {

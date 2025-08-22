@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Navigate, useLocation, Link } from 'react-router-dom';
 import { LogIn, User, Lock, Utensils, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AppContext';
@@ -61,12 +61,12 @@ function Login() {
   });
   const [isLoading, setIsLoading] = useState(false);
   
-  const { usuario, login } = useAuth();
+  const { usuario, isAuthenticated, login } = useAuth();
   const { showSuccess, showError, ToastContainer } = useToast();
   const location = useLocation();
 
   // Se já está logado, redireciona
-  if (usuario.isAuthenticated) {
+  if (isAuthenticated) {
     const from = (location.state as any)?.from?.pathname || '/admin/dashboard';
     return <Navigate to={from} replace />;
   }
@@ -108,8 +108,12 @@ function Login() {
       }
 
       // Login bem-sucedido
-      login(funcionario);
-      showSuccess('Login realizado!', `Bem-vindo(a), ${funcionario.nome}`);
+      const result = await login(formData.email, formData.senha);
+      if (result.success) {
+        showSuccess('Login realizado!', `Bem-vindo(a), ${funcionario.nome}`);
+      } else {
+        showError('Erro', result.error || 'Falha no login');
+      }
       
     } catch (error) {
       showError('Erro', 'Falha no sistema. Tente novamente.');

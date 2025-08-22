@@ -2,6 +2,9 @@
 import { supabase, Database } from '../supabase';
 import { handleApiError, createSuccessResponse, ApiResponse } from './index';
 
+// Re-export ApiResponse for other modules
+export type { ApiResponse };
+
 type UserProfile = Database['public']['Tables']['users']['Row'];
 
 export interface AuthUser {
