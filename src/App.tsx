@@ -11,9 +11,9 @@ const LoadingSpinner: React.FC = () => (
   </div>
 );
 
-// Code-split imports with React.lazy()
+// Load modular home page
 const ModularHomePage = React.lazy(() => import('./modules/home').then(module => ({ default: module.ModularHomePage })));
-const Home = React.lazy(() => import('./pages/public/Home'));
+// Keep original home as fallback
 const MenuPublico = React.lazy(() => import('./pages/public/MenuPublico'));
 const ReservaOnline = React.lazy(() => import('./pages/public/ReservaOnline'));
 

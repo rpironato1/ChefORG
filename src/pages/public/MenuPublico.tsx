@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Search, Clock, Utensils } from 'lucide-react';
 import CardMenuItem from '../../components/ui/CardMenuItem';

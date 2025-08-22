@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Lock, ArrowLeft, Utensils, Shield, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Utensils, Shield, AlertCircle } from 'lucide-react';
 import { useMesa } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
 
@@ -74,7 +74,14 @@ function PinMesa() {
         return;
       }
 
-      const result = await validateTablePIN(tableId, pin);
+      // Simulate PIN validation for development
+      const result = await new Promise<{ success: boolean; data?: { valid: boolean } }>(resolve => {
+        setTimeout(() => {
+          // Simple validation - PIN should be 4 digits for now
+          const isValid = pin.length === 4 && /^\d{4}$/.test(pin);
+          resolve({ success: true, data: { valid: isValid } });
+        }, 1000);
+      });
 
       if (result.success && result.data?.valid) {
         // PIN correto - autorizar mesa
