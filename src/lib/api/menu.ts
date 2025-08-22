@@ -14,14 +14,15 @@ export type CategoryWithItems = MenuCategory & {
  */
 export const getAllCategories = async (): Promise<ApiResponse<MenuCategory[]>> => {
   try {
-    const { data, error } = await supabase
+    const query = supabase
       .from('menu_categories')
       .select('*')
-      .eq('ativo', true)
-      .order('ordem', { ascending: true });
+      .eq('ativo', true);
+    
+    const { data, error } = await query.order('ordem', { ascending: true });
 
     if (error) throw error;
-    return createSuccessResponse(data);
+    return createSuccessResponse(data || []);
   } catch (error) {
     return handleApiError(error);
   }
@@ -32,14 +33,15 @@ export const getAllCategories = async (): Promise<ApiResponse<MenuCategory[]>> =
  */
 export const getAllMenuItems = async (): Promise<ApiResponse<MenuItem[]>> => {
     try {
-        const { data, error } = await supabase
+        const query = supabase
             .from('menu_items')
             .select('*')
-            .eq('disponivel', true)
-            .order('nome', { ascending: true });
+            .eq('disponivel', true);
+        
+        const { data, error } = await query.order('nome', { ascending: true });
 
         if (error) throw error;
-        return createSuccessResponse(data);
+        return createSuccessResponse(data || []);
     } catch (error) {
         return handleApiError(error);
     }

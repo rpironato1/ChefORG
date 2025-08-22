@@ -46,6 +46,9 @@ export const getSalesDashboardData = async (startDate: string, endDate: string):
       end_date: endDate,
     }) as { data: SalesDashboardData | null; error: any };
     if (error) throw error;
+    if (!data) {
+      throw new Error('Nenhum dado de vendas encontrado');
+    }
     return createSuccessResponse(data);
   } catch (error) {
     return handleApiError(error, 'Falha ao buscar dados de vendas.');
@@ -62,6 +65,9 @@ export const getReservationsDashboardData = async (date: string): Promise<ApiRes
             p_date: date
         }) as { data: ReservationsDashboardData | null; error: any };
         if (error) throw error;
+        if (!data) {
+            throw new Error('Nenhum dado de reservas encontrado');
+        }
         return createSuccessResponse(data);
     } catch (error) {
         return handleApiError(error, 'Falha ao buscar dados de reservas.');
@@ -74,8 +80,11 @@ export const getReservationsDashboardData = async (date: string): Promise<ApiRes
  */
 export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboardData>> => {
     try {
-        const { data, error } = await supabase.rpc('get_stock_dashboard_data') as { data: StockDashboardData | null; error: any };
+        const { data, error } = await supabase.rpc('get_stock_dashboard_data', {}) as { data: StockDashboardData | null; error: any };
         if (error) throw error;
+        if (!data) {
+            throw new Error('Nenhum dado de estoque encontrado');
+        }
         return createSuccessResponse(data);
     } catch (error) {
         return handleApiError(error, 'Falha ao buscar dados de estoque.');
@@ -88,8 +97,11 @@ export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboar
  */
 export const getLoyaltyDashboardData = async (): Promise<ApiResponse<LoyaltyDashboardData>> => {
     try {
-        const { data, error } = await supabase.rpc('get_loyalty_dashboard_data') as { data: LoyaltyDashboardData | null; error: any };
+        const { data, error } = await supabase.rpc('get_loyalty_dashboard_data', {}) as { data: LoyaltyDashboardData | null; error: any };
         if (error) throw error;
+        if (!data) {
+            throw new Error('Nenhum dado de fidelidade encontrado');
+        }
         return createSuccessResponse(data);
     } catch (error) {
         return handleApiError(error, 'Falha ao buscar dados de fidelidade.');

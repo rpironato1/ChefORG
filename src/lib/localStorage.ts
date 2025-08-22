@@ -51,7 +51,7 @@ export class LocalStorageClient {
   // Generic select operation
   from<T extends TableName>(table: T) {
     const baseQuery = {
-      select: (columns = '*') => {
+      select: (_columns = '*') => {
         const selectQuery = {
           eq: (column: string, value: any) => ({
             single: () => this.selectSingleWithFilter(table, column, value),
@@ -315,7 +315,7 @@ export class LocalStorageClient {
 
   // Auth methods
   auth = {
-    signInWithPassword: async ({ email, password }: { email: string; password: string }) => {
+    signInWithPassword: async ({ email, password: _password }: { email: string; password: string }) => {
       // Simple mock authentication
       const users = getFromStorage<any>(STORAGE_KEYS.users);
       const user = users.find((u: any) => u.email === email);
@@ -354,7 +354,7 @@ export class LocalStorageClient {
   };
 
   // RPC (Remote Procedure Call) support for complex queries
-  rpc = (functionName: string, params: Record<string, any>) => {
+  rpc = (functionName: string, _params: Record<string, any>) => {
     return new Promise((resolve) => {
       try {
         // Mock RPC responses for common functions
@@ -380,7 +380,7 @@ export class LocalStorageClient {
 
   // Functions support for edge functions
   functions = {
-    invoke: (functionName: string, options?: { body?: any }) => {
+    invoke: (functionName: string, _options?: { body?: any }) => {
       return new Promise((resolve) => {
         try {
           // Mock function responses

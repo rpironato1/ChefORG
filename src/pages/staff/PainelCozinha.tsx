@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Clock, ChefHat, Bell, CheckCircle, Loader2, AlertTriangle } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { Clock, ChefHat, Bell, Loader2, AlertTriangle } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { getOrdersByStatus, updateOrderStatus, OrderWithItems } from '../../lib/api/orders';
 import { Database } from '../../lib/supabase'; // Ajuste o caminho se necessário
@@ -59,7 +59,7 @@ function PainelCozinha() {
 
     orders.forEach(order => {
       order.order_items.forEach(item => {
-        const categoryName = item.menu_items?.categoria || 'Outros';
+        const categoryName = (item.menu_items as any)?.categoria || item.menu_items?.nome || 'Outros';
         categorySet.add(categoryName);
         if (!itemsByCategory[categoryName]) {
           itemsByCategory[categoryName] = [];

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, Clock, Eye, EyeOff, Loader2, AlertTriangle } from 'lucide-react';
 import { getMenuWithItems, CategoryWithItems } from '../lib/api/menu';
-import { MenuItem } from '../types'; // Supondo que MenuItem esteja em types
 
 // O modal pode ser movido para um componente separado para maior clareza
 // import MenuItemModal from '../components/admin/MenuItemModal';

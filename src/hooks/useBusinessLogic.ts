@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
-import { Mesa, Reserva, Pedido, PedidoItem, MenuItem, Pagamento, Feedback } from '../types';
+import { Mesa, Reserva, Pedido, PedidoItem, MenuItem, Pagamento } from '../types';
 
 // 4.1 Validar disponibilidade de mesa
 export const useValidarDisponibilidadeMesa = () => {
   const validarDisponibilidade = useCallback((
     mesas: Mesa[],
-    dataHora: Date,
+    _dataHora: Date,
     numeroConvidados: number,
     mesaId?: string
   ): { disponivel: boolean; mesasSugeridas: Mesa[] } => {
@@ -197,7 +197,7 @@ export const useMesas = () => {
     }
     
     if (filtros?.capacidadeMin) {
-      resultado = resultado.filter(m => m.capacidade >= filtros.capacidadeMin);
+      resultado = resultado.filter(m => m.capacidade >= filtros.capacidadeMin!);
     }
     
     return resultado;
@@ -448,7 +448,7 @@ export const useTempoEstimado = () => {
     return tempoMaximo + 5;
   }, []);
 
-  const atualizarTempoEstimado = useCallback((pedidoId: string, novoTempo: number): boolean => {
+  const atualizarTempoEstimado = useCallback((_pedidoId: string, _novoTempo: number): boolean => {
     // Implementar lógica para atualizar tempo estimado
     return true;
   }, []);
@@ -526,12 +526,13 @@ export const usePagamentoCaixa = () => {
     return novoPagamento;
   }, []);
 
-  const buscarPagamentoPorCodigo = useCallback((codigoMesa: string): Pagamento | null => {
+  const buscarPagamentoPorCodigo = useCallback((_codigoMesa: string): Pagamento | null => {
     // Implementar lógica para buscar pagamento por código da mesa
     return null;
   }, []);
 
   return {
+    pagamentos,
     registrarPagamentoManual,
     buscarPagamentoPorCodigo
   };
@@ -539,7 +540,7 @@ export const usePagamentoCaixa = () => {
 
 // 4.11 Gerar relatórios de vendas, reservas, fila, tempo médio
 export const useRelatorios = () => {
-  const gerarRelatorioVendas = useCallback((periodo: { inicio: Date; fim: Date }) => {
+  const gerarRelatorioVendas = useCallback((_periodo: { inicio: Date; fim: Date }) => {
     // Implementar lógica para gerar relatório de vendas
     return {
       totalVendas: 0,
@@ -550,7 +551,7 @@ export const useRelatorios = () => {
     };
   }, []);
 
-  const gerarRelatorioReservas = useCallback((periodo: { inicio: Date; fim: Date }) => {
+  const gerarRelatorioReservas = useCallback((_periodo: { inicio: Date; fim: Date }) => {
     // Implementar lógica para gerar relatório de reservas
     return {
       totalReservas: 0,
@@ -561,7 +562,7 @@ export const useRelatorios = () => {
     };
   }, []);
 
-  const gerarRelatorioFila = useCallback((periodo: { inicio: Date; fim: Date }) => {
+  const gerarRelatorioFila = useCallback((_periodo: { inicio: Date; fim: Date }) => {
     // Implementar lógica para gerar relatório de fila
     return {
       tempoMedioEspera: 0,
@@ -571,7 +572,7 @@ export const useRelatorios = () => {
     };
   }, []);
 
-  const gerarRelatorioTempoMedio = useCallback((periodo: { inicio: Date; fim: Date }) => {
+  const gerarRelatorioTempoMedio = useCallback((_periodo: { inicio: Date; fim: Date }) => {
     // Implementar lógica para gerar relatório de tempo médio
     return {
       tempoPreparo: 0,
@@ -609,7 +610,7 @@ export const useEstoque = () => {
     ));
   }, []);
 
-  const registrarDescarte = useCallback((id: string, quantidade: number, motivo: string) => {
+  const registrarDescarte = useCallback((_id: string, _quantidade: number, _motivo: string) => {
     // Implementar lógica para registrar descarte
     return true;
   }, []);

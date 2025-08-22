@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Clock, Users, CheckCircle, Bell, Utensils, MapPin, Loader2, AlertTriangle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Loader2, AlertTriangle } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { getAllTables, updateTableStatus } from '../../lib/api/tables';
 import { getOrdersByStatus, updateOrderStatus, OrderWithItems } from '../../lib/api/orders';
@@ -15,7 +15,7 @@ function PainelGarcom() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'pedidos' | 'mesas'>('pedidos');
-  const { showSuccess, showError } = useToast();
+  const { showSuccess, showError, ToastContainer } = useToast();
 
   const fetchData = async () => {
     // Não mostra o loader em atualizações silenciosas
