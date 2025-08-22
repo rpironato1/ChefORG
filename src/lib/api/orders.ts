@@ -3,7 +3,6 @@ import { supabase, Database } from '../supabase';
 import { handleApiError, createSuccessResponse, ApiResponse } from './index';
 
 type Order = Database['public']['Tables']['orders']['Row'];
-type OrderInsert = Database['public']['Tables']['orders']['Insert'];
 type OrderItemInsert = Database['public']['Tables']['order_items']['Insert'];
 type OrderStatus = Database['public']['Enums']['order_status'];
 
@@ -25,17 +24,18 @@ export type OrderWithItems = Order & {
 export const createOrder = async (
   tableId: number,
   items: Omit<OrderItemInsert, 'order_id'>[],
-  userId?: number
+  _userId?: number
 ): Promise<ApiResponse<Order>> => {
   try {
     // Idealmente, isso seria uma única transação (RPC) no Supabase.
     // Simulando a transação no lado do cliente:
 
     // 1. Criar o registro do pedido principal
-    const orderInsertData: OrderInsert = {
+    const orderInsertData = {
       table_id: tableId,
-      user_id: userId,
-      status: 'confirmado',
+      status: 'confirmado' as const,
+      customer_name: 'Cliente',
+      total: 0
       // totais podem ser calculados por triggers no DB ou aqui
     };
 
