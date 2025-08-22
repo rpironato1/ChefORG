@@ -1,12 +1,7 @@
-import React from 'react';
 import { 
-  TrendingUp, 
-  Users, 
   ShoppingCart, 
   DollarSign,
   Clock,
-  CheckCircle,
-  AlertCircle,
   Utensils
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';

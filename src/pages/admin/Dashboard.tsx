@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { useState, useEffect } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { DollarSign, Users, Box, Star, TrendingUp, BookOpen, Loader2, AlertTriangle, Calendar } from 'lucide-react';
 import {
   getSalesDashboardData, SalesDashboardData,

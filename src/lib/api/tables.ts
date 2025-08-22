@@ -10,13 +10,13 @@ type Table = Database['public']['Tables']['tables']['Row'];
  */
 export const getAllTables = async (): Promise<ApiResponse<Table[]>> => {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('tables')
       .select('*')
-      .order('numero', { ascending: true });
+      .order('numero', { ascending: true }) as any;
 
     if (error) throw error;
-    return createSuccessResponse(data);
+    return createSuccessResponse(data || []);
   } catch (error) {
     return handleApiError(error);
   }
@@ -28,14 +28,14 @@ export const getAllTables = async (): Promise<ApiResponse<Table[]>> => {
  */
 export const getTableByQR = async (qrCode: string): Promise<ApiResponse<Table>> => {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('tables')
       .select('*')
       .eq('qr_code', qrCode)
-      .single();
+      .single() as any;
 
     if (error) throw error;
-    return createSuccessResponse(data);
+    return createSuccessResponse(data || null);
   } catch (error) {
     return handleApiError(error, 'Mesa não encontrada.');
   }
@@ -47,11 +47,11 @@ export const getTableByQR = async (qrCode: string): Promise<ApiResponse<Table>> 
  */
 export const validateTablePIN = async (tableId: number, pin: string): Promise<ApiResponse<{ valid: boolean }>> => {
   try {
-    const { data: table, error } = await supabase
+    const { data: table, error } = await (supabase as any)
       .from('tables')
       .select('pin, status')
       .eq('id', tableId)
-      .single();
+      .single() as any;
 
     if (error) throw error;
 
@@ -83,7 +83,7 @@ export const releaseTable = async (tableId: number): Promise<ApiResponse<Table>>
       .update({ status: 'limpeza', pin: null, cliente_atual: null, pedido_atual_id: null })
       .eq('id', tableId)
       .select()
-      .single();
+      .single() as any;
     
     if (error) throw error;
     return createSuccessResponse(data, 'Mesa liberada para limpeza.');
@@ -103,7 +103,7 @@ export const updateTableStatus = async (tableId: number, status: Table['status']
             .update({ status })
             .eq('id', tableId)
             .select()
-            .single();
+            .single() as any;
 
         if (error) throw error;
         return createSuccessResponse(data, `Status da mesa atualizado para ${status}.`);

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Plus, Minus, Search, Utensils, Loader2, AlertTriangle, Clock } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Plus, Minus, Search, Utensils, Loader2, AlertTriangle } from 'lucide-react';
 import { useMesa } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
 import CardMenuItem from '../../components/ui/CardMenuItem';
@@ -211,9 +211,22 @@ function CardapioMesa() {
           <div key={category.id}>
             <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">{category.nome}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.menu_items.map(item => (
-                <CardMenuItem key={item.id} item={item} quantidade={getQuantidadeNoCarrinho(item.id)} onAdicionar={adicionarItem} onRemover={removerItem} showControles={true} />
-              ))}
+              {category.menu_items.map(item => {
+                // Mapear item do banco para tipo MenuItem
+                const menuItem: MenuItem = {
+                  id: item.id,
+                  nome: item.nome,
+                  descricao: item.descricao,
+                  preco: item.preco,
+                  categoria: item.categoria,
+                  disponivel: item.disponivel,
+                  tempo_preparo: item.tempo_preparo,
+                  ingredientes: item.ingredientes,
+                  imagem: item.imagem,
+                  restricoes: item.restricoes
+                };
+                return <CardMenuItem key={item.id} item={menuItem} quantidade={getQuantidadeNoCarrinho(item.id.toString())} onAdicionar={(item) => adicionarItem({...item, id: item.id.toString()})} onRemover={(item) => removerItem({...item, id: item.id.toString()})} showControles={true} />;
+              })}
             </div>
           </div>
         ))}

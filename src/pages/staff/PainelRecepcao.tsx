@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { TabelaResponsiva } from '../../components/ui/TabelaResponsiva';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import TabelaResponsiva from '../../components/ui/TabelaResponsiva';
 import Modal from '../../components/ui/Modal';
+import { Card, CardHeader, CardContent, CardTitle } from '../../components/ui/Card';
 import { useToast } from '../../components/ui/Toast';
 import { Loader2, AlertTriangle } from 'lucide-react';
 import { getAllTables } from '../../lib/api/tables';
 import { getAllReservations, allocateTableToWaitingClient } from '../../lib/api/reservations';
 import { sendNotification } from '../../lib/api/notifications';
-import { Database } from '@/lib/supabase';
+import { Database } from '../../lib/supabase';
 
 type Table = Database['public']['Tables']['tables']['Row'];
 type Reservation = Database['public']['Tables']['reservations']['Row'] & { users?: { telefone: string | null } };
@@ -77,8 +77,8 @@ const PainelRecepcao: React.FC = () => {
       
       if (result.success && result.data) {
         const pin = result.data.pin;
-        const clientName = selectedReservation.nome_cliente;
-        const clientPhone = selectedReservation.telefone_contato;
+        const clientName = selectedReservation.cliente_nome;
+        const clientPhone = selectedReservation.cliente_telefone;
         const tableNumber = tables.find(t => t.id === tableId)?.numero;
 
         // Enviar notificação para o cliente
@@ -144,8 +144,8 @@ const PainelRecepcao: React.FC = () => {
                 headers={['Pos.', 'Nome', 'Qtd', 'Ações']}
                 rows={filaDeEspera.map((item, index) => [
                   index + 1,
-                  item.nome_cliente,
-                  item.pessoas,
+                  item.cliente_nome,
+                  item.numero_convidados,
                   <button onClick={() => handleOpenAllocationModal(item)} className="btn-primary-sm">Alocar</button>
                 ])}
               />
@@ -158,7 +158,7 @@ const PainelRecepcao: React.FC = () => {
               <TabelaResponsiva
                 headers={['Nome', 'Horário', 'Status', 'Ações']}
                 rows={reservasDeHoje.map(reserva => [
-                  reserva.nome_cliente,
+                  reserva.cliente_nome,
                   new Date(reserva.data_hora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
                   reserva.status,
                   <button className="text-blue-600 hover:underline">Check-in</button>
@@ -186,9 +186,9 @@ const PainelRecepcao: React.FC = () => {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} titulo={`Alocar Mesa para ${selectedReservation?.nome_cliente}`}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} titulo={`Alocar Mesa para ${selectedReservation?.cliente_nome}`}>
         <div className="p-4">
-          <p className="mb-4">Selecione uma mesa livre para alocar para <strong>{selectedReservation?.pessoas}</strong> pessoa(s).</p>
+          <p className="mb-4">Selecione uma mesa livre para alocar para <strong>{selectedReservation?.numero_convidados}</strong> pessoa(s).</p>
           {isAllocating ? (
             <div className="flex justify-center items-center h-32"><Loader2 className="h-8 w-8 animate-spin" /></div>
           ) : (
@@ -199,7 +199,7 @@ const PainelRecepcao: React.FC = () => {
                     key={mesa.id}
                     onClick={() => handleAllocateTable(mesa.id)}
                     className="p-4 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
-                    disabled={mesa.lugares < (selectedReservation?.pessoas || 0)}
+                    disabled={mesa.lugares < (selectedReservation?.numero_convidados || 0)}
                   >
                     <p className="font-bold">Mesa {mesa.numero}</p>
                     <p className="text-sm">{mesa.lugares} lugares</p>

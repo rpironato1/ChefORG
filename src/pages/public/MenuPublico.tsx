@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Search, Clock, Utensils } from 'lucide-react';
 import CardMenuItem from '../../components/ui/CardMenuItem';
@@ -12,7 +12,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 28.90,
     categoria: 'Lanches',
     disponivel: true,
-    tempoPreparacao: 15,
+    tempo_preparo: 15,
     ingredientes: ['Carne bovina', 'Queijo artesanal', 'Alface', 'Tomate', 'Cebola', 'Molho especial'],
     restricoes: []
   },
@@ -23,7 +23,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 45.50,
     categoria: 'Pratos Principais',
     disponivel: true,
-    tempoPreparacao: 25,
+    tempo_preparo: 25,
     ingredientes: ['Arroz arbóreo', 'Camarões', 'Vinho branco', 'Cebola', 'Alho', 'Parmesão'],
     restricoes: ['Frutos do mar']
   },
@@ -34,7 +34,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 22.80,
     categoria: 'Entradas',
     disponivel: true,
-    tempoPreparacao: 10,
+    tempo_preparo: 10,
     ingredientes: ['Alface romana', 'Croutons', 'Parmesão', 'Molho caesar'],
     restricoes: ['Vegetariano']
   },
@@ -45,7 +45,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 16.90,
     categoria: 'Sobremesas',
     disponivel: true,
-    tempoPreparacao: 5,
+    tempo_preparo: 5,
     ingredientes: ['Mascarpone', 'Café', 'Biscoito', 'Cacau', 'Ovos', 'Açúcar'],
     restricoes: ['Vegetariano', 'Contém lactose', 'Contém glúten']
   },
@@ -56,7 +56,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 8.50,
     categoria: 'Bebidas',
     disponivel: true,
-    tempoPreparacao: 3,
+    tempo_preparo: 3,
     ingredientes: ['Laranja'],
     restricoes: ['Vegano']
   },
@@ -67,7 +67,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 32.40,
     categoria: 'Pratos Principais',
     disponivel: true,
-    tempoPreparacao: 18,
+    tempo_preparo: 18,
     ingredientes: ['Massa', 'Manjericão', 'Pinhões', 'Alho', 'Parmesão', 'Azeite'],
     restricoes: ['Vegetariano', 'Contém glúten']
   },
@@ -78,7 +78,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 52.90,
     categoria: 'Pratos Principais',
     disponivel: true,
-    tempoPreparacao: 30,
+    tempo_preparo: 30,
     ingredientes: ['Picanha', 'Farofa', 'Vinagrete', 'Mandioca'],
     restricoes: []
   },
@@ -89,7 +89,7 @@ const mockMenuItems: MenuItem[] = [
     preco: 18.50,
     categoria: 'Entradas',
     disponivel: true,
-    tempoPreparacao: 8,
+    tempo_preparo: 8,
     ingredientes: ['Pão italiano', 'Tomates', 'Manjericão', 'Azeite', 'Alho'],
     restricoes: ['Vegetariano', 'Vegano']
   }

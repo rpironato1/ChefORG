@@ -82,16 +82,16 @@ function CardMenuItem({
               !item.disponivel ? 'text-gray-400' : 'text-gray-500'
             }`}>
               <Clock className="h-3 w-3" />
-              <span>{item.tempoPreparacao} min</span>
+              <span>{item.tempo_preparo} min</span>
             </div>
           </div>
         </div>
 
         {/* Restrições */}
-        {item.restricoes && item.restricoes.length > 0 && (
+        {item.restricoes && (
           <div className="mb-3">
             <div className="flex flex-wrap gap-1">
-              {item.restricoes.map((restricao, index) => (
+              {(Array.isArray(item.restricoes) ? item.restricoes : [item.restricoes]).map((restricao: string, index: number) => (
                 <span 
                   key={index}
                   className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full"

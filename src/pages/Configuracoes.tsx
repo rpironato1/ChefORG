@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Save, Bell, Shield, Database, Palette, Globe, Printer, Wifi } from 'lucide-react';
+import { useState } from 'react';
+import { Save, Bell, Shield, Database, Globe, Printer } from 'lucide-react';
 
 function Configuracoes() {
   const [activeTab, setActiveTab] = useState('geral');

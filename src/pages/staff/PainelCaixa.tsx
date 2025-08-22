@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { TabelaResponsiva } from '../../components/ui/TabelaResponsiva';
-import { Modal } from '../../components/ui/Modal';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, AlertTriangle } from 'lucide-react';
+import TabelaResponsiva from '../../components/ui/TabelaResponsiva';
+import Modal from '../../components/ui/Modal';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
+import { Loader2 } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { getOrderByMesaCode, OrderWithItems } from '../../lib/api/orders';
 import { createPayment, confirmPayment } from '../../lib/api/payments';
@@ -117,9 +117,9 @@ const PainelCaixa: React.FC = () => {
                 ) : (
                     <div className="grid grid-cols-2 gap-2">
                         <button onClick={() => handleRegistrarPagamento('dinheiro')} className="p-3 bg-green-500 text-white rounded-md hover:bg-green-600">Dinheiro</button>
-                        <button onClick={() => handleRegistrarPagamento('cartao_credito')} className="p-3 bg-orange-500 text-white rounded-md hover:bg-orange-600">Crédito</button>
-                        <button onClick={() => handleRegistrarPagamento('cartao_debito')} className="p-3 bg-sky-500 text-white rounded-md hover:bg-sky-600">Débito</button>
+                        <button onClick={() => handleRegistrarPagamento('cartao')} className="p-3 bg-orange-500 text-white rounded-md hover:bg-orange-600">Cartão</button>
                         <button onClick={() => handleRegistrarPagamento('pix')} className="p-3 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">PIX Manual</button>
+                        <button onClick={() => handleRegistrarPagamento('apple_pay')} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-600">Apple Pay</button>
                     </div>
                 )}
               </div>

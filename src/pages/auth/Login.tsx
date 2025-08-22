@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useLocation, Link } from 'react-router-dom';
-import { LogIn, User, Lock, Utensils, AlertCircle } from 'lucide-react';
+import { LogIn, User, Lock, Utensils } from 'lucide-react';
 import { useAuth } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
 import { Funcionario } from '../../types';
@@ -61,7 +61,7 @@ function Login() {
   });
   const [isLoading, setIsLoading] = useState(false);
   
-  const { usuario, isAuthenticated, login } = useAuth();
+  const { isAuthenticated, login } = useAuth();
   const { showSuccess, showError, ToastContainer } = useToast();
   const location = useLocation();
 
@@ -129,16 +129,17 @@ function Login() {
     }));
   };
 
-  const getCargoLabel = (cargo: Funcionario['cargo']) => {
-    const labels = {
-      recepcao: 'Recepção',
-      garcom: 'Garçom',
-      cozinheiro: 'Cozinheiro',
-      caixa: 'Caixa',
-      gerente: 'Gerente'
-    };
-    return labels[cargo];
-  };
+  // Função para futuro uso na exibição de perfis
+  // const getCargoLabel = (cargo: Funcionario['cargo']) => {
+  //   const labels = {
+  //     recepcao: 'Recepção',
+  //     garcom: 'Garçom',
+  //     cozinheiro: 'Cozinheiro',
+  //     caixa: 'Caixa',
+  //     gerente: 'Gerente'
+  //   };
+  //   return labels[cargo];
+  // };
 
   return (
     <div className="min-h-screen bg-gray-50">

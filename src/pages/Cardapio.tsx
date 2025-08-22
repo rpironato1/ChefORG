@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, Clock, Eye, EyeOff, Loader2, AlertTriangle } from 'lucide-react';
 import { getMenuWithItems, CategoryWithItems } from '../lib/api/menu';
-import { MenuItem } from '../types'; // Supondo que MenuItem esteja em types
 
 // O modal pode ser movido para um componente separado para maior clareza
 // import MenuItemModal from '../components/admin/MenuItemModal';
@@ -136,7 +135,7 @@ function Cardapio() {
                     </span>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <Clock className="h-4 w-4" />
-                      <span>{item.tempo_preparacao} min</span>
+                      <span>{item.tempo_preparo} min</span>
                     </div>
                   </div>
                 </div>

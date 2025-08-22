@@ -128,12 +128,12 @@ function ReservaOnline() {
 
     try {
       const result = await createReservation({
-        nome_cliente: formData.nome,
-        cpf: formData.cpf.replace(/\D/g, ''),
-        telefone_contato: formData.telefone.replace(/\D/g, ''),
+        cliente_nome: formData.nome,
+        cliente_cpf: formData.cpf.replace(/\D/g, ''),
+        cliente_telefone: formData.telefone.replace(/\D/g, ''),
         data_hora: dataHora.toISOString(),
-        pessoas: formData.quantidade,
-        observacoes: formData.restricoes,
+        numero_convidados: formData.quantidade,
+        restricoes: formData.restricoes,
       });
 
       if (result.success && result.data) {
@@ -142,7 +142,7 @@ function ReservaOnline() {
         
         // Envia notificação de confirmação
         const reservationDetails = result.data;
-        const messageBody = `Olá ${reservationDetails.nome_cliente}, sua reserva no ChefORG para ${reservationDetails.pessoas} pessoa(s) no dia ${new Date(reservationDetails.data_hora).toLocaleDateString('pt-BR')} às ${new Date(reservationDetails.data_hora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} foi confirmada!`;
+        const messageBody = `Olá ${reservationDetails.cliente_nome}, sua reserva no ChefORG para ${reservationDetails.numero_convidados} pessoa(s) no dia ${new Date(reservationDetails.data_hora).toLocaleDateString('pt-BR')} às ${new Date(reservationDetails.data_hora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} foi confirmada!`;
         
         await sendNotification(formData.telefone.replace(/\D/g, ''), messageBody);
 

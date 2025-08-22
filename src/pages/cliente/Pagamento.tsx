@@ -124,11 +124,11 @@ function PagamentoPage() {
   };
 
   const paymentMethods: { id: PaymentMethod, name: string, icon: React.ElementType }[] = [
-    { id: 'cartao_credito', name: 'Cartão de Crédito', icon: CreditCard },
+    { id: 'cartao', name: 'Cartão de Crédito', icon: CreditCard },
     { id: 'pix', name: 'PIX', icon: QrCode },
     { id: 'apple_pay', name: 'Apple Pay', icon: Smartphone },
     { id: 'google_pay', name: 'Google Pay', icon: Smartphone },
-    { id: 'caixa', name: 'Pagar no Caixa', icon: Receipt },
+    { id: 'dinheiro', name: 'Pagar no Caixa', icon: Receipt },
   ];
 
   if (isLoading) {
@@ -197,7 +197,7 @@ function PagamentoPage() {
       {/* --- MODAIS --- */}
 
       {/* Modal para Cartão de Crédito (Stripe) */}
-      <Modal isOpen={isModalOpen && selectedMethod === 'cartao_credito' && !!clientSecret} onClose={() => setIsModalOpen(false)} titulo="Pagamento com Cartão">
+      <Modal isOpen={isModalOpen && selectedMethod === 'cartao' && !!clientSecret} onClose={() => setIsModalOpen(false)} titulo="Pagamento com Cartão">
         <Elements options={stripeOptions} stripe={stripePromise}>
           <CheckoutForm onSuccess={handleStripeSuccess} onError={handleStripeError} />
         </Elements>
@@ -214,7 +214,7 @@ function PagamentoPage() {
       </Modal>
 
       {/* Modal para Pagamento no Caixa */}
-      <Modal isOpen={isModalOpen && selectedMethod === 'caixa'} onClose={() => setIsModalOpen(false)} titulo="Pagamento no Caixa">
+      <Modal isOpen={isModalOpen && selectedMethod === 'dinheiro'} onClose={() => setIsModalOpen(false)} titulo="Pagamento no Caixa">
         <div className="text-center py-6">
           <Hash className="h-12 w-12 mx-auto mb-4" />
           <h3 className="text-lg font-semibold">Apresente o código no caixa:</h3>

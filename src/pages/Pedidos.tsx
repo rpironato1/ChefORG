@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Plus, Clock, CheckCircle, XCircle, Eye, Filter } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, Clock, CheckCircle, XCircle, Eye } from 'lucide-react';
 
 interface PedidoItem {
   id: string;

@@ -17,7 +17,7 @@ export const createFeedback = async (
       .from('feedback')
       .select('id')
       .eq('order_id', details.order_id)
-      .single();
+      .single() as any;
 
     if (existingError && existingError.code !== 'PGRST116') {
       throw existingError;
@@ -27,13 +27,27 @@ export const createFeedback = async (
     }
 
     // Inserir o novo feedback
-    const { data, error } = await supabase
+    const insertResult = await (supabase as any)
       .from('feedback')
-      .insert(details)
-      .select()
-      .single();
+      .insert(details);
+
+    if (insertResult.error) throw insertResult.error;
+
+    // Get the created feedback by reading back from storage
+    const { data: allFeedback, error } = await new Promise((resolve) => {
+      const result = supabase.from('feedback').select('*');
+      if (result && typeof result.then === 'function') {
+        result.then(resolve);
+      } else {
+        resolve({ data: [], error: null });
+      }
+    }) as { data: any[] | null; error: any };
 
     if (error) throw error;
+    
+    // Find the most recently created feedback
+    const data = allFeedback?.[allFeedback.length - 1];
+    if (!data) throw new Error('Failed to create feedback');
 
     // Idealmente, um trigger no DB calcularia a média e adicionaria pontos de fidelidade.
     // Ex: PERFORM on_new_feedback(data.id);
@@ -53,7 +67,7 @@ export const getFeedbackByOrder = async (orderId: number): Promise<ApiResponse<F
       .from('feedback')
       .select('*')
       .eq('order_id', orderId)
-      .single();
+      .single() as any;
     
     if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
         throw error;
@@ -70,14 +84,24 @@ export const getFeedbackByOrder = async (orderId: number): Promise<ApiResponse<F
  */
 export const getRecentFeedbacks = async (limit = 10): Promise<ApiResponse<Feedback[]>> => {
     try {
-        const { data, error } = await supabase
-            .from('feedback')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(limit);
+        // Get all feedback and sort/limit in memory
+        const { data: allFeedback, error } = await new Promise((resolve) => {
+          const result = supabase.from('feedback').select('*');
+          if (result && typeof result.then === 'function') {
+            result.then(resolve);
+          } else {
+            resolve({ data: [], error: null });
+          }
+        }) as { data: any[] | null; error: any };
 
         if (error) throw error;
-        return createSuccessResponse(data);
+        
+        // Sort by created_at descending and limit
+        const sortedData = (allFeedback || [])
+          .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime())
+          .slice(0, limit);
+
+        return createSuccessResponse(sortedData);
     } catch (error) {
         return handleApiError(error);
     }

@@ -2,16 +2,16 @@
 
 // ===== ENTIDADES PRINCIPAIS =====
 export interface MenuItem {
-  id: string;
+  id: string | number;
   nome: string;
   descricao: string;
   preco: number;
   categoria: string;
   disponivel: boolean;
-  tempoPreparacao: number;
+  tempo_preparo: number;
   ingredientes: string[];
-  imagem?: string;
-  restricoes?: string[];
+  imagem?: string | null;
+  restricoes?: string[] | string | null;
 }
 
 export interface Mesa {

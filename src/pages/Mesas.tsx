@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Plus, Edit, Trash2, Users, Clock, DollarSign } from 'lucide-react';
 
 interface Mesa {

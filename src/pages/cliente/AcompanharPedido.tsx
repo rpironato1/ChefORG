@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, CheckCircle, Users, Utensils, AlertTriangle, Bell, ChefHat, Loader2 } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, Users, AlertCircle, AlertTriangle, Bell, ChefHat, Loader2 } from 'lucide-react';
 import { getActiveOrderByTable, OrderWithItems } from '../../lib/api/orders';
 
 function AcompanharPedido() {

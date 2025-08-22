@@ -61,7 +61,7 @@ export const getSalesReport = async (
     const { data, error } = await supabase.rpc('get_sales_report', {
       start_date: startDate,
       end_date: endDate,
-    });
+    }) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -76,7 +76,7 @@ export const getSalesReport = async (
  */
 export const getGeneralStats = async (): Promise<ApiResponse<GeneralStatsData>> => {
     try {
-        const { data, error } = await supabase.rpc('get_general_stats');
+        const { data, error } = await supabase.rpc('get_general_stats', {}) as { data: any; error: any };
 
         if (error) throw error;
         return createSuccessResponse(data);
@@ -96,7 +96,7 @@ export const getSalesDashboardData = async (
     const { data, error } = await supabase.rpc('get_sales_dashboard_data', {
       start_date: startDate,
       end_date: endDate,
-    });
+    }) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -114,7 +114,7 @@ export const getReservationsDashboardData = async (
   try {
     const { data, error } = await supabase.rpc('get_reservations_dashboard_data', {
       p_date: date,
-    });
+    }) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -128,7 +128,7 @@ export const getReservationsDashboardData = async (
  */
 export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboardData>> => {
   try {
-    const { data, error } = await supabase.rpc('get_stock_dashboard_data');
+    const { data, error } = await supabase.rpc('get_stock_dashboard_data', {}) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -142,7 +142,7 @@ export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboar
  */
 export const getLoyaltyDashboardData = async (): Promise<ApiResponse<LoyaltyDashboardData>> => {
   try {
-    const { data, error } = await supabase.rpc('get_loyalty_dashboard_data');
+    const { data, error } = await supabase.rpc('get_loyalty_dashboard_data', {}) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
