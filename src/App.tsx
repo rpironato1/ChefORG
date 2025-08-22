@@ -29,6 +29,9 @@ const Feedback = React.lazy(() => import('./pages/cliente/Feedback'));
 // Auth pages
 const Login = React.lazy(() => import('./pages/auth/Login'));
 
+// Sprint 3 Demo
+const Sprint3Demo = React.lazy(() => import('./components/Sprint3Demo'));
+
 // Layout Administrativo
 import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -72,6 +75,13 @@ function App() {
           {/* Autenticação */}
           <Route path="/login" element={<Login />} />
           <Route path="/admin/login" element={<Login />} />
+
+          {/* Sprint 3 Demo */}
+          <Route path="/sprint3-demo" element={
+            <PublicLayout>
+              <Sprint3Demo />
+            </PublicLayout>
+          } />
 
           {/* Área Administrativa com ResponsiveLayout */}
           <Route path="/admin/*" element={
