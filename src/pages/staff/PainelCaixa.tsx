@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { TabelaResponsiva } from '../../components/ui/TabelaResponsiva';
-import { Modal } from '../../components/ui/Modal';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, AlertTriangle } from 'lucide-react';
+import TabelaResponsiva from '../../components/ui/TabelaResponsiva';
+import Modal from '../../components/ui/Modal';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
+import { Loader2 } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { getOrderByMesaCode, OrderWithItems } from '../../lib/api/orders';
 import { createPayment, confirmPayment } from '../../lib/api/payments';

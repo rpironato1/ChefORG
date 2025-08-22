@@ -11,8 +11,10 @@ interface Coluna {
 }
 
 interface TabelaResponsivaProps {
-  dados: any[];
-  colunas: Coluna[];
+  dados?: any[];
+  colunas?: Coluna[];
+  headers?: string[]; // Compatibilidade com formato antigo
+  rows?: any[][]; // Compatibilidade com formato antigo
   onSort?: (key: string, direction: 'asc' | 'desc') => void;
   sortKey?: string;
   sortDirection?: 'asc' | 'desc';
@@ -25,6 +27,8 @@ interface TabelaResponsivaProps {
 function TabelaResponsiva({
   dados,
   colunas,
+  headers,
+  rows,
   onSort,
   sortKey,
   sortDirection,
@@ -33,6 +37,19 @@ function TabelaResponsiva({
   onRowClick,
   className = ''
 }: TabelaResponsivaProps) {
+  
+  // Compatibilidade: converter formato antigo para o novo
+  let finalDados = dados || [];
+  let finalColunas = colunas || [];
+  
+  if (headers && rows) {
+    finalColunas = headers.map((header, index) => ({
+      key: index.toString(),
+      titulo: header,
+      render: (value: any, item: any) => rows[finalDados.indexOf(item)][index]
+    }));
+    finalDados = rows.map((row, index) => ({ _index: index, ...row }));
+  }
   
   const handleSort = (key: string) => {
     if (!onSort) return;
@@ -77,7 +94,7 @@ function TabelaResponsiva({
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              {colunas.map((coluna) => (
+              {finalColunas.map((coluna) => (
                 <th
                   key={coluna.key}
                   className={`px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider ${getAlignClass(coluna.align)} ${
@@ -95,14 +112,14 @@ function TabelaResponsiva({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {dados.length === 0 ? (
+            {finalDados.length === 0 ? (
               <tr>
-                <td colSpan={colunas.length} className="px-6 py-12 text-center text-gray-500">
+                <td colSpan={finalColunas.length} className="px-6 py-12 text-center text-gray-500">
                   {emptyMessage}
                 </td>
               </tr>
             ) : (
-              dados.map((item, index) => (
+              finalDados.map((item, index) => (
                 <tr
                   key={index}
                   className={`hover:bg-gray-50 transition-colors ${
@@ -110,7 +127,7 @@ function TabelaResponsiva({
                   }`}
                   onClick={() => onRowClick && onRowClick(item)}
                 >
-                  {colunas.map((coluna) => (
+                  {finalColunas.map((coluna) => (
                     <td
                       key={coluna.key}
                       className={`px-6 py-4 whitespace-nowrap text-sm ${getAlignClass(coluna.align)}`}
