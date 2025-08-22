@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { ChefHat } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { MobileHeader } from '../navigation/MobileHeader';
 import { MobileDrawer } from '../navigation/MobileDrawer';
 import { MobileBottomNavigation } from '../navigation/MobileBottomNavigation';
+import { PWAInstallBanner } from '../components/pwa/PWAInstallBanner';
+import { useSwipeNavigation } from '../hooks/useSwipeNavigation';
+import { usePullToRefresh } from '../hooks/usePullToRefresh';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -12,6 +15,39 @@ interface PublicLayoutProps {
 export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Configure swipe navigation based on current route
+  const getSwipeRoutes = () => {
+    switch (location.pathname) {
+      case '/':
+        return { left: '/menu' };
+      case '/menu':
+        return { left: '/reserva', right: '/' };
+      case '/reserva':
+        return { right: '/menu' };
+      default:
+        return {};
+    }
+  };
+
+  const swipeHandlers = useSwipeNavigation({
+    routes: getSwipeRoutes(),
+    enableSwipeNavigation: !mobileMenuOpen
+  });
+
+  // Pull to refresh handler
+  const handleRefresh = async () => {
+    // Simulate refresh delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // In a real app, this would refresh page data
+    window.location.reload();
+  };
+
+  const { touchHandlers, refreshState } = usePullToRefresh({
+    onRefresh: handleRefresh,
+    disabled: mobileMenuOpen
+  });
 
   return (
     <div className="min-h-screen bg-white">
@@ -22,10 +58,30 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
           isOpen={mobileMenuOpen} 
           onClose={() => setMobileMenuOpen(false)} 
         />
-        <main className="pb-16">
+        
+        {/* Pull to refresh indicator */}
+        {refreshState.isActive && (
+          <div 
+            className="fixed top-16 left-0 right-0 flex justify-center z-30 transition-transform duration-200"
+            style={{ transform: `translateY(${Math.min(refreshState.pullDistance - 60, 40)}px)` }}
+          >
+            <div className="bg-white rounded-full shadow-lg p-2">
+              <div className={`w-6 h-6 border-2 border-primary-600 rounded-full ${
+                refreshState.isRefreshing ? 'animate-spin border-t-transparent' : ''
+              } ${refreshState.isTriggered ? 'border-t-transparent animate-pulse' : ''}`} />
+            </div>
+          </div>
+        )}
+        
+        <main 
+          className="pb-16" 
+          {...swipeHandlers} 
+          {...touchHandlers}
+        >
           {children}
         </main>
         <MobileBottomNavigation />
+        <PWAInstallBanner />
       </div>
       
       {/* Desktop Layout - Public Header */}
