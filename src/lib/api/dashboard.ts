@@ -42,9 +42,9 @@ export interface LoyaltyDashboardData {
 export const getSalesDashboardData = async (startDate: string, endDate: string): Promise<ApiResponse<SalesDashboardData>> => {
   try {
     const { data, error } = await supabase.rpc('get_sales_dashboard_data', {
-      start_date,
-      end_date,
-    });
+      start_date: startDate,
+      end_date: endDate,
+    }) as { data: SalesDashboardData | null; error: any };
     if (error) throw error;
     return createSuccessResponse(data);
   } catch (error) {
@@ -60,7 +60,7 @@ export const getReservationsDashboardData = async (date: string): Promise<ApiRes
     try {
         const { data, error } = await supabase.rpc('get_reservations_dashboard_data', {
             p_date: date
-        });
+        }) as { data: ReservationsDashboardData | null; error: any };
         if (error) throw error;
         return createSuccessResponse(data);
     } catch (error) {
@@ -74,7 +74,7 @@ export const getReservationsDashboardData = async (date: string): Promise<ApiRes
  */
 export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboardData>> => {
     try {
-        const { data, error } = await supabase.rpc('get_stock_dashboard_data');
+        const { data, error } = await supabase.rpc('get_stock_dashboard_data') as { data: StockDashboardData | null; error: any };
         if (error) throw error;
         return createSuccessResponse(data);
     } catch (error) {
@@ -88,7 +88,7 @@ export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboar
  */
 export const getLoyaltyDashboardData = async (): Promise<ApiResponse<LoyaltyDashboardData>> => {
     try {
-        const { data, error } = await supabase.rpc('get_loyalty_dashboard_data');
+        const { data, error } = await supabase.rpc('get_loyalty_dashboard_data') as { data: LoyaltyDashboardData | null; error: any };
         if (error) throw error;
         return createSuccessResponse(data);
     } catch (error) {

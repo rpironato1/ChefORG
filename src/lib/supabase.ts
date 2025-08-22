@@ -307,6 +307,61 @@ export type Database = {
           updated_at?: string | null
         }
       }
+      menu_categories: {
+        Row: {
+          id: number
+          nome: string
+          descricao: string | null
+          ordem: number
+          ativo: boolean
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: number
+          nome: string
+          descricao?: string | null
+          ordem?: number
+          ativo?: boolean
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: number
+          nome?: string
+          descricao?: string | null
+          ordem?: number
+          ativo?: boolean
+          created_at?: string | null
+          updated_at?: string | null
+        }
+      }
+      loyalty: {
+        Row: {
+          id: number
+          user_id: number
+          pontos: number
+          nivel: string
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: number
+          user_id: number
+          pontos?: number
+          nivel?: string
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: number
+          user_id?: number
+          pontos?: number
+          nivel?: string
+          created_at?: string | null
+          updated_at?: string | null
+        }
+      }
     }
     Enums: {
       order_status: 'carrinho' | 'confirmado' | 'preparando' | 'pronto' | 'entregue' | 'pago'

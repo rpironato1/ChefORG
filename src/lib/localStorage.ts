@@ -6,11 +6,13 @@ const STORAGE_KEYS = {
   users: 'cheforg_users',
   tables: 'cheforg_tables',
   menu_items: 'cheforg_menu_items',
+  menu_categories: 'cheforg_menu_categories',
   orders: 'cheforg_orders',
   order_items: 'cheforg_order_items',
   reservations: 'cheforg_reservations',
   payments: 'cheforg_payments',
   feedback: 'cheforg_feedback',
+  loyalty: 'cheforg_loyalty',
   current_user: 'cheforg_current_user',
   auth_session: 'cheforg_auth_session'
 } as const;
@@ -48,34 +50,60 @@ type TableUpdate<T extends TableName> = Database['public']['Tables'][T]['Update'
 export class LocalStorageClient {
   // Generic select operation
   from<T extends TableName>(table: T) {
-    return {
-      select: (columns = '*') => ({
-        eq: (column: string, value: any) => ({
-          single: () => this.selectSingleWithFilter(table, column, value),
-          ...this.selectWithFilter(table, column, value)
-        }),
-        single: () => ({
-          ...this.selectSingle(table)
-        }),
-        order: (column: string, options?: { ascending?: boolean }) => 
-          this.selectWithOrder(table, column, options?.ascending ?? true),
-        limit: (count: number) => this.selectWithLimit(table, count),
-        range: (from: number, to: number) => this.selectWithRange(table, from, to),
-        // Chain methods
-        then: (callback: Function) => {
-          const data = this.selectAll(table);
-          return callback({ data, error: null });
-        }
-      }),
+    const baseQuery = {
+      select: (columns = '*') => {
+        const selectQuery = {
+          eq: (column: string, value: any) => ({
+            single: () => this.selectSingleWithFilter(table, column, value),
+            ...this.selectWithFilter(table, column, value)
+          }),
+          order: (column: string, options?: { ascending?: boolean }) => 
+            this.selectWithOrder(table, column, options?.ascending ?? true),
+          limit: (count: number) => this.selectWithLimit(table, count),
+          range: (from: number, to: number) => this.selectWithRange(table, from, to),
+          in: (column: string, values: any[]) => this.selectWithIn(table, column, values),
+          // Chain methods
+          then: (callback: Function) => {
+            const data = this.selectAll(table);
+            return callback({ data, error: null });
+          }
+        };
+
+        // Return selectQuery with additional methods
+        return {
+          ...selectQuery,
+          single: () => ({
+            ...this.selectSingle(table)
+          })
+        };
+      },
+      
       insert: (values: TableInsert<T> | TableInsert<T>[]) => this.insert(table, values),
+      
       update: (values: TableUpdate<T>) => ({
         eq: (column: string, value: any) => this.update(table, values, column, value),
         match: (filters: Record<string, any>) => this.updateWithMatch(table, values, filters)
       }),
+      
       delete: () => ({
         eq: (column: string, value: any) => this.delete(table, column, value),
         match: (filters: Record<string, any>) => this.deleteWithMatch(table, filters)
       })
+    };
+
+    // Add direct methods for when select() is not called first
+    return {
+      ...baseQuery,
+      eq: (column: string, value: any) => this.selectWithFilter(table, column, value),
+      order: (column: string, options?: { ascending?: boolean }) => 
+        this.selectWithOrder(table, column, options?.ascending ?? true),
+      limit: (count: number) => this.selectWithLimit(table, count),
+      range: (from: number, to: number) => this.selectWithRange(table, from, to),
+      in: (column: string, values: any[]) => this.selectWithIn(table, column, values),
+      then: (callback: Function) => {
+        const data = this.selectAll(table);
+        return callback({ data, error: null });
+      }
     };
   }
 
@@ -155,6 +183,18 @@ export class LocalStorageClient {
       try {
         const allData = this.selectAll(table);
         resolve({ data: allData.slice(from, to + 1), error: null });
+      } catch (error) {
+        resolve({ data: null, error });
+      }
+    });
+  }
+
+  private selectWithIn<T extends TableName>(table: T, column: string, values: any[]): Promise<{ data: TableRow<T>[] | null; error: any }> {
+    return new Promise((resolve) => {
+      try {
+        const allData = this.selectAll(table);
+        const filtered = allData.filter(item => values.includes((item as any)[column]));
+        resolve({ data: filtered, error: null });
       } catch (error) {
         resolve({ data: null, error });
       }
@@ -336,6 +376,24 @@ export class LocalStorageClient {
         resolve({ data: null, error });
       }
     });
+  };
+
+  // Functions support for edge functions
+  functions = {
+    invoke: (functionName: string, options?: { body?: any }) => {
+      return new Promise((resolve) => {
+        try {
+          // Mock function responses
+          if (functionName === 'send-notification') {
+            resolve({ data: { success: true, messageId: 'mock-123' }, error: null });
+          } else {
+            resolve({ data: null, error: { message: `Function ${functionName} not implemented` } });
+          }
+        } catch (error) {
+          resolve({ data: null, error });
+        }
+      });
+    }
   };
 }
 

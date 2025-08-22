@@ -318,6 +318,67 @@ const testFeedback = [
   }
 ];
 
+// Test menu categories data
+const testMenuCategories = [
+  {
+    id: 1,
+    nome: 'Hambúrgueres',
+    descricao: 'Hambúrgueres artesanais',
+    ordem: 1,
+    ativo: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 2,
+    nome: 'Pizzas',
+    descricao: 'Pizzas tradicionais',
+    ordem: 2,
+    ativo: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 3,
+    nome: 'Saladas',
+    descricao: 'Saladas frescas',
+    ordem: 3,
+    ativo: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 4,
+    nome: 'Bebidas',
+    descricao: 'Bebidas variadas',
+    ordem: 4,
+    ativo: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 5,
+    nome: 'Sobremesas',
+    descricao: 'Sobremesas deliciosas',
+    ordem: 5,
+    ativo: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  }
+];
+
+// Test loyalty data
+const testLoyalty = [
+  {
+    id: 1,
+    user_id: 6,
+    pontos: 150,
+    nivel: 'Bronze',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  }
+];
+
 // Function to initialize test data
 export const initializeTestData = async () => {
   console.log('Initializing ChefORG test data...');
@@ -333,11 +394,13 @@ export const initializeTestData = async () => {
     // Note: menu_items, orders, etc. might need to be added to the Database type
     // For now, we'll store them directly in localStorage
     localStorage.setItem('cheforg_menu_items', JSON.stringify(testMenuItems));
+    localStorage.setItem('cheforg_menu_categories', JSON.stringify(testMenuCategories));
     localStorage.setItem('cheforg_orders', JSON.stringify(testOrders));
     localStorage.setItem('cheforg_order_items', JSON.stringify(testOrderItems));
     localStorage.setItem('cheforg_reservations', JSON.stringify(testReservations));
     localStorage.setItem('cheforg_payments', JSON.stringify(testPayments));
     localStorage.setItem('cheforg_feedback', JSON.stringify(testFeedback));
+    localStorage.setItem('cheforg_loyalty', JSON.stringify(testLoyalty));
     
     console.log('Test data initialized successfully!');
     console.log('Available test accounts:');
@@ -366,11 +429,13 @@ export const getDataState = () => {
     users: JSON.parse(localStorage.getItem('cheforg_users') || '[]'),
     tables: JSON.parse(localStorage.getItem('cheforg_tables') || '[]'),
     menuItems: JSON.parse(localStorage.getItem('cheforg_menu_items') || '[]'),
+    menuCategories: JSON.parse(localStorage.getItem('cheforg_menu_categories') || '[]'),
     orders: JSON.parse(localStorage.getItem('cheforg_orders') || '[]'),
     orderItems: JSON.parse(localStorage.getItem('cheforg_order_items') || '[]'),
     reservations: JSON.parse(localStorage.getItem('cheforg_reservations') || '[]'),
     payments: JSON.parse(localStorage.getItem('cheforg_payments') || '[]'),
-    feedback: JSON.parse(localStorage.getItem('cheforg_feedback') || '[]')
+    feedback: JSON.parse(localStorage.getItem('cheforg_feedback') || '[]'),
+    loyalty: JSON.parse(localStorage.getItem('cheforg_loyalty') || '[]')
   };
 };
 
@@ -378,9 +443,11 @@ export {
   testUsers, 
   testTables, 
   testMenuItems, 
+  testMenuCategories,
   testOrders, 
   testOrderItems, 
   testReservations, 
   testPayments, 
-  testFeedback 
+  testFeedback,
+  testLoyalty
 };

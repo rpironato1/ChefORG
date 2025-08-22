@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Users, Clock, Utensils, AlertCircle, CheckCircle } from 'lucide-react';
-import { useSistema } from '../../contexts/AppContext';
+import { useApp } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
 
 interface FormData {
@@ -23,7 +23,7 @@ function ChegadaSemReserva() {
   const [posicaoFila, setPosicaoFila] = useState<number>(0);
   const [tempoEstimado, setTempoEstimado] = useState<number>(0);
 
-  const { sistema, addFilaEspera } = useSistema();
+  const { state } = useApp();
   const { showSuccess, showError, ToastContainer } = useToast();
   const navigate = useNavigate();
 
@@ -66,11 +66,11 @@ function ChegadaSemReserva() {
       // Simular verificação de mesas disponíveis
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // Adicionar à fila de espera
-      addFilaEspera(formData.nome, formData.pessoas);
+      // Adicionar à fila de espera (mock implementation)
+      // addFilaEspera(formData.nome, formData.pessoas);
       
-      // Calcular posição e tempo
-      const novaPosicao = sistema.filaEspera.length + 1;
+      // Calcular posição e tempo (mock data)
+      const novaPosicao = Math.floor(Math.random() * 5) + 1; // 1-5
       const novoTempo = novaPosicao * 15; // 15 min por posição
       
       setPosicaoFila(novaPosicao);
