@@ -1,0 +1,257 @@
+{
+  "timestamp": "2025-08-24T19:18:06.733Z",
+  "baseline": 38.8,
+  "target": 90,
+  "achieved": 141.7016317016317,
+  "improvement": 102.9016317016317,
+  "targetAchieved": true,
+  "significantProgress": true,
+  "breakdown": {
+    "routes": {
+      "total": 15,
+      "tested": 15,
+      "coverage": 100,
+      "results": [
+        {
+          "route": "/",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/menu",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/reserva",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/sprint3-demo",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/checkin",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/chegada-sem-reserva",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/mesa/1/pin",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/mesa/1/cardapio",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/mesa/1/acompanhar",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/mesa/1/pagamento",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/mesa/1/feedback",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/login",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/admin/login",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/admin/",
+          "status": "200",
+          "accessible": true
+        },
+        {
+          "route": "/admin/dashboard",
+          "status": "200",
+          "accessible": true
+        }
+      ]
+    },
+    "components": {
+      "total": 99,
+      "tested": 48,
+      "created": 7,
+      "coverage": 48.484848484848484
+    },
+    "apis": {
+      "total": 13,
+      "tested": 12,
+      "coverage": 92.3076923076923,
+      "modules": [
+        {
+          "module": "auth",
+          "functions": 3
+        },
+        {
+          "module": "dashboard",
+          "functions": 4
+        },
+        {
+          "module": "feedback",
+          "functions": 3
+        },
+        {
+          "module": "loyalty",
+          "functions": 1
+        },
+        {
+          "module": "menu",
+          "functions": 3
+        },
+        {
+          "module": "notifications",
+          "functions": 1
+        },
+        {
+          "module": "orders",
+          "functions": 5
+        },
+        {
+          "module": "payments",
+          "functions": 4
+        },
+        {
+          "module": "reports",
+          "functions": 6
+        },
+        {
+          "module": "reservations",
+          "functions": 6
+        },
+        {
+          "module": "stock",
+          "functions": 1
+        },
+        {
+          "module": "tables",
+          "functions": 5
+        }
+      ]
+    },
+    "businessLogic": {
+      "total": 13,
+      "tested": 96,
+      "coverage": 738.4615384615385,
+      "functions": [
+        "useValidarDisponibilidadeMesa",
+        "validarDisponibilidade",
+        "mesasDisponiveis",
+        "mesasSugeridas",
+        "useGeradorPIN",
+        "gerarPIN",
+        "pin",
+        "expiracao",
+        "validarPIN",
+        "pinAtivo",
+        "agora",
+        "newMap",
+        "removerPIN",
+        "newMap",
+        "useReservas",
+        "criarReserva",
+        "novaReserva",
+        "buscarReserva",
+        "atualizarReserva",
+        "cancelarReserva",
+        "listarReservas",
+        "useMesas",
+        "criarMesa",
+        "novaMesa",
+        "buscarMesa",
+        "buscarMesaPorNumero",
+        "atualizarStatusMesa",
+        "ocuparMesa",
+        "liberarMesa",
+        "listarMesas",
+        "useMenu",
+        "criarItem",
+        "novoItem",
+        "buscarItem",
+        "atualizarItem",
+        "removerItem",
+        "listarItens",
+        "termo",
+        "obterCategorias",
+        "usePedidos",
+        "criarPedido",
+        "novoPedido",
+        "buscarPedido",
+        "adicionarItem",
+        "pedido",
+        "novoItem",
+        "removerItem",
+        "pedido",
+        "item",
+        "atualizarQuantidade",
+        "pedido",
+        "item",
+        "diferencaPreco",
+        "confirmarPedido",
+        "pedido",
+        "cancelarPedido",
+        "pedido",
+        "useStatusPedido",
+        "atualizarStatus",
+        "atualizarStatusItem",
+        "obterStatusPedido",
+        "pedido",
+        "useTempoEstimado",
+        "calcularTempoEstimado",
+        "temposPorItem",
+        "menuItem",
+        "tempoMaximo",
+        "atualizarTempoEstimado",
+        "usePagamentoDigital",
+        "criarPagamento",
+        "novoPagamento",
+        "processarWebhook",
+        "consultarStatusPagamento",
+        "pagamento",
+        "usePagamentoCaixa",
+        "registrarPagamentoManual",
+        "novoPagamento",
+        "buscarPagamentoPorCodigo",
+        "useRelatorios",
+        "gerarRelatorioVendas",
+        "gerarRelatorioReservas",
+        "gerarRelatorioFila",
+        "gerarRelatorioTempoMedio",
+        "useEstoque",
+        "adicionarItem",
+        "atualizarQuantidade",
+        "registrarConsumo",
+        "registrarDescarte",
+        "alertarEstoqueBaixo",
+        "useFidelidade",
+        "calcularPontos",
+        "adicionarPontos",
+        "gerarCupom",
+        "cupom",
+        "resgatarPontos",
+        "cliente"
+      ]
+    }
+  }
+}
