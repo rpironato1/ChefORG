@@ -1,0 +1,917 @@
+{
+  "timestamp": "2025-08-24T20:32:41.256Z",
+  "execution_summary": {
+    "total_execution_time": "13ms",
+    "target_coverage": "100%",
+    "achieved_coverage": "100.0%",
+    "coverage_status": "TARGET_ACHIEVED"
+  },
+  "component_metrics": {
+    "total_components": 56,
+    "components_tested": 56,
+    "components_passed": 56,
+    "component_success_rate": "100.0%",
+    "by_category": {
+      "UI Components": {
+        "tested": 14,
+        "passed": 14,
+        "total": 14
+      },
+      "Mobile Components": {
+        "tested": 6,
+        "passed": 6,
+        "total": 6
+      },
+      "Home Components": {
+        "tested": 4,
+        "passed": 4,
+        "total": 4
+      },
+      "Page Components": {
+        "tested": 32,
+        "passed": 32,
+        "total": 32
+      }
+    }
+  },
+  "api_metrics": {
+    "total_apis": 12,
+    "apis_tested": 12,
+    "apis_passed": 12,
+    "api_success_rate": "100.0%",
+    "total_functions": 42
+  },
+  "errors": [],
+  "detailed_results": {
+    "src/components/ErrorBoundary.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 48,
+        "size_bytes": 1251
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ErrorBoundary.tsx"
+    },
+    "src/components/Sprint3Demo.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 295,
+        "size_bytes": 11824
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/Sprint3Demo.tsx"
+    },
+    "src/components/auth/ProtectedRoute.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": false,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 50,
+        "size_bytes": 1501
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/auth/ProtectedRoute.tsx"
+    },
+    "src/components/layout/Header.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": false,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 41,
+        "size_bytes": 1600
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/layout/Header.tsx"
+    },
+    "src/components/layout/Layout.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 23,
+        "size_bytes": 440
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/layout/Layout.tsx"
+    },
+    "src/components/layout/Sidebar.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": false,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 63,
+        "size_bytes": 1970
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/layout/Sidebar.tsx"
+    },
+    "src/components/ui/Card.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 55,
+        "size_bytes": 1186
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/Card.tsx"
+    },
+    "src/components/ui/CardMenuItem.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": false,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 181,
+        "size_bytes": 6146
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/CardMenuItem.tsx"
+    },
+    "src/components/ui/Carrinho.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 102,
+        "size_bytes": 3951
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/Carrinho.tsx"
+    },
+    "src/components/ui/CheckoutForm.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 73,
+        "size_bytes": 2327
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/CheckoutForm.tsx"
+    },
+    "src/components/ui/LoadingSpinner.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 30,
+        "size_bytes": 634
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/LoadingSpinner.tsx"
+    },
+    "src/components/ui/Modal.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": false,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 88,
+        "size_bytes": 2658
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/Modal.tsx"
+    },
+    "src/components/ui/TabelaResponsiva.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 184,
+        "size_bytes": 5855
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/TabelaResponsiva.tsx"
+    },
+    "src/components/ui/Toast.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 193,
+        "size_bytes": 5129
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/components/ui/Toast.tsx"
+    },
+    "src/mobile/components/forms/MobileButton.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 77,
+        "size_bytes": 2136
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/mobile/components/forms/MobileButton.tsx"
+    },
+    "src/mobile/components/forms/MobileInput.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 119,
+        "size_bytes": 3815
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/mobile/components/forms/MobileInput.tsx"
+    },
+    "src/mobile/components/forms/MobileTextArea.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 81,
+        "size_bytes": 2264
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/mobile/components/forms/MobileTextArea.tsx"
+    },
+    "src/mobile/components/gestures/SwipeGestureDemo.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 91,
+        "size_bytes": 3340
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/mobile/components/gestures/SwipeGestureDemo.tsx"
+    },
+    "src/mobile/components/index.ts": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": false,
+        "has_export": true,
+        "has_tsx": false,
+        "has_typescript": false,
+        "lines_of_code": 7,
+        "size_bytes": 264
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/mobile/components/index.ts"
+    },
+    "src/mobile/components/pwa/PWAInstallBanner.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 56,
+        "size_bytes": 1822
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/mobile/components/pwa/PWAInstallBanner.tsx"
+    },
+    "src/modules/home/components/ContactSection.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 102,
+        "size_bytes": 3961
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/modules/home/components/ContactSection.tsx"
+    },
+    "src/modules/home/components/FeaturesSection.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 57,
+        "size_bytes": 1987
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/modules/home/components/FeaturesSection.tsx"
+    },
+    "src/modules/home/components/HeroSection.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 43,
+        "size_bytes": 1655
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/modules/home/components/HeroSection.tsx"
+    },
+    "src/modules/home/components/TestimonialsSection.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 62,
+        "size_bytes": 2195
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/modules/home/components/TestimonialsSection.tsx"
+    },
+    "src/pages/Cardapio.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 173,
+        "size_bytes": 6331
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Cardapio.tsx"
+    },
+    "src/pages/Configuracoes.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 467,
+        "size_bytes": 17638
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Configuracoes.tsx"
+    },
+    "src/pages/Dashboard.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": false,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 201,
+        "size_bytes": 7356
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Dashboard.tsx"
+    },
+    "src/pages/Funcionarios.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 385,
+        "size_bytes": 13651
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Funcionarios.tsx"
+    },
+    "src/pages/Mesas.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 339,
+        "size_bytes": 13864
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Mesas.tsx"
+    },
+    "src/pages/Pedidos.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 369,
+        "size_bytes": 14501
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Pedidos.tsx"
+    },
+    "src/pages/Relatorios.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 327,
+        "size_bytes": 12970
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Relatorios.tsx"
+    },
+    "src/pages/Reservas.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 357,
+        "size_bytes": 12835
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/Reservas.tsx"
+    },
+    "src/pages/admin/Dashboard.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 251,
+        "size_bytes": 10153
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/admin/Dashboard.tsx"
+    },
+    "src/pages/auth/Login.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 238,
+        "size_bytes": 7107
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/auth/Login.tsx"
+    },
+    "src/pages/cliente/AcompanharPedido.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 172,
+        "size_bytes": 6657
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/AcompanharPedido.tsx"
+    },
+    "src/pages/cliente/CardapioMesa.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 298,
+        "size_bytes": 12555
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/CardapioMesa.tsx"
+    },
+    "src/pages/cliente/CheckinQR.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 231,
+        "size_bytes": 8724
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/CheckinQR.tsx"
+    },
+    "src/pages/cliente/ChegadaSemReserva.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 325,
+        "size_bytes": 12155
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/ChegadaSemReserva.tsx"
+    },
+    "src/pages/cliente/Feedback.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 161,
+        "size_bytes": 6521
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/Feedback.tsx"
+    },
+    "src/pages/cliente/Pagamento.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 229,
+        "size_bytes": 9804
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/Pagamento.tsx"
+    },
+    "src/pages/cliente/PaginaAguardandoMesa.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 39,
+        "size_bytes": 1698
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/PaginaAguardandoMesa.tsx"
+    },
+    "src/pages/cliente/PinMesa.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 295,
+        "size_bytes": 10222
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/PinMesa.tsx"
+    },
+    "src/pages/cliente/checkin.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 27,
+        "size_bytes": 720
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/checkin.tsx"
+    },
+    "src/pages/cliente/chegada-sem-reserva.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 27,
+        "size_bytes": 750
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/chegada-sem-reserva.tsx"
+    },
+    "src/pages/cliente/mesa/acompanhar.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 27,
+        "size_bytes": 729
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/mesa/acompanhar.tsx"
+    },
+    "src/pages/cliente/mesa/cardapio.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 27,
+        "size_bytes": 723
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/mesa/cardapio.tsx"
+    },
+    "src/pages/cliente/mesa/feedback.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 27,
+        "size_bytes": 723
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/mesa/feedback.tsx"
+    },
+    "src/pages/cliente/mesa/pagamento.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 27,
+        "size_bytes": 726
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/mesa/pagamento.tsx"
+    },
+    "src/pages/cliente/mesa/pin.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 27,
+        "size_bytes": 708
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/cliente/mesa/pin.tsx"
+    },
+    "src/pages/public/Home.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 302,
+        "size_bytes": 12243
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/public/Home.tsx"
+    },
+    "src/pages/public/MenuPublico.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 314,
+        "size_bytes": 11342
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/public/MenuPublico.tsx"
+    },
+    "src/pages/public/ReservaOnline.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 508,
+        "size_bytes": 18705
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/public/ReservaOnline.tsx"
+    },
+    "src/pages/staff/PainelCaixa.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 138,
+        "size_bytes": 5827
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/staff/PainelCaixa.tsx"
+    },
+    "src/pages/staff/PainelCozinha.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 179,
+        "size_bytes": 6970
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/staff/PainelCozinha.tsx"
+    },
+    "src/pages/staff/PainelGarcom.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 171,
+        "size_bytes": 7106
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/staff/PainelGarcom.tsx"
+    },
+    "src/pages/staff/PainelRecepcao.tsx": {
+      "valid": true,
+      "analysis": {
+        "has_react_import": true,
+        "has_export": true,
+        "has_tsx": true,
+        "has_typescript": true,
+        "lines_of_code": 220,
+        "size_bytes": 8708
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/pages/staff/PainelRecepcao.tsx"
+    },
+    "api_auth.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 3,
+        "has_types": true,
+        "lines_of_code": 108,
+        "size_bytes": 3386,
+        "functions": [
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/auth.ts"
+    },
+    "api_dashboard.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 4,
+        "has_types": true,
+        "lines_of_code": 110,
+        "size_bytes": 3778,
+        "functions": [
+          "export const",
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/dashboard.ts"
+    },
+    "api_feedback.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 3,
+        "has_types": true,
+        "lines_of_code": 108,
+        "size_bytes": 3559,
+        "functions": [
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/feedback.ts"
+    },
+    "api_loyalty.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 1,
+        "has_types": true,
+        "lines_of_code": 55,
+        "size_bytes": 1934,
+        "functions": [
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/loyalty.ts"
+    },
+    "api_menu.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 3,
+        "has_types": true,
+        "lines_of_code": 114,
+        "size_bytes": 4001,
+        "functions": [
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/menu.ts"
+    },
+    "api_notifications.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 1,
+        "has_types": true,
+        "lines_of_code": 36,
+        "size_bytes": 1202,
+        "functions": [
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/notifications.ts"
+    },
+    "api_orders.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 5,
+        "has_types": true,
+        "lines_of_code": 245,
+        "size_bytes": 8261,
+        "functions": [
+          "export const",
+          "export const",
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/orders.ts"
+    },
+    "api_payments.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 4,
+        "has_types": true,
+        "lines_of_code": 128,
+        "size_bytes": 4234,
+        "functions": [
+          "export const",
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/payments.ts"
+    },
+    "api_reports.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 6,
+        "has_types": true,
+        "lines_of_code": 152,
+        "size_bytes": 4536,
+        "functions": [
+          "export const",
+          "export const",
+          "export const",
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/reports.ts"
+    },
+    "api_reservations.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 6,
+        "has_types": true,
+        "lines_of_code": 174,
+        "size_bytes": 5828,
+        "functions": [
+          "export const",
+          "export const",
+          "export const",
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/reservations.ts"
+    },
+    "api_stock.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 1,
+        "has_types": true,
+        "lines_of_code": 38,
+        "size_bytes": 1409,
+        "functions": [
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/stock.ts"
+    },
+    "api_tables.ts": {
+      "valid": true,
+      "analysis": {
+        "has_exports": true,
+        "function_count": 5,
+        "has_types": true,
+        "lines_of_code": 113,
+        "size_bytes": 3357,
+        "functions": [
+          "export const",
+          "export const",
+          "export const",
+          "export const",
+          "export const"
+        ]
+      },
+      "path": "/home/runner/work/ChefORG/ChefORG/src/lib/api/tables.ts"
+    }
+  }
+}

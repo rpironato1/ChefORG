@@ -22,6 +22,8 @@
     "test:mcp:wcag": "./scripts/run-mcp-tests.sh wcag",
     "test:mcp:performance": "./scripts/run-mcp-tests.sh performance",
     "test:mcp:forms": "./scripts/run-mcp-tests.sh forms",
+    "test:mcp:56-components": "./scripts/run-100-percent-coverage.sh",
+    "test:component-analysis": "node scripts/analyze-all-components.cjs",
     "test:playwright": "npx playwright test tests/mcp-playwright/MCPPlaywrightOrchestrator.ts",
     "install:all": "npm install && npm install -w web && npm install -w mobile"
   },
