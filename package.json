@@ -17,9 +17,17 @@
     "build:mobile": "npm run build -w mobile",
     "lint": "npm run lint -w web && npm run lint -w mobile",
     "test": "npm run test -w web",
+    "test:mcp": "./scripts/run-mcp-tests.sh",
+    "test:mcp:complete": "./scripts/run-mcp-tests.sh complete",
+    "test:mcp:wcag": "./scripts/run-mcp-tests.sh wcag",
+    "test:mcp:performance": "./scripts/run-mcp-tests.sh performance",
+    "test:mcp:forms": "./scripts/run-mcp-tests.sh forms",
+    "test:playwright": "npx playwright test tests/mcp-playwright/MCPPlaywrightOrchestrator.ts",
     "install:all": "npm install && npm install -w web && npm install -w mobile"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "playwright": "^1.55.0",
     "typescript": "^5.2.2"
   }
 }
