@@ -1,0 +1,94 @@
+{
+  "routes": {
+    "total": 16,
+    "tested": 10,
+    "missing": [
+      "/mesa/:numeroMesa/pagamento",
+      "/mesa/:numeroMesa/feedback",
+      "/login",
+      "/admin/login",
+      "/admin/login",
+      "/admin/*"
+    ]
+  },
+  "files": {
+    "total": 99,
+    "tested": 15,
+    "categories": {
+      "pages": 25,
+      "components": 22,
+      "hooks": 16,
+      "contexts": 1,
+      "api": 13,
+      "types": 1,
+      "mobile": 16,
+      "modules": 24
+    }
+  },
+  "functions": {
+    "total": 0,
+    "tested": 0,
+    "byModule": {
+      "businessLogic": 13
+    }
+  },
+  "apis": {
+    "total": 13,
+    "tested": 5,
+    "modules": [
+      {
+        "name": "auth",
+        "functions": 3
+      },
+      {
+        "name": "dashboard",
+        "functions": 4
+      },
+      {
+        "name": "feedback",
+        "functions": 3
+      },
+      {
+        "name": "index",
+        "functions": 2
+      },
+      {
+        "name": "loyalty",
+        "functions": 1
+      },
+      {
+        "name": "menu",
+        "functions": 3
+      },
+      {
+        "name": "notifications",
+        "functions": 1
+      },
+      {
+        "name": "orders",
+        "functions": 5
+      },
+      {
+        "name": "payments",
+        "functions": 4
+      },
+      {
+        "name": "reports",
+        "functions": 6
+      },
+      {
+        "name": "reservations",
+        "functions": 6
+      },
+      {
+        "name": "stock",
+        "functions": 1
+      },
+      {
+        "name": "tables",
+        "functions": 5
+      }
+    ],
+    "totalFunctions": 44
+  }
+}
