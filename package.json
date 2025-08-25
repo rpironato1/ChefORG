@@ -26,6 +26,9 @@
     "test:mcp:56-components": "./scripts/run-100-percent-coverage.sh",
     "test:component-analysis": "node scripts/analyze-all-components.cjs",
     "test:playwright": "npx playwright test tests/mcp-playwright/MCPPlaywrightOrchestrator.ts",
+    "test:lighthouse": "./scripts/lighthouse-comprehensive-test.sh",
+    "test:lighthouse:detailed": "./scripts/lighthouse-detailed-analysis.sh",
+    "test:lighthouse:extract": "./scripts/extract-lighthouse-issues.sh",
     "install:all": "npm install && npm install -w web && npm install -w mobile",
     "validate:dependencies": "./validate-dependencies.sh",
     "validate:ports": "./validate-dependencies.sh --resolve-ports",
@@ -33,7 +36,14 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
+    "lighthouse": "^12.8.1",
     "playwright": "^1.55.0",
-    "typescript": "^5.2.2"
+    "playwright-lighthouse": "^4.0.0",
+    "rollup-plugin-visualizer": "^6.0.3",
+    "typescript": "^5.2.2",
+    "vite-plugin-compression2": "^2.2.0"
+  },
+  "dependencies": {
+    "react-error-boundary": "^6.0.0"
   }
 }

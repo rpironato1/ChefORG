@@ -194,7 +194,7 @@ function PinMesa() {
                     className={`w-12 h-12 border-2 rounded-lg flex items-center justify-center text-xl font-bold ${
                       pin.length > index
                         ? 'border-primary-600 bg-primary-50 text-primary-600'
-                        : 'border-gray-300 bg-gray-50'
+                        : 'border-gray-500 bg-gray-50'
                     }`}
                   >
                     {pin.length > index ? '●' : ''}
@@ -249,7 +249,7 @@ function PinMesa() {
                 className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
                   pin.length === 4 && !isValidating
                     ? 'bg-primary-600 text-white hover:bg-primary-700'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-gray-400 text-gray-500 cursor-not-allowed'
                 }`}
               >
                 {isValidating ? 'Validando...' : 'Confirmar PIN'}

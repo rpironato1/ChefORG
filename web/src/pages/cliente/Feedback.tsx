@@ -88,10 +88,24 @@ function Feedback() {
   };
 
   const renderEstrelas = (categoria: keyof Omit<AvaliacaoFeedback, 'comentario'>, valor: number) => {
+    const categoryLabels = {
+      estrelas_servico: 'Atendimento e Serviço',
+      estrelas_comida: 'Qualidade da Comida',
+      estrelas_estabelecimento: 'Ambiente do Restaurante',
+      estrelas_experiencia: 'Experiência Geral'
+    };
+
     return (
-      <div className="flex gap-1 justify-center">
+      <div className="flex gap-1 justify-center" role="group" aria-label={`Avaliação de ${categoryLabels[categoria]}`}>
         {[1, 2, 3, 4, 5].map((estrela) => (
-          <button key={estrela} onClick={() => avaliarEstrelas(categoria, estrela)} className={`p-1 transition-colors ${estrela <= valor ? 'text-yellow-400' : 'text-gray-300 hover:text-yellow-300'}`}>
+          <button 
+            key={estrela} 
+            onClick={() => avaliarEstrelas(categoria, estrela)} 
+            className={`p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded ${estrela <= valor ? 'text-yellow-400' : 'text-gray-600 hover:text-yellow-300'}`}
+            aria-label={`Dar ${estrela} estrela${estrela > 1 ? 's' : ''} para ${categoryLabels[categoria]}`}
+            aria-pressed={estrela <= valor}
+            type="button"
+          >
             <Star className="h-8 w-8" fill={estrela <= valor ? 'currentColor' : 'none'} />
           </button>
         ))}
@@ -128,25 +142,39 @@ function Feedback() {
 
         <div className="space-y-4">
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Atendimento e Serviço</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Atendimento e Serviço</h2>
             {renderEstrelas('estrelas_servico', avaliacao.estrelas_servico)}
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Qualidade da Comida</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Qualidade da Comida</h2>
             {renderEstrelas('estrelas_comida', avaliacao.estrelas_comida)}
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Ambiente do Restaurante</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Ambiente do Restaurante</h2>
             {renderEstrelas('estrelas_estabelecimento', avaliacao.estrelas_estabelecimento)}
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Experiência Geral</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Experiência Geral</h2>
             {renderEstrelas('estrelas_experiencia', avaliacao.estrelas_experiencia)}
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4">Comentário (opcional)</h3>
-            <textarea value={avaliacao.comentario} onChange={(e) => setAvaliacao(prev => ({ ...prev, comentario: e.target.value }))} placeholder="Conte-nos mais..." className="w-full p-3 border rounded-lg" rows={4} />
+            <h2 className="text-lg font-semibold mb-4">Comentário (opcional)</h2>
+            <label htmlFor="feedback-comment" className="sr-only">
+              Comentário opcional sobre sua experiência no restaurante
+            </label>
+            <textarea 
+              id="feedback-comment"
+              value={avaliacao.comentario} 
+              onChange={(e) => setAvaliacao(prev => ({ ...prev, comentario: e.target.value }))} 
+              placeholder="Conte-nos mais sobre sua experiência..." 
+              className="w-full p-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" 
+              rows={4}
+              aria-describedby="feedback-comment-description"
+            />
+            <p id="feedback-comment-description" className="sr-only">
+              Campo opcional para comentários adicionais sobre sua experiência no restaurante
+            </p>
           </div>
 
           <button onClick={enviarAvaliacao} disabled={isSubmitting} className="w-full py-3 btn-primary">

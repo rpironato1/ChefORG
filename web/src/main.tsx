@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 import { initializeTestData } from './lib/testData'
+import './utils/performance'
 
 // Initialize test data if not already present
 if (!localStorage.getItem('cheforg_users')) {

@@ -196,7 +196,7 @@ function CardapioMesa() {
         <div className="mb-6">
           <div className="relative max-w-md mb-4">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <input type="text" placeholder="Buscar pratos..." value={busca} onChange={(e) => setBusca(e.target.value)} className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+            <input type="text" placeholder="Buscar pratos..." value={busca} onChange={(e) => setBusca(e.target.value)} className="w-full pl-10 pr-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
           </div>
           <div className="flex flex-wrap gap-2">
             {allCategories.map(categoria => (
@@ -209,7 +209,7 @@ function CardapioMesa() {
 
         {itemsFiltrados.map(category => (
           <div key={category.id}>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">{category.nome}</h2>
+            <h1 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">{category.nome}</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {category.menu_items.map(item => {
                 // Mapear item do banco para tipo MenuItem
@@ -234,7 +234,7 @@ function CardapioMesa() {
         {itemsFiltrados.length === 0 && !isLoading && (
           <div className="text-center py-16">
             <Utensils className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-gray-900 mb-2">Nenhum prato encontrado</h3>
+            <h2 className="text-xl font-medium text-gray-900 mb-2">Nenhum prato encontrado</h2>
             <p className="text-gray-600">Tente ajustar sua busca ou selecionar uma categoria diferente.</p>
           </div>
         )}
@@ -258,7 +258,7 @@ function CardapioMesa() {
                   {carrinho.map((carrinhoItem) => (
                     <div key={carrinhoItem.item.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{carrinhoItem.item.nome}</h4>
+                        <h3 className="font-medium text-gray-900">{carrinhoItem.item.nome}</h3>
                         <p className="text-sm text-gray-600">R$ {Number(carrinhoItem.item.preco).toFixed(2)}</p>
                       </div>
                       <div className="flex items-center gap-3">

@@ -106,7 +106,7 @@ function CheckinQR() {
                 disabled={isScanning}
                 className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
                   isScanning 
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
                     : 'bg-primary-600 text-white hover:bg-primary-700'
                 }`}
               >

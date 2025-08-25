@@ -179,7 +179,7 @@ function MenuPublico() {
                 placeholder="Buscar pratos..."
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-lg"
+                className="w-full pl-10 pr-4 py-3 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-lg"
               />
             </div>
           </div>

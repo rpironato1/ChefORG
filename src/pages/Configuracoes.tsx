@@ -44,8 +44,8 @@ function Configuracoes() {
   ];
 
   const handleSave = () => {
-    console.log('Configurações salvas:', settings);
-    // Aqui implementaríamos a lógica de salvamento
+    // TODO: Implement settings save logic
+    // console.log('Configurações salvas:', settings);
   };
 
   const renderGeralTab = () => (

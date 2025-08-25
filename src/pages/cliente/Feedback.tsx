@@ -91,7 +91,12 @@ function Feedback() {
     return (
       <div className="flex gap-1 justify-center">
         {[1, 2, 3, 4, 5].map((estrela) => (
-          <button key={estrela} onClick={() => avaliarEstrelas(categoria, estrela)} className={`p-1 transition-colors ${estrela <= valor ? 'text-yellow-400' : 'text-gray-300 hover:text-yellow-300'}`}>
+          <button 
+            key={estrela} 
+            onClick={() => avaliarEstrelas(categoria, estrela)} 
+            className={`p-1 transition-colors ${estrela <= valor ? 'text-yellow-400' : 'text-gray-600 hover:text-yellow-400'}`}
+            aria-label={`Avaliar ${categoria} com ${estrela} estrela${estrela > 1 ? 's' : ''}`}
+          >
             <Star className="h-8 w-8" fill={estrela <= valor ? 'currentColor' : 'none'} />
           </button>
         ))}
