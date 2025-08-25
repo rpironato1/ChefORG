@@ -21,8 +21,8 @@ Run these commands in sequence to set up the development environment:
    ```bash
    npm run dev
    ```
-   - **NEVER CANCEL** - Server starts in ~235ms and runs on port 3000
-   - Access at `http://localhost:3000`
+   - **NEVER CANCEL** - Server starts in ~235ms and runs on port 8110
+   - Access at `http://localhost:8110`
    - Hot reload enabled for all React/TypeScript changes
    - Console will show test data initialization messages - this is normal
 
@@ -62,19 +62,19 @@ Run these commands in sequence to set up the development environment:
 Always test these complete user flows after making changes:
 
 1. **Public Website Flow:**
-   - Visit `http://localhost:3000`
+   - Visit `http://localhost:8110`
    - Click "Reservar Mesa" button
    - Fill reservation form with valid data
    - Navigate through the 3-step reservation process
    - Check that form validation works properly
 
 2. **Admin System Access:**
-   - Try accessing `http://localhost:3000/admin`
+   - Try accessing `http://localhost:8110/admin`
    - Should redirect to login page (authentication working)
    - Verify protected routes are properly secured
 
 3. **Menu and Customer Interface:**
-   - Navigate to `http://localhost:3000/menu`
+   - Navigate to `http://localhost:8110/menu`
    - Check menu categories and item displays
    - Verify responsive design on different screen sizes
 
@@ -126,7 +126,7 @@ src/
 
 ### Important Configuration Files
 - `package.json` - Dependencies and scripts
-- `vite.config.ts` - Build configuration (port 3000)
+- `vite.config.ts` - Build configuration (port 8110)
 - `tsconfig.json` - TypeScript configuration
 - `tailwind.config.js` - CSS framework configuration
 - `.github/workflows/keepalive.yml` - Supabase keep-alive automation

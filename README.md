@@ -89,7 +89,7 @@ npm install
 npm run dev
 ```
 
-4. Acesse a aplicação em `http://localhost:3000`
+4. Acesse a aplicação em `http://localhost:8110`
 
 ## 📁 Estrutura do Projeto
 

@@ -12,6 +12,7 @@
     "dev": "npm run dev -w web",
     "dev:web": "npm run dev -w web",
     "dev:mobile": "npm run start -w mobile",
+    "dev:setup": "./dev-setup.sh",
     "build": "npm run build -w web",
     "build:web": "npm run build -w web",
     "build:mobile": "npm run build -w mobile",
