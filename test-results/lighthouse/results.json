@@ -1,0 +1,147 @@
+{
+  "timestamp": "2025-08-25T17:02:19Z",
+  "results": [
+    {
+      "route": "/",
+      "name": "Home Page",
+      "desktop": {
+        "performance": 74,
+        "accessibility": 91,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/menu",
+      "name": "Public Menu",
+      "desktop": {
+        "performance": 75,
+        "accessibility": 95,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/reserva",
+      "name": "Online Reservation",
+      "desktop": {
+        "performance": 74,
+        "accessibility": 94,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/login",
+      "name": "Login",
+      "desktop": {
+        "performance": 76,
+        "accessibility": 94,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/checkin",
+      "name": "Client Check-in",
+      "desktop": {
+        "performance": 76,
+        "accessibility": 91,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/chegada-sem-reserva",
+      "name": "Walk-in Arrival",
+      "desktop": {
+        "performance": 75,
+        "accessibility": 87,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/mesa/1/pin",
+      "name": "Table PIN",
+      "desktop": {
+        "performance": 76,
+        "accessibility": 92,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/mesa/1/cardapio",
+      "name": "Table Menu",
+      "desktop": {
+        "performance": 75,
+        "accessibility": 85,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/mesa/1/acompanhar",
+      "name": "Order Tracking",
+      "desktop": {
+        "performance": 76,
+        "accessibility": 89,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/mesa/1/pagamento",
+      "name": "Payment",
+      "desktop": {
+        "performance": 73,
+        "accessibility": 100,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/mesa/1/feedback",
+      "name": "Feedback",
+      "desktop": {
+        "performance": 75,
+        "accessibility": 83,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+    ,
+    {
+      "route": "/sprint3-demo",
+      "name": "Sprint 3 Demo",
+      "desktop": {
+        "performance": 71,
+        "accessibility": 94,
+        "bestPractices": 96,
+        "seo": 90
+      }
+    }
+  ],
+  "summary": {
+    "totalRoutes": 12,
+    "passedRoutes": 12,
+    "failedRoutes": 0,
+    "overallScores": {
+      "performance": 74,
+      "accessibility": 91,
+      "bestPractices": 96,
+      "seo": 90
+    }
+  }
+}
