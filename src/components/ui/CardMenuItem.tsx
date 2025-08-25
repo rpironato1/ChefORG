@@ -1,5 +1,6 @@
 import { Clock, Plus, Minus } from 'lucide-react';
 import { MenuItem } from '../../types';
+import LazyImage from './LazyImage';
 
 interface CardMenuItemProps {
   item: MenuItem;
@@ -40,10 +41,10 @@ function CardMenuItem({
       {/* Imagem do item (se disponível) */}
       {item.imagem && (
         <div className="relative">
-          <img 
+          <LazyImage 
             src={item.imagem} 
-            alt={item.nome}
-            className="w-full h-48 object-cover rounded-t-lg"
+            alt={`Imagem do prato ${item.nome}`}
+            className="w-full h-48 rounded-t-lg"
           />
           {!item.disponivel && (
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-t-lg">

@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-08-25T17:02:19Z",
+  "timestamp": "2025-08-25T17:18:35Z",
   "results": [
     {
       "route": "/",
       "name": "Home Page",
       "desktop": {
-        "performance": 74,
+        "performance": 75,
         "accessibility": 91,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -19,7 +19,7 @@
         "performance": 75,
         "accessibility": 95,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -27,10 +27,10 @@
       "route": "/reserva",
       "name": "Online Reservation",
       "desktop": {
-        "performance": 74,
+        "performance": 73,
         "accessibility": 94,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -38,10 +38,10 @@
       "route": "/login",
       "name": "Login",
       "desktop": {
-        "performance": 76,
+        "performance": 77,
         "accessibility": 94,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -49,10 +49,10 @@
       "route": "/checkin",
       "name": "Client Check-in",
       "desktop": {
-        "performance": 76,
+        "performance": 77,
         "accessibility": 91,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -60,10 +60,10 @@
       "route": "/chegada-sem-reserva",
       "name": "Walk-in Arrival",
       "desktop": {
-        "performance": 75,
+        "performance": 74,
         "accessibility": 87,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -74,7 +74,7 @@
         "performance": 76,
         "accessibility": 92,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -82,10 +82,10 @@
       "route": "/mesa/1/cardapio",
       "name": "Table Menu",
       "desktop": {
-        "performance": 75,
+        "performance": 76,
         "accessibility": 85,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -96,7 +96,7 @@
         "performance": 76,
         "accessibility": 89,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -107,7 +107,7 @@
         "performance": 73,
         "accessibility": 100,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -118,7 +118,7 @@
         "performance": 75,
         "accessibility": 83,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
     ,
@@ -126,10 +126,10 @@
       "route": "/sprint3-demo",
       "name": "Sprint 3 Demo",
       "desktop": {
-        "performance": 71,
+        "performance": 72,
         "accessibility": 94,
         "bestPractices": 96,
-        "seo": 90
+        "seo": 100
       }
     }
   ],
@@ -141,7 +141,7 @@
       "performance": 74,
       "accessibility": 91,
       "bestPractices": 96,
-      "seo": 90
+      "seo": 100
     }
   }
 }
