@@ -344,8 +344,8 @@ export class LocalStorageClient {
 
   // Auth methods
   auth = {
-    signInWithPassword: async ({ email, password: _password }: { email: string; password: string }) => {
-      // Simple mock authentication
+    signInWithPassword: async ({ email, password }: { email: string; password: string }) => {
+      // Simple mock authentication with test data integration
       const users = getFromStorage<any>(STORAGE_KEYS.users);
       const user = users.find((u: any) => u.email === email);
       
@@ -353,9 +353,14 @@ export class LocalStorageClient {
         return { data: null, error: { message: 'Usuário não encontrado' } };
       }
 
-      // For testing, accept any password for demo purposes
+      // Check password - for development, accept '123456' for all users
+      if (password !== '123456') {
+        return { data: null, error: { message: 'Senha incorreta' } };
+      }
+
+      // Create auth user object
       const authUser = {
-        id: user.id,
+        id: user.id.toString(),
         email: user.email,
         created_at: new Date().toISOString()
       };

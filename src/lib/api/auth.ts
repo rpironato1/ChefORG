@@ -18,39 +18,43 @@ export interface AuthUser {
  */
 export const login = async (email: string, password: string): Promise<ApiResponse<AuthUser>> => {
   try {
+    console.log('Auth login attempt:', { email });
+    
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
+    console.log('Auth response:', { authData, authError });
+
     if (authError) throw authError;
     if (!authData.user) throw new Error("Usuário não encontrado após o login.");
 
-    // Após o login, busca o perfil do usuário na tabela 'users'
-    // Temporariamente comentado devido a problemas de compatibilidade localStorage
-    const profile = null; // TODO: implementar busca de perfil
-    const profileError = null;
+    // Busca o perfil do usuário na tabela 'users' usando localStorage
+    const { data: profile, error: profileError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
     
-    // const { data: profile, error: profileError } = await supabase
-    //   .from('users')
-    //   .select('*')
-    //   .eq('id', authData.user.id)
-    //   .single() as any;
+    console.log('Profile lookup:', { profile, profileError });
     
-    if (profileError) {
-        // Se o perfil não for encontrado, ainda consideramos o login um sucesso,
-        // mas o perfil será nulo. A aplicação pode decidir o que fazer.
+    if (profileError || !profile) {
         console.warn("Usuário autenticado mas perfil não encontrado na tabela 'users'.");
+        // Retorna erro se não encontrar o perfil
+        throw new Error("Perfil do usuário não encontrado.");
     }
 
     const response: AuthUser = {
-      id: authData.user.id,
-      email: authData.user.email,
+      id: profile.id.toString(),
+      email: profile.email,
       profile: profile,
     };
 
+    console.log('Successful login response:', response);
     return createSuccessResponse(response, 'Login realizado com sucesso!');
   } catch (error) {
+    console.error('Login error:', error);
     return handleApiError(error, 'Email ou senha inválidos.');
   }
 };
@@ -80,23 +84,23 @@ export const getCurrentUser = async (): Promise<ApiResponse<AuthUser | null>> =>
 
         const { user } = sessionData.session;
 
-        // Temporariamente comentado devido a problemas de compatibilidade localStorage
-        const profile = null; // TODO: implementar busca de perfil
-        const profileError = null;
-        
-        // const { data: profile, error: profileError } = await supabase
-        //     .from('users')
-        //     .select('*')
-        //     .eq('id', user.id)
-        //     .single() as any;
+        // Busca o perfil do usuário na tabela 'users' usando o email da sessão
+        const { data: profile, error: profileError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', user.email)
+            .single();
 
-        if (profileError) {
+        if (profileError || !profile) {
             console.warn("Sessão encontrada mas perfil não encontrado na tabela 'users'.");
+            // Força logout se não encontrar o perfil
+            await supabase.auth.signOut();
+            return createSuccessResponse(null);
         }
 
         const response: AuthUser = {
-            id: user.id,
-            email: user.email,
+            id: profile.id.toString(),
+            email: profile.email,
             profile: profile,
         };
 

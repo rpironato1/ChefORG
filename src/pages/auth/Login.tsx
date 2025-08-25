@@ -3,56 +3,6 @@ import { Navigate, useLocation, Link } from 'react-router-dom';
 import { LogIn, User, Lock, Utensils } from 'lucide-react';
 import { useAuth } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
-import { Funcionario } from '../../types';
-
-// Mock de funcionários para demonstração
-const mockFuncionarios: Funcionario[] = [
-  {
-    id: '1',
-    nome: 'Ana Silva',
-    cargo: 'recepcao',
-    email: 'ana@cheforg.com',
-    telefone: '(11) 99999-0001',
-    status: 'ativo',
-    dataAdmissao: new Date('2023-01-15'),
-  },
-  {
-    id: '2',
-    nome: 'Carlos Santos',
-    cargo: 'garcom',
-    email: 'carlos@cheforg.com',
-    telefone: '(11) 99999-0002',
-    status: 'ativo',
-    dataAdmissao: new Date('2023-03-10'),
-  },
-  {
-    id: '3',
-    nome: 'Maria Oliveira',
-    cargo: 'cozinheiro',
-    email: 'maria@cheforg.com',
-    telefone: '(11) 99999-0003',
-    status: 'ativo',
-    dataAdmissao: new Date('2023-02-20'),
-  },
-  {
-    id: '4',
-    nome: 'João Costa',
-    cargo: 'caixa',
-    email: 'joao@cheforg.com',
-    telefone: '(11) 99999-0004',
-    status: 'ativo',
-    dataAdmissao: new Date('2023-04-05'),
-  },
-  {
-    id: '5',
-    nome: 'Sandra Lima',
-    cargo: 'gerente',
-    email: 'sandra@cheforg.com',
-    telefone: '(11) 99999-0005',
-    status: 'ativo',
-    dataAdmissao: new Date('2022-11-01'),
-  },
-];
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -82,40 +32,22 @@ function Login() {
     setIsLoading(true);
 
     try {
-      // Simular verificação de login
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      console.log('Attempting login with:', formData.email);
       
-      // Mock: encontrar funcionário por email
-      const funcionario = mockFuncionarios.find(f => f.email === formData.email);
-      
-      if (!funcionario) {
-        showError('Erro', 'Email ou senha incorretos');
-        return;
-      }
-
-      // Mock: verificar senha (em produção seria hash)
-      const senhasMock: { [email: string]: string } = {
-        'ana@cheforg.com': '123456',
-        'carlos@cheforg.com': '123456',
-        'maria@cheforg.com': '123456',
-        'joao@cheforg.com': '123456',
-        'sandra@cheforg.com': '123456',
-      };
-
-      if (senhasMock[formData.email] !== formData.senha) {
-        showError('Erro', 'Email ou senha incorretos');
-        return;
-      }
-
-      // Login bem-sucedido
+      // Realizar login usando a API unificada
       const result = await login(formData.email, formData.senha);
-      if (result.success) {
-        showSuccess('Login realizado!', `Bem-vindo(a), ${funcionario.nome}`);
+      
+      console.log('Login result:', result);
+      
+      if (result.success && result.data) {
+        const userName = result.data.profile?.nome || 'Usuário';
+        showSuccess('Login realizado!', `Bem-vindo(a), ${userName}`);
       } else {
-        showError('Erro', result.error || 'Falha no login');
+        showError('Erro', result.error || 'Email ou senha incorretos');
       }
       
     } catch (error) {
+      console.error('Login error:', error);
       showError('Erro', 'Falha no sistema. Tente novamente.');
     } finally {
       setIsLoading(false);
@@ -128,18 +60,6 @@ function Login() {
       [field]: value
     }));
   };
-
-  // Função para futuro uso na exibição de perfis
-  // const getCargoLabel = (cargo: Funcionario['cargo']) => {
-  //   const labels = {
-  //     recepcao: 'Recepção',
-  //     garcom: 'Garçom',
-  //     cozinheiro: 'Cozinheiro',
-  //     caixa: 'Caixa',
-  //     gerente: 'Gerente'
-  //   };
-  //   return labels[cargo];
-  // };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -217,6 +137,23 @@ function Login() {
             >
               {isLoading ? 'Entrando...' : 'Entrar'}
             </button>
+
+            {/* Development Help Section */}
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <h3 className="text-sm font-medium text-blue-800 mb-2">
+                🔧 Contas de Teste (Desenvolvimento)
+              </h3>
+              <div className="text-xs text-blue-700 space-y-1">
+                <p><strong>Senha padrão:</strong> 123456</p>
+                <div className="grid grid-cols-1 gap-1 mt-2">
+                  <p>• admin@cheforg.com (Gerente)</p>
+                  <p>• recepcao@cheforg.com (Recepção)</p>
+                  <p>• garcom@cheforg.com (Garçom)</p>
+                  <p>• cozinha@cheforg.com (Cozinha)</p>
+                  <p>• caixa@cheforg.com (Caixa)</p>
+                </div>
+              </div>
+            </div>
           </form>
 
           
