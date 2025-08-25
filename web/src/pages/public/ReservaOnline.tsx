@@ -385,7 +385,7 @@ function ReservaOnline() {
                         className={`p-3 border rounded-lg text-sm font-medium transition-colors ${
                           formData.hora === horario
                             ? 'border-primary-600 bg-primary-50 text-primary-600'
-                            : 'border-gray-300 hover:border-gray-400'
+                            : 'border-gray-500 hover:border-gray-400'
                         }`}
                       >
                         {horario}

@@ -19,9 +19,9 @@ export const MobileTextArea = forwardRef<HTMLTextAreaElement, MobileTextAreaProp
     ...props
   }, ref) => {
     const variantClasses = {
-      default: 'border border-gray-300 rounded-lg bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100',
+      default: 'border border-gray-500 rounded-lg bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100',
       filled: 'border-0 rounded-lg bg-gray-100 focus:bg-white focus:ring-2 focus:ring-primary-100',
-      outlined: 'border-2 border-gray-300 rounded-lg bg-transparent focus:border-primary-500'
+      outlined: 'border-2 border-gray-500 rounded-lg bg-transparent focus:border-primary-500'
     };
 
     const resizeClasses = {

@@ -44,8 +44,15 @@ function Configuracoes() {
   ];
 
   const handleSave = () => {
-    console.log('Configurações salvas:', settings);
-    // Aqui implementaríamos a lógica de salvamento
+    // Save configuration to local storage or API
+    try {
+      localStorage.setItem('cheforg-settings', JSON.stringify(settings));
+      // Show success feedback to user
+      // showSuccess('Configurações salvas com sucesso!');
+    } catch (error) {
+      // Handle save error
+      // showError('Erro ao salvar configurações');
+    }
   };
 
   const renderGeralTab = () => (
@@ -133,7 +140,7 @@ function Configuracoes() {
               onChange={(e) => setSettings({...settings, notificacoesPedidos: e.target.checked})}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-500 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
           </label>
         </div>
 
@@ -149,7 +156,7 @@ function Configuracoes() {
               onChange={(e) => setSettings({...settings, notificacoesReservas: e.target.checked})}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-500 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
           </label>
         </div>
 
@@ -165,7 +172,7 @@ function Configuracoes() {
               onChange={(e) => setSettings({...settings, notificacoesEstoque: e.target.checked})}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-500 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
           </label>
         </div>
       </div>
@@ -178,7 +185,7 @@ function Configuracoes() {
               type="checkbox"
               checked={settings.emailNotificacoes}
               onChange={(e) => setSettings({...settings, emailNotificacoes: e.target.checked})}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="rounded border-gray-500 text-blue-600 focus:ring-blue-500"
             />
             <span className="ml-2 text-sm text-gray-700">Email</span>
           </label>
@@ -187,7 +194,7 @@ function Configuracoes() {
               type="checkbox"
               checked={settings.smsNotificacoes}
               onChange={(e) => setSettings({...settings, smsNotificacoes: e.target.checked})}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="rounded border-gray-500 text-blue-600 focus:ring-blue-500"
             />
             <span className="ml-2 text-sm text-gray-700">SMS</span>
           </label>
@@ -269,7 +276,7 @@ function Configuracoes() {
               type="checkbox"
               checked={settings.backupAutomatico}
               onChange={(e) => setSettings({...settings, backupAutomatico: e.target.checked})}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="rounded border-gray-500 text-blue-600 focus:ring-blue-500"
             />
             <span className="ml-2 text-sm text-gray-700">Ativar backup automático</span>
           </label>

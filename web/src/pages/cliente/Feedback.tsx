@@ -91,7 +91,7 @@ function Feedback() {
     return (
       <div className="flex gap-1 justify-center">
         {[1, 2, 3, 4, 5].map((estrela) => (
-          <button key={estrela} onClick={() => avaliarEstrelas(categoria, estrela)} className={`p-1 transition-colors ${estrela <= valor ? 'text-yellow-400' : 'text-gray-300 hover:text-yellow-300'}`}>
+          <button key={estrela} onClick={() => avaliarEstrelas(categoria, estrela)} className={`p-1 transition-colors ${estrela <= valor ? 'text-yellow-400' : 'text-gray-600 hover:text-yellow-300'}`}>
             <Star className="h-8 w-8" fill={estrela <= valor ? 'currentColor' : 'none'} />
           </button>
         ))}
@@ -128,24 +128,24 @@ function Feedback() {
 
         <div className="space-y-4">
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Atendimento e Serviço</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Atendimento e Serviço</h2>
             {renderEstrelas('estrelas_servico', avaliacao.estrelas_servico)}
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Qualidade da Comida</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Qualidade da Comida</h2>
             {renderEstrelas('estrelas_comida', avaliacao.estrelas_comida)}
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Ambiente do Restaurante</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Ambiente do Restaurante</h2>
             {renderEstrelas('estrelas_estabelecimento', avaliacao.estrelas_estabelecimento)}
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-center mb-2">Experiência Geral</h3>
+            <h2 className="text-lg font-semibold text-center mb-2">Experiência Geral</h2>
             {renderEstrelas('estrelas_experiencia', avaliacao.estrelas_experiencia)}
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4">Comentário (opcional)</h3>
+            <h2 className="text-lg font-semibold mb-4">Comentário (opcional)</h2>
             <textarea value={avaliacao.comentario} onChange={(e) => setAvaliacao(prev => ({ ...prev, comentario: e.target.value }))} placeholder="Conte-nos mais..." className="w-full p-3 border rounded-lg" rows={4} />
           </div>
 

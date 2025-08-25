@@ -273,7 +273,7 @@ function ChegadaSemReserva() {
               <select
                 value={formData.pessoas}
                 onChange={(e) => handleInputChange('pessoas', parseInt(e.target.value))}
-                className="w-full h-12 px-4 text-base border border-gray-300 rounded-lg bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                className="w-full h-12 px-4 text-base border border-gray-500 rounded-lg bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
                 required
               >
                 {Array.from({ length: 12 }, (_, i) => i + 1).map(num => (

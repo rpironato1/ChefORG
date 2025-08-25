@@ -37,7 +37,7 @@ export const SwipeGestureDemo: React.FC = () => {
       <div 
         {...swipeHandlers}
         className={`
-          min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg
+          min-h-[200px] border-2 border-dashed border-gray-500 rounded-lg
           flex flex-col items-center justify-center
           transition-all duration-300 p-6
           ${lastSwipe === 'left' ? 'bg-red-50 border-red-300' : ''}
