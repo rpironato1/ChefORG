@@ -26,7 +26,10 @@
     "test:mcp:56-components": "./scripts/run-100-percent-coverage.sh",
     "test:component-analysis": "node scripts/analyze-all-components.cjs",
     "test:playwright": "npx playwright test tests/mcp-playwright/MCPPlaywrightOrchestrator.ts",
-    "install:all": "npm install && npm install -w web && npm install -w mobile"
+    "install:all": "npm install && npm install -w web && npm install -w mobile",
+    "validate:dependencies": "./validate-dependencies.sh",
+    "validate:ports": "./validate-dependencies.sh --resolve-ports",
+    "validate:help": "./validate-dependencies.sh --help"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",

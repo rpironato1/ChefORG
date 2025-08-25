@@ -360,6 +360,277 @@ npm run test:coverage
 
 ---
 
+## 🕸️ **Grafo de Dependências e Rotas**
+
+### 🎯 **Teoria dos Grafos Aplicada**
+
+O sistema ChefORG implementa um **grafo de dependências direcionado acíclico (DAG)** onde cada módulo representa um **nó** e as dependências representam **arestas direcionadas**.
+
+```mermaid
+graph TD
+    subgraph "🏗️ CAMADA DE INFRAESTRUTURA"
+        DB[(🗄️ Supabase Database)]
+        API[🔌 API Layer<br/>12 módulos]
+        SHARED[📦 Shared Module<br/>Types + Utils]
+    end
+    
+    subgraph "🌐 CAMADA DE APLICAÇÃO"
+        LEGACY[📱 Legacy App<br/>:8110]
+        WEB[🖥️ Web Module<br/>:8110]
+        MOBILE[📱 Mobile Module<br/>:8100]
+    end
+    
+    subgraph "🧪 CAMADA DE TESTES"
+        PLAYWRIGHT[🎭 Playwright<br/>:8115]
+        MCP[🤖 MCP Tests<br/>All Ports]
+        STORY[📚 Storybook<br/>:8120]
+    end
+    
+    %% Dependências de Infraestrutura
+    API --> DB
+    SHARED --> API
+    
+    %% Dependências de Aplicação
+    LEGACY --> SHARED
+    LEGACY --> API
+    WEB --> SHARED
+    WEB --> API
+    MOBILE --> SHARED
+    MOBILE --> API
+    
+    %% Dependências de Testes
+    PLAYWRIGHT --> LEGACY
+    PLAYWRIGHT --> WEB
+    MCP --> LEGACY
+    MCP --> WEB
+    MCP --> MOBILE
+    STORY --> SHARED
+    
+    %% Estilos
+    classDef infrastructure fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef application fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef testing fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    
+    class DB,API,SHARED infrastructure
+    class LEGACY,WEB,MOBILE application
+    class PLAYWRIGHT,MCP,STORY testing
+```
+
+### 🗺️ **Mapa de Rotas por Módulo**
+
+#### **📍 Rotas Públicas** (Nível 0 - Sem Dependências)
+```mermaid
+graph LR
+    subgraph "🌍 ACESSO PÚBLICO"
+        HOME[🏠 / <br/>Homepage]
+        MENU[🍽️ /menu <br/>Cardápio Público]
+        RESERVA[📅 /reserva <br/>Sistema de Reservas]
+    end
+    
+    HOME --> AUTH_OPTIONAL[🔓 Auth Opcional]
+    MENU --> DB_READ[📖 DB Read-Only]
+    RESERVA --> DB_WRITE[✍️ DB Write]
+```
+
+#### **📍 Rotas de Cliente** (Nível 1 - Dependem de Validação)
+```mermaid
+graph LR
+    subgraph "👤 EXPERIÊNCIA DO CLIENTE"
+        CHECKIN[📱 /checkin <br/>QR Scanner]
+        CHEGADA[🚶 /chegada-sem-reserva <br/>Fila Virtual]
+        PIN[🔢 /mesa/:id/pin <br/>Autenticação PIN]
+        CARDAPIO[🍴 /mesa/:id/cardapio <br/>Menu da Mesa]
+        ACOMPANHAR[👀 /mesa/:id/acompanhar <br/>Status do Pedido]
+        PAGAMENTO[💳 /mesa/:id/pagamento <br/>Checkout]
+        FEEDBACK[⭐ /mesa/:id/feedback <br/>Avaliação]
+    end
+    
+    CHECKIN --> PIN
+    CHEGADA --> PIN
+    PIN --> CARDAPIO
+    CARDAPIO --> ACOMPANHAR
+    ACOMPANHAR --> PAGAMENTO
+    PAGAMENTO --> FEEDBACK
+```
+
+#### **📍 Rotas Administrativas** (Nível 2 - Dependem de Autenticação + Autorização)
+```mermaid
+graph LR
+    subgraph "🔐 ÁREA ADMINISTRATIVA"
+        LOGIN[🔑 /login <br/>Autenticação]
+        DASHBOARD[📊 /admin/dashboard <br/>Painel Principal]
+        RECEPCAO[🏨 /admin/recepcao <br/>Recepção]
+        GARCOM[👨‍🍳 /admin/garcom <br/>Painel Garçom]
+        COZINHA[🔥 /admin/cozinha <br/>Painel Cozinha]
+        CAIXA[💰 /admin/caixa <br/>Painel Caixa]
+        GERENCIA[👔 /admin/gerencia <br/>Gestão]
+    end
+    
+    LOGIN --> DASHBOARD
+    DASHBOARD --> RECEPCAO
+    DASHBOARD --> GARCOM
+    DASHBOARD --> COZINHA
+    DASHBOARD --> CAIXA
+    DASHBOARD --> GERENCIA
+```
+
+### 🔗 **Matriz de Dependências**
+
+| Módulo/Rota | Database | API Layer | Auth | Shared | Mobile Metro | Web Server |
+|-------------|----------|-----------|------|--------|--------------|------------|
+| **🏠 Homepage** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ |
+| **🍽️ Menu Público** | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| **📅 Reservas** | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| **📱 Check-in QR** | ✅ | ✅ | ❌ | ✅ | ⚠️ | ✅ |
+| **🔢 PIN Mesa** | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| **🍴 Cardápio Mesa** | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| **💳 Pagamento** | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| **👔 Admin Routes** | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| **📱 Mobile App** | ✅ | ✅ | ⚠️ | ✅ | ✅ | ❌ |
+| **🧪 Playwright Tests** | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | ✅ |
+
+**Legenda:** ✅ Obrigatório | ⚠️ Opcional | ❌ Não Necessário
+
+### 🚀 **Sequências de Inicialização por Cenário**
+
+#### **🔧 Desenvolvimento Web Completo**
+```bash
+# Ordem obrigatória para desenvolvimento completo
+1. npm run dev:web           # Porta 8110 (Principal)
+   └── Aguardar: "Local: http://localhost:8110"
+   
+2. Verificar APIs funcionando
+   └── Testar: curl http://localhost:8110/api/health
+   
+3. npm run test:mcp         # Porta 8115 (Testes)
+   └── Aguardar: Coverage > 90%
+```
+
+#### **📱 Desenvolvimento Mobile**
+```bash
+# Ordem obrigatória para mobile
+1. npm run dev:mobile       # Porta 8100 (Metro)
+   └── Aguardar: "Metro Bundler ready"
+   
+2. npm run dev:web          # Porta 8110 (APIs)
+   └── Aguardar: Backend APIs disponíveis
+   
+3. Escolher plataforma:
+   └── 'i' para iOS Simulator
+   └── 'a' para Android Emulator  
+   └── 'w' para Web (http://localhost:8100)
+```
+
+#### **🧪 Ambiente de Testes Completo**
+```bash
+# Ordem para cobertura 100%
+1. npm run dev:web          # Base APIs
+2. npm run dev:mobile       # Mobile bundler
+3. npm run test:mcp:complete # Todos os testes
+   └── Execução: ~15 minutos
+   └── Portas: 8110, 8100, 8115
+```
+
+### 🎯 **Algoritmo de Resolução de Dependências**
+
+```javascript
+/**
+ * Algoritmo para determinar ordem de inicialização
+ * Baseado em Ordenação Topológica (Kahn's Algorithm)
+ */
+const DEPENDENCY_GRAPH = {
+  'database': [],
+  'shared': ['database'],
+  'api': ['database', 'shared'],
+  'web': ['api', 'shared'],
+  'mobile': ['api', 'shared'],
+  'tests': ['web', 'mobile', 'api']
+};
+
+function getStartupOrder(requiredModules) {
+  const visited = new Set();
+  const result = [];
+  
+  function dfs(module) {
+    if (visited.has(module)) return;
+    visited.add(module);
+    
+    // Resolver dependências primeiro
+    for (const dependency of DEPENDENCY_GRAPH[module] || []) {
+      dfs(dependency);
+    }
+    
+    result.push(module);
+  }
+  
+  requiredModules.forEach(dfs);
+  return result;
+}
+
+// Exemplo de uso:
+getStartupOrder(['tests', 'mobile']) 
+// → ['database', 'shared', 'api', 'web', 'mobile', 'tests']
+```
+
+### 🔍 **Validação de Dependências**
+
+#### **🟢 Checklist de Saúde do Sistema**
+```bash
+#!/bin/bash
+# Script: validate-dependencies.sh
+
+echo "🔍 Validando Dependências ChefORG..."
+
+# 1. Verificar portas disponíveis
+check_port() {
+  if lsof -Pi :$1 -sTCP:LISTEN -t >/dev/null; then
+    echo "❌ Porta $1 ocupada"
+    return 1
+  else
+    echo "✅ Porta $1 disponível"
+    return 0
+  fi
+}
+
+# 2. Validar ordem de inicialização
+echo "📋 Verificando portas (8100-8120)..."
+check_port 8100  # Mobile Metro
+check_port 8110  # Web Vite  
+check_port 8115  # Playwright
+check_port 8120  # Storybook
+
+# 3. Testar dependências de módulos
+echo "🔗 Testando dependências..."
+curl -f http://localhost:8110/health || echo "❌ Web não disponível"
+curl -f http://localhost:8100/_health || echo "⚠️ Mobile opcional"
+
+# 4. Verificar shared types
+cd shared && npm run type-check || echo "❌ Shared types inválidos"
+
+echo "✅ Validação completa!"
+```
+
+#### **🔧 Auto-Resolução de Conflitos**
+```bash
+# Script automático para resolver conflitos de porta
+resolve_port_conflicts() {
+  echo "🔧 Resolvendo conflitos de porta..."
+  
+  # Matar processos nas portas 8100-8120
+  for port in {8100..8120}; do
+    pid=$(lsof -ti:$port)
+    if [ ! -z "$pid" ]; then
+      echo "🚫 Finalizando processo na porta $port (PID: $pid)"
+      kill -9 $pid
+    fi
+  done
+  
+  echo "✅ Portas liberadas!"
+}
+```
+
+---
+
 ## 🎯 **Próximos Passos**
 
 ### 🚧 **Melhorias Planejadas**
@@ -376,8 +647,8 @@ npm run test:coverage
 - [ ] Configurar environment (.env)
 - [ ] Instalar dependências (npm run install:all)
 - [ ] Verificar portas disponíveis (8100-8120)
-- [ ] Iniciar web (npm run dev:web)
-- [ ] Iniciar mobile (npm run dev:mobile) 
+- [ ] Executar resolução de dependências (./validate-dependencies.sh)
+- [ ] Iniciar módulos na ordem correta (ver sequências acima)
 - [ ] Validar shared types (cd shared && npm run type-check)
 - [ ] Executar testes (npm run test:mcp)
 - [ ] Verificar hot reload funcionando
@@ -391,8 +662,9 @@ npm run test:coverage
 - **💡 Features**: GitHub Discussions para sugestões
 - **📚 Docs**: Este arquivo + código comentado
 - **🧪 Testes**: `npm run test:mcp` para validação completa
+- **🔍 Debug**: `./validate-dependencies.sh` para diagnóstico
 
 ---
 
 *Documentação atualizada em: Dezembro 2024*
-*Versão da Arquitetura: v1.0 (Monorepo stable)*
+*Versão da Arquitetura: v1.1 (Dependency Graph + Route Mapping)*
