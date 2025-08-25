@@ -78,7 +78,7 @@ export function LazyImage({
     // Try to detect if it's a relative path and add WebP support
     if (originalSrc.startsWith('/') || originalSrc.startsWith('./')) {
       const pathParts = originalSrc.split('.');
-      const extension = pathParts.pop();
+      pathParts.pop(); // Remove extension (not used)
       const basePath = pathParts.join('.');
       
       // Return both WebP and original format

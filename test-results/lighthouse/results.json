@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-08-25T17:32:07Z",
+  "timestamp": "2025-08-25T17:53:56Z",
   "results": [
     {
       "route": "/",
       "name": "Home Page",
       "desktop": {
-        "performance": 74,
+        "performance": 75,
         "accessibility": 91,
         "bestPractices": 96,
         "seo": 100
@@ -27,7 +27,7 @@
       "route": "/reserva",
       "name": "Online Reservation",
       "desktop": {
-        "performance": 73,
+        "performance": 75,
         "accessibility": 94,
         "bestPractices": 96,
         "seo": 100
@@ -49,7 +49,7 @@
       "route": "/checkin",
       "name": "Client Check-in",
       "desktop": {
-        "performance": 76,
+        "performance": 75,
         "accessibility": 91,
         "bestPractices": 96,
         "seo": 100
@@ -82,7 +82,7 @@
       "route": "/mesa/1/cardapio",
       "name": "Table Menu",
       "desktop": {
-        "performance": 75,
+        "performance": 74,
         "accessibility": 85,
         "bestPractices": 96,
         "seo": 100
@@ -104,7 +104,7 @@
       "route": "/mesa/1/pagamento",
       "name": "Payment",
       "desktop": {
-        "performance": 73,
+        "performance": 74,
         "accessibility": 100,
         "bestPractices": 96,
         "seo": 100
@@ -116,32 +116,8 @@
       "name": "Feedback",
       "desktop": {
         "performance": 75,
-        "accessibility": 83,
+        "accessibility": 88,
         "bestPractices": 96,
         "seo": 100
       }
     }
-    ,
-    {
-      "route": "/sprint3-demo",
-      "name": "Sprint 3 Demo",
-      "desktop": {
-        "performance": 72,
-        "accessibility": 94,
-        "bestPractices": 96,
-        "seo": 100
-      }
-    }
-  ],
-  "summary": {
-    "totalRoutes": 12,
-    "passedRoutes": 12,
-    "failedRoutes": 0,
-    "overallScores": {
-      "performance": 74,
-      "accessibility": 91,
-      "bestPractices": 96,
-      "seo": 100
-    }
-  }
-}
