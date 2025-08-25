@@ -12,14 +12,28 @@
     "dev": "npm run dev -w web",
     "dev:web": "npm run dev -w web",
     "dev:mobile": "npm run start -w mobile",
+    "dev:setup": "./dev-setup.sh",
     "build": "npm run build -w web",
     "build:web": "npm run build -w web",
     "build:mobile": "npm run build -w mobile",
     "lint": "npm run lint -w web && npm run lint -w mobile",
     "test": "npm run test -w web",
-    "install:all": "npm install && npm install -w web && npm install -w mobile"
+    "test:mcp": "./scripts/run-mcp-tests.sh",
+    "test:mcp:complete": "./scripts/run-mcp-tests.sh complete",
+    "test:mcp:wcag": "./scripts/run-mcp-tests.sh wcag",
+    "test:mcp:performance": "./scripts/run-mcp-tests.sh performance",
+    "test:mcp:forms": "./scripts/run-mcp-tests.sh forms",
+    "test:mcp:56-components": "./scripts/run-100-percent-coverage.sh",
+    "test:component-analysis": "node scripts/analyze-all-components.cjs",
+    "test:playwright": "npx playwright test tests/mcp-playwright/MCPPlaywrightOrchestrator.ts",
+    "install:all": "npm install && npm install -w web && npm install -w mobile",
+    "validate:dependencies": "./validate-dependencies.sh",
+    "validate:ports": "./validate-dependencies.sh --resolve-ports",
+    "validate:help": "./validate-dependencies.sh --help"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "playwright": "^1.55.0",
     "typescript": "^5.2.2"
   }
 }

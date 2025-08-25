@@ -32,11 +32,11 @@ A aplicação é construída sobre uma arquitetura robusta com front-end em **Re
     O arquivo `supabase-updates.md` contém todas as funções, triggers e modificações de banco de dados que foram aplicadas. Se estiver configurando uma nova instância do Supabase, você deve executar os scripts SQL contidos nesse arquivo no seu editor SQL do Supabase para garantir que a API funcione corretamente.
 
 4.  **Executar a Aplicação em Modo de Desenvolvimento**:
-    Este comando inicia o servidor de desenvolvimento do Vite, geralmente na porta `3000`.
+    Este comando inicia o servidor de desenvolvimento do Vite, geralmente na port 8110`.
     ```bash
     npm run dev
     ```
-    Acesse a aplicação em `http://localhost:3000`.
+    Acesse a aplicação em `http://localhost:8110`.
 
 ### 2.3. Scripts Disponíveis
 
@@ -85,7 +85,7 @@ O projeto segue uma estrutura de pastas bem organizada, separando responsabilida
 ### 4.1. Arquivos de Configuração (Raiz)
 
 -   **`package.json`**: Define as dependências do projeto, como `react`, `react-router-dom`, `supabase-js`, `tailwindcss`, e `vite`. Também contém os scripts para rodar, buildar e lintar o projeto.
--   **`vite.config.ts`**: Configura o Vite, definindo o plugin do React e a porta do servidor de desenvolvimento (`3000`).
+-   **`vite.config.ts`**: Configura o Vite, definindo o plugin do React e a port 8110`).
 -   **`tailwind.config.js`**: Estende o tema padrão do Tailwind CSS, adicionando uma paleta de cores primária (tons de laranja) e definindo a fonte padrão (`Inter`).
 -   **`tsconfig.json`**: Arquivo de configuração do TypeScript. Define o target para `ES2020`, habilita o JSX e impõe regras estritas de tipagem para garantir a qualidade do código.
 -   **`postcss.config.js`**: Configura o PostCSS para usar os plugins do Tailwind CSS e Autoprefixer, que adiciona prefixos de navegadores aos estilos CSS.
