@@ -1,6 +1,6 @@
 # 🎯 ChefORG Comprehensive Lighthouse Report
 
-**Generated:** Mon Aug 25 17:18:35 UTC 2025
+**Generated:** Mon Aug 25 17:32:07 UTC 2025
 
 ## 📊 Test Results Summary
 
@@ -10,7 +10,7 @@
 
 | Metric | Desktop Score | Status |
 |--------|---------------|--------|
-| Performance | 75/100 | ✅ |
+| Performance | 74/100 | ✅ |
 | Accessibility | 91/100 | ✅ |
 | Best Practices | 96/100 | ✅ |
 | SEO | 100/100 | ✅ |
@@ -21,7 +21,7 @@
 
 | Metric | Desktop Score | Status |
 |--------|---------------|--------|
-| Performance | 75/100 | ✅ |
+| Performance | 74/100 | ✅ |
 | Accessibility | 95/100 | ✅ |
 | Best Practices | 96/100 | ✅ |
 | SEO | 100/100 | ✅ |
@@ -43,7 +43,7 @@
 
 | Metric | Desktop Score | Status |
 |--------|---------------|--------|
-| Performance | 77/100 | ✅ |
+| Performance | 76/100 | ✅ |
 | Accessibility | 94/100 | ✅ |
 | Best Practices | 96/100 | ✅ |
 | SEO | 100/100 | ✅ |
@@ -54,7 +54,7 @@
 
 | Metric | Desktop Score | Status |
 |--------|---------------|--------|
-| Performance | 77/100 | ✅ |
+| Performance | 76/100 | ✅ |
 | Accessibility | 91/100 | ✅ |
 | Best Practices | 96/100 | ✅ |
 | SEO | 100/100 | ✅ |
@@ -87,7 +87,7 @@
 
 | Metric | Desktop Score | Status |
 |--------|---------------|--------|
-| Performance | 76/100 | ✅ |
+| Performance | 75/100 | ✅ |
 | Accessibility | 85/100 | ✅ |
 | Best Practices | 96/100 | ✅ |
 | SEO | 100/100 | ✅ |
@@ -156,5 +156,5 @@
 
 
 ---
-**Report generated on:** Mon Aug 25 17:23:46 UTC 2025
+**Report generated on:** Mon Aug 25 17:37:22 UTC 2025
 **Lighthouse version:** 12.8.1

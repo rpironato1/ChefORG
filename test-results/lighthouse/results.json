@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-08-25T17:18:35Z",
+  "timestamp": "2025-08-25T17:32:07Z",
   "results": [
     {
       "route": "/",
       "name": "Home Page",
       "desktop": {
-        "performance": 75,
+        "performance": 74,
         "accessibility": 91,
         "bestPractices": 96,
         "seo": 100
@@ -16,7 +16,7 @@
       "route": "/menu",
       "name": "Public Menu",
       "desktop": {
-        "performance": 75,
+        "performance": 74,
         "accessibility": 95,
         "bestPractices": 96,
         "seo": 100
@@ -38,7 +38,7 @@
       "route": "/login",
       "name": "Login",
       "desktop": {
-        "performance": 77,
+        "performance": 76,
         "accessibility": 94,
         "bestPractices": 96,
         "seo": 100
@@ -49,7 +49,7 @@
       "route": "/checkin",
       "name": "Client Check-in",
       "desktop": {
-        "performance": 77,
+        "performance": 76,
         "accessibility": 91,
         "bestPractices": 96,
         "seo": 100
@@ -82,7 +82,7 @@
       "route": "/mesa/1/cardapio",
       "name": "Table Menu",
       "desktop": {
-        "performance": 76,
+        "performance": 75,
         "accessibility": 85,
         "bestPractices": 96,
         "seo": 100
