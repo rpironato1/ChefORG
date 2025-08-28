@@ -1,6 +1,6 @@
 // Error handling utilities for modules
 
-export { 
+export {
   ModuleErrorBoundary,
   ReservationsErrorBoundary,
   TablesErrorBoundary,
@@ -8,7 +8,7 @@ export {
   OrdersErrorBoundary,
   PaymentsErrorBoundary,
   AuthErrorBoundary,
-  withErrorBoundary
+  withErrorBoundary,
 } from './ErrorBoundaries';
 
 // Custom error classes for better error handling
@@ -17,12 +17,7 @@ export class ChefOrgError extends Error {
   public readonly code?: string;
   public readonly context?: Record<string, any>;
 
-  constructor(
-    message: string,
-    module: string,
-    code?: string,
-    context?: Record<string, any>
-  ) {
+  constructor(message: string, module: string, code?: string, context?: Record<string, any>) {
     super(message);
     this.name = 'ChefOrgError';
     this.module = module;
@@ -82,7 +77,7 @@ export const logError = (error: Error, additionalContext?: Record<string, any>) 
     timestamp: new Date().toISOString(),
     url: window.location.href,
     userAgent: navigator.userAgent,
-    ...additionalContext
+    ...additionalContext,
   };
 
   // Log to console in development

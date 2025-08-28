@@ -17,7 +17,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ onMenuToggle }) => {
           >
             <Menu className="w-6 h-6 text-gray-700" />
           </button>
-          
+
           <div className="flex items-center">
             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center mr-3">
               <ChefHat className="w-5 h-5 text-white" />

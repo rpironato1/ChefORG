@@ -83,14 +83,14 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
         table_id: 5,
         customer_name: 'João Silva',
         status: 'preparando',
-        total: 67.80,
+        total: 67.8,
         created_at: '2025-08-22T20:30:00Z',
         items: [
           {
             id: 1,
             menu_item_id: 1,
             quantidade: 2,
-            preco_unitario: 28.90,
+            preco_unitario: 28.9,
             status: 'preparando',
             nome_item: 'Pizza Margherita',
           },
@@ -98,7 +98,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
             id: 2,
             menu_item_id: 4,
             quantidade: 2,
-            preco_unitario: 4.50,
+            preco_unitario: 4.5,
             status: 'pronto',
             nome_item: 'Refrigerante Lata',
           },
@@ -106,7 +106,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
             id: 3,
             menu_item_id: 5,
             quantidade: 1,
-            preco_unitario: 12.90,
+            preco_unitario: 12.9,
             status: 'pendente',
             nome_item: 'Brownie com Sorvete',
           },
@@ -117,14 +117,14 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
         table_id: 3,
         customer_name: 'Maria Santos',
         status: 'confirmado',
-        total: 57.80,
+        total: 57.8,
         created_at: '2025-08-22T21:00:00Z',
         items: [
           {
             id: 4,
             menu_item_id: 3,
             quantidade: 2,
-            preco_unitario: 24.90,
+            preco_unitario: 24.9,
             status: 'pendente',
             nome_item: 'Hambúrguer Artesanal',
           },
@@ -132,7 +132,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
             id: 5,
             menu_item_id: 4,
             quantidade: 2,
-            preco_unitario: 4.50,
+            preco_unitario: 4.5,
             status: 'pendente',
             nome_item: 'Refrigerante Lata',
           },
@@ -143,14 +143,14 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
         table_id: 7,
         customer_name: 'Pedro Costa',
         status: 'pago',
-        total: 45.80,
+        total: 45.8,
         created_at: '2025-08-22T19:15:00Z',
         items: [
           {
             id: 6,
             menu_item_id: 2,
             quantidade: 1,
-            preco_unitario: 32.90,
+            preco_unitario: 32.9,
             status: 'entregue',
             nome_item: 'Pizza Pepperoni',
           },
@@ -158,7 +158,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
             id: 7,
             menu_item_id: 5,
             quantidade: 1,
-            preco_unitario: 12.90,
+            preco_unitario: 12.9,
             status: 'entregue',
             nome_item: 'Brownie com Sorvete',
           },
@@ -198,9 +198,9 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('pt-BR', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
+    return date.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
@@ -214,11 +214,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
 
   const handleUpdateOrderStatus = (orderId: number, newStatus: string) => {
     setOrders(prev =>
-      prev.map(order =>
-        order.id === orderId
-          ? { ...order, status: newStatus as any }
-          : order
-      )
+      prev.map(order => (order.id === orderId ? { ...order, status: newStatus as any } : order))
     );
   };
 
@@ -229,10 +225,8 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
           ? {
               ...order,
               items: order.items.map(item =>
-                item.id === itemId
-                  ? { ...item, status: newStatus as any }
-                  : item
-              )
+                item.id === itemId ? { ...item, status: newStatus as any } : item
+              ),
             }
           : order
       )
@@ -248,12 +242,12 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
           R$ {(item.preco_unitario * item.quantidade).toFixed(2).replace('.', ',')}
         </Text>
       </View>
-      
+
       <View style={styles.itemStatusContainer}>
         <View style={[styles.itemStatusBadge, { backgroundColor: getStatusColor(item.status) }]}>
           <Text style={styles.itemStatusText}>{getStatusText(item.status)}</Text>
         </View>
-        
+
         {item.status === 'pendente' && (
           <TouchableOpacity
             style={styles.startCookingButton}
@@ -262,7 +256,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
             <Text style={styles.actionButtonText}>Iniciar</Text>
           </TouchableOpacity>
         )}
-        
+
         {item.status === 'preparando' && (
           <TouchableOpacity
             style={styles.readyButton}
@@ -271,7 +265,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
             <Text style={styles.actionButtonText}>Pronto</Text>
           </TouchableOpacity>
         )}
-        
+
         {item.status === 'pronto' && (
           <TouchableOpacity
             style={styles.deliverButton}
@@ -286,23 +280,25 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
 
   const renderOrder = (order: Order) => {
     const allItemsDelivered = order.items.every(item => item.status === 'entregue');
-    
+
     return (
       <View key={order.id} style={styles.orderCard}>
         <View style={styles.orderHeader}>
           <View>
             <Text style={styles.orderTitle}>Pedido #{order.id}</Text>
-            <Text style={styles.orderInfo}>Mesa {order.table_id} • {order.customer_name}</Text>
+            <Text style={styles.orderInfo}>
+              Mesa {order.table_id} • {order.customer_name}
+            </Text>
             <Text style={styles.orderTime}>{formatTime(order.created_at)}</Text>
           </View>
-          
+
           <View style={styles.orderStatusContainer}>
-            <View style={[styles.orderStatusBadge, { backgroundColor: getStatusColor(order.status) }]}>
+            <View
+              style={[styles.orderStatusBadge, { backgroundColor: getStatusColor(order.status) }]}
+            >
               <Text style={styles.orderStatusText}>{getStatusText(order.status)}</Text>
             </View>
-            <Text style={styles.orderTotal}>
-              R$ {order.total.toFixed(2).replace('.', ',')}
-            </Text>
+            <Text style={styles.orderTotal}>R$ {order.total.toFixed(2).replace('.', ',')}</Text>
           </View>
         </View>
 
@@ -326,7 +322,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
               size="medium"
             />
           )}
-          
+
           {allItemsDelivered && order.status === 'entregue' && (
             <NativeButton
               title="Finalizar e Pagar"
@@ -361,7 +357,7 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
             Pedidos Ativos
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.tab, selectedTab === 'history' && styles.activeTab]}
           onPress={() => setSelectedTab('history')}
@@ -380,10 +376,9 @@ export const OrderScreen: React.FC<OrderScreenProps> = ({ navigation }) => {
               {selectedTab === 'current' ? 'Nenhum pedido ativo' : 'Nenhum pedido no histórico'}
             </Text>
             <Text style={styles.emptySubtext}>
-              {selectedTab === 'current' 
-                ? 'Os pedidos aparecerão aqui quando forem feitos' 
-                : 'Os pedidos finalizados aparecerão aqui'
-              }
+              {selectedTab === 'current'
+                ? 'Os pedidos aparecerão aqui quando forem feitos'
+                : 'Os pedidos finalizados aparecerão aqui'}
             </Text>
           </View>
         ) : (

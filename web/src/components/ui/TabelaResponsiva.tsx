@@ -35,32 +35,31 @@ function TabelaResponsiva({
   loading = false,
   emptyMessage = 'Nenhum registro encontrado',
   onRowClick,
-  className = ''
+  className = '',
 }: TabelaResponsivaProps) {
-  
   // Compatibilidade: converter formato antigo para o novo
   let finalDados = dados || [];
   let finalColunas = colunas || [];
-  
+
   if (headers && rows) {
     finalColunas = headers.map((header, index) => ({
       key: index.toString(),
       titulo: header,
-      render: (value: any, item: any) => rows[finalDados.indexOf(item)][index]
+      render: (value: any, item: any) => rows[finalDados.indexOf(item)][index],
     }));
     finalDados = rows.map((row, index) => ({ _index: index, ...row }));
   }
-  
+
   const handleSort = (key: string) => {
     if (!onSort) return;
-    
+
     const newDirection = sortKey === key && sortDirection === 'asc' ? 'desc' : 'asc';
     onSort(key, newDirection);
   };
 
   const renderSortIcon = (key: string) => {
     if (sortKey !== key) return null;
-    
+
     return sortDirection === 'asc' ? (
       <ChevronUp className="h-4 w-4" />
     ) : (
@@ -70,9 +69,12 @@ function TabelaResponsiva({
 
   const getAlignClass = (align?: string) => {
     switch (align) {
-      case 'center': return 'text-center';
-      case 'right': return 'text-right';
-      default: return 'text-left';
+      case 'center':
+        return 'text-center';
+      case 'right':
+        return 'text-right';
+      default:
+        return 'text-left';
     }
   };
 
@@ -88,13 +90,15 @@ function TabelaResponsiva({
   }
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden ${className}`}>
+    <div
+      className={`bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden ${className}`}
+    >
       {/* Versão Desktop */}
       <div className="hidden md:block overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              {finalColunas.map((coluna) => (
+              {finalColunas.map(coluna => (
                 <th
                   key={coluna.key}
                   className={`px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider ${getAlignClass(coluna.align)} ${
@@ -127,15 +131,12 @@ function TabelaResponsiva({
                   }`}
                   onClick={() => onRowClick && onRowClick(item)}
                 >
-                  {finalColunas.map((coluna) => (
+                  {finalColunas.map(coluna => (
                     <td
                       key={coluna.key}
                       className={`px-6 py-4 whitespace-nowrap text-sm ${getAlignClass(coluna.align)}`}
                     >
-                      {coluna.render 
-                        ? coluna.render(item[coluna.key], item)
-                        : item[coluna.key]
-                      }
+                      {coluna.render ? coluna.render(item[coluna.key], item) : item[coluna.key]}
                     </td>
                   ))}
                 </tr>
@@ -148,9 +149,7 @@ function TabelaResponsiva({
       {/* Versão Mobile - Cards */}
       <div className="md:hidden">
         {dados.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">
-            {emptyMessage}
-          </div>
+          <div className="p-8 text-center text-gray-500">{emptyMessage}</div>
         ) : (
           <div className="divide-y divide-gray-200">
             {dados.map((item, index) => (
@@ -159,16 +158,11 @@ function TabelaResponsiva({
                 className={`p-4 ${onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
                 onClick={() => onRowClick && onRowClick(item)}
               >
-                {colunas.map((coluna) => (
+                {colunas.map(coluna => (
                   <div key={coluna.key} className="flex justify-between items-center py-1">
-                    <span className="text-sm font-medium text-gray-700">
-                      {coluna.titulo}:
-                    </span>
+                    <span className="text-sm font-medium text-gray-700">{coluna.titulo}:</span>
                     <span className="text-sm text-gray-900">
-                      {coluna.render 
-                        ? coluna.render(item[coluna.key], item)
-                        : item[coluna.key]
-                      }
+                      {coluna.render ? coluna.render(item[coluna.key], item) : item[coluna.key]}
                     </span>
                   </div>
                 ))}
@@ -181,4 +175,4 @@ function TabelaResponsiva({
   );
 }
 
-export default TabelaResponsiva; 
+export default TabelaResponsiva;

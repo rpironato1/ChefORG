@@ -10,68 +10,77 @@ export const useTables = () => {
       ...dados,
       id: `MESA-${Date.now()}`,
       qrCode: `QR-${dados.numero.toString().padStart(3, '0')}`,
-      status: 'livre'
+      status: 'livre',
     };
-    
+
     setMesas(prev => [...prev, novaMesa]);
     return novaMesa;
   }, []);
 
-  const buscarMesa = useCallback((id: string): Mesa | undefined => {
-    return mesas.find(m => m.id === id);
-  }, [mesas]);
+  const buscarMesa = useCallback(
+    (id: string): Mesa | undefined => {
+      return mesas.find(m => m.id === id);
+    },
+    [mesas]
+  );
 
-  const buscarMesaPorNumero = useCallback((numero: number): Mesa | undefined => {
-    return mesas.find(m => m.numero === numero);
-  }, [mesas]);
+  const buscarMesaPorNumero = useCallback(
+    (numero: number): Mesa | undefined => {
+      return mesas.find(m => m.numero === numero);
+    },
+    [mesas]
+  );
 
   const atualizarStatusMesa = useCallback((id: string, status: Mesa['status']): boolean => {
-    setMesas(prev => prev.map(m => m.id === id ? { ...m, status } : m));
+    setMesas(prev => prev.map(m => (m.id === id ? { ...m, status } : m)));
     return true;
   }, []);
 
   const ocuparMesa = useCallback((id: string, clienteAtual: string, garcom?: string): boolean => {
-    setMesas(prev => prev.map(m => 
-      m.id === id ? { ...m, status: 'ocupada', clienteAtual, garcom } : m
-    ));
+    setMesas(prev =>
+      prev.map(m => (m.id === id ? { ...m, status: 'ocupada', clienteAtual, garcom } : m))
+    );
     return true;
   }, []);
 
   const liberarMesa = useCallback((id: string): boolean => {
-    setMesas(prev => prev.map(m => 
-      m.id === id ? { 
-        ...m, 
-        status: 'livre', 
-        clienteAtual: undefined, 
-        garcom: undefined, 
-        pedidoAtual: undefined,
-        pin: undefined 
-      } : m
-    ));
+    setMesas(prev =>
+      prev.map(m =>
+        m.id === id
+          ? {
+              ...m,
+              status: 'livre',
+              clienteAtual: undefined,
+              garcom: undefined,
+              pedidoAtual: undefined,
+              pin: undefined,
+            }
+          : m
+      )
+    );
     return true;
   }, []);
 
-  const listarMesas = useCallback((filtros?: {
-    status?: Mesa['status'];
-    garcom?: string;
-    capacidadeMin?: number;
-  }) => {
-    let resultado = mesas;
-    
-    if (filtros?.status) {
-      resultado = resultado.filter(m => m.status === filtros.status);
-    }
-    
-    if (filtros?.garcom) {
-      resultado = resultado.filter(m => m.garcom === filtros.garcom);
-    }
-    
-    if (filtros?.capacidadeMin) {
-      resultado = resultado.filter(m => m.capacidade >= filtros.capacidadeMin!);
-    }
-    
-    return resultado;
-  }, [mesas]);
+  const listarMesas = useCallback(
+    (filtros?: { status?: Mesa['status']; garcom?: string; capacidadeMin?: number }) => {
+      let resultado = mesas;
+
+      if (filtros?.status) {
+        resultado = resultado.filter(m => m.status === filtros.status);
+      }
+
+      if (filtros?.garcom) {
+        resultado = resultado.filter(m => m.garcom === filtros.garcom);
+      }
+
+      if (filtros?.capacidadeMin) {
+        resultado = resultado.filter(m => m.capacidade >= filtros.capacidadeMin!);
+      }
+
+      return resultado;
+    },
+    [mesas]
+  );
 
   return {
     mesas,
@@ -81,6 +90,6 @@ export const useTables = () => {
     atualizarStatusMesa,
     ocuparMesa,
     liberarMesa,
-    listarMesas
+    listarMesas,
   };
 };

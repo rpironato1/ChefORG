@@ -51,25 +51,24 @@ export class NotificationService {
     if (Device.isDevice) {
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      
+
       if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      
+
       if (finalStatus !== 'granted') {
         console.warn('Failed to get push token for push notification!');
         return null;
       }
-      
+
       try {
         token = (await Notifications.getExpoPushTokenAsync()).data;
         this.expoPushToken = token;
         console.log('Expo Push Token:', token);
-        
+
         // In production, send this token to your server
         // await this.sendTokenToServer(token);
-        
       } catch (error) {
         console.error('Error getting Expo push token:', error);
       }
@@ -87,7 +86,7 @@ export class NotificationService {
     try {
       // In a real app, you would send this to your backend
       console.log('Sending push token to server:', token);
-      
+
       // Mock API call
       // await fetch('https://your-api.com/push-tokens', {
       //   method: 'POST',
@@ -229,11 +228,7 @@ export class NotificationService {
   /**
    * Send notification for staff task assignments
    */
-  async notifyStaffTask(
-    taskId: number,
-    title: string,
-    description: string
-  ): Promise<void> {
+  async notifyStaffTask(taskId: number, title: string, description: string): Promise<void> {
     await this.scheduleLocalNotification({
       title: `📋 Nova Tarefa: ${title}`,
       body: description,

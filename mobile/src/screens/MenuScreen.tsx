@@ -85,7 +85,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
         id: 1,
         nome: 'Pizza Margherita',
         descricao: 'Molho de tomate, mussarela, manjericão fresco',
-        preco: 28.90,
+        preco: 28.9,
         categoria_id: 1,
         ativo: true,
       },
@@ -93,7 +93,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
         id: 2,
         nome: 'Pizza Pepperoni',
         descricao: 'Molho de tomate, mussarela, pepperoni',
-        preco: 32.90,
+        preco: 32.9,
         categoria_id: 1,
         ativo: true,
       },
@@ -101,7 +101,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
         id: 3,
         nome: 'Hambúrguer Artesanal',
         descricao: 'Carne 180g, queijo, alface, tomate, cebola caramelizada',
-        preco: 24.90,
+        preco: 24.9,
         categoria_id: 2,
         ativo: true,
       },
@@ -109,7 +109,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
         id: 4,
         nome: 'Refrigerante Lata',
         descricao: 'Coca-Cola, Pepsi, Sprite, Fanta',
-        preco: 4.50,
+        preco: 4.5,
         categoria_id: 3,
         ativo: true,
       },
@@ -117,7 +117,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
         id: 5,
         nome: 'Brownie com Sorvete',
         descricao: 'Brownie de chocolate com sorvete de baunilha',
-        preco: 12.90,
+        preco: 12.9,
         categoria_id: 4,
         ativo: true,
       },
@@ -130,8 +130,9 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
 
   const filteredItems = menuItems.filter(item => {
     const matchesCategory = selectedCategory ? item.categoria_id === selectedCategory : true;
-    const matchesSearch = item.nome.toLowerCase().includes(searchText.toLowerCase()) ||
-                         item.descricao.toLowerCase().includes(searchText.toLowerCase());
+    const matchesSearch =
+      item.nome.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.descricao.toLowerCase().includes(searchText.toLowerCase());
     return matchesCategory && matchesSearch && item.ativo;
   });
 
@@ -169,11 +170,9 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
           <View style={styles.menuItemInfo}>
             <Text style={styles.menuItemName}>{item.nome}</Text>
             <Text style={styles.menuItemDescription}>{item.descricao}</Text>
-            <Text style={styles.menuItemPrice}>
-              R$ {item.preco.toFixed(2).replace('.', ',')}
-            </Text>
+            <Text style={styles.menuItemPrice}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
           </View>
-          
+
           <View style={styles.menuItemActions}>
             {quantity > 0 ? (
               <View style={styles.quantityControls}>
@@ -183,9 +182,9 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
                 >
                   <Text style={styles.quantityButtonText}>-</Text>
                 </TouchableOpacity>
-                
+
                 <Text style={styles.quantityText}>{quantity}</Text>
-                
+
                 <TouchableOpacity
                   style={[styles.quantityButton, styles.increaseButton]}
                   onPress={() => addToCart(item.id)}
@@ -194,10 +193,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             ) : (
-              <TouchableOpacity
-                style={styles.addButton}
-                onPress={() => addToCart(item.id)}
-              >
+              <TouchableOpacity style={styles.addButton} onPress={() => addToCart(item.id)}>
                 <Text style={styles.addButtonText}>Adicionar</Text>
               </TouchableOpacity>
             )}
@@ -214,9 +210,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
         styles.categoryButton,
         selectedCategory === category.id && styles.categoryButtonActive,
       ]}
-      onPress={() => setSelectedCategory(
-        selectedCategory === category.id ? null : category.id
-      )}
+      onPress={() => setSelectedCategory(selectedCategory === category.id ? null : category.id)}
     >
       <Text
         style={[
@@ -276,11 +270,9 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({ navigation }) => {
             <Text style={styles.cartItemCount}>
               {getTotalItems()} {getTotalItems() === 1 ? 'item' : 'itens'}
             </Text>
-            <Text style={styles.cartTotal}>
-              R$ {getCartTotal().toFixed(2).replace('.', ',')}
-            </Text>
+            <Text style={styles.cartTotal}>R$ {getCartTotal().toFixed(2).replace('.', ',')}</Text>
           </View>
-          
+
           <NativeButton
             title="Ver Carrinho"
             onPress={() => navigation.navigate('Orders')}

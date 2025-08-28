@@ -22,13 +22,12 @@ export class FormTestingService {
       try {
         // Test empty form submission (validation)
         await this.testEmptyFormSubmission(form);
-        
+
         // Test form filling and submission
         await this.testFormFilling(form);
-        
+
         // Test form accessibility
         await this.testFormAccessibility(form);
-        
       } catch (error) {
         console.error(`Form test failed:`, error);
         allFormsPassed = false;
@@ -44,33 +43,39 @@ export class FormTestingService {
   private async detectForms(): Promise<any[]> {
     return await this.page.evaluate(() => {
       const forms = Array.from(document.querySelectorAll('form'));
-      
+
       return forms.map((form, index) => {
         const fields = Array.from(form.querySelectorAll('input, select, textarea')).map(field => {
           const input = field as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-          
+
           return {
             id: input.id || `field-${index}-${Math.random()}`,
             name: input.name || '',
             type: input.type || input.tagName.toLowerCase(),
             required: input.hasAttribute('required'),
             placeholder: input.getAttribute('placeholder') || '',
-            options: input.tagName === 'SELECT' ? 
-              Array.from((input as HTMLSelectElement).options).map(opt => opt.value) : []
+            options:
+              input.tagName === 'SELECT'
+                ? Array.from((input as HTMLSelectElement).options).map(opt => opt.value)
+                : [],
           };
         });
 
-        const submitButton = form.querySelector('button[type="submit"], input[type="submit"], button:not([type])');
-        
+        const submitButton = form.querySelector(
+          'button[type="submit"], input[type="submit"], button:not([type])'
+        );
+
         return {
           id: form.id || `form-${index}`,
           action: form.action || '',
           method: form.method || 'GET',
           fields,
-          submitButton: submitButton ? {
-            id: submitButton.id || `submit-${index}`,
-            text: (submitButton as HTMLElement).textContent?.trim() || 'Submit'
-          } : null
+          submitButton: submitButton
+            ? {
+                id: submitButton.id || `submit-${index}`,
+                text: (submitButton as HTMLElement).textContent?.trim() || 'Submit',
+              }
+            : null,
         };
       });
     });
@@ -192,7 +197,7 @@ export class FormTestingService {
       try {
         const selector = field.id ? `#${field.id}` : `[name="${field.name}"]`;
         const element = await this.page.locator(selector).first();
-        
+
         // Focus on element using keyboard
         await element.focus();
         await this.page.waitForTimeout(100);
@@ -211,7 +216,6 @@ export class FormTestingService {
           await this.page.keyboard.press('Backspace');
           await this.page.keyboard.press('Backspace');
         }
-
       } catch (error) {
         console.warn(`Accessibility test failed for field ${field.id}:`, error);
       }
@@ -236,14 +240,18 @@ export class FormTestingService {
    */
   private async validateRequiredFieldErrors(): Promise<void> {
     // Look for error indicators
-    const errorElements = await this.page.$$('[role="alert"], .error, .invalid, [aria-invalid="true"], .field-error');
-    
+    const errorElements = await this.page.$$(
+      '[role="alert"], .error, .invalid, [aria-invalid="true"], .field-error'
+    );
+
     // Check for validation messages
     const validationMessages = await this.page.$$(':invalid, [data-validation-error]');
-    
+
     // Check HTML5 validation
     const hasHTML5Validation = await this.page.evaluate(() => {
-      const inputs = document.querySelectorAll('input[required], select[required], textarea[required]');
+      const inputs = document.querySelectorAll(
+        'input[required], select[required], textarea[required]'
+      );
       for (const input of inputs) {
         if (!(input as HTMLInputElement).checkValidity()) {
           return true;
@@ -263,10 +271,10 @@ export class FormTestingService {
   private async validateFormSubmissionSuccess(): Promise<void> {
     // Look for success indicators
     const successIndicators = await this.page.$$('.success, .submitted, [role="status"]');
-    
+
     // Check for URL change (redirect after submission)
     const currentUrl = this.page.url();
-    
+
     // Check for success messages in page content
     const hasSuccessMessage = await this.page.evaluate(() => {
       const successWords = ['success', 'submitted', 'thank you', 'received', 'completed'];
@@ -283,12 +291,12 @@ export class FormTestingService {
    */
   private async validateAriaLiveRegions(): Promise<void> {
     const liveRegions = await this.page.$$('[aria-live], [role="status"], [role="alert"]');
-    
+
     for (const region of liveRegions) {
       const ariaLive = await region.getAttribute('aria-live');
       const role = await region.getAttribute('role');
       const content = await region.textContent();
-      
+
       if ((ariaLive || role) && content?.trim()) {
         // Live region has content, which is good for screen readers
         continue;
@@ -302,11 +310,11 @@ export class FormTestingService {
   private generateEmail(): string {
     const domains = ['test.com', 'example.org', 'demo.net'];
     const names = ['user', 'test', 'demo', 'sample'];
-    
+
     const name = names[Math.floor(Math.random() * names.length)];
     const domain = domains[Math.floor(Math.random() * domains.length)];
     const number = Math.floor(Math.random() * 1000);
-    
+
     return `${name}${number}@${domain}`;
   }
 
@@ -331,19 +339,20 @@ export class FormTestingService {
     const name = field.name?.toLowerCase() || '';
     const id = field.id?.toLowerCase() || '';
     const placeholder = field.placeholder?.toLowerCase() || '';
-    
+
     const context = `${name} ${id} ${placeholder}`;
-    
+
     if (context.includes('name')) return 'Test User';
     if (context.includes('company')) return 'Test Company';
     if (context.includes('address')) return '123 Test Street';
     if (context.includes('city')) return 'Test City';
     if (context.includes('zip') || context.includes('postal')) return '12345';
     if (context.includes('country')) return 'Test Country';
-    if (context.includes('message') || context.includes('comment')) return 'This is a test message.';
+    if (context.includes('message') || context.includes('comment'))
+      return 'This is a test message.';
     if (context.includes('title')) return 'Test Title';
     if (context.includes('subject')) return 'Test Subject';
-    
+
     return 'Test Value';
   }
 }

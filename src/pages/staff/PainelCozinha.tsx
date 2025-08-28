@@ -16,18 +16,19 @@ function PainelCozinha() {
   const fetchOrders = async () => {
     // Apenas mostra o loader na carga inicial
     if (isLoading) {
-        const result = await getOrdersByStatus(['confirmado', 'preparando']);
-        if (result.success && result.data) {
-            setOrders(result.data);
-        } else {
-            setError(result.error || 'Falha ao buscar pedidos.');
-        }
-        setIsLoading(false);
-    } else { // Atualizações subsequentes são silenciosas
-        const result = await getOrdersByStatus(['confirmado', 'preparando']);
-        if (result.success && result.data) {
-            setOrders(result.data);
-        }
+      const result = await getOrdersByStatus(['confirmado', 'preparando']);
+      if (result.success && result.data) {
+        setOrders(result.data);
+      } else {
+        setError(result.error || 'Falha ao buscar pedidos.');
+      }
+      setIsLoading(false);
+    } else {
+      // Atualizações subsequentes são silenciosas
+      const result = await getOrdersByStatus(['confirmado', 'preparando']);
+      if (result.success && result.data) {
+        setOrders(result.data);
+      }
     }
   };
 
@@ -39,14 +40,14 @@ function PainelCozinha() {
 
   const handleUpdateStatus = async (orderId: number, newStatus: OrderStatus) => {
     const originalOrders = [...orders];
-    
+
     // Atualização otimista da UI
     setOrders(prevOrders => prevOrders.filter(o => o.id !== orderId));
 
     const result = await updateOrderStatus(orderId, newStatus);
     if (result.success) {
       showSuccess('Status atualizado!', `Pedido #${orderId} agora está ${newStatus}.`);
-      await fetchOrders(); 
+      await fetchOrders();
     } else {
       showError('Erro!', result.error || 'Não foi possível atualizar o status.');
       setOrders(originalOrders); // Reverte em caso de erro
@@ -54,17 +55,18 @@ function PainelCozinha() {
   };
 
   const { itemsByCategory, categories } = useMemo(() => {
-    const itemsByCategory: { [key: string]: any[] } = { 'Todos': [] };
+    const itemsByCategory: { [key: string]: any[] } = { Todos: [] };
     const categorySet = new Set<string>(['Todos']);
 
     orders.forEach(order => {
       order.order_items.forEach(item => {
-        const categoryName = (item.menu_items as any)?.categoria || item.menu_items?.nome || 'Outros';
+        const categoryName =
+          (item.menu_items as any)?.categoria || item.menu_items?.nome || 'Outros';
         categorySet.add(categoryName);
         if (!itemsByCategory[categoryName]) {
           itemsByCategory[categoryName] = [];
         }
-        
+
         const itemData = {
           ...item,
           orderId: order.id,
@@ -105,7 +107,7 @@ function PainelCozinha() {
     <div className="min-h-screen bg-gray-50 p-6">
       <ToastContainer />
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Painel da Cozinha</h1>
-      
+
       <div className="mb-6">
         <div className="flex flex-wrap gap-2">
           {categories.map(category => (
@@ -133,7 +135,9 @@ function PainelCozinha() {
                 <h3 className="text-lg font-bold text-gray-900">{item.menu_items?.nome}</h3>
                 <span className="text-2xl font-bold">x{item.quantidade}</span>
               </div>
-              <p className="text-sm text-gray-600 mb-3">Mesa {item.tableNumber} - Pedido #{item.orderId}</p>
+              <p className="text-sm text-gray-600 mb-3">
+                Mesa {item.tableNumber} - Pedido #{item.orderId}
+              </p>
               {item.observacoes && (
                 <p className="text-sm bg-yellow-50 p-2 rounded-md border border-yellow-200 text-yellow-800">
                   Obs: {item.observacoes}

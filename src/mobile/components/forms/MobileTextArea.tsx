@@ -9,26 +9,30 @@ interface MobileTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export const MobileTextArea = forwardRef<HTMLTextAreaElement, MobileTextAreaProps>(
-  ({
-    label,
-    error,
-    helperText,
-    variant = 'default',
-    resize = 'vertical',
-    className = '',
-    ...props
-  }, ref) => {
+  (
+    {
+      label,
+      error,
+      helperText,
+      variant = 'default',
+      resize = 'vertical',
+      className = '',
+      ...props
+    },
+    ref
+  ) => {
     const variantClasses = {
-      default: 'border border-gray-300 rounded-lg bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100',
+      default:
+        'border border-gray-300 rounded-lg bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100',
       filled: 'border-0 rounded-lg bg-gray-100 focus:bg-white focus:ring-2 focus:ring-primary-100',
-      outlined: 'border-2 border-gray-300 rounded-lg bg-transparent focus:border-primary-500'
+      outlined: 'border-2 border-gray-300 rounded-lg bg-transparent focus:border-primary-500',
     };
 
     const resizeClasses = {
       none: 'resize-none',
       vertical: 'resize-y',
       horizontal: 'resize-x',
-      both: 'resize'
+      both: 'resize',
     };
 
     const textareaClasses = `
@@ -43,7 +47,9 @@ export const MobileTextArea = forwardRef<HTMLTextAreaElement, MobileTextAreaProp
       placeholder:text-gray-400
       disabled:bg-gray-100 disabled:text-gray-500
       ${className}
-    `.trim().replace(/\s+/g, ' ');
+    `
+      .trim()
+      .replace(/\s+/g, ' ');
 
     // Mobile optimizations
     const mobileProps = {
@@ -60,14 +66,9 @@ export const MobileTextArea = forwardRef<HTMLTextAreaElement, MobileTextAreaProp
             {props.required && <span className="text-red-500 ml-1">*</span>}
           </label>
         )}
-        
-        <textarea
-          ref={ref}
-          className={textareaClasses}
-          {...mobileProps}
-          {...props}
-        />
-        
+
+        <textarea ref={ref} className={textareaClasses} {...mobileProps} {...props} />
+
         {(error || helperText) && (
           <p className={`text-xs ${error ? 'text-red-500' : 'text-gray-500'}`}>
             {error || helperText}

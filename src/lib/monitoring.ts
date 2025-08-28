@@ -24,7 +24,12 @@ export const initSentry = () => {
 export const SentryErrorBoundary = Sentry.withErrorBoundary;
 
 // Performance monitoring
-export const sentryTrace = Sentry.trace;
+export const sentryTrace = (name: string, op: string) => {
+  if (import.meta.env.PROD) {
+    return Sentry.startSpan({ name, op }, () => {});
+  }
+  return null;
+};
 
 // Manual error reporting
 export const reportError = (error: Error, context?: Record<string, any>) => {
@@ -45,7 +50,7 @@ export const setSentryUser = (user: { id: string; email?: string; role?: string 
 // Custom performance monitoring
 export const startTransaction = (name: string, op: string) => {
   if (import.meta.env.PROD) {
-    return Sentry.startTransaction({ name, op });
+    return Sentry.startSpan({ name, op }, () => {});
   }
   return null;
 };

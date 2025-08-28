@@ -17,24 +17,17 @@ export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({ children }) 
       {/* Mobile Layout */}
       <div className="block md:hidden">
         <MobileHeader onMenuToggle={() => setMobileMenuOpen(true)} />
-        <MobileDrawer 
-          isOpen={mobileMenuOpen} 
-          onClose={() => setMobileMenuOpen(false)} 
-        />
-        <main className="pb-16">
-          {children}
-        </main>
+        <MobileDrawer isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+        <main className="pb-16">{children}</main>
         <MobileBottomNavigation />
       </div>
-      
+
       {/* Desktop Layout */}
       <div className="hidden md:block">
         <Sidebar />
         <div className="md:ml-64">
           <Header />
-          <main className="p-6">
-            {children}
-          </main>
+          <main className="p-6">{children}</main>
         </div>
       </div>
     </div>

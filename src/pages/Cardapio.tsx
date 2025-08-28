@@ -9,7 +9,7 @@ function Cardapio() {
   const [menu, setMenu] = useState<CategoryWithItems[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -39,14 +39,16 @@ function Cardapio() {
   const filteredMenu = menu
     .map(category => ({
       ...category,
-      menu_items: category.menu_items.filter(item => 
-        item.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (item.descricao && item.descricao.toLowerCase().includes(searchTerm.toLowerCase()))
+      menu_items: category.menu_items.filter(
+        item =>
+          item.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (item.descricao && item.descricao.toLowerCase().includes(searchTerm.toLowerCase()))
       ),
     }))
-    .filter(category => 
-      (selectedCategory === 'Todas' || category.nome === selectedCategory) &&
-      category.menu_items.length > 0
+    .filter(
+      category =>
+        (selectedCategory === 'Todas' || category.nome === selectedCategory) &&
+        category.menu_items.length > 0
     );
 
   if (isLoading) {
@@ -74,9 +76,7 @@ function Cardapio() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Cardápio</h1>
-          <p className="text-gray-600 mt-1">
-            Gerencie os itens do seu menu e categorias
-          </p>
+          <p className="text-gray-600 mt-1">Gerencie os itens do seu menu e categorias</p>
         </div>
         <button className="btn-primary">
           <Plus className="h-4 w-4 mr-2" />
@@ -91,7 +91,7 @@ function Cardapio() {
             type="text"
             placeholder="Buscar itens do cardápio..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             className="input-field"
           />
         </div>
@@ -124,11 +124,11 @@ function Cardapio() {
                     Indisponível
                   </div>
                 )}
-                
+
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.nome}</h3>
                   <p className="text-gray-600 text-sm mb-3">{item.descricao}</p>
-                  
+
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-2xl font-bold text-primary-600">
                       R$ {Number(item.preco).toFixed(2)}
@@ -170,4 +170,4 @@ function Cardapio() {
   );
 }
 
-export default Cardapio; 
+export default Cardapio;

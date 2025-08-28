@@ -15,7 +15,7 @@ export interface ApiResponse<T = any> {
 // Utilitários comuns
 export const handleApiError = (error: any, customMessage?: string): ApiResponse<any> => {
   console.error('API Error:', error);
-  
+
   // Erros do Supabase podem ter `code` e `message`
   if (error?.code) {
     return {
@@ -30,7 +30,7 @@ export const handleApiError = (error: any, customMessage?: string): ApiResponse<
       error: customMessage || error.message,
     };
   }
-  
+
   return {
     success: false,
     error: customMessage || 'Erro interno do servidor.',
@@ -50,4 +50,4 @@ export const createSuccessResponse = <T>(data: T, message?: string): ApiResponse
 // - payments.ts (6.6, 6.7)
 // - menu.ts (6.8)
 // - feedback.ts (6.9)
-// - reports.ts (6.10) 
+// - reports.ts (6.10)

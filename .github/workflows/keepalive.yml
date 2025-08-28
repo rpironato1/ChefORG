@@ -16,10 +16,10 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"source": "github-actions", "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}')
-          
+
           echo "Resposta da função keep-alive:"
           echo $response
-          
+
           # Verifica se a resposta contém "success": true
           if echo "$response" | grep -q '"success": true'; then
             echo "✅ Keep-alive executado com sucesso!"
@@ -27,4 +27,4 @@ jobs:
             echo "❌ Erro na execução do keep-alive"
             echo "Resposta: $response"
             exit 1
-          fi 
+          fi

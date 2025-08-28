@@ -7,50 +7,62 @@ Always reference these instructions first and fallback to search or bash command
 ## Working Effectively
 
 ### Bootstrap and Setup
+
 Run these commands in sequence to set up the development environment:
 
 1. **Install Dependencies:**
+
    ```bash
    npm install
    ```
+
    - Takes ~1 minute to complete
    - Downloads ~332 packages
    - May show deprecation warnings - these are normal
 
 2. **Start Development Server:**
+
    ```bash
    npm run dev
    ```
+
    - **NEVER CANCEL** - Server starts in ~235ms and runs on port 8110
    - Access at `http://localhost:8110`
    - Hot reload enabled for all React/TypeScript changes
    - Console will show test data initialization messages - this is normal
 
 3. **Build for Production (CURRENTLY FAILS):**
+
    ```bash
    npm run build
    ```
+
    - **WARNING:** Currently fails with 167 TypeScript errors
    - **NEVER CANCEL** - Build takes ~7 seconds when it fails, would take 30+ seconds if successful
    - Do NOT attempt production builds until TypeScript errors are resolved
    - Set timeout to 90+ minutes for build commands
 
 4. **Lint Code (PARTIALLY WORKS):**
+
    ```bash
    npm run lint
    ```
+
    - Basic ESLint configuration is present but limited
    - Does not handle TypeScript/React syntax properly
    - Use for basic JavaScript syntax checking only
 
 5. **Preview Production Build:**
+
    ```bash
    npm run preview
    ```
+
    - Only works after successful `npm run build`
    - Currently not functional due to build errors
 
 ### Critical Build Status
+
 - **Development Mode:** ✅ Works perfectly
 - **Production Build:** ❌ Blocked by 167 TypeScript errors
 - **Testing Infrastructure:** ❌ Not implemented (0% coverage)
@@ -59,6 +71,7 @@ Run these commands in sequence to set up the development environment:
 ## Validation and Testing
 
 ### Manual Validation Scenarios
+
 Always test these complete user flows after making changes:
 
 1. **Public Website Flow:**
@@ -84,7 +97,9 @@ Always test these complete user flows after making changes:
    - No critical JavaScript errors should appear
 
 ### Build Troubleshooting
+
 **Common Build Errors to Fix:**
+
 - Unused React imports in multiple files
 - TypeScript type mismatches in API responses
 - Missing exports in `lib/api/index.ts`
@@ -92,6 +107,7 @@ Always test these complete user flows after making changes:
 - Import path resolution issues
 
 **When Build Errors Occur:**
+
 1. Read the specific TypeScript error messages
 2. Focus on files with highest error counts first
 3. Remove unused imports before fixing type issues
@@ -101,6 +117,7 @@ Always test these complete user flows after making changes:
 ## Project Structure and Key Areas
 
 ### Core Application Structure
+
 ```
 src/
 ├── components/          # Reusable UI components
@@ -125,6 +142,7 @@ src/
 ```
 
 ### Important Configuration Files
+
 - `package.json` - Dependencies and scripts
 - `vite.config.ts` - Build configuration (port 8110)
 - `tsconfig.json` - TypeScript configuration
@@ -132,6 +150,7 @@ src/
 - `.github/workflows/keepalive.yml` - Supabase keep-alive automation
 
 ### Frequently Modified Areas
+
 - **Business Logic:** `src/hooks/useBusinessLogic.ts` - Contains core restaurant operations logic
 - **API Layer:** `src/lib/api/` - All Supabase interactions and data operations
 - **Authentication:** `src/contexts/AppContext.tsx` - User session management
@@ -141,12 +160,14 @@ src/
 ## Database and Backend
 
 ### Supabase Configuration
+
 - **Current Mode:** Uses localStorage fallback for development
 - **Production Database:** Supabase (credentials in `src/lib/supabase.ts`)
 - **Keep-Alive System:** Configured to prevent database sleep
 - **Database Schema:** Comprehensive with 10+ tables for restaurant operations
 
 ### Key Database Tables
+
 - `users` - Staff and customer accounts
 - `tables` - Restaurant table management
 - `menu_items` - Food and beverage catalog
@@ -156,7 +177,9 @@ src/
 - `feedback` - Customer reviews and ratings
 
 ### API Modules (src/lib/api/)
+
 Each module handles specific business domain:
+
 - `dashboard.ts` - Management analytics
 - `orders.ts` - Order processing
 - `reservations.ts` - Booking management
@@ -170,6 +193,7 @@ Each module handles specific business domain:
 ## Development Guidelines
 
 ### Making Changes
+
 1. **Always run `npm run dev` first** to ensure clean starting state
 2. **Test in browser immediately** after any significant change
 3. **Check console for errors** - application logs helpful debugging info
@@ -177,6 +201,7 @@ Each module handles specific business domain:
 5. **Test responsive design** - application targets mobile and desktop
 
 ### Code Quality
+
 - Remove unused imports to reduce build errors
 - Follow existing patterns in API modules
 - Use proper TypeScript types from `src/types/index.ts`
@@ -184,7 +209,9 @@ Each module handles specific business domain:
 - Test user flows manually after changes
 
 ### Common Tasks
+
 **Adding New Features:**
+
 1. Check if similar functionality exists in existing API modules
 2. Add types to `src/types/index.ts` first
 3. Create API functions in appropriate `src/lib/api/` module
@@ -193,6 +220,7 @@ Each module handles specific business domain:
 6. Test complete user scenarios
 
 **Fixing Build Errors:**
+
 1. Start development server: `npm run dev`
 2. Attempt build: `npm run build` (expect failures)
 3. Fix TypeScript errors systematically
@@ -201,6 +229,7 @@ Each module handles specific business domain:
 6. Verify exports in `lib/api/index.ts`
 
 **Debugging Issues:**
+
 1. Check browser console for JavaScript errors
 2. Verify network requests in browser dev tools
 3. Check localStorage for test data persistence
@@ -216,7 +245,9 @@ Each module handles specific business domain:
 - **VERIFY TIMEOUTS** of 90+ minutes for build commands and 30+ minutes for any compilation tasks
 
 ## Test Accounts (Development Mode)
+
 When running in development, these accounts are available:
+
 - Admin: admin@cheforg.com
 - Recepção: recepcao@cheforg.com
 - Garçom: garcom@cheforg.com
@@ -225,6 +256,7 @@ When running in development, these accounts are available:
 - Cliente: cliente@test.com
 
 ## Next Steps for Production Readiness
+
 1. **Fix all 167 TypeScript errors** (blocking issue)
 2. **Implement test infrastructure** (0% coverage currently)
 3. **Resolve authentication context issues**
@@ -234,4 +266,4 @@ When running in development, these accounts are available:
 
 ---
 
-*This system is 75% complete but requires TypeScript error resolution before production deployment.*
+_This system is 75% complete but requires TypeScript error resolution before production deployment._

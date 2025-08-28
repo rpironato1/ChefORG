@@ -7,9 +7,9 @@ const SCREENSHOT_CONFIG = {
   devices: [
     { name: 'desktop', width: 1920, height: 1080 },
     { name: 'tablet', width: 768, height: 1024 },
-    { name: 'mobile', width: 375, height: 667 }
+    { name: 'mobile', width: 375, height: 667 },
   ],
-  
+
   // All application routes from App.tsx analysis
   routes: [
     // Public routes
@@ -17,7 +17,7 @@ const SCREENSHOT_CONFIG = {
     { path: '/menu', name: 'menu-publico' },
     { path: '/reserva', name: 'reserva-online' },
     { path: '/sprint3-demo', name: 'sprint3-demo' },
-    
+
     // Client routes (with dynamic mesa ID)
     { path: '/checkin', name: 'checkin-qr' },
     { path: '/chegada-sem-reserva', name: 'chegada-sem-reserva' },
@@ -26,11 +26,11 @@ const SCREENSHOT_CONFIG = {
     { path: '/mesa/1/acompanhar', name: 'mesa-acompanhar' },
     { path: '/mesa/1/pagamento', name: 'mesa-pagamento' },
     { path: '/mesa/1/feedback', name: 'mesa-feedback' },
-    
+
     // Auth routes
     { path: '/login', name: 'login' },
     { path: '/admin/login', name: 'admin-login' },
-    
+
     // Admin routes (will require authentication handling)
     { path: '/admin', name: 'admin-dashboard' },
     { path: '/admin/dashboard', name: 'admin-dashboard-explicit' },
@@ -39,11 +39,11 @@ const SCREENSHOT_CONFIG = {
     { path: '/admin/cozinha', name: 'admin-cozinha' },
     { path: '/admin/caixa', name: 'admin-caixa' },
     { path: '/admin/gerencia', name: 'admin-gerencia' },
-    { path: '/admin/acesso-negado', name: 'admin-acesso-negado' }
+    { path: '/admin/acesso-negado', name: 'admin-acesso-negado' },
   ],
-  
+
   baseUrl: 'http://localhost:3000',
-  screenshotDir: 'screenshots/screen-now'
+  screenshotDir: 'screenshots/screen-now',
 };
 
 class ComprehensiveScreenshotTester {
@@ -58,53 +58,60 @@ class ComprehensiveScreenshotTester {
     this.page = page;
   }
 
-  async takeScreenshotForRoute(route: { path: string; name: string }, device: { name: string; width: number; height: number }) {
+  async takeScreenshotForRoute(
+    route: { path: string; name: string },
+    device: { name: string; width: number; height: number }
+  ) {
     try {
       // Set viewport for device
       await this.page.setViewportSize({ width: device.width, height: device.height });
-      
+
       // Navigate to route
-      await this.page.goto(`${SCREENSHOT_CONFIG.baseUrl}${route.path}`, { 
+      await this.page.goto(`${SCREENSHOT_CONFIG.baseUrl}${route.path}`, {
         waitUntil: 'networkidle',
-        timeout: 10000 
+        timeout: 10000,
       });
-      
+
       // Wait for potential loading animations
       await this.page.waitForTimeout(2000);
-      
+
       // Handle authentication redirects for admin routes
       if (route.path.startsWith('/admin') && this.page.url().includes('/login')) {
-        console.log(`Admin route ${route.path} redirected to login - taking login screenshot instead`);
+        console.log(
+          `Admin route ${route.path} redirected to login - taking login screenshot instead`
+        );
         const filename = `${route.name}-redirected-to-login-${device.name}.png`;
         await this.page.screenshot({
           path: path.join(SCREENSHOT_CONFIG.screenshotDir, filename),
-          fullPage: true
+          fullPage: true,
         });
         return { success: true, filename, redirected: true };
       }
-      
+
       // Take screenshot
       const filename = `${route.name}-${device.name}.png`;
       await this.page.screenshot({
         path: path.join(SCREENSHOT_CONFIG.screenshotDir, filename),
-        fullPage: true
+        fullPage: true,
       });
-      
+
       console.log(`✅ Screenshot saved: ${filename}`);
       return { success: true, filename, redirected: false };
-      
     } catch (error) {
       console.error(`❌ Error taking screenshot for ${route.path} on ${device.name}:`, error);
       return { success: false, error: error.message, route: route.path, device: device.name };
     }
   }
 
-  async captureInteractiveStates(route: { path: string; name: string }, device: { name: string; width: number; height: number }) {
+  async captureInteractiveStates(
+    route: { path: string; name: string },
+    device: { name: string; width: number; height: number }
+  ) {
     try {
       await this.page.setViewportSize({ width: device.width, height: device.height });
-      await this.page.goto(`${SCREENSHOT_CONFIG.baseUrl}${route.path}`, { 
+      await this.page.goto(`${SCREENSHOT_CONFIG.baseUrl}${route.path}`, {
         waitUntil: 'networkidle',
-        timeout: 10000 
+        timeout: 10000,
       });
       await this.page.waitForTimeout(1000);
 
@@ -115,19 +122,21 @@ class ComprehensiveScreenshotTester {
       let filename = `${route.name}-${device.name}-default.png`;
       await this.page.screenshot({
         path: path.join(SCREENSHOT_CONFIG.screenshotDir, filename),
-        fullPage: true
+        fullPage: true,
       });
       states.push({ state: 'default', filename });
 
       // 2. Try to find and hover over interactive elements
-      const interactiveElements = await this.page.locator('button, a, input, select, [role="button"]').all();
+      const interactiveElements = await this.page
+        .locator('button, a, input, select, [role="button"]')
+        .all();
       if (interactiveElements.length > 0) {
         await interactiveElements[0].hover();
         await this.page.waitForTimeout(500);
         filename = `${route.name}-${device.name}-hover.png`;
         await this.page.screenshot({
           path: path.join(SCREENSHOT_CONFIG.screenshotDir, filename),
-          fullPage: true
+          fullPage: true,
         });
         states.push({ state: 'hover', filename });
       }
@@ -140,7 +149,7 @@ class ComprehensiveScreenshotTester {
         filename = `${route.name}-${device.name}-focused.png`;
         await this.page.screenshot({
           path: path.join(SCREENSHOT_CONFIG.screenshotDir, filename),
-          fullPage: true
+          fullPage: true,
         });
         states.push({ state: 'focused', filename });
       }
@@ -155,7 +164,7 @@ class ComprehensiveScreenshotTester {
 
 test.describe('Comprehensive Screenshot Test Suite', () => {
   let screenshotTester: ComprehensiveScreenshotTester;
-  
+
   test.beforeAll(async ({ browser }) => {
     // Ensure screenshot directory exists
     const fs = require('fs');
@@ -176,7 +185,7 @@ test.describe('Comprehensive Screenshot Test Suite', () => {
       test(`Screenshot: ${route.name} on ${device.name}`, async () => {
         const result = await screenshotTester.takeScreenshotForRoute(route, device);
         expect(result.success).toBe(true);
-        
+
         if (!result.success) {
           console.error(`Failed to capture ${route.name} on ${device.name}:`, result.error);
         }
@@ -188,7 +197,7 @@ test.describe('Comprehensive Screenshot Test Suite', () => {
   test('Interactive States - Homepage', async () => {
     for (const device of SCREENSHOT_CONFIG.devices) {
       const result = await screenshotTester.captureInteractiveStates(
-        { path: '/', name: 'home-interactive' }, 
+        { path: '/', name: 'home-interactive' },
         device
       );
       expect(result.success).toBe(true);
@@ -198,7 +207,7 @@ test.describe('Comprehensive Screenshot Test Suite', () => {
   test('Interactive States - Menu', async () => {
     for (const device of SCREENSHOT_CONFIG.devices) {
       const result = await screenshotTester.captureInteractiveStates(
-        { path: '/menu', name: 'menu-interactive' }, 
+        { path: '/menu', name: 'menu-interactive' },
         device
       );
       expect(result.success).toBe(true);
@@ -208,7 +217,7 @@ test.describe('Comprehensive Screenshot Test Suite', () => {
   test('Interactive States - Reserva', async () => {
     for (const device of SCREENSHOT_CONFIG.devices) {
       const result = await screenshotTester.captureInteractiveStates(
-        { path: '/reserva', name: 'reserva-interactive' }, 
+        { path: '/reserva', name: 'reserva-interactive' },
         device
       );
       expect(result.success).toBe(true);
@@ -220,20 +229,20 @@ test.describe('Comprehensive Screenshot Test Suite', () => {
 test('Generate Screenshot Summary Report', async ({ page }) => {
   const fs = require('fs');
   const reportPath = path.join(SCREENSHOT_CONFIG.screenshotDir, 'SCREENSHOT_REPORT.md');
-  
+
   let report = `# ChefORG Screenshot Report\n\n`;
   report += `Generated: ${new Date().toISOString()}\n\n`;
   report += `## Coverage Summary\n\n`;
   report += `- **Total Routes**: ${SCREENSHOT_CONFIG.routes.length}\n`;
   report += `- **Device Types**: ${SCREENSHOT_CONFIG.devices.length} (Desktop, Tablet, Mobile)\n`;
   report += `- **Total Screenshots**: ${SCREENSHOT_CONFIG.routes.length * SCREENSHOT_CONFIG.devices.length}\n\n`;
-  
+
   report += `## Device Specifications\n\n`;
   for (const device of SCREENSHOT_CONFIG.devices) {
     report += `- **${device.name}**: ${device.width}x${device.height}px\n`;
   }
   report += `\n`;
-  
+
   report += `## Routes Captured\n\n`;
   for (const route of SCREENSHOT_CONFIG.routes) {
     report += `### ${route.name}\n`;
@@ -244,7 +253,7 @@ test('Generate Screenshot Summary Report', async ({ page }) => {
     }
     report += `\n`;
   }
-  
+
   fs.writeFileSync(reportPath, report);
   console.log(`📊 Screenshot report generated: ${reportPath}`);
 });

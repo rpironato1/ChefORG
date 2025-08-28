@@ -1,22 +1,26 @@
 # Sistema Keep-Alive para Supabase (Plano Gratuito)
 
 ## 🎯 Objetivo
+
 Manter o projeto Supabase ativo no plano gratuito através de execuções diárias automatizadas, evitando o desligamento após 7 dias de inatividade.
 
 ## 🔧 Configuração Implementada
 
 ### 1. Edge Function Criada
+
 - **Nome:** `keep-alive`
 - **Função:** Executa uma query mínima no banco para manter atividade
 - **URL:** `https://[seu-projeto].supabase.co/functions/v1/keep-alive`
 
 ### 2. Tabela de Logs
+
 - **Tabela:** `system_keepalive_logs`
 - **Função:** Registra todas as execuções do sistema
 
 ## 📅 Configuração do Cron Job
 
 ### Opção 1: GitHub Actions (Recomendado)
+
 Crie um arquivo `.github/workflows/keepalive.yml` no seu repositório:
 
 ```yaml
@@ -41,17 +45,19 @@ jobs:
 ```
 
 ### Opção 2: Cron-Job.org (Gratuito)
+
 1. Acesse https://cron-job.org/
 2. Crie uma conta gratuita
 3. Adicione um novo cron job:
    - **URL:** `https://[seu-projeto].supabase.co/functions/v1/keep-alive`
    - **Método:** POST
    - **Frequência:** Diária (ex: 08:00)
-   - **Headers:** 
+   - **Headers:**
      - `Authorization: Bearer [SEU-ANON-KEY]`
      - `Content-Type: application/json`
 
 ### Opção 3: Uptime Robot (Gratuito)
+
 1. Acesse https://uptimerobot.com/
 2. Crie uma conta gratuita
 3. Adicione um novo monitor:
@@ -62,24 +68,29 @@ jobs:
 ## 🔐 Configuração de Segurança
 
 ### Chaves Necessárias:
+
 - **SUPABASE_URL:** URL do seu projeto
 - **SUPABASE_ANON_KEY:** Chave anônima do projeto
 
 ### Para GitHub Actions:
+
 Adicione as seguintes secrets no seu repositório:
+
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY`
 
 ## 📊 Monitoramento
 
 ### Verificar Execuções:
+
 ```sql
-SELECT * FROM system_keepalive_logs 
-ORDER BY created_at DESC 
+SELECT * FROM system_keepalive_logs
+ORDER BY created_at DESC
 LIMIT 10;
 ```
 
 ### Verificar Status da Função:
+
 ```bash
 curl -X POST "https://[SEU-PROJETO].supabase.co/functions/v1/keep-alive" \
   -H "Authorization: Bearer [SEU-ANON-KEY]" \
@@ -89,6 +100,7 @@ curl -X POST "https://[SEU-PROJETO].supabase.co/functions/v1/keep-alive" \
 ## 🛠️ Testando o Sistema
 
 ### Teste Manual:
+
 ```bash
 # Substitua [SEU-PROJETO] e [SEU-ANON-KEY] pelos valores corretos
 curl -X POST "https://[SEU-PROJETO].supabase.co/functions/v1/keep-alive" \
@@ -98,6 +110,7 @@ curl -X POST "https://[SEU-PROJETO].supabase.co/functions/v1/keep-alive" \
 ```
 
 ### Resposta Esperada:
+
 ```json
 {
   "success": true,
@@ -111,6 +124,7 @@ curl -X POST "https://[SEU-PROJETO].supabase.co/functions/v1/keep-alive" \
 ## 🔄 Automação Completa
 
 ### Script de Configuração (Bash):
+
 ```bash
 #!/bin/bash
 # config-keepalive.sh
@@ -150,16 +164,18 @@ echo "Últimas execuções:"
 ## 🔧 Troubleshooting
 
 ### Se a função não executar:
+
 1. Verifique se a URL está correta
 2. Verifique se a chave de API está válida
 3. Verifique os logs da Edge Function
 4. Teste manualmente primeiro
 
 ### Se houver erro de permissão:
+
 1. Verifique se o RLS não está bloqueando
 2. Use a service role key se necessário
 3. Verifique as políticas de segurança
 
 ---
 
-✅ **Sistema configurado e pronto para uso!** 
+✅ **Sistema configurado e pronto para uso!**

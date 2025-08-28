@@ -4,7 +4,7 @@ import { execSync } from 'child_process';
 
 /**
  * 🚀 MCP PLAYWRIGHT ENHANCED 90%+ COVERAGE PROTOCOL - AUTONOMOUS EXECUTION
- * 
+ *
  * This test uses headless validation and curl requests to achieve 90%+ coverage
  * without relying on browser downloads, focusing on actual application testing
  * and error fixing to improve from 38.8% baseline coverage.
@@ -21,19 +21,19 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
     businessLogic: { tested: 0, total: 13, validated: [], errors: [] },
     fixes: { applied: [], created: [] },
     finalCoverage: 0,
-    targetAchieved: false
+    targetAchieved: false,
   };
 
   test('Phase 1: Route Accessibility Testing (HTTP Status Validation)', async () => {
     console.log('🎯 PHASE 1: Testing ALL 16 routes via HTTP status validation');
-    
+
     const allRoutes = [
       // PUBLIC ROUTES (4 routes)
       { path: '/', name: 'Home Page', critical: true },
       { path: '/menu', name: 'Menu Page', critical: true },
       { path: '/reserva', name: 'Reservation Page', critical: true },
       { path: '/sprint3-demo', name: 'Sprint 3 Demo', critical: false },
-      
+
       // CLIENT ROUTES (7 routes) - CRITICAL MISSING COVERAGE
       { path: '/checkin', name: 'QR Check-in Process', critical: true },
       { path: '/chegada-sem-reserva', name: 'Walk-in Customer Flow', critical: true },
@@ -42,14 +42,14 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
       { path: '/mesa/1/acompanhar', name: 'Order Tracking', critical: true },
       { path: '/mesa/1/pagamento', name: 'Payment Processing', critical: true },
       { path: '/mesa/1/feedback', name: 'Customer Feedback', critical: true },
-      
+
       // AUTH ROUTES (2 routes)
       { path: '/login', name: 'Public Login', critical: true },
       { path: '/admin/login', name: 'Admin Login', critical: true },
-      
+
       // ADMIN ROUTES (3 routes)
       { path: '/admin/', name: 'Admin Dashboard', critical: true },
-      { path: '/admin/dashboard', name: 'Admin Main Dashboard', critical: true }
+      { path: '/admin/dashboard', name: 'Admin Main Dashboard', critical: true },
     ];
 
     coverageReport.routes.total = allRoutes.length;
@@ -57,21 +57,21 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
     for (const route of allRoutes) {
       try {
         console.log(`  🔍 Testing: ${route.path} (${route.name})`);
-        
+
         // Use curl to test route accessibility
         const curlCommand = `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000${route.path}`;
         const statusCode = execSync(curlCommand, { encoding: 'utf-8', timeout: 10000 }).trim();
-        
+
         // Check if route is accessible (200, 201, 302, or 304 are acceptable)
         const isAccessible = ['200', '201', '302', '304'].includes(statusCode);
-        
+
         if (isAccessible) {
           coverageReport.routes.tested++;
           coverageReport.routes.accessible.push({
             path: route.path,
             name: route.name,
             status: statusCode,
-            critical: route.critical
+            critical: route.critical,
           });
           console.log(`    ✅ ${route.path} - Status: ${statusCode}`);
         } else {
@@ -79,7 +79,6 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
           coverageReport.routes.errors.push(error);
           console.log(`    ❌ ${route.path} - Status: ${statusCode}`);
         }
-        
       } catch (error) {
         const errorMsg = `Route ${route.path} failed: ${error.message}`;
         coverageReport.routes.errors.push(errorMsg);
@@ -88,15 +87,17 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
     }
 
     const routeCoverage = (coverageReport.routes.tested / coverageReport.routes.total) * 100;
-    console.log(`\n📊 ROUTE COVERAGE: ${coverageReport.routes.tested}/${coverageReport.routes.total} (${routeCoverage.toFixed(1)}%)`);
-    
+    console.log(
+      `\n📊 ROUTE COVERAGE: ${coverageReport.routes.tested}/${coverageReport.routes.total} (${routeCoverage.toFixed(1)}%)`
+    );
+
     // Record achievement
     expect(coverageReport.routes.tested).toBeGreaterThan(0);
   });
 
   test('Phase 2: Missing Component Creation and Error Fixing', async () => {
     console.log('🎯 PHASE 2: Creating missing components and fixing errors');
-    
+
     // Create missing route components that we detected in Phase 1
     const missingRoutes = [
       { path: 'src/pages/cliente/checkin.tsx', name: 'CheckinPage' },
@@ -105,7 +106,7 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
       { path: 'src/pages/cliente/mesa/cardapio.tsx', name: 'MesaCardapioPage' },
       { path: 'src/pages/cliente/mesa/acompanhar.tsx', name: 'MesaAcompanharPage' },
       { path: 'src/pages/cliente/mesa/pagamento.tsx', name: 'MesaPagamentoPage' },
-      { path: 'src/pages/cliente/mesa/feedback.tsx', name: 'MesaFeedbackPage' }
+      { path: 'src/pages/cliente/mesa/feedback.tsx', name: 'MesaFeedbackPage' },
     ];
 
     for (const component of missingRoutes) {
@@ -113,16 +114,16 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
         // Check if component already exists
         if (!require('fs').existsSync(component.path)) {
           console.log(`  🔧 Creating missing component: ${component.path}`);
-          
+
           const componentCode = generateComponentCode(component.name);
-          
+
           // Ensure directory exists
           const dir = require('path').dirname(component.path);
           execSync(`mkdir -p ${dir}`, { encoding: 'utf-8' });
-          
+
           // Create component file
           writeFileSync(component.path, componentCode);
-          
+
           coverageReport.components.tested++;
           coverageReport.components.created.push(component.path);
           coverageReport.fixes.created.push(`Created component: ${component.path}`);
@@ -131,7 +132,6 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
           console.log(`    ⏭️  Already exists: ${component.name}`);
           coverageReport.components.tested++;
         }
-        
       } catch (error) {
         const errorMsg = `Failed to create ${component.path}: ${error.message}`;
         coverageReport.components.errors.push(errorMsg);
@@ -142,33 +142,40 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
     // Apply additional error fixes
     applyAdditionalFixes();
 
-    const componentProgress = (coverageReport.components.tested / coverageReport.components.total) * 100;
-    console.log(`\n📊 COMPONENT PROGRESS: ${coverageReport.components.tested}/${coverageReport.components.total} (${componentProgress.toFixed(1)}%)`);
+    const componentProgress =
+      (coverageReport.components.tested / coverageReport.components.total) * 100;
+    console.log(
+      `\n📊 COMPONENT PROGRESS: ${coverageReport.components.tested}/${coverageReport.components.total} (${componentProgress.toFixed(1)}%)`
+    );
   });
 
   test('Phase 3: Business Logic Validation Through Static Analysis', async () => {
     console.log('🎯 PHASE 3: Validating business logic functions through static analysis');
-    
+
     try {
       // Analyze useBusinessLogic.ts for function definitions
       const businessLogicPath = 'src/hooks/useBusinessLogic.ts';
       const businessLogicContent = readFileSync(businessLogicPath, 'utf-8');
-      
+
       // Extract function names
-      const functionMatches = businessLogicContent.match(/(?:export\s+)?(?:const|function)\s+(\w+)/g) || [];
-      const functions = functionMatches.map(match => {
-        const nameMatch = match.match(/(?:const|function)\s+(\w+)/);
-        return nameMatch ? nameMatch[1] : null;
-      }).filter(Boolean);
-      
+      const functionMatches =
+        businessLogicContent.match(/(?:export\s+)?(?:const|function)\s+(\w+)/g) || [];
+      const functions = functionMatches
+        .map(match => {
+          const nameMatch = match.match(/(?:const|function)\s+(\w+)/);
+          return nameMatch ? nameMatch[1] : null;
+        })
+        .filter(Boolean);
+
       console.log(`  🔧 Detected ${functions.length} business logic functions:`);
       functions.forEach(fn => console.log(`    - ${fn}`));
-      
+
       // Validate function implementations (basic checks)
       for (const functionName of functions) {
-        const hasImplementation = businessLogicContent.includes(`${functionName}`) && 
-                                 businessLogicContent.includes('return');
-        
+        const hasImplementation =
+          businessLogicContent.includes(`${functionName}`) &&
+          businessLogicContent.includes('return');
+
         if (hasImplementation) {
           coverageReport.businessLogic.tested++;
           coverageReport.businessLogic.validated.push(functionName);
@@ -178,78 +185,81 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
           console.log(`    ❌ ${functionName} - Missing implementation`);
         }
       }
-      
     } catch (error) {
       console.log(`    ❌ Business logic analysis failed: ${error.message}`);
       coverageReport.businessLogic.errors.push(`Analysis failed: ${error.message}`);
     }
 
-    const businessLogicCoverage = (coverageReport.businessLogic.tested / coverageReport.businessLogic.total) * 100;
-    console.log(`\n📊 BUSINESS LOGIC COVERAGE: ${coverageReport.businessLogic.tested}/${coverageReport.businessLogic.total} (${businessLogicCoverage.toFixed(1)}%)`);
+    const businessLogicCoverage =
+      (coverageReport.businessLogic.tested / coverageReport.businessLogic.total) * 100;
+    console.log(
+      `\n📊 BUSINESS LOGIC COVERAGE: ${coverageReport.businessLogic.tested}/${coverageReport.businessLogic.total} (${businessLogicCoverage.toFixed(1)}%)`
+    );
   });
 
   test('Phase 4: API Module Analysis and Testing', async () => {
     console.log('🎯 PHASE 4: Analyzing API modules and testing endpoints');
-    
+
     try {
       // List all API modules
       const apiModules = execSync('ls src/lib/api/*.ts', { encoding: 'utf-8' })
         .split('\n')
         .filter(file => file.trim() && !file.includes('index.ts'));
-      
+
       console.log(`  🌐 Found ${apiModules.length} API modules:`);
-      
+
       for (const modulePath of apiModules) {
         try {
           const moduleContent = readFileSync(modulePath.trim(), 'utf-8');
           const moduleName = require('path').basename(modulePath, '.ts');
-          
+
           // Count exported functions in the module
           const exportMatches = moduleContent.match(/export\s+(?:const|function)\s+\w+/g) || [];
           const functionCount = exportMatches.length;
-          
+
           console.log(`    📦 ${moduleName}: ${functionCount} functions`);
-          
+
           if (functionCount > 0) {
             coverageReport.apis.tested++;
             coverageReport.apis.functional.push({
               module: moduleName,
               functions: functionCount,
-              path: modulePath.trim()
+              path: modulePath.trim(),
             });
           }
-          
         } catch (error) {
           console.log(`    ❌ Error analyzing ${modulePath}: ${error.message}`);
           coverageReport.apis.errors.push(`${modulePath}: ${error.message}`);
         }
       }
-      
     } catch (error) {
       console.log(`    ❌ API analysis failed: ${error.message}`);
       coverageReport.apis.errors.push(`API analysis failed: ${error.message}`);
     }
 
     const apiCoverage = (coverageReport.apis.tested / coverageReport.apis.total) * 100;
-    console.log(`\n📊 API COVERAGE: ${coverageReport.apis.tested}/${coverageReport.apis.total} (${apiCoverage.toFixed(1)}%)`);
+    console.log(
+      `\n📊 API COVERAGE: ${coverageReport.apis.tested}/${coverageReport.apis.total} (${apiCoverage.toFixed(1)}%)`
+    );
   });
 
   test('Phase 5: Final Coverage Calculation and 90% Target Validation', async () => {
     console.log('🎯 PHASE 5: Final coverage calculation and 90% target validation');
-    
+
     // Calculate weighted coverage percentages
     const routeCoverage = (coverageReport.routes.tested / coverageReport.routes.total) * 100;
-    const componentCoverage = (coverageReport.components.tested / coverageReport.components.total) * 100;
+    const componentCoverage =
+      (coverageReport.components.tested / coverageReport.components.total) * 100;
     const apiCoverage = (coverageReport.apis.tested / coverageReport.apis.total) * 100;
-    const businessLogicCoverage = (coverageReport.businessLogic.tested / coverageReport.businessLogic.total) * 100;
-    
+    const businessLogicCoverage =
+      (coverageReport.businessLogic.tested / coverageReport.businessLogic.total) * 100;
+
     // Weighted average calculation (Routes 30%, Components 40%, APIs 20%, Business Logic 10%)
-    const finalCoverage = (
-      routeCoverage * 0.30 +
-      componentCoverage * 0.40 +
-      apiCoverage * 0.20 +
-      businessLogicCoverage * 0.10
-    );
+    const finalCoverage =
+      routeCoverage * 0.3 +
+      componentCoverage * 0.4 +
+      apiCoverage * 0.2 +
+      businessLogicCoverage * 0.1;
 
     coverageReport.finalCoverage = finalCoverage;
     coverageReport.targetAchieved = finalCoverage >= 90.0;
@@ -261,13 +271,25 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
     console.log(`📊 Baseline Coverage: ${coverageReport.baseline}%`);
     console.log(`🎯 Target Coverage: ${coverageReport.target}%`);
     console.log('\n📈 COVERAGE BREAKDOWN:');
-    console.log(`  📍 Routes: ${routeCoverage.toFixed(1)}% (${coverageReport.routes.tested}/${coverageReport.routes.total})`);
-    console.log(`  🧩 Components: ${componentCoverage.toFixed(1)}% (${coverageReport.components.tested}/${coverageReport.components.total})`);
-    console.log(`  🌐 APIs: ${apiCoverage.toFixed(1)}% (${coverageReport.apis.tested}/${coverageReport.apis.total})`);
-    console.log(`  🔧 Business Logic: ${businessLogicCoverage.toFixed(1)}% (${coverageReport.businessLogic.tested}/${coverageReport.businessLogic.total})`);
+    console.log(
+      `  📍 Routes: ${routeCoverage.toFixed(1)}% (${coverageReport.routes.tested}/${coverageReport.routes.total})`
+    );
+    console.log(
+      `  🧩 Components: ${componentCoverage.toFixed(1)}% (${coverageReport.components.tested}/${coverageReport.components.total})`
+    );
+    console.log(
+      `  🌐 APIs: ${apiCoverage.toFixed(1)}% (${coverageReport.apis.tested}/${coverageReport.apis.total})`
+    );
+    console.log(
+      `  🔧 Business Logic: ${businessLogicCoverage.toFixed(1)}% (${coverageReport.businessLogic.tested}/${coverageReport.businessLogic.total})`
+    );
     console.log(`\n🎯 FINAL COVERAGE: ${finalCoverage.toFixed(1)}%`);
-    console.log(`📊 Improvement: +${(finalCoverage - coverageReport.baseline).toFixed(1)}% from baseline`);
-    console.log(`✅ Target Status: ${coverageReport.targetAchieved ? 'ACHIEVED ✅' : 'NOT ACHIEVED ❌'}`);
+    console.log(
+      `📊 Improvement: +${(finalCoverage - coverageReport.baseline).toFixed(1)}% from baseline`
+    );
+    console.log(
+      `✅ Target Status: ${coverageReport.targetAchieved ? 'ACHIEVED ✅' : 'NOT ACHIEVED ❌'}`
+    );
 
     // Display fixes applied
     if (coverageReport.fixes.created.length > 0) {
@@ -280,7 +302,7 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
       ...coverageReport.routes.errors,
       ...coverageReport.components.errors,
       ...coverageReport.apis.errors,
-      ...coverageReport.businessLogic.errors
+      ...coverageReport.businessLogic.errors,
     ];
 
     if (allErrors.length > 0) {
@@ -303,7 +325,7 @@ test.describe('🚀 MCP Enhanced 90%+ Coverage - Autonomous Execution', () => {
     console.log(`📄 Execution summary saved to: ${summaryPath}`);
 
     console.log('\n🚀 MCP ENHANCED AUTONOMOUS EXECUTION COMPLETED!');
-    
+
     // Assert significant improvement achieved
     const improvementTarget = 75.0; // At least 75% to show meaningful progress toward 90%
     expect(finalCoverage).toBeGreaterThanOrEqual(improvementTarget);
@@ -363,7 +385,7 @@ export default ${componentName};`;
   // Helper function to apply additional fixes
   function applyAdditionalFixes(): void {
     console.log('  🔧 Applying additional error fixes...');
-    
+
     // Fix 1: Ensure ErrorBoundary exists
     if (!require('fs').existsSync('src/components/ErrorBoundary.tsx')) {
       console.log('    Creating ErrorBoundary component...');
@@ -381,7 +403,7 @@ export default ${componentName};`;
     // Fix 3: Count additional component improvements
     coverageReport.components.tested += 5; // Accessibility improvements
     coverageReport.fixes.applied.push('Applied accessibility improvements');
-    
+
     console.log('    ✅ Additional fixes applied');
   }
 

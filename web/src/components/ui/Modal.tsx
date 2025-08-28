@@ -9,34 +9,42 @@ interface ModalConfirmacaoProps extends ModalProps {
   tipoConfirmacao?: 'info' | 'sucesso' | 'aviso' | 'erro';
 }
 
-function Modal({ 
-  isOpen, 
-  onClose, 
-  titulo, 
+function Modal({
+  isOpen,
+  onClose,
+  titulo,
   children,
   onConfirmar,
   onCancelar,
   textoBotaoConfirmar = 'Confirmar',
   textoBotaoCancelar = 'Cancelar',
-  tipoConfirmacao = 'info'
+  tipoConfirmacao = 'info',
 }: ModalConfirmacaoProps) {
   if (!isOpen) return null;
 
   const getCorTema = () => {
     switch (tipoConfirmacao) {
-      case 'sucesso': return 'border-green-500 text-green-700';
-      case 'aviso': return 'border-yellow-500 text-yellow-700';
-      case 'erro': return 'border-red-500 text-red-700';
-      default: return 'border-blue-500 text-blue-700';
+      case 'sucesso':
+        return 'border-green-500 text-green-700';
+      case 'aviso':
+        return 'border-yellow-500 text-yellow-700';
+      case 'erro':
+        return 'border-red-500 text-red-700';
+      default:
+        return 'border-blue-500 text-blue-700';
     }
   };
 
   const getCorBotao = () => {
     switch (tipoConfirmacao) {
-      case 'sucesso': return 'bg-green-600 hover:bg-green-700';
-      case 'aviso': return 'bg-yellow-600 hover:bg-yellow-700';
-      case 'erro': return 'bg-red-600 hover:bg-red-700';
-      default: return 'bg-blue-600 hover:bg-blue-700';
+      case 'sucesso':
+        return 'bg-green-600 hover:bg-green-700';
+      case 'aviso':
+        return 'bg-yellow-600 hover:bg-yellow-700';
+      case 'erro':
+        return 'bg-red-600 hover:bg-red-700';
+      default:
+        return 'bg-blue-600 hover:bg-blue-700';
     }
   };
 
@@ -55,9 +63,7 @@ function Modal({
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          {children}
-        </div>
+        <div className="p-6">{children}</div>
 
         {/* Footer com botões */}
         {(onConfirmar || onCancelar) && (
@@ -85,4 +91,4 @@ function Modal({
   );
 }
 
-export default Modal; 
+export default Modal;

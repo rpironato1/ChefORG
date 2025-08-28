@@ -19,17 +19,11 @@ export const ModularHomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      <HeroSection 
-        onReserveClick={handleReserveClick}
-        onMenuClick={handleMenuClick}
-      />
+      <HeroSection onReserveClick={handleReserveClick} onMenuClick={handleMenuClick} />
       <FeaturesSection />
       <TestimonialsSection />
-      <ContactSection 
-        onReserveClick={handleReserveClick}
-        onMenuClick={handleMenuClick}
-      />
-      
+      <ContactSection onReserveClick={handleReserveClick} onMenuClick={handleMenuClick} />
+
       {/* Sprint 2: Mobile Gesture Demo - Only show on mobile */}
       <div className="block md:hidden">
         <SwipeGestureDemo />

@@ -13,17 +13,67 @@ interface Mesa {
 }
 
 const mockMesas: Mesa[] = [
-  { id: '1', numero: 1, capacidade: 4, status: 'ocupada', garcom: 'João', pedidoAtual: '#001', tempoOcupacao: '45 min', valorConta: 89.50 },
+  {
+    id: '1',
+    numero: 1,
+    capacidade: 4,
+    status: 'ocupada',
+    garcom: 'João',
+    pedidoAtual: '#001',
+    tempoOcupacao: '45 min',
+    valorConta: 89.5,
+  },
   { id: '2', numero: 2, capacidade: 2, status: 'livre', garcom: 'Maria' },
-  { id: '3', numero: 3, capacidade: 6, status: 'reservada', garcom: 'Pedro', tempoOcupacao: '19:30' },
+  {
+    id: '3',
+    numero: 3,
+    capacidade: 6,
+    status: 'reservada',
+    garcom: 'Pedro',
+    tempoOcupacao: '19:30',
+  },
   { id: '4', numero: 4, capacidade: 4, status: 'limpeza' },
-  { id: '5', numero: 5, capacidade: 8, status: 'ocupada', garcom: 'Ana', pedidoAtual: '#002', tempoOcupacao: '23 min', valorConta: 156.80 },
+  {
+    id: '5',
+    numero: 5,
+    capacidade: 8,
+    status: 'ocupada',
+    garcom: 'Ana',
+    pedidoAtual: '#002',
+    tempoOcupacao: '23 min',
+    valorConta: 156.8,
+  },
   { id: '6', numero: 6, capacidade: 2, status: 'livre', garcom: 'Carlos' },
-  { id: '7', numero: 7, capacidade: 4, status: 'ocupada', garcom: 'Lucia', pedidoAtual: '#003', tempoOcupacao: '12 min', valorConta: 45.20 },
+  {
+    id: '7',
+    numero: 7,
+    capacidade: 4,
+    status: 'ocupada',
+    garcom: 'Lucia',
+    pedidoAtual: '#003',
+    tempoOcupacao: '12 min',
+    valorConta: 45.2,
+  },
   { id: '8', numero: 8, capacidade: 6, status: 'livre', garcom: 'Roberto' },
-  { id: '9', numero: 9, capacidade: 4, status: 'reservada', garcom: 'Isabel', tempoOcupacao: '20:15' },
+  {
+    id: '9',
+    numero: 9,
+    capacidade: 4,
+    status: 'reservada',
+    garcom: 'Isabel',
+    tempoOcupacao: '20:15',
+  },
   { id: '10', numero: 10, capacidade: 2, status: 'livre', garcom: 'Miguel' },
-  { id: '11', numero: 11, capacidade: 8, status: 'ocupada', garcom: 'Fernanda', pedidoAtual: '#004', tempoOcupacao: '67 min', valorConta: 234.90 },
+  {
+    id: '11',
+    numero: 11,
+    capacidade: 8,
+    status: 'ocupada',
+    garcom: 'Fernanda',
+    pedidoAtual: '#004',
+    tempoOcupacao: '67 min',
+    valorConta: 234.9,
+  },
   { id: '12', numero: 12, capacidade: 4, status: 'limpeza' },
 ];
 
@@ -35,21 +85,31 @@ function Mesas() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'livre': return 'bg-green-100 border-green-200 text-green-700';
-      case 'ocupada': return 'bg-red-100 border-red-200 text-red-700';
-      case 'reservada': return 'bg-yellow-100 border-yellow-200 text-yellow-700';
-      case 'limpeza': return 'bg-gray-100 border-gray-200 text-gray-700';
-      default: return 'bg-gray-100 border-gray-200 text-gray-700';
+      case 'livre':
+        return 'bg-green-100 border-green-200 text-green-700';
+      case 'ocupada':
+        return 'bg-red-100 border-red-200 text-red-700';
+      case 'reservada':
+        return 'bg-yellow-100 border-yellow-200 text-yellow-700';
+      case 'limpeza':
+        return 'bg-gray-100 border-gray-200 text-gray-700';
+      default:
+        return 'bg-gray-100 border-gray-200 text-gray-700';
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'livre': return 'Livre';
-      case 'ocupada': return 'Ocupada';
-      case 'reservada': return 'Reservada';
-      case 'limpeza': return 'Limpeza';
-      default: return 'Desconhecido';
+      case 'livre':
+        return 'Livre';
+      case 'ocupada':
+        return 'Ocupada';
+      case 'reservada':
+        return 'Reservada';
+      case 'limpeza':
+        return 'Limpeza';
+      default:
+        return 'Desconhecido';
     }
   };
 
@@ -59,9 +119,7 @@ function Mesas() {
   };
 
   const handleStatusChange = (mesaId: string, newStatus: Mesa['status']) => {
-    setMesas(mesas.map(mesa => 
-      mesa.id === mesaId ? { ...mesa, status: newStatus } : mesa
-    ));
+    setMesas(mesas.map(mesa => (mesa.id === mesaId ? { ...mesa, status: newStatus } : mesa)));
   };
 
   const stats = {
@@ -87,7 +145,9 @@ function Mesas() {
             <button
               onClick={() => setViewMode('grid')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                viewMode === 'grid' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                viewMode === 'grid'
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               Grade
@@ -95,7 +155,9 @@ function Mesas() {
             <button
               onClick={() => setViewMode('list')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                viewMode === 'list' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                viewMode === 'list'
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               Lista
@@ -145,7 +207,7 @@ function Mesas() {
       {/* Mesas Grid/List View */}
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-          {mesas.map((mesa) => (
+          {mesas.map(mesa => (
             <div
               key={mesa.id}
               onClick={() => handleMesaClick(mesa)}
@@ -157,13 +219,9 @@ function Mesas() {
                   <Users className="h-4 w-4 inline mr-1" />
                   {mesa.capacidade} pessoas
                 </div>
-                <div className="text-xs font-medium mb-2">
-                  {getStatusText(mesa.status)}
-                </div>
+                <div className="text-xs font-medium mb-2">{getStatusText(mesa.status)}</div>
                 {mesa.garcom && (
-                  <div className="text-xs text-gray-600 mb-1">
-                    Garçom: {mesa.garcom}
-                  </div>
+                  <div className="text-xs text-gray-600 mb-1">Garçom: {mesa.garcom}</div>
                 )}
                 {mesa.tempoOcupacao && (
                   <div className="text-xs text-gray-600 mb-1">
@@ -211,7 +269,7 @@ function Mesas() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {mesas.map((mesa) => (
+                {mesas.map(mesa => (
                   <tr key={mesa.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">Mesa {mesa.numero}</div>
@@ -220,7 +278,9 @@ function Mesas() {
                       <div className="text-sm text-gray-900">{mesa.capacidade} pessoas</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(mesa.status)}`}>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(mesa.status)}`}
+                      >
                         {getStatusText(mesa.status)}
                       </span>
                     </td>
@@ -255,18 +315,16 @@ function Mesas() {
       {isModalOpen && selectedMesa && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              Mesa {selectedMesa.numero}
-            </h2>
-            
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Mesa {selectedMesa.numero}</h2>
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Status
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select
                   value={selectedMesa.status}
-                  onChange={(e) => handleStatusChange(selectedMesa.id, e.target.value as Mesa['status'])}
+                  onChange={e =>
+                    handleStatusChange(selectedMesa.id, e.target.value as Mesa['status'])
+                  }
                   className="input-field"
                 >
                   <option value="livre">Livre</option>
@@ -277,9 +335,7 @@ function Mesas() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Capacidade
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Capacidade</label>
                 <input
                   type="number"
                   value={selectedMesa.capacidade}
@@ -316,16 +372,10 @@ function Mesas() {
             </div>
 
             <div className="flex justify-end gap-3 mt-6">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="btn-secondary"
-              >
+              <button onClick={() => setIsModalOpen(false)} className="btn-secondary">
                 Cancelar
               </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="btn-primary"
-              >
+              <button onClick={() => setIsModalOpen(false)} className="btn-primary">
                 Salvar
               </button>
             </div>
@@ -336,4 +386,4 @@ function Mesas() {
   );
 }
 
-export default Mesas; 
+export default Mesas;

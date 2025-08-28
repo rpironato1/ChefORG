@@ -4,23 +4,23 @@ import { Star } from 'lucide-react';
 export const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
-      name: "Maria Silva",
-      text: "Experiência incrível! Comida deliciosa e atendimento excepcional.",
-      time: "2 dias atrás",
-      rating: 5
+      name: 'Maria Silva',
+      text: 'Experiência incrível! Comida deliciosa e atendimento excepcional.',
+      time: '2 dias atrás',
+      rating: 5,
     },
     {
-      name: "João Santos", 
-      text: "Ambiente maravilhoso e pratos surpreendentes. Voltarei com certeza!",
-      time: "1 semana atrás",
-      rating: 5
+      name: 'João Santos',
+      text: 'Ambiente maravilhoso e pratos surpreendentes. Voltarei com certeza!',
+      time: '1 semana atrás',
+      rating: 5,
     },
     {
-      name: "Ana Costa",
-      text: "Ótima experiência gastronômica. Recomendo para ocasiões especiais.",
-      time: "2 semanas atrás", 
-      rating: 5
-    }
+      name: 'Ana Costa',
+      text: 'Ótima experiência gastronômica. Recomendo para ocasiões especiais.',
+      time: '2 semanas atrás',
+      rating: 5,
+    },
   ];
 
   return (

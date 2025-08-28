@@ -6,6 +6,7 @@
 ## 🔍 Status do Sistema
 
 ### Portas Verificadas (8100-8120)
+
 - ✅ Porta 8100: DISPONÍVEL
 - ✅ Porta 8110: DISPONÍVEL
 - ✅ Porta 8115: DISPONÍVEL
@@ -14,7 +15,7 @@
 ## 🏗️ Ordem de Inicialização Recomendada
 
 1. `npm run dev:web` (Porta 8110)
-2. `npm run dev:mobile` (Porta 8100) 
+2. `npm run dev:mobile` (Porta 8100)
 3. `npm run test:mcp` (Porta 8115)
 
 ## 📈 Próximas Ações

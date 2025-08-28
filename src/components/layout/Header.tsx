@@ -14,20 +14,20 @@ function Header() {
             />
           </div>
         </div>
-        
+
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-sm">
             <span className="text-gray-600">Bem-vindo,</span>
             <span className="font-medium text-gray-900">Administrador</span>
           </div>
-          
+
           <button className="relative p-2 text-gray-400 hover:text-gray-600 transition-colors">
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
               3
             </span>
           </button>
-          
+
           <button className="flex items-center gap-2 p-2 text-gray-400 hover:text-gray-600 transition-colors">
             <User className="h-5 w-5" />
           </button>
@@ -38,4 +38,4 @@ function Header() {
 }
 
 export { Header };
-export default Header; 
+export default Header;

@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 import { Mesa, Reserva, Cliente } from '../types';
-import { login as apiLogin, logout as apiLogout, getCurrentUser, AuthUser, ApiResponse } from '../lib/api/auth';
+import {
+  login as apiLogin,
+  logout as apiLogout,
+  getCurrentUser,
+  AuthUser,
+  ApiResponse,
+} from '../lib/api/auth';
 
 // --- STATE AND REDUCER ---
 
@@ -37,13 +43,30 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'SET_LOADING_AUTH':
       return { ...state, isLoadingAuth: action.payload };
     case 'SET_USER':
-      return { ...state, usuario: action.payload, isAuthenticated: !!action.payload, isLoadingAuth: false };
+      return {
+        ...state,
+        usuario: action.payload,
+        isAuthenticated: !!action.payload,
+        isLoadingAuth: false,
+      };
     case 'LOGOUT':
       return { ...state, usuario: null, isAuthenticated: false };
     case 'SET_MESA_ATUAL':
-      return { ...state, mesaAtual: { ...state.mesaAtual, mesa: action.payload.mesa, cliente: action.payload.cliente, reserva: action.payload.reserva, isAutorizado: false } };
+      return {
+        ...state,
+        mesaAtual: {
+          ...state.mesaAtual,
+          mesa: action.payload.mesa,
+          cliente: action.payload.cliente,
+          reserva: action.payload.reserva,
+          isAutorizado: false,
+        },
+      };
     case 'AUTORIZAR_MESA':
-      return { ...state, mesaAtual: { ...state.mesaAtual, pin: action.payload.pin, isAutorizado: true } };
+      return {
+        ...state,
+        mesaAtual: { ...state.mesaAtual, pin: action.payload.pin, isAutorizado: true },
+      };
     case 'LIMPAR_MESA':
       return { ...state, mesaAtual: { isAutorizado: false } };
     default:
@@ -87,9 +110,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AppContext.Provider value={{ state, dispatch, login, logout }}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={{ state, dispatch, login, logout }}>{children}</AppContext.Provider>
   );
 }
 
@@ -134,4 +155,3 @@ export function useMesa() {
     limparMesa,
   };
 }
- 

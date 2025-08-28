@@ -22,12 +22,7 @@ export const NativeButton: React.FC<PlatformButtonProps> = ({
   loading = false,
   icon,
 }) => {
-  const buttonStyle = [
-    styles.button,
-    styles[variant],
-    styles[size],
-    disabled && styles.disabled,
-  ];
+  const buttonStyle = [styles.button, styles[variant], styles[size], disabled && styles.disabled];
 
   const textStyle = [
     styles.text,

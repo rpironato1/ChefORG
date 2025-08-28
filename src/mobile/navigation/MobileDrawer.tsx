@@ -15,7 +15,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
     { icon: Home, label: 'Início', path: '/' },
     { icon: ChefHat, label: 'Cardápio', path: '/menu' },
     { icon: Calendar, label: 'Reservas', path: '/reserva' },
-    { icon: User, label: 'Login', path: '/login' }
+    { icon: User, label: 'Login', path: '/login' },
   ];
 
   const handleNavigation = (path: string) => {
@@ -28,11 +28,8 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
   return (
     <>
       {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-        onClick={onClose}
-      />
-      
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" onClick={onClose} />
+
       {/* Drawer */}
       <div className="fixed top-0 left-0 h-full w-80 bg-white z-50 transform transition-transform duration-300 ease-in-out md:hidden">
         <div className="flex items-center justify-between p-4 border-b">
@@ -42,10 +39,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
             </div>
             <span className="text-xl font-bold text-gray-900">ChefORG</span>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100"
-          >
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -55,14 +49,14 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
             {menuItems.map((item, index) => {
               const IconComponent = item.icon;
               const isActive = location.pathname === item.path;
-              
+
               return (
                 <li key={index}>
                   <button
                     onClick={() => handleNavigation(item.path)}
                     className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors ${
-                      isActive 
-                        ? 'bg-primary-100 text-primary-700' 
+                      isActive
+                        ? 'bg-primary-100 text-primary-700'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >

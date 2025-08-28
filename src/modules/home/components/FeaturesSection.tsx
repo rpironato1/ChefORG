@@ -5,19 +5,19 @@ export const FeaturesSection: React.FC = () => {
   const features = [
     {
       icon: ChefHat,
-      title: "Culinária Premium",
-      description: "Pratos elaborados com ingredientes frescos e técnicas refinadas"
+      title: 'Culinária Premium',
+      description: 'Pratos elaborados com ingredientes frescos e técnicas refinadas',
     },
     {
       icon: Heart,
-      title: "Ambiente Acolhedor", 
-      description: "Espaço elegante e confortável para momentos especiais"
+      title: 'Ambiente Acolhedor',
+      description: 'Espaço elegante e confortável para momentos especiais',
     },
     {
       icon: Award,
-      title: "Prêmios e Reconhecimentos",
-      description: "Reconhecido pela excelência em gastronomia e atendimento"
-    }
+      title: 'Prêmios e Reconhecimentos',
+      description: 'Reconhecido pela excelência em gastronomia e atendimento',
+    },
   ];
 
   return (
@@ -28,8 +28,8 @@ export const FeaturesSection: React.FC = () => {
             Por que escolher o ChefORG?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Oferecemos uma experiência gastronômica completa, onde cada detalhe 
-            é pensado para proporcionar momentos inesquecíveis.
+            Oferecemos uma experiência gastronômica completa, onde cada detalhe é pensado para
+            proporcionar momentos inesquecíveis.
           </p>
         </div>
 
@@ -37,16 +37,15 @@ export const FeaturesSection: React.FC = () => {
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <div key={index} className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div
+                key={index}
+                className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              >
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary-100 rounded-full flex items-center justify-center">
                   <IconComponent className="w-8 h-8 text-primary-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
               </div>
             );
           })}

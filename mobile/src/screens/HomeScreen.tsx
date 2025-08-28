@@ -43,18 +43,18 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     {
       titulo: 'Culinária Premium',
       descricao: 'Pratos elaborados com ingredientes frescos e técnicas refinadas',
-      icon: '🍽️'
+      icon: '🍽️',
     },
     {
       titulo: 'Ambiente Acolhedor',
       descricao: 'Espaço elegante e confortável para momentos especiais',
-      icon: '👥'
+      icon: '👥',
     },
     {
       titulo: 'Prêmios e Reconhecimentos',
       descricao: 'Reconhecido pela excelência em gastronomia e atendimento',
-      icon: '🏆'
-    }
+      icon: '🏆',
+    },
   ];
 
   const avaliacoes = [
@@ -62,20 +62,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       nome: 'Maria Silva',
       estrelas: 5,
       comentario: 'Experiência incrível! Comida deliciosa e atendimento excepcional.',
-      data: '2 dias atrás'
+      data: '2 dias atrás',
     },
     {
       nome: 'João Santos',
       estrelas: 5,
       comentario: 'Ambiente maravilhoso e pratos surpreendentes. Voltarei com certeza!',
-      data: '1 semana atrás'
+      data: '1 semana atrás',
     },
     {
       nome: 'Ana Costa',
       estrelas: 4,
       comentario: 'Ótima experiência gastronômica. Recomendo para ocasiões especiais.',
-      data: '2 semanas atrás'
-    }
+      data: '2 semanas atrás',
+    },
   ];
 
   const renderEstrelas = (quantidade: number) => {
@@ -111,10 +111,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           <View style={styles.heroContent}>
             <Text style={styles.heroTitle}>Bem-vindos ao ChefORG</Text>
             <Text style={styles.heroSubtitle}>
-              Uma experiência gastronômica única que combina sabores excepcionais 
-              com um ambiente sofisticado e acolhedor.
+              Uma experiência gastronômica única que combina sabores excepcionais com um ambiente
+              sofisticado e acolhedor.
             </Text>
-            
+
             <View style={styles.heroButtons}>
               <NativeButton
                 title="📅 Reservar Mesa"
@@ -137,10 +137,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Por que escolher o ChefORG?</Text>
           <Text style={styles.sectionSubtitle}>
-            Oferecemos uma experiência gastronômica completa, onde cada detalhe 
-            é pensado para proporcionar momentos inesquecíveis.
+            Oferecemos uma experiência gastronômica completa, onde cada detalhe é pensado para
+            proporcionar momentos inesquecíveis.
           </Text>
-          
+
           <View style={styles.destaquesContainer}>
             {destaques.map((destaque, index) => (
               <View key={index} style={styles.destaqueCard}>
@@ -155,9 +155,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         {/* Avaliações Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>O que nossos clientes dizem</Text>
-          
-          <ScrollView 
-            horizontal 
+
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.avaliacoesContainer}
           >
@@ -165,9 +165,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               <View key={index} style={styles.avaliacaoCard}>
                 <View style={styles.avaliacaoHeader}>
                   <Text style={styles.avaliacaoNome}>{avaliacao.nome}</Text>
-                  <View style={styles.estrelasContainer}>
-                    {renderEstrelas(avaliacao.estrelas)}
-                  </View>
+                  <View style={styles.estrelasContainer}>{renderEstrelas(avaliacao.estrelas)}</View>
                 </View>
                 <Text style={styles.avaliacaoComentario}>{avaliacao.comentario}</Text>
                 <Text style={styles.avaliacaoData}>{avaliacao.data}</Text>
@@ -179,18 +177,18 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         {/* Informações Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Informações</Text>
-          
+
           <View style={styles.infoContainer}>
             <View style={styles.infoItem}>
               <Text style={styles.infoIcon}>📍</Text>
               <Text style={styles.infoText}>Rua das Palmeiras, 123 - Centro</Text>
             </View>
-            
+
             <View style={styles.infoItem}>
               <Text style={styles.infoIcon}>📞</Text>
               <Text style={styles.infoText}>(11) 99999-9999</Text>
             </View>
-            
+
             <View style={styles.infoItem}>
               <Text style={styles.infoIcon}>🕒</Text>
               <Text style={styles.infoText}>Seg-Dom: 18:00 - 23:00</Text>

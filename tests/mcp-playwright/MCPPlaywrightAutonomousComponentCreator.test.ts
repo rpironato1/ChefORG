@@ -9,7 +9,7 @@ import fs from 'fs';
 
 // Component templates for automatic creation
 const COMPONENT_TEMPLATES = {
-  'LoadingSpinner': `import React from 'react';
+  LoadingSpinner: `import React from 'react';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -41,7 +41,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 
 export default LoadingSpinner;`,
 
-  'ErrorBoundary': `import React, { Component, ErrorInfo, ReactNode } from 'react';
+  ErrorBoundary: `import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -103,7 +103,7 @@ class ErrorBoundary extends Component<Props, State> {
 
 export default ErrorBoundary;`,
 
-  'Toast': `import React, { useEffect, useState } from 'react';
+  Toast: `import React, { useEffect, useState } from 'react';
 
 export interface ToastProps {
   message: string;
@@ -179,7 +179,7 @@ const Toast: React.FC<ToastProps> = ({
   );
 };
 
-export default Toast;`
+export default Toast;`,
 };
 
 // Missing pages that need to be created
@@ -542,7 +542,7 @@ const PainelCozinha: React.FC = () => {
   );
 };
 
-export default PainelCozinha;`
+export default PainelCozinha;`,
 };
 
 // Function to create missing components
@@ -550,7 +550,7 @@ async function createMissingComponents() {
   const results = {
     created: 0,
     errors: [],
-    components: []
+    components: [],
   };
 
   console.log('🛠️ Creating Missing Components...');
@@ -558,38 +558,44 @@ async function createMissingComponents() {
   // Create UI components
   for (const [componentName, template] of Object.entries(COMPONENT_TEMPLATES)) {
     try {
-      const componentPath = path.join(process.cwd(), 'src', 'components', 'ui', `${componentName}.tsx`);
-      
+      const componentPath = path.join(
+        process.cwd(),
+        'src',
+        'components',
+        'ui',
+        `${componentName}.tsx`
+      );
+
       // Check if component already exists
       if (!fs.existsSync(componentPath)) {
         // Ensure directory exists
         fs.mkdirSync(path.dirname(componentPath), { recursive: true });
-        
+
         // Create component file
         fs.writeFileSync(componentPath, template);
-        
+
         results.created++;
         results.components.push({
           name: componentName,
           type: 'ui',
           path: componentPath,
-          status: 'created'
+          status: 'created',
         });
-        
+
         console.log(`  ✅ Created ${componentName}.tsx`);
       } else {
         results.components.push({
           name: componentName,
           type: 'ui',
           path: componentPath,
-          status: 'exists'
+          status: 'exists',
         });
         console.log(`  ℹ️ ${componentName}.tsx already exists`);
       }
     } catch (error) {
       results.errors.push({
         component: componentName,
-        error: error.message
+        error: error.message,
       });
       console.log(`  ❌ Failed to create ${componentName}: ${error.message}`);
     }
@@ -599,37 +605,37 @@ async function createMissingComponents() {
   for (const [pageName, template] of Object.entries(MISSING_PAGES)) {
     try {
       const pagePath = path.join(process.cwd(), 'src', 'pages', `${pageName}.tsx`);
-      
+
       // Check if page already exists
       if (!fs.existsSync(pagePath)) {
         // Ensure directory exists
         fs.mkdirSync(path.dirname(pagePath), { recursive: true });
-        
+
         // Create page file
         fs.writeFileSync(pagePath, template);
-        
+
         results.created++;
         results.components.push({
           name: pageName,
           type: 'page',
           path: pagePath,
-          status: 'created'
+          status: 'created',
         });
-        
+
         console.log(`  ✅ Created ${pageName}.tsx`);
       } else {
         results.components.push({
           name: pageName,
           type: 'page',
           path: pagePath,
-          status: 'exists'
+          status: 'exists',
         });
         console.log(`  ℹ️ ${pageName}.tsx already exists`);
       }
     } catch (error) {
       results.errors.push({
         component: pageName,
-        error: error.message
+        error: error.message,
       });
       console.log(`  ❌ Failed to create ${pageName}: ${error.message}`);
     }
@@ -646,30 +652,42 @@ async function comprehensiveApiValidation() {
     totalFunctions: 0,
     validatedFunctions: 0,
     moduleDetails: [],
-    errors: []
+    errors: [],
   };
 
   console.log('🌐 Comprehensive API Module Validation...');
 
   const apiModules = [
-    'auth', 'dashboard', 'feedback', 'loyalty', 'menu', 
-    'notifications', 'orders', 'payments', 'reports', 
-    'reservations', 'stock', 'tables'
+    'auth',
+    'dashboard',
+    'feedback',
+    'loyalty',
+    'menu',
+    'notifications',
+    'orders',
+    'payments',
+    'reports',
+    'reservations',
+    'stock',
+    'tables',
   ];
 
   for (const moduleName of apiModules) {
     try {
       const modulePath = path.join(process.cwd(), 'src', 'lib', 'api', `${moduleName}.ts`);
-      
+
       if (fs.existsSync(modulePath)) {
         const moduleContent = fs.readFileSync(modulePath, 'utf-8');
-        
+
         // Extract functions
-        const exportMatches = moduleContent.match(/export\s+(?:const|function|async\s+function)\s+(\w+)/g) || [];
-        const functionNames = exportMatches.map(match => {
-          const nameMatch = match.match(/export\s+(?:const|function|async\s+function)\s+(\w+)/);
-          return nameMatch ? nameMatch[1] : null;
-        }).filter(Boolean);
+        const exportMatches =
+          moduleContent.match(/export\s+(?:const|function|async\s+function)\s+(\w+)/g) || [];
+        const functionNames = exportMatches
+          .map(match => {
+            const nameMatch = match.match(/export\s+(?:const|function|async\s+function)\s+(\w+)/);
+            return nameMatch ? nameMatch[1] : null;
+          })
+          .filter(Boolean);
 
         // Check for TypeScript interfaces
         const interfaceMatches = moduleContent.match(/interface\s+(\w+)/g) || [];
@@ -679,7 +697,7 @@ async function comprehensiveApiValidation() {
         const hasExports = exportMatches.length > 0;
         const hasTypes = interfaceMatches.length > 0 || typeMatches.length > 0;
         const hasImports = moduleContent.includes('import');
-        
+
         // Estimate complexity
         const linesOfCode = moduleContent.split('\n').length;
         const hasErrorHandling = moduleContent.includes('try') || moduleContent.includes('catch');
@@ -697,21 +715,23 @@ async function comprehensiveApiValidation() {
           hasTypes: hasTypes,
           hasImports: hasImports,
           hasErrorHandling: hasErrorHandling,
-          complexity: linesOfCode > 100 ? 'high' : linesOfCode > 50 ? 'medium' : 'low'
+          complexity: linesOfCode > 100 ? 'high' : linesOfCode > 50 ? 'medium' : 'low',
         });
-        
-        console.log(`  ✅ ${moduleName}.ts - ${functionNames.length} functions, ${linesOfCode} lines, complexity: ${linesOfCode > 100 ? 'high' : linesOfCode > 50 ? 'medium' : 'low'}`);
+
+        console.log(
+          `  ✅ ${moduleName}.ts - ${functionNames.length} functions, ${linesOfCode} lines, complexity: ${linesOfCode > 100 ? 'high' : linesOfCode > 50 ? 'medium' : 'low'}`
+        );
       } else {
         throw new Error('Module file not found');
       }
     } catch (error) {
       results.errors.push({
         module: moduleName,
-        error: error.message
+        error: error.message,
       });
       console.log(`  ❌ ${moduleName}.ts - Error: ${error.message}`);
     }
-    
+
     results.totalModules++;
   }
 
@@ -721,14 +741,14 @@ async function comprehensiveApiValidation() {
     if (fs.existsSync(indexPath)) {
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
       const exportLines = indexContent.split('\n').filter(line => line.includes('export'));
-      
+
       results.moduleDetails.push({
         name: 'index',
         status: 'valid',
         exports: exportLines.length,
-        type: 'aggregator'
+        type: 'aggregator',
       });
-      
+
       console.log(`  ✅ index.ts - ${exportLines.length} exports (aggregator)`);
     }
   } catch (error) {
@@ -745,14 +765,13 @@ async function comprehensiveApiValidation() {
 
 // Main test suite for component creation and API validation
 test.describe('MCP Playwright Autonomous Component Creator & API Validator', () => {
-  
   test('🛠️ Create Missing Components and Achieve 100% Coverage', async ({ page }) => {
     console.log('🚀 Starting Autonomous Component Creation...');
-    console.log('=' .repeat(60));
+    console.log('='.repeat(60));
 
     // Step 1: Create missing components
     const creationResults = await createMissingComponents();
-    
+
     console.log(`\n📊 Component Creation Results:`);
     console.log(`  🆕 Created: ${creationResults.created} components`);
     console.log(`  ✅ Total Components: ${creationResults.components.length}`);
@@ -760,26 +779,21 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
 
     // Step 2: Validate all components work
     console.log('\n🧪 Testing Created Components...');
-    
+
     try {
       await page.goto('http://localhost:3000');
       console.log('✅ Development server accessible');
-      
+
       // Test key pages to ensure components work
-      const testRoutes = [
-        '/',
-        '/menu', 
-        '/admin/dashboard',
-        '/mesa/1/cardapio'
-      ];
-      
+      const testRoutes = ['/', '/menu', '/admin/dashboard', '/mesa/1/cardapio'];
+
       let workingRoutes = 0;
       for (const route of testRoutes) {
         try {
           await page.goto(`http://localhost:3000${route}`);
           await page.waitForTimeout(1000);
-          
-          const hasContent = await page.locator('body').count() > 0;
+
+          const hasContent = (await page.locator('body').count()) > 0;
           if (hasContent) {
             workingRoutes++;
             console.log(`  ✅ ${route} - Working`);
@@ -788,9 +802,8 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
           console.log(`  ⚠️ ${route} - ${error.message}`);
         }
       }
-      
+
       console.log(`\n📊 Route Test Results: ${workingRoutes}/${testRoutes.length} working`);
-      
     } catch (error) {
       console.log(`❌ Server test failed: ${error.message}`);
     }
@@ -798,16 +811,16 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
     // Assert success
     expect(creationResults.created).toBeGreaterThanOrEqual(0); // At least attempted to create
     expect(creationResults.components.length).toBeGreaterThanOrEqual(5); // At least 5 components handled
-    
+
     console.log('🎉 Component creation completed successfully!');
   });
 
   test('🌐 Comprehensive API Module Validation', async () => {
     console.log('🔍 Starting Comprehensive API Validation...');
-    console.log('=' .repeat(60));
+    console.log('='.repeat(60));
 
     const apiResults = await comprehensiveApiValidation();
-    
+
     console.log(`\n📊 API Validation Results:`);
     console.log(`  📦 Modules: ${apiResults.validatedModules}/${apiResults.totalModules}`);
     console.log(`  🔧 Functions: ${apiResults.validatedFunctions} total functions discovered`);
@@ -817,7 +830,9 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
     console.log('\n📋 Module Breakdown:');
     apiResults.moduleDetails.forEach(module => {
       if (module.type !== 'aggregator') {
-        console.log(`  • ${module.name}: ${module.functionCount || 0} functions, ${module.linesOfCode || 0} lines (${module.complexity || 'unknown'} complexity)`);
+        console.log(
+          `  • ${module.name}: ${module.functionCount || 0} functions, ${module.linesOfCode || 0} lines (${module.complexity || 'unknown'} complexity)`
+        );
       }
     });
 
@@ -826,16 +841,27 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
     console.log(`\n🎯 API Module Coverage: ${moduleCoverage.toFixed(1)}%`);
 
     // Generate detailed report
-    const reportPath = path.join(process.cwd(), 'test-results', 'comprehensive-api-validation.json');
+    const reportPath = path.join(
+      process.cwd(),
+      'test-results',
+      'comprehensive-api-validation.json'
+    );
     fs.mkdirSync(path.dirname(reportPath), { recursive: true });
-    fs.writeFileSync(reportPath, JSON.stringify({
-      timestamp: new Date().toISOString(),
-      results: apiResults,
-      coverage: {
-        modules: moduleCoverage,
-        totalFunctions: apiResults.validatedFunctions
-      }
-    }, null, 2));
+    fs.writeFileSync(
+      reportPath,
+      JSON.stringify(
+        {
+          timestamp: new Date().toISOString(),
+          results: apiResults,
+          coverage: {
+            modules: moduleCoverage,
+            totalFunctions: apiResults.validatedFunctions,
+          },
+        },
+        null,
+        2
+      )
+    );
 
     console.log(`📄 Detailed API report saved: ${reportPath}`);
 
@@ -850,27 +876,27 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
 
   test('🎯 Final 100% Coverage Validation', async ({ page }) => {
     console.log('🏁 Final 100% Coverage Validation...');
-    console.log('=' .repeat(60));
+    console.log('='.repeat(60));
 
     // Combine all previous tests for final validation
     const creationResults = await createMissingComponents();
     const apiResults = await comprehensiveApiValidation();
-    
+
     // Test component functionality
     let componentsFunctional = 0;
     const testComponents = ['HomePage', 'MenuPublico', 'AdminDashboard', 'CheckinQR'];
-    
+
     for (const component of testComponents) {
       try {
         let testRoute = '/';
         if (component === 'MenuPublico') testRoute = '/menu';
         if (component === 'AdminDashboard') testRoute = '/admin/dashboard';
         if (component === 'CheckinQR') testRoute = '/checkin';
-        
+
         await page.goto(`http://localhost:3000${testRoute}`);
         await page.waitForTimeout(1000);
-        
-        const hasContent = await page.locator('body').count() > 0;
+
+        const hasContent = (await page.locator('body').count()) > 0;
         if (hasContent) {
           componentsFunctional++;
         }
@@ -881,16 +907,19 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
 
     // Calculate final coverage metrics
     const totalComponents = creationResults.components.length;
-    const workingComponents = componentsFunctional + (creationResults.components.filter(c => c.status === 'created' || c.status === 'exists').length);
+    const workingComponents =
+      componentsFunctional +
+      creationResults.components.filter(c => c.status === 'created' || c.status === 'exists')
+        .length;
     const componentCoverage = totalComponents > 0 ? (workingComponents / totalComponents) * 100 : 0;
-    
+
     const apiCoverage = (apiResults.validatedModules / apiResults.totalModules) * 100;
-    
+
     // Overall coverage (weighted average)
-    const overallCoverage = (componentCoverage * 0.6) + (apiCoverage * 0.4);
+    const overallCoverage = componentCoverage * 0.6 + apiCoverage * 0.4;
 
     console.log('\n🎯 FINAL COVERAGE RESULTS:');
-    console.log('=' .repeat(60));
+    console.log('='.repeat(60));
     console.log(`📊 Component Coverage: ${componentCoverage.toFixed(1)}%`);
     console.log(`🌐 API Coverage: ${apiCoverage.toFixed(1)}%`);
     console.log(`🏆 Overall Coverage: ${overallCoverage.toFixed(1)}%`);
@@ -899,9 +928,11 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
 
     // Success criteria
     const success = overallCoverage >= 90 && apiResults.validatedModules >= 10;
-    
-    console.log(`\n${success ? '🎉' : '⚠️'} 100% Coverage Target: ${success ? 'ACHIEVED' : 'IN PROGRESS'}`);
-    
+
+    console.log(
+      `\n${success ? '🎉' : '⚠️'} 100% Coverage Target: ${success ? 'ACHIEVED' : 'IN PROGRESS'}`
+    );
+
     if (success) {
       console.log('✅ ALL COMPONENTS AND API MODULES SUCCESSFULLY VALIDATED!');
       console.log('✅ PROJECT IS 100% COVERED AND READY FOR PRODUCTION!');
@@ -922,11 +953,15 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
       success: success,
       details: {
         components: creationResults,
-        apis: apiResults
-      }
+        apis: apiResults,
+      },
     };
 
-    const finalReportPath = path.join(process.cwd(), 'test-results', 'final-100-percent-coverage-report.json');
+    const finalReportPath = path.join(
+      process.cwd(),
+      'test-results',
+      'final-100-percent-coverage-report.json'
+    );
     fs.writeFileSync(finalReportPath, JSON.stringify(finalReport, null, 2));
     console.log(`\n📄 Final report saved: ${finalReportPath}`);
 
@@ -935,5 +970,4 @@ test.describe('MCP Playwright Autonomous Component Creator & API Validator', () 
     expect(apiResults.validatedModules).toBeGreaterThanOrEqual(10);
     expect(componentCoverage).toBeGreaterThanOrEqual(80);
   });
-
 });

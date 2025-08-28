@@ -11,7 +11,7 @@ function CheckinQR() {
   const handleScanSuccess = (result: string) => {
     setScanResult(result);
     setIsScanning(false);
-    
+
     // Simular busca de informações da mesa
     setTimeout(() => {
       // Mock da informação da mesa
@@ -21,11 +21,11 @@ function CheckinQR() {
           nome: 'Maria Silva',
           pessoas: 4,
           horario: '19:30',
-          id: 'RES-001'
+          id: 'RES-001',
         },
-        status: 'confirmada'
+        status: 'confirmada',
       };
-      
+
       setMesaInfo(mockMesaInfo);
       showSuccess('QR Code lido com sucesso!', 'Dados da reserva carregados');
     }, 1000);
@@ -49,7 +49,7 @@ function CheckinQR() {
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
-      
+
       {/* Header */}
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,10 +68,8 @@ function CheckinQR() {
             <div className="mb-6">
               <QrCode className="h-16 w-16 text-primary-600 mx-auto" />
             </div>
-            
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Check-in na Mesa
-            </h1>
+
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Check-in na Mesa</h1>
             <p className="text-gray-600 mb-8">
               Escaneie o QR Code da sua mesa para fazer o check-in
             </p>
@@ -105,7 +103,7 @@ function CheckinQR() {
                 onClick={mockScanQR}
                 disabled={isScanning}
                 className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
-                  isScanning 
+                  isScanning
                     ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
                     : 'bg-primary-600 text-white hover:bg-primary-700'
                 }`}
@@ -120,52 +118,40 @@ function CheckinQR() {
             <div className="space-y-6">
               <div className="text-center">
                 <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                  Mesa Identificada!
-                </h2>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Mesa Identificada!</h2>
               </div>
 
               <div className="bg-gray-50 rounded-lg p-6">
                 <div className="grid grid-cols-1 gap-4">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">Mesa:</span>
-                    <span className="text-lg font-bold text-primary-600">
-                      #{mesaInfo.numero}
-                    </span>
+                    <span className="text-lg font-bold text-primary-600">#{mesaInfo.numero}</span>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">Nome:</span>
-                    <span className="font-medium text-gray-900">
-                      {mesaInfo.reserva.nome}
-                    </span>
+                    <span className="font-medium text-gray-900">{mesaInfo.reserva.nome}</span>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">Pessoas:</span>
                     <div className="flex items-center gap-1">
                       <Users className="h-4 w-4 text-gray-600" />
-                      <span className="font-medium text-gray-900">
-                        {mesaInfo.reserva.pessoas}
-                      </span>
+                      <span className="font-medium text-gray-900">{mesaInfo.reserva.pessoas}</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">Horário:</span>
                     <div className="flex items-center gap-1">
                       <Clock className="h-4 w-4 text-gray-600" />
-                      <span className="font-medium text-gray-900">
-                        {mesaInfo.reserva.horario}
-                      </span>
+                      <span className="font-medium text-gray-900">{mesaInfo.reserva.horario}</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">Reserva:</span>
-                    <span className="font-medium text-gray-900">
-                      {mesaInfo.reserva.id}
-                    </span>
+                    <span className="font-medium text-gray-900">{mesaInfo.reserva.id}</span>
                   </div>
                 </div>
               </div>
@@ -180,13 +166,10 @@ function CheckinQR() {
               </div>
 
               <div className="space-y-3">
-                <button
-                  onClick={handleConfirmCheckin}
-                  className="w-full btn-primary"
-                >
+                <button onClick={handleConfirmCheckin} className="w-full btn-primary">
                   Confirmar Check-in
                 </button>
-                
+
                 <button
                   onClick={() => {
                     setScanResult(null);
@@ -203,14 +186,11 @@ function CheckinQR() {
           {/* Informações de Ajuda */}
           {!scanResult && (
             <div className="mt-8 text-center">
-              <h3 className="text-sm font-medium text-gray-900 mb-2">
-                Precisa de ajuda?
-              </h3>
+              <h3 className="text-sm font-medium text-gray-900 mb-2">Precisa de ajuda?</h3>
               <p className="text-xs text-gray-600 mb-4">
-                O QR Code está localizado na mesa. Se não conseguir encontrar, 
-                peça ajuda ao garçom.
+                O QR Code está localizado na mesa. Se não conseguir encontrar, peça ajuda ao garçom.
               </p>
-              
+
               <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
                 <div className="flex items-center gap-1">
                   <AlertCircle className="h-4 w-4" />
@@ -228,4 +208,4 @@ function CheckinQR() {
   );
 }
 
-export default CheckinQR; 
+export default CheckinQR;

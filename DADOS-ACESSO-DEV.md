@@ -13,6 +13,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 ## 👥 Contas de Acesso
 
 ### 🔐 Administrador/Gerente
+
 - **Email:** `admin@cheforg.com`
 - **Senha:** `123456`
 - **Cargo:** Gerente
@@ -20,6 +21,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 - **Permissões:** Acesso completo ao sistema
 
 ### 📞 Recepção
+
 - **Email:** `recepcao@cheforg.com`
 - **Senha:** `123456`
 - **Cargo:** Recepção
@@ -27,6 +29,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 - **Permissões:** Gestão de reservas e atendimento
 
 ### 🍽️ Garçom
+
 - **Email:** `garcom@cheforg.com`
 - **Senha:** `123456`
 - **Cargo:** Garçom
@@ -34,6 +37,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 - **Permissões:** Gestão de mesas e pedidos
 
 ### 👨‍🍳 Cozinha
+
 - **Email:** `cozinha@cheforg.com`
 - **Senha:** `123456`
 - **Cargo:** Cozinheiro
@@ -41,6 +45,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 - **Permissões:** Painel de preparo e gestão de pedidos
 
 ### 💰 Caixa
+
 - **Email:** `caixa@cheforg.com`
 - **Senha:** `123456`
 - **Cargo:** Caixa
@@ -48,6 +53,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 - **Permissões:** Processamento de pagamentos
 
 ### 👤 Cliente
+
 - **Email:** `cliente@test.com`
 - **Senha:** `123456`
 - **Cargo:** Cliente
@@ -59,11 +65,13 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 ## 🚪 URLs de Acesso
 
 ### Páginas Públicas
+
 - **Home:** `http://localhost:8110/`
 - **Menu Público:** `http://localhost:8110/menu`
 - **Reserva Online:** `http://localhost:8110/reserva`
 
 ### Área Administrativa
+
 - **Login Admin:** `http://localhost:8110/admin/login`
 - **Dashboard:** `http://localhost:8110/admin/dashboard`
 - **Painel Recepção:** `http://localhost:8110/admin/recepcao`
@@ -73,6 +81,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 - **Painel Gerência:** `http://localhost:8110/admin/gerencia`
 
 ### Páginas do Cliente
+
 - **Check-in QR:** `http://localhost:8110/checkin`
 - **Pin da Mesa:** `http://localhost:8110/mesa/{numero}/pin`
 - **Cardápio da Mesa:** `http://localhost:8110/mesa/{numero}/cardapio`
@@ -85,6 +94,7 @@ Este documento contém todos os dados de acesso necessários para realizar teste
 ## 🔧 Configuração de Desenvolvimento
 
 ### Iniciando o Sistema
+
 ```bash
 # Instalar dependências
 npm install
@@ -96,11 +106,13 @@ npm run dev
 ```
 
 ### Dados de Teste
+
 - **Inicialização:** Automática ao carregar a aplicação
 - **Armazenamento:** localStorage do navegador
 - **Reset:** Limpar localStorage ou recarregar a página
 
 ### Mesas de Teste Disponíveis
+
 - **Mesa 1:** PIN `1234` (Livre)
 - **Mesa 2:** PIN `2345` (Ocupada)
 - **Mesa 3:** PIN `3456` (Reservada)
@@ -112,12 +124,14 @@ npm run dev
 ## 🧪 Cenários de Teste
 
 ### Fluxo de Autenticação
+
 1. Acessar `http://localhost:8110/admin/login`
 2. Inserir credenciais de qualquer usuário acima
 3. Verificar redirecionamento baseado no cargo
 4. Testar navegação entre painéis (conforme permissões)
 
 ### Fluxo do Cliente
+
 1. Acessar uma mesa via QR ou URL direta
 2. Inserir PIN da mesa
 3. Navegar pelo cardápio
@@ -126,6 +140,7 @@ npm run dev
 6. Finalizar com pagamento e feedback
 
 ### Fluxo de Reserva
+
 1. Acessar `http://localhost:8110/reserva`
 2. Preencher formulário de reserva
 3. Confirmar reserva
@@ -136,6 +151,7 @@ npm run dev
 ## 🔒 Segurança e Permissões
 
 ### Sistema de Roles
+
 - **gerente:** Acesso total
 - **recepcao:** Reservas e atendimento
 - **garcom:** Mesas e pedidos
@@ -144,6 +160,7 @@ npm run dev
 - **cliente:** Funcionalidades limitadas
 
 ### Proteção de Rotas
+
 - Todas as rotas `/admin/*` requerem autenticação
 - Verificação de cargo para acessos específicos
 - Redirecionamento automático para login se não autenticado
@@ -154,6 +171,7 @@ npm run dev
 ## 📱 Testes Automatizados
 
 ### Lighthouse Testing
+
 ```bash
 # Executar testes completos
 npm run test:lighthouse
@@ -166,6 +184,7 @@ npm run test:lighthouse:extract
 ```
 
 ### Validação Manual
+
 - Testar responsividade em diferentes dispositivos
 - Verificar acessibilidade com leitores de tela
 - Validar fluxos completos de usuário
@@ -176,6 +195,7 @@ npm run test:lighthouse:extract
 ## 🔄 Automatização
 
 ### Reset de Dados
+
 ```javascript
 // No console do navegador
 localStorage.clear();
@@ -183,6 +203,7 @@ location.reload();
 ```
 
 ### Verificação de Estado
+
 ```javascript
 // Ver dados atuais
 console.log(JSON.parse(localStorage.getItem('cheforg_users')));
@@ -198,6 +219,7 @@ console.log(JSON.parse(localStorage.getItem('cheforg_tables')));
 **Última Atualização:** $(date)
 
 **Observações:**
+
 - Dados são resetados a cada inicialização
 - Senhas são simuladas (não há hash real)
 - Sistema otimizado para desenvolvimento e testes
@@ -205,4 +227,4 @@ console.log(JSON.parse(localStorage.getItem('cheforg_tables')));
 
 ---
 
-*Este documento deve ser mantido atualizado conforme alterações no sistema de autenticação e dados de teste.*
+_Este documento deve ser mantido atualizado conforme alterações no sistema de autenticação e dados de teste._

@@ -43,7 +43,7 @@ export const usePWA = () => {
     try {
       await deferredPrompt.prompt();
       const result = await deferredPrompt.userChoice;
-      
+
       if (result.outcome === 'accepted') {
         setIsInstalled(true);
         setIsInstallable(false);

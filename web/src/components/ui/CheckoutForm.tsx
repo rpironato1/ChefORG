@@ -55,7 +55,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onError }) => {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      <button disabled={isProcessing || !stripe || !elements} id="submit" className="w-full btn-primary mt-6">
+      <button
+        disabled={isProcessing || !stripe || !elements}
+        id="submit"
+        className="w-full btn-primary mt-6"
+      >
         {isProcessing ? (
           <div className="flex items-center justify-center">
             <Loader2 className="h-5 w-5 animate-spin mr-2" />
@@ -65,7 +69,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onError }) => {
           <span>Pagar Agora</span>
         )}
       </button>
-      {message && <div id="payment-message" className="text-red-500 text-sm mt-2">{message}</div>}
+      {message && (
+        <div id="payment-message" className="text-red-500 text-sm mt-2">
+          {message}
+        </div>
+      )}
     </form>
   );
 };

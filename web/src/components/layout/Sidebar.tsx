@@ -8,7 +8,7 @@ import {
   BarChart3,
   Settings,
   Utensils,
-  ChefHat
+  ChefHat,
 } from 'lucide-react';
 
 const menuItems = [
@@ -32,12 +32,12 @@ function Sidebar() {
           <ChefHat className="h-8 w-8 text-primary-600" />
           <h1 className="text-2xl font-bold text-gray-800">ChefORG</h1>
         </div>
-        
+
         <nav className="space-y-2">
-          {menuItems.map((item) => {
+          {menuItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
-            
+
             return (
               <Link
                 key={item.path}
@@ -60,4 +60,4 @@ function Sidebar() {
 }
 
 export { Sidebar };
-export default Sidebar; 
+export default Sidebar;

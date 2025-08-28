@@ -10,11 +10,7 @@ interface ProtectedRouteProps {
   redirectTo?: string;
 }
 
-function ProtectedRoute({ 
-  children, 
-  requiredRole, 
-  redirectTo = '/login' 
-}: ProtectedRouteProps) {
+function ProtectedRoute({ children, requiredRole, redirectTo = '/login' }: ProtectedRouteProps) {
   const { usuario, isAuthenticated, isLoadingAuth } = useAuth();
   const location = useLocation();
 
@@ -36,7 +32,7 @@ function ProtectedRoute({
   if (requiredRole) {
     const userRole = usuario.profile.role;
     const requiredRoles = Array.isArray(requiredRole) ? requiredRole : [requiredRole];
-    
+
     if (!requiredRoles.includes(userRole)) {
       // Redireciona para uma página de acesso negado ou para o dashboard principal
       return <Navigate to="/admin/acesso-negado" replace />;
@@ -47,4 +43,3 @@ function ProtectedRoute({
 }
 
 export default ProtectedRoute;
- 

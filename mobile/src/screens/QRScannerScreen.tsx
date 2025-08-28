@@ -60,14 +60,14 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({ navigation }) 
 
   const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
     if (scanned) return;
-    
+
     setScanned(true);
     Vibration.vibrate();
 
     // Parse QR code data
     try {
       let qrData;
-      
+
       // Try to parse as JSON first
       try {
         qrData = JSON.parse(data);
@@ -79,101 +79,81 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({ navigation }) 
       // Handle different QR code types
       if (qrData.type === 'table') {
         // Table QR code
-        Alert.alert(
-          'Mesa Escaneada',
-          `Mesa ${qrData.tableId} detectada!`,
-          [
-            {
-              text: 'Ver Cardápio',
-              onPress: () => {
-                navigation.navigate('Menu', { tableId: qrData.tableId });
-              },
+        Alert.alert('Mesa Escaneada', `Mesa ${qrData.tableId} detectada!`, [
+          {
+            text: 'Ver Cardápio',
+            onPress: () => {
+              navigation.navigate('Menu', { tableId: qrData.tableId });
             },
-            {
-              text: 'Fazer Pedido',
-              onPress: () => {
-                navigation.navigate('Orders', { tableId: qrData.tableId });
-              },
+          },
+          {
+            text: 'Fazer Pedido',
+            onPress: () => {
+              navigation.navigate('Orders', { tableId: qrData.tableId });
             },
-            {
-              text: 'Escanear Novamente',
-              onPress: () => setScanned(false),
-              style: 'cancel',
-            },
-          ]
-        );
-      } else if (qrData.type === 'order') {
-        // Order QR code
-        Alert.alert(
-          'Pedido Encontrado',
-          `Pedido #${qrData.orderId} detectado!`,
-          [
-            {
-              text: 'Ver Detalhes',
-              onPress: () => {
-                navigation.navigate('Orders', { orderId: qrData.orderId });
-              },
-            },
-            {
-              text: 'Escanear Novamente',
-              onPress: () => setScanned(false),
-              style: 'cancel',
-            },
-          ]
-        );
-      } else if (qrData.type === 'payment') {
-        // Payment QR code
-        Alert.alert(
-          'Pagamento PIX',
-          'QR Code de pagamento detectado!',
-          [
-            {
-              text: 'Processar Pagamento',
-              onPress: () => {
-                // Handle payment processing
-                Alert.alert('Sucesso', 'Pagamento processado com sucesso!');
-                navigation.goBack();
-              },
-            },
-            {
-              text: 'Cancelar',
-              onPress: () => navigation.goBack(),
-              style: 'cancel',
-            },
-          ]
-        );
-      } else {
-        // Generic QR code
-        Alert.alert(
-          'QR Code Detectado',
-          data,
-          [
-            {
-              text: 'Copiar',
-              onPress: () => {
-                // In a real app, you would copy to clipboard
-                Alert.alert('Copiado', 'Texto copiado para a área de transferência');
-              },
-            },
-            {
-              text: 'Escanear Novamente',
-              onPress: () => setScanned(false),
-              style: 'cancel',
-            },
-          ]
-        );
-      }
-    } catch (error) {
-      Alert.alert(
-        'Erro',
-        'Não foi possível processar o QR Code',
-        [
+          },
           {
             text: 'Escanear Novamente',
             onPress: () => setScanned(false),
+            style: 'cancel',
           },
-        ]
-      );
+        ]);
+      } else if (qrData.type === 'order') {
+        // Order QR code
+        Alert.alert('Pedido Encontrado', `Pedido #${qrData.orderId} detectado!`, [
+          {
+            text: 'Ver Detalhes',
+            onPress: () => {
+              navigation.navigate('Orders', { orderId: qrData.orderId });
+            },
+          },
+          {
+            text: 'Escanear Novamente',
+            onPress: () => setScanned(false),
+            style: 'cancel',
+          },
+        ]);
+      } else if (qrData.type === 'payment') {
+        // Payment QR code
+        Alert.alert('Pagamento PIX', 'QR Code de pagamento detectado!', [
+          {
+            text: 'Processar Pagamento',
+            onPress: () => {
+              // Handle payment processing
+              Alert.alert('Sucesso', 'Pagamento processado com sucesso!');
+              navigation.goBack();
+            },
+          },
+          {
+            text: 'Cancelar',
+            onPress: () => navigation.goBack(),
+            style: 'cancel',
+          },
+        ]);
+      } else {
+        // Generic QR code
+        Alert.alert('QR Code Detectado', data, [
+          {
+            text: 'Copiar',
+            onPress: () => {
+              // In a real app, you would copy to clipboard
+              Alert.alert('Copiado', 'Texto copiado para a área de transferência');
+            },
+          },
+          {
+            text: 'Escanear Novamente',
+            onPress: () => setScanned(false),
+            style: 'cancel',
+          },
+        ]);
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível processar o QR Code', [
+        {
+          text: 'Escanear Novamente',
+          onPress: () => setScanned(false),
+        },
+      ]);
     }
   };
 
@@ -182,9 +162,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({ navigation }) 
   };
 
   const toggleCameraType = () => {
-    setCameraType(
-      cameraType === CameraType.back ? CameraType.front : CameraType.back
-    );
+    setCameraType(cameraType === CameraType.back ? CameraType.front : CameraType.back);
   };
 
   if (hasPermission === null) {
@@ -227,9 +205,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({ navigation }) 
         <View style={styles.overlay}>
           {/* Top overlay */}
           <View style={styles.overlayTop}>
-            <Text style={styles.instructionText}>
-              Posicione o QR Code dentro do quadro
-            </Text>
+            <Text style={styles.instructionText}>Posicione o QR Code dentro do quadro</Text>
           </View>
 
           {/* Middle section with scanning frame */}
@@ -241,11 +217,9 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({ navigation }) 
               <View style={[styles.corner, styles.topRight]} />
               <View style={[styles.corner, styles.bottomLeft]} />
               <View style={[styles.corner, styles.bottomRight]} />
-              
+
               {/* Scanning line animation could go here */}
-              {!scanned && (
-                <View style={styles.scanningLine} />
-              )}
+              {!scanned && <View style={styles.scanningLine} />}
             </View>
             <View style={styles.overlaySide} />
           </View>
@@ -253,13 +227,8 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({ navigation }) 
           {/* Bottom overlay with controls */}
           <View style={styles.overlayBottom}>
             <View style={styles.controls}>
-              <TouchableOpacity
-                style={styles.controlButton}
-                onPress={toggleFlash}
-              >
-                <Text style={styles.controlButtonText}>
-                  {flashOn ? '🔦' : '💡'}
-                </Text>
+              <TouchableOpacity style={styles.controlButton} onPress={toggleFlash}>
+                <Text style={styles.controlButtonText}>{flashOn ? '🔦' : '💡'}</Text>
                 <Text style={styles.controlButtonLabel}>Flash</Text>
               </TouchableOpacity>
 
@@ -268,19 +237,13 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({ navigation }) 
                 onPress={() => setScanned(false)}
                 disabled={!scanned}
               >
-                <Text style={[
-                  styles.controlButtonText,
-                  scanned && styles.controlButtonActive
-                ]}>
+                <Text style={[styles.controlButtonText, scanned && styles.controlButtonActive]}>
                   🔄
                 </Text>
                 <Text style={styles.controlButtonLabel}>Escanear</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.controlButton}
-                onPress={toggleCameraType}
-              >
+              <TouchableOpacity style={styles.controlButton} onPress={toggleCameraType}>
                 <Text style={styles.controlButtonText}>📷</Text>
                 <Text style={styles.controlButtonLabel}>Virar</Text>
               </TouchableOpacity>

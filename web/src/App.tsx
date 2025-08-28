@@ -12,7 +12,9 @@ const LoadingSpinner: React.FC = () => (
 );
 
 // Load modular home page
-const ModularHomePage = React.lazy(() => import('./modules/home').then(module => ({ default: module.ModularHomePage })));
+const ModularHomePage = React.lazy(() =>
+  import('./modules/home').then(module => ({ default: module.ModularHomePage }))
+);
 // Keep original home as fallback
 const MenuPublico = React.lazy(() => import('./pages/public/MenuPublico'));
 const ReservaOnline = React.lazy(() => import('./pages/public/ReservaOnline'));
@@ -47,22 +49,31 @@ function App() {
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           {/* Páginas Públicas com PublicLayout */}
-          <Route path="/" element={
-            <PublicLayout>
-              <ModularHomePage />
-            </PublicLayout>
-          } />
-          <Route path="/menu" element={
-            <PublicLayout>
-              <MenuPublico />
-            </PublicLayout>
-          } />
-          <Route path="/reserva" element={
-            <PublicLayout>
-              <ReservaOnline />
-            </PublicLayout>
-          } />
-          
+          <Route
+            path="/"
+            element={
+              <PublicLayout>
+                <ModularHomePage />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/menu"
+            element={
+              <PublicLayout>
+                <MenuPublico />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/reserva"
+            element={
+              <PublicLayout>
+                <ReservaOnline />
+              </PublicLayout>
+            }
+          />
+
           {/* Páginas de Cliente - Rotas Dinâmicas */}
           <Route path="/checkin" element={<CheckinQR />} />
           <Route path="/chegada-sem-reserva" element={<ChegadaSemReserva />} />
@@ -77,75 +88,104 @@ function App() {
           <Route path="/admin/login" element={<Login />} />
 
           {/* Sprint 3 Demo */}
-          <Route path="/sprint3-demo" element={
-            <PublicLayout>
-              <Sprint3Demo />
-            </PublicLayout>
-          } />
+          <Route
+            path="/sprint3-demo"
+            element={
+              <PublicLayout>
+                <Sprint3Demo />
+              </PublicLayout>
+            }
+          />
 
           {/* Área Administrativa com ResponsiveLayout */}
-          <Route path="/admin/*" element={
-            <ResponsiveLayout>
-              <ProtectedRoute>
-                <Layout>
-                  <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    
-                    {/* Rotas específicas por papel */}
-                    <Route path="/recepcao" element={
-                      <ProtectedRoute requiredRole="recepcao">
-                        <div>Painel Recepção - Em breve</div>
-                      </ProtectedRoute>
-                    } />
-                    
-                    <Route path="/garcom" element={
-                      <ProtectedRoute requiredRole="garcom">
-                        <PainelGarcom />
-                      </ProtectedRoute>
-                    } />
-                    
-                    <Route path="/cozinha" element={
-                      <ProtectedRoute requiredRole="cozinheiro">
-                        <PainelCozinha />
-                      </ProtectedRoute>
-                    } />
-                    
-                    <Route path="/caixa" element={
-                      <ProtectedRoute requiredRole="caixa">
-                        <div>Painel Caixa - Em breve</div>
-                      </ProtectedRoute>
-                    } />
-                    
-                    <Route path="/gerencia" element={
-                      <ProtectedRoute requiredRole="gerente">
-                        <div>Painel Gerência - Em breve</div>
-                      </ProtectedRoute>
-                    } />
+          <Route
+            path="/admin/*"
+            element={
+              <ResponsiveLayout>
+                <ProtectedRoute>
+                  <Layout>
+                    <Routes>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/dashboard" element={<Dashboard />} />
 
-                    {/* Página de Acesso Negado */}
-                    <Route path="/acesso-negado" element={
-                      <div className="text-center py-16">
-                        <h2 className="text-2xl font-bold text-red-600 mb-4">Acesso Negado</h2>
-                        <p className="text-gray-600">Você não tem permissão para acessar esta página.</p>
-                      </div>
-                    } />
-                  </Routes>
-                </Layout>
-              </ProtectedRoute>
-            </ResponsiveLayout>
-          } />
+                      {/* Rotas específicas por papel */}
+                      <Route
+                        path="/recepcao"
+                        element={
+                          <ProtectedRoute requiredRole="recepcao">
+                            <div>Painel Recepção - Em breve</div>
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      <Route
+                        path="/garcom"
+                        element={
+                          <ProtectedRoute requiredRole="garcom">
+                            <PainelGarcom />
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      <Route
+                        path="/cozinha"
+                        element={
+                          <ProtectedRoute requiredRole="cozinheiro">
+                            <PainelCozinha />
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      <Route
+                        path="/caixa"
+                        element={
+                          <ProtectedRoute requiredRole="caixa">
+                            <div>Painel Caixa - Em breve</div>
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      <Route
+                        path="/gerencia"
+                        element={
+                          <ProtectedRoute requiredRole="gerente">
+                            <div>Painel Gerência - Em breve</div>
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      {/* Página de Acesso Negado */}
+                      <Route
+                        path="/acesso-negado"
+                        element={
+                          <div className="text-center py-16">
+                            <h2 className="text-2xl font-bold text-red-600 mb-4">Acesso Negado</h2>
+                            <p className="text-gray-600">
+                              Você não tem permissão para acessar esta página.
+                            </p>
+                          </div>
+                        }
+                      />
+                    </Routes>
+                  </Layout>
+                </ProtectedRoute>
+              </ResponsiveLayout>
+            }
+          />
 
           {/* Rota de fallback */}
-          <Route path="*" element={
-            <PublicLayout>
-              <ModularHomePage />
-            </PublicLayout>
-          } />
+          <Route
+            path="*"
+            element={
+              <PublicLayout>
+                <ModularHomePage />
+              </PublicLayout>
+            }
+          />
         </Routes>
       </Suspense>
     </AppProvider>
   );
 }
 
-export default App; 
+export default App;

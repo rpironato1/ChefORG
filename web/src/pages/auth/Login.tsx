@@ -60,7 +60,7 @@ function Login() {
     senha: '',
   });
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { isAuthenticated, login } = useAuth();
   const { showSuccess, showError, ToastContainer } = useToast();
   const location = useLocation();
@@ -73,7 +73,7 @@ function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.email || !formData.senha) {
       showError('Erro', 'Email e senha são obrigatórios');
       return;
@@ -84,10 +84,10 @@ function Login() {
     try {
       // Simular verificação de login
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Mock: encontrar funcionário por email
       const funcionario = mockFuncionarios.find(f => f.email === formData.email);
-      
+
       if (!funcionario) {
         showError('Erro', 'Email ou senha incorretos');
         return;
@@ -114,7 +114,6 @@ function Login() {
       } else {
         showError('Erro', result.error || 'Falha no login');
       }
-      
     } catch (error) {
       showError('Erro', 'Falha no sistema. Tente novamente.');
     } finally {
@@ -125,7 +124,7 @@ function Login() {
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -144,7 +143,7 @@ function Login() {
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
-      
+
       {/* Header */}
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -163,9 +162,7 @@ function Login() {
             <div className="mx-auto h-16 w-16 bg-primary-100 rounded-full flex items-center justify-center">
               <LogIn className="h-8 w-8 text-primary-600" />
             </div>
-            <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              Acesso Staff
-            </h2>
+            <h2 className="mt-6 text-3xl font-bold text-gray-900">Acesso Staff</h2>
             <p className="mt-2 text-sm text-gray-600">
               Entre com suas credenciais para acessar o sistema
             </p>
@@ -185,7 +182,7 @@ function Login() {
                   autoComplete="email"
                   required
                   value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  onChange={e => handleInputChange('email', e.target.value)}
                   className="input-field"
                   placeholder="seu@email.com"
                 />
@@ -203,7 +200,7 @@ function Login() {
                   autoComplete="current-password"
                   required
                   value={formData.senha}
-                  onChange={(e) => handleInputChange('senha', e.target.value)}
+                  onChange={e => handleInputChange('senha', e.target.value)}
                   className="input-field"
                   placeholder="••••••••"
                 />
@@ -219,13 +216,8 @@ function Login() {
             </button>
           </form>
 
-          
-
           <div className="text-center">
-            <Link 
-              to="/" 
-              className="text-sm text-primary-600 hover:text-primary-700"
-            >
+            <Link to="/" className="text-sm text-primary-600 hover:text-primary-700">
               ← Voltar para página inicial
             </Link>
           </div>
@@ -235,4 +227,4 @@ function Login() {
   );
 }
 
-export default Login; 
+export default Login;

@@ -21,7 +21,7 @@ const mockReservas: Reserva[] = [
     dataHora: '2024-01-15T19:30',
     numeroConvidados: 4,
     status: 'confirmada',
-    observacoes: 'Aniversário - decorar a mesa'
+    observacoes: 'Aniversário - decorar a mesa',
   },
   {
     id: '2',
@@ -30,7 +30,7 @@ const mockReservas: Reserva[] = [
     mesa: 8,
     dataHora: '2024-01-15T20:00',
     numeroConvidados: 2,
-    status: 'confirmada'
+    status: 'confirmada',
   },
   {
     id: '3',
@@ -40,7 +40,7 @@ const mockReservas: Reserva[] = [
     dataHora: '2024-01-16T18:00',
     numeroConvidados: 6,
     status: 'confirmada',
-    observacoes: 'Jantar de negócios'
+    observacoes: 'Jantar de negócios',
   },
   {
     id: '4',
@@ -49,8 +49,8 @@ const mockReservas: Reserva[] = [
     mesa: 5,
     dataHora: '2024-01-16T19:00',
     numeroConvidados: 3,
-    status: 'realizada'
-  }
+    status: 'realizada',
+  },
 ];
 
 function Reservas() {
@@ -64,33 +64,54 @@ function Reservas() {
 
   const statusOptions = [
     { value: 'todas', label: 'Todas', count: reservas.length },
-    { value: 'confirmada', label: 'Confirmadas', count: reservas.filter(r => r.status === 'confirmada').length },
-    { value: 'realizada', label: 'Realizadas', count: reservas.filter(r => r.status === 'realizada').length },
-    { value: 'cancelada', label: 'Canceladas', count: reservas.filter(r => r.status === 'cancelada').length }
+    {
+      value: 'confirmada',
+      label: 'Confirmadas',
+      count: reservas.filter(r => r.status === 'confirmada').length,
+    },
+    {
+      value: 'realizada',
+      label: 'Realizadas',
+      count: reservas.filter(r => r.status === 'realizada').length,
+    },
+    {
+      value: 'cancelada',
+      label: 'Canceladas',
+      count: reservas.filter(r => r.status === 'cancelada').length,
+    },
   ];
 
   const filteredReservas = reservas.filter(reserva => {
     const matchesStatus = selectedStatus === 'todas' || reserva.status === selectedStatus;
-    const matchesSearch = reserva.clienteNome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         reserva.clienteTelefone.includes(searchTerm);
+    const matchesSearch =
+      reserva.clienteNome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      reserva.clienteTelefone.includes(searchTerm);
     return matchesStatus && matchesSearch;
   });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'confirmada': return 'bg-green-100 text-green-700';
-      case 'realizada': return 'bg-blue-100 text-blue-700';
-      case 'cancelada': return 'bg-red-100 text-red-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case 'confirmada':
+        return 'bg-green-100 text-green-700';
+      case 'realizada':
+        return 'bg-blue-100 text-blue-700';
+      case 'cancelada':
+        return 'bg-red-100 text-red-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'confirmada': return 'Confirmada';
-      case 'realizada': return 'Realizada';
-      case 'cancelada': return 'Cancelada';
-      default: return 'Desconhecido';
+      case 'confirmada':
+        return 'Confirmada';
+      case 'realizada':
+        return 'Realizada';
+      case 'cancelada':
+        return 'Cancelada';
+      default:
+        return 'Desconhecido';
     }
   };
 
@@ -108,7 +129,7 @@ function Reservas() {
       mesa: 1,
       dataHora: new Date().toISOString().slice(0, 16),
       numeroConvidados: 2,
-      status: 'confirmada'
+      status: 'confirmada',
     });
     setIsEditing(false);
     setIsModalOpen(true);
@@ -118,7 +139,7 @@ function Reservas() {
     const date = new Date(dateTime);
     return {
       date: date.toLocaleDateString('pt-BR'),
-      time: date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+      time: date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
     };
   };
 
@@ -128,9 +149,7 @@ function Reservas() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Reservas</h1>
-          <p className="text-gray-600 mt-1">
-            Gerencie as reservas do restaurante
-          </p>
+          <p className="text-gray-600 mt-1">Gerencie as reservas do restaurante</p>
         </div>
         <button onClick={handleNewReserva} className="btn-primary">
           <Plus className="h-4 w-4 mr-2" />
@@ -145,7 +164,7 @@ function Reservas() {
             type="text"
             placeholder="Buscar por cliente ou telefone..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             className="input-field"
           />
         </div>
@@ -161,9 +180,11 @@ function Reservas() {
               }`}
             >
               {option.label}
-              <span className={`px-2 py-1 rounded-full text-xs ${
-                selectedStatus === option.value ? 'bg-primary-700' : 'bg-gray-200'
-              }`}>
+              <span
+                className={`px-2 py-1 rounded-full text-xs ${
+                  selectedStatus === option.value ? 'bg-primary-700' : 'bg-gray-200'
+                }`}
+              >
                 {option.count}
               </span>
             </button>
@@ -185,7 +206,9 @@ function Reservas() {
                     {reserva.clienteTelefone}
                   </p>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(reserva.status)}`}>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(reserva.status)}`}
+                >
                   {getStatusText(reserva.status)}
                 </span>
               </div>
@@ -239,7 +262,7 @@ function Reservas() {
             <h2 className="text-xl font-bold text-gray-900 mb-6">
               {isEditing ? 'Editar Reserva' : 'Nova Reserva'}
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -248,33 +271,35 @@ function Reservas() {
                 <input
                   type="text"
                   value={selectedReserva.clienteNome}
-                  onChange={(e) => setSelectedReserva({...selectedReserva, clienteNome: e.target.value})}
+                  onChange={e =>
+                    setSelectedReserva({ ...selectedReserva, clienteNome: e.target.value })
+                  }
                   className="input-field"
                   placeholder="Ex: Maria Silva"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Telefone
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
                 <input
                   type="tel"
                   value={selectedReserva.clienteTelefone}
-                  onChange={(e) => setSelectedReserva({...selectedReserva, clienteTelefone: e.target.value})}
+                  onChange={e =>
+                    setSelectedReserva({ ...selectedReserva, clienteTelefone: e.target.value })
+                  }
                   className="input-field"
                   placeholder="(11) 99999-9999"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Data e Hora
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Data e Hora</label>
                 <input
                   type="datetime-local"
                   value={selectedReserva.dataHora}
-                  onChange={(e) => setSelectedReserva({...selectedReserva, dataHora: e.target.value})}
+                  onChange={e =>
+                    setSelectedReserva({ ...selectedReserva, dataHora: e.target.value })
+                  }
                   className="input-field"
                 />
               </div>
@@ -287,31 +312,39 @@ function Reservas() {
                   type="number"
                   min="1"
                   value={selectedReserva.numeroConvidados}
-                  onChange={(e) => setSelectedReserva({...selectedReserva, numeroConvidados: parseInt(e.target.value)})}
+                  onChange={e =>
+                    setSelectedReserva({
+                      ...selectedReserva,
+                      numeroConvidados: parseInt(e.target.value),
+                    })
+                  }
                   className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Mesa
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mesa</label>
                 <input
                   type="number"
                   min="1"
                   value={selectedReserva.mesa}
-                  onChange={(e) => setSelectedReserva({...selectedReserva, mesa: parseInt(e.target.value)})}
+                  onChange={e =>
+                    setSelectedReserva({ ...selectedReserva, mesa: parseInt(e.target.value) })
+                  }
                   className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Status
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select
                   value={selectedReserva.status}
-                  onChange={(e) => setSelectedReserva({...selectedReserva, status: e.target.value as Reserva['status']})}
+                  onChange={e =>
+                    setSelectedReserva({
+                      ...selectedReserva,
+                      status: e.target.value as Reserva['status'],
+                    })
+                  }
                   className="input-field"
                 >
                   <option value="confirmada">Confirmada</option>
@@ -321,12 +354,12 @@ function Reservas() {
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Observações
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Observações</label>
                 <textarea
                   value={selectedReserva.observacoes || ''}
-                  onChange={(e) => setSelectedReserva({...selectedReserva, observacoes: e.target.value})}
+                  onChange={e =>
+                    setSelectedReserva({ ...selectedReserva, observacoes: e.target.value })
+                  }
                   className="input-field h-20 resize-none"
                   placeholder="Observações especiais..."
                 />
@@ -334,16 +367,10 @@ function Reservas() {
             </div>
 
             <div className="flex justify-end gap-3 mt-6">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="btn-secondary"
-              >
+              <button onClick={() => setIsModalOpen(false)} className="btn-secondary">
                 Cancelar
               </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="btn-primary"
-              >
+              <button onClick={() => setIsModalOpen(false)} className="btn-primary">
                 {isEditing ? 'Salvar Alterações' : 'Criar Reserva'}
               </button>
             </div>
@@ -354,4 +381,4 @@ function Reservas() {
   );
 }
 
-export default Reservas; 
+export default Reservas;

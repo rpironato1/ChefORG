@@ -6,16 +6,12 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const stripeWebhookSecret = Deno.env.get('STRIPE_WEBHOOK_SIGNING_SECRET');
 
-serve(async (req) => {
+serve(async req => {
   const signature = req.headers.get('Stripe-Signature');
   const body = await req.text();
 
   try {
-    const event = await stripe.webhooks.constructEventAsync(
-      body,
-      signature,
-      stripeWebhookSecret
-    );
+    const event = await stripe.webhooks.constructEventAsync(body, signature, stripeWebhookSecret);
 
     if (event.type === 'payment_intent.succeeded') {
       const intent = event.data.object;
@@ -42,7 +38,6 @@ serve(async (req) => {
       headers: { 'Content-Type': 'application/json' },
       status: 200,
     });
-
   } catch (err) {
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }

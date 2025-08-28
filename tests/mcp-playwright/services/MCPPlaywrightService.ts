@@ -24,8 +24,8 @@ export class MCPPlaywrightService {
         network: [],
         console: [],
         wcag_violations: [],
-        performance_score: 0
-      }
+        performance_score: 0,
+      },
     };
   }
 
@@ -38,16 +38,16 @@ export class MCPPlaywrightService {
       this.context = await browser.newContext({
         viewport: { width: 1920, height: 1080 },
         recordVideo: { dir: 'test-results/videos/' },
-        recordHar: { path: 'test-results/network.har' }
+        recordHar: { path: 'test-results/network.har' },
       });
 
       this.page = await this.context.newPage();
 
       // Setup viewports for responsive testing
       const viewports = [
-        { width: 1920, height: 1080, device: "desktop" },
-        { width: 768, height: 1024, device: "tablet" },
-        { width: 375, height: 667, device: "mobile" }
+        { width: 1920, height: 1080, device: 'desktop' },
+        { width: 768, height: 1024, device: 'tablet' },
+        { width: 375, height: 667, device: 'mobile' },
       ];
 
       for (const vp of viewports) {
@@ -59,26 +59,26 @@ export class MCPPlaywrightService {
       await this.page.setViewportSize({ width: 1920, height: 1080 });
 
       // Setup console monitoring
-      this.page.on('console', (msg) => {
+      this.page.on('console', msg => {
         this.metrics.performance.console.push({
           level: msg.type() as any,
           message: msg.text(),
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       });
 
       // Setup network monitoring
-      this.page.on('response', (response) => {
+      this.page.on('response', response => {
         this.metrics.performance.network.push({
           url: response.url(),
           method: response.request().method(),
           status: response.status(),
           time: Date.now(),
-          size: 0 // Will be calculated separately
+          size: 0, // Will be calculated separately
         });
       });
 
-      return "INITIALIZATION_COMPLETE";
+      return 'INITIALIZATION_COMPLETE';
     } catch (error) {
       this.metrics.errors.push(error as Error);
       throw error;
@@ -92,14 +92,14 @@ export class MCPPlaywrightService {
     if (!this.page) throw new Error('Page not initialized');
 
     const routes: RouteTest[] = [];
-    
+
     try {
       // Navigate to home page
       await this.page.goto('/');
       await this.page.waitForLoadState('networkidle');
 
       // Extract routes from navigation elements, links, and buttons
-      const routeLinks = await this.page.$$eval('a[href], button[data-route]', (elements) => {
+      const routeLinks = await this.page.$$eval('a[href], button[data-route]', elements => {
         return elements
           .map(el => {
             if (el.tagName === 'A') {
@@ -116,11 +116,11 @@ export class MCPPlaywrightService {
       const commonRoutes = [
         '/',
         '/menu',
-        '/reservations', 
+        '/reservations',
         '/orders',
         '/admin',
         '/login',
-        '/profile'
+        '/profile',
       ];
 
       const allRoutes = [...new Set([...routeLinks, ...commonRoutes])];
@@ -130,7 +130,7 @@ export class MCPPlaywrightService {
         try {
           await this.page.goto(route);
           await this.page.waitForLoadState('networkidle');
-          
+
           // Capture console errors
           const consoleErrors = this.metrics.performance.console
             .filter(msg => msg.level === 'error')
@@ -140,7 +140,7 @@ export class MCPPlaywrightService {
             url: route,
             wcag_passed: await this.validateBasicWCAG(),
             console_errors: consoleErrors,
-            performance_score: await this.calculatePerformanceScore()
+            performance_score: await this.calculatePerformanceScore(),
           };
 
           routes.push(routeTest);
@@ -148,8 +148,10 @@ export class MCPPlaywrightService {
           routes.push({
             url: route,
             wcag_passed: false,
-            console_errors: [{ level: 'error', message: (error as Error).message, timestamp: Date.now() }],
-            performance_score: 0
+            console_errors: [
+              { level: 'error', message: (error as Error).message, timestamp: Date.now() },
+            ],
+            performance_score: 0,
           });
         }
       }
@@ -170,12 +172,12 @@ export class MCPPlaywrightService {
 
     try {
       // Check for alt text on images
-      const imagesWithoutAlt = await this.page.$$eval('img', (images) => {
+      const imagesWithoutAlt = await this.page.$$eval('img', images => {
         return images.filter(img => !img.getAttribute('alt')).length;
       });
 
       // Check for form labels
-      const inputsWithoutLabels = await this.page.$$eval('input', (inputs) => {
+      const inputsWithoutLabels = await this.page.$$eval('input', inputs => {
         return inputs.filter(input => {
           const id = input.getAttribute('id');
           const ariaLabel = input.getAttribute('aria-label');
@@ -185,7 +187,7 @@ export class MCPPlaywrightService {
       });
 
       // Check for heading structure
-      const headings = await this.page.$$eval('h1, h2, h3, h4, h5, h6', (headings) => {
+      const headings = await this.page.$$eval('h1, h2, h3, h4, h5, h6', headings => {
         return headings.map(h => parseInt(h.tagName.charAt(1)));
       });
 
@@ -206,18 +208,17 @@ export class MCPPlaywrightService {
     let score = 100;
 
     // Check network requests
-    const slowRequests = this.metrics.performance.network
-      .filter(req => req.time > 3000).length;
-    
-    const errorRequests = this.metrics.performance.network
-      .filter(req => req.status >= 400).length;
+    const slowRequests = this.metrics.performance.network.filter(req => req.time > 3000).length;
+
+    const errorRequests = this.metrics.performance.network.filter(req => req.status >= 400).length;
 
     score -= slowRequests * 10;
     score -= errorRequests * 20;
 
     // Check console errors
-    const recentErrors = this.metrics.performance.console
-      .filter(msg => msg.level === 'error' && msg.timestamp > Date.now() - 10000);
+    const recentErrors = this.metrics.performance.console.filter(
+      msg => msg.level === 'error' && msg.timestamp > Date.now() - 10000
+    );
 
     score -= recentErrors.length * 15;
 
@@ -234,7 +235,7 @@ export class MCPPlaywrightService {
       if (error.message.includes('Element not found') && selector) {
         // Try alternative selectors
         const alternativeSelectors = this.generateAlternativeSelectors(selector);
-        
+
         for (const altSelector of alternativeSelectors) {
           try {
             await this.page.click(altSelector);
@@ -286,12 +287,7 @@ export class MCPPlaywrightService {
     // If it's an ID selector, try class-based alternatives
     if (originalSelector.startsWith('#')) {
       const id = originalSelector.substring(1);
-      alternatives.push(
-        `[id="${id}"]`,
-        `[data-testid="${id}"]`,
-        `[name="${id}"]`,
-        `.${id}`
-      );
+      alternatives.push(`[id="${id}"]`, `[data-testid="${id}"]`, `[name="${id}"]`, `.${id}`);
     }
 
     // If it's a class selector, try attribute-based alternatives

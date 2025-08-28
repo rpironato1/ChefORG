@@ -182,4 +182,4 @@ export interface DashboardGerente {
   ticketMedio: number;
   funcionariosAtivos: number;
   reservasHoje: number;
-} 
+}

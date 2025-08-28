@@ -17,7 +17,7 @@ export const formatTime = (date: Date): string => {
 export const formatCurrency = (value: number): string => {
   return value.toLocaleString('pt-BR', {
     style: 'currency',
-    currency: 'BRL'
+    currency: 'BRL',
   });
 };
 
@@ -54,7 +54,7 @@ export const validatePhone = (phone: string): boolean => {
 export const validateCPF = (cpf: string): boolean => {
   const cleaned = cpf.replace(/\D/g, '');
   if (cleaned.length !== 11) return false;
-  
+
   // Validation algorithm for CPF
   let sum = 0;
   for (let i = 0; i < 9; i++) {
@@ -63,7 +63,7 @@ export const validateCPF = (cpf: string): boolean => {
   let remainder = (sum * 10) % 11;
   if (remainder === 10 || remainder === 11) remainder = 0;
   if (remainder !== parseInt(cleaned.charAt(9))) return false;
-  
+
   sum = 0;
   for (let i = 0; i < 10; i++) {
     sum += parseInt(cleaned.charAt(i)) * (11 - i);
@@ -71,7 +71,7 @@ export const validateCPF = (cpf: string): boolean => {
   remainder = (sum * 10) % 11;
   if (remainder === 10 || remainder === 11) remainder = 0;
   if (remainder !== parseInt(cleaned.charAt(10))) return false;
-  
+
   return true;
 };
 
@@ -119,10 +119,8 @@ export const deepMerge = (target: any, source: any): any => {
   if (isObject(target) && isObject(source)) {
     Object.keys(source).forEach(key => {
       if (isObject(source[key])) {
-        if (!(key in target))
-          Object.assign(output, { [key]: source[key] });
-        else
-          output[key] = deepMerge(target[key], source[key]);
+        if (!(key in target)) Object.assign(output, { [key]: source[key] });
+        else output[key] = deepMerge(target[key], source[key]);
       } else {
         Object.assign(output, { [key]: source[key] });
       }
@@ -141,9 +139,9 @@ export const generateUUID = (): string => {
     return crypto.randomUUID();
   }
   // Fallback for environments without crypto.randomUUID
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = Math.random() * 16 | 0;
-    const v = c == 'x' ? r : (r & 0x3 | 0x8);
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c == 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 };

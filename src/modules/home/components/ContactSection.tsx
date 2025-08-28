@@ -10,19 +10,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onReserveClick, 
   const contactInfo = [
     {
       icon: MapPin,
-      title: "Endereço",
-      lines: ["Rua das Flores, 123 - Centro", "São Paulo - SP"]
+      title: 'Endereço',
+      lines: ['Rua das Flores, 123 - Centro', 'São Paulo - SP'],
     },
     {
       icon: Clock,
-      title: "Funcionamento", 
-      lines: ["Segunda a Quinta: 11h às 23h", "Sexta e Sábado: 11h às 24h", "Domingo: 11h às 22h"]
+      title: 'Funcionamento',
+      lines: ['Segunda a Quinta: 11h às 23h', 'Sexta e Sábado: 11h às 24h', 'Domingo: 11h às 22h'],
     },
     {
       icon: Phone,
-      title: "Contato",
-      lines: ["(11) 3333-4444", "contato@cheforg.com"]
-    }
+      title: 'Contato',
+      lines: ['(11) 3333-4444', 'contato@cheforg.com'],
+    },
   ];
 
   return (
@@ -32,17 +32,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onReserveClick, 
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Nossa História
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Nossa História</h2>
               <p className="text-lg text-gray-700 mb-4">
-                Fundado em 2015, o ChefORG nasceu da paixão pela gastronomia e do desejo 
-                de criar experiências memoráveis. Nossa equipe de chefs especializados trabalha 
+                Fundado em 2015, o ChefORG nasceu da paixão pela gastronomia e do desejo de criar
+                experiências memoráveis. Nossa equipe de chefs especializados trabalha
                 incansavelmente para oferecer pratos únicos e saborosos.
               </p>
               <p className="text-lg text-gray-700 mb-6">
-                Utilizamos apenas ingredientes frescos e de alta qualidade, combinados com 
-                técnicas culinárias modernas para criar uma experiência gastronômica incomparável.
+                Utilizamos apenas ingredientes frescos e de alta qualidade, combinados com técnicas
+                culinárias modernas para criar uma experiência gastronômica incomparável.
               </p>
               <button
                 onClick={onMenuClick}
@@ -66,7 +64,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onReserveClick, 
                       <div>
                         <p className="font-semibold text-gray-900 mb-1">{info.title}</p>
                         {info.lines.map((line, lineIndex) => (
-                          <p key={lineIndex} className="text-gray-600 text-sm">{line}</p>
+                          <p key={lineIndex} className="text-gray-600 text-sm">
+                            {line}
+                          </p>
                         ))}
                       </div>
                     </div>
@@ -85,7 +85,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onReserveClick, 
             Pronto para uma experiência única?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Reserve sua mesa agora e descubra por que somos o restaurante favorito de tantas pessoas.
+            Reserve sua mesa agora e descubra por que somos o restaurante favorito de tantas
+            pessoas.
           </p>
           <button
             onClick={onReserveClick}

@@ -17,7 +17,7 @@ function Feedback() {
   const { numeroMesa, orderId } = useParams<{ numeroMesa: string; orderId: string }>();
   const navigate = useNavigate();
   const { showSuccess, showError, ToastContainer } = useToast();
-  
+
   const [currentOrderId, setCurrentOrderId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,7 +27,7 @@ function Feedback() {
     estrelas_servico: 0,
     estrelas_comida: 0,
     estrelas_experiencia: 0,
-    comentario: ''
+    comentario: '',
   });
 
   useEffect(() => {
@@ -36,16 +36,16 @@ function Feedback() {
       setIsLoading(true);
       try {
         const tableId = parseInt(numeroMesa, 10);
-        const result = await getActiveOrderByTable(tableId); 
+        const result = await getActiveOrderByTable(tableId);
         if (result.success && result.data) {
           setCurrentOrderId(result.data.id);
         } else {
           // Fallback para o ID da URL se a mesa não tiver mais pedido ativo
           if (orderId) setCurrentOrderId(parseInt(orderId, 10));
-          else showError("Erro", "Não foi possível localizar o pedido para avaliação.");
+          else showError('Erro', 'Não foi possível localizar o pedido para avaliação.');
         }
       } catch (e) {
-        showError("Erro", "Falha de conexão ao buscar pedido.");
+        showError('Erro', 'Falha de conexão ao buscar pedido.');
       } finally {
         setIsLoading(false);
       }
@@ -53,54 +53,64 @@ function Feedback() {
     fetchOrder();
   }, [numeroMesa, orderId]);
 
-  const avaliarEstrelas = (categoria: keyof Omit<AvaliacaoFeedback, 'comentario'>, valor: number) => {
+  const avaliarEstrelas = (
+    categoria: keyof Omit<AvaliacaoFeedback, 'comentario'>,
+    valor: number
+  ) => {
     setAvaliacao(prev => ({ ...prev, [categoria]: valor }));
   };
 
   const enviarAvaliacao = async () => {
     if (!currentOrderId) {
-      showError("Erro", "ID do pedido não encontrado.");
+      showError('Erro', 'ID do pedido não encontrado.');
       return;
     }
     if (Object.values(avaliacao).every(v => v === 0 || v === '')) {
-        showError("Avaliação Vazia", "Por favor, dê uma nota para continuar.");
-        return;
+      showError('Avaliação Vazia', 'Por favor, dê uma nota para continuar.');
+      return;
     }
 
     setIsSubmitting(true);
     try {
       const result = await createFeedback({
         order_id: currentOrderId,
-        ...avaliacao
+        ...avaliacao,
       });
 
       if (result.success) {
-        showSuccess("Obrigado!", "Sua avaliação foi registrada com sucesso.");
+        showSuccess('Obrigado!', 'Sua avaliação foi registrada com sucesso.');
         setTimeout(() => navigate('/'), 2000);
       } else {
-        showError("Erro", result.error || "Não foi possível enviar sua avaliação.");
+        showError('Erro', result.error || 'Não foi possível enviar sua avaliação.');
       }
     } catch (err) {
-      showError("Erro de Conexão", "Tente novamente mais tarde.");
+      showError('Erro de Conexão', 'Tente novamente mais tarde.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const renderEstrelas = (categoria: keyof Omit<AvaliacaoFeedback, 'comentario'>, valor: number) => {
+  const renderEstrelas = (
+    categoria: keyof Omit<AvaliacaoFeedback, 'comentario'>,
+    valor: number
+  ) => {
     const categoryLabels = {
       estrelas_servico: 'Atendimento e Serviço',
       estrelas_comida: 'Qualidade da Comida',
       estrelas_estabelecimento: 'Ambiente do Restaurante',
-      estrelas_experiencia: 'Experiência Geral'
+      estrelas_experiencia: 'Experiência Geral',
     };
 
     return (
-      <div className="flex gap-1 justify-center" role="group" aria-label={`Avaliação de ${categoryLabels[categoria]}`}>
-        {[1, 2, 3, 4, 5].map((estrela) => (
-          <button 
-            key={estrela} 
-            onClick={() => avaliarEstrelas(categoria, estrela)} 
+      <div
+        className="flex gap-1 justify-center"
+        role="group"
+        aria-label={`Avaliação de ${categoryLabels[categoria]}`}
+      >
+        {[1, 2, 3, 4, 5].map(estrela => (
+          <button
+            key={estrela}
+            onClick={() => avaliarEstrelas(categoria, estrela)}
             className={`p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded ${estrela <= valor ? 'text-yellow-400' : 'text-gray-600 hover:text-yellow-300'}`}
             aria-label={`Dar ${estrela} estrela${estrela > 1 ? 's' : ''} para ${categoryLabels[categoria]}`}
             aria-pressed={estrela <= valor}
@@ -114,7 +124,11 @@ function Feedback() {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen"><Loader2 className="h-12 w-12 animate-spin" /></div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="h-12 w-12 animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -123,7 +137,10 @@ function Feedback() {
       <nav className="bg-white shadow-sm border-b sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <button onClick={() => navigate('/')} className="flex items-center text-gray-600 hover:text-gray-900 mr-4">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center text-gray-600 hover:text-gray-900 mr-4"
+            >
               <ArrowLeft className="h-5 w-5 mr-2" /> Pular Avaliação
             </button>
             <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -163,12 +180,12 @@ function Feedback() {
             <label htmlFor="feedback-comment" className="sr-only">
               Comentário opcional sobre sua experiência no restaurante
             </label>
-            <textarea 
+            <textarea
               id="feedback-comment"
-              value={avaliacao.comentario} 
-              onChange={(e) => setAvaliacao(prev => ({ ...prev, comentario: e.target.value }))} 
-              placeholder="Conte-nos mais sobre sua experiência..." 
-              className="w-full p-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500" 
+              value={avaliacao.comentario}
+              onChange={e => setAvaliacao(prev => ({ ...prev, comentario: e.target.value }))}
+              placeholder="Conte-nos mais sobre sua experiência..."
+              className="w-full p-3 border border-gray-500 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
               rows={4}
               aria-describedby="feedback-comment-description"
             />
@@ -177,7 +194,11 @@ function Feedback() {
             </p>
           </div>
 
-          <button onClick={enviarAvaliacao} disabled={isSubmitting} className="w-full py-3 btn-primary">
+          <button
+            onClick={enviarAvaliacao}
+            disabled={isSubmitting}
+            className="w-full py-3 btn-primary"
+          >
             {isSubmitting ? <Loader2 className="animate-spin mx-auto" /> : 'Enviar Avaliação'}
           </button>
         </div>

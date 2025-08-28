@@ -21,7 +21,7 @@ const mockFuncionarios: Funcionario[] = [
     telefone: '(11) 99999-1234',
     status: 'ativo',
     dataAdmissao: '2023-01-15',
-    salario: 2500
+    salario: 2500,
   },
   {
     id: '2',
@@ -31,7 +31,7 @@ const mockFuncionarios: Funcionario[] = [
     telefone: '(11) 99999-5678',
     status: 'ativo',
     dataAdmissao: '2023-02-20',
-    salario: 3200
+    salario: 3200,
   },
   {
     id: '3',
@@ -41,7 +41,7 @@ const mockFuncionarios: Funcionario[] = [
     telefone: '(11) 99999-9012',
     status: 'ativo',
     dataAdmissao: '2022-11-10',
-    salario: 4500
+    salario: 4500,
   },
   {
     id: '4',
@@ -51,7 +51,7 @@ const mockFuncionarios: Funcionario[] = [
     telefone: '(11) 99999-3456',
     status: 'ativo',
     dataAdmissao: '2023-03-05',
-    salario: 2500
+    salario: 2500,
   },
   {
     id: '5',
@@ -61,8 +61,8 @@ const mockFuncionarios: Funcionario[] = [
     telefone: '(11) 99999-7890',
     status: 'inativo',
     dataAdmissao: '2023-01-20',
-    salario: 2800
-  }
+    salario: 2800,
+  },
 ];
 
 const cargos = ['Todos', 'garcom', 'cozinheiro', 'gerente', 'caixa'];
@@ -77,28 +77,39 @@ function Funcionarios() {
 
   const filteredFuncionarios = funcionarios.filter(func => {
     const matchesCargo = selectedCargo === 'Todos' || func.cargo === selectedCargo;
-    const matchesSearch = func.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         func.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      func.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      func.email.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCargo && matchesSearch;
   });
 
   const getCargoColor = (cargo: string) => {
     switch (cargo) {
-      case 'garcom': return 'bg-blue-100 text-blue-700';
-      case 'cozinheiro': return 'bg-green-100 text-green-700';
-      case 'gerente': return 'bg-purple-100 text-purple-700';
-      case 'caixa': return 'bg-orange-100 text-orange-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case 'garcom':
+        return 'bg-blue-100 text-blue-700';
+      case 'cozinheiro':
+        return 'bg-green-100 text-green-700';
+      case 'gerente':
+        return 'bg-purple-100 text-purple-700';
+      case 'caixa':
+        return 'bg-orange-100 text-orange-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
     }
   };
 
   const getCargoLabel = (cargo: string) => {
     switch (cargo) {
-      case 'garcom': return 'Garçom';
-      case 'cozinheiro': return 'Cozinheiro';
-      case 'gerente': return 'Gerente';
-      case 'caixa': return 'Caixa';
-      default: return cargo;
+      case 'garcom':
+        return 'Garçom';
+      case 'cozinheiro':
+        return 'Cozinheiro';
+      case 'gerente':
+        return 'Gerente';
+      case 'caixa':
+        return 'Caixa';
+      default:
+        return cargo;
     }
   };
 
@@ -116,7 +127,7 @@ function Funcionarios() {
       email: '',
       telefone: '',
       status: 'ativo',
-      dataAdmissao: new Date().toISOString().split('T')[0]
+      dataAdmissao: new Date().toISOString().split('T')[0],
     });
     setIsEditing(false);
     setIsModalOpen(true);
@@ -126,7 +137,7 @@ function Funcionarios() {
     const stats = cargos.slice(1).map(cargo => ({
       cargo,
       total: funcionarios.filter(f => f.cargo === cargo).length,
-      ativos: funcionarios.filter(f => f.cargo === cargo && f.status === 'ativo').length
+      ativos: funcionarios.filter(f => f.cargo === cargo && f.status === 'ativo').length,
     }));
     return stats;
   };
@@ -137,9 +148,7 @@ function Funcionarios() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Funcionários</h1>
-          <p className="text-gray-600 mt-1">
-            Gerencie a equipe do restaurante
-          </p>
+          <p className="text-gray-600 mt-1">Gerencie a equipe do restaurante</p>
         </div>
         <button onClick={handleNewFuncionario} className="btn-primary">
           <Plus className="h-4 w-4 mr-2" />
@@ -154,7 +163,7 @@ function Funcionarios() {
             type="text"
             placeholder="Buscar funcionários..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             className="input-field"
           />
         </div>
@@ -185,7 +194,7 @@ function Funcionarios() {
                 {stat.ativos}/{stat.total} ativos
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div 
+                <div
                   className="bg-primary-600 h-2 rounded-full"
                   style={{ width: `${stat.total > 0 ? (stat.ativos / stat.total) * 100 : 0}%` }}
                 ></div>
@@ -206,16 +215,20 @@ function Funcionarios() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">{funcionario.nome}</h3>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getCargoColor(funcionario.cargo)}`}>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${getCargoColor(funcionario.cargo)}`}
+                  >
                     {getCargoLabel(funcionario.cargo)}
                   </span>
                 </div>
               </div>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                funcionario.status === 'ativo' 
-                  ? 'bg-green-100 text-green-700' 
-                  : 'bg-red-100 text-red-700'
-              }`}>
+              <span
+                className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  funcionario.status === 'ativo'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
+                }`}
+              >
                 {funcionario.status === 'ativo' ? 'Ativo' : 'Inativo'}
               </span>
             </div>
@@ -231,7 +244,9 @@ function Funcionarios() {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Calendar className="h-4 w-4" />
-                <span>Admissão: {new Date(funcionario.dataAdmissao).toLocaleDateString('pt-BR')}</span>
+                <span>
+                  Admissão: {new Date(funcionario.dataAdmissao).toLocaleDateString('pt-BR')}
+                </span>
               </div>
               {funcionario.salario && (
                 <div className="text-sm text-gray-600">
@@ -263,7 +278,7 @@ function Funcionarios() {
             <h2 className="text-xl font-bold text-gray-900 mb-6">
               {isEditing ? 'Editar Funcionário' : 'Novo Funcionário'}
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -272,19 +287,24 @@ function Funcionarios() {
                 <input
                   type="text"
                   value={selectedFuncionario.nome}
-                  onChange={(e) => setSelectedFuncionario({...selectedFuncionario, nome: e.target.value})}
+                  onChange={e =>
+                    setSelectedFuncionario({ ...selectedFuncionario, nome: e.target.value })
+                  }
                   className="input-field"
                   placeholder="Ex: João Silva"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Cargo
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
                 <select
                   value={selectedFuncionario.cargo}
-                  onChange={(e) => setSelectedFuncionario({...selectedFuncionario, cargo: e.target.value as Funcionario['cargo']})}
+                  onChange={e =>
+                    setSelectedFuncionario({
+                      ...selectedFuncionario,
+                      cargo: e.target.value as Funcionario['cargo'],
+                    })
+                  }
                   className="input-field"
                 >
                   <option value="garcom">Garçom</option>
@@ -295,26 +315,26 @@ function Funcionarios() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                 <input
                   type="email"
                   value={selectedFuncionario.email}
-                  onChange={(e) => setSelectedFuncionario({...selectedFuncionario, email: e.target.value})}
+                  onChange={e =>
+                    setSelectedFuncionario({ ...selectedFuncionario, email: e.target.value })
+                  }
                   className="input-field"
                   placeholder="funcionario@restaurant.com"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Telefone
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
                 <input
                   type="tel"
                   value={selectedFuncionario.telefone}
-                  onChange={(e) => setSelectedFuncionario({...selectedFuncionario, telefone: e.target.value})}
+                  onChange={e =>
+                    setSelectedFuncionario({ ...selectedFuncionario, telefone: e.target.value })
+                  }
                   className="input-field"
                   placeholder="(11) 99999-9999"
                 />
@@ -327,32 +347,40 @@ function Funcionarios() {
                 <input
                   type="date"
                   value={selectedFuncionario.dataAdmissao}
-                  onChange={(e) => setSelectedFuncionario({...selectedFuncionario, dataAdmissao: e.target.value})}
+                  onChange={e =>
+                    setSelectedFuncionario({ ...selectedFuncionario, dataAdmissao: e.target.value })
+                  }
                   className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Salário (R$)
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Salário (R$)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={selectedFuncionario.salario || ''}
-                  onChange={(e) => setSelectedFuncionario({...selectedFuncionario, salario: parseFloat(e.target.value)})}
+                  onChange={e =>
+                    setSelectedFuncionario({
+                      ...selectedFuncionario,
+                      salario: parseFloat(e.target.value),
+                    })
+                  }
                   className="input-field"
                   placeholder="2500.00"
                 />
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Status
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select
                   value={selectedFuncionario.status}
-                  onChange={(e) => setSelectedFuncionario({...selectedFuncionario, status: e.target.value as Funcionario['status']})}
+                  onChange={e =>
+                    setSelectedFuncionario({
+                      ...selectedFuncionario,
+                      status: e.target.value as Funcionario['status'],
+                    })
+                  }
                   className="input-field"
                 >
                   <option value="ativo">Ativo</option>
@@ -362,16 +390,10 @@ function Funcionarios() {
             </div>
 
             <div className="flex justify-end gap-3 mt-6">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="btn-secondary"
-              >
+              <button onClick={() => setIsModalOpen(false)} className="btn-secondary">
                 Cancelar
               </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="btn-primary"
-              >
+              <button onClick={() => setIsModalOpen(false)} className="btn-primary">
                 {isEditing ? 'Salvar Alterações' : 'Criar Funcionário'}
               </button>
             </div>
@@ -382,4 +404,4 @@ function Funcionarios() {
   );
 }
 
-export default Funcionarios; 
+export default Funcionarios;

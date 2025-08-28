@@ -53,11 +53,18 @@ for file in $API_FILES; do
     if [ -f "$file" ]; then
         # Count exported functions
         FUNCTION_COUNT=$(grep -c "export.*function\|export.*=.*=>" "$file" 2>/dev/null || echo "0")
+        FUNCTION_COUNT=$(echo "$FUNCTION_COUNT" | tr -d '\n')
+        FUNCTION_COUNT=${FUNCTION_COUNT:-0}
+        if ! [[ "$FUNCTION_COUNT" =~ ^[0-9]+$ ]]; then
+            FUNCTION_COUNT=0
+        fi
         TOTAL_FUNCTIONS=$((TOTAL_FUNCTIONS + FUNCTION_COUNT))
         
         # Count documented functions (with JSDoc)
         DOC_COUNT=$(grep -B5 "export.*function\|export.*=.*=>" "$file" | grep -c "\/\*\*\|\/\/ @" 2>/dev/null || echo "0")
-        if [ "$DOC_COUNT" = "" ]; then
+        DOC_COUNT=$(echo "$DOC_COUNT" | tr -d '\n')
+        DOC_COUNT=${DOC_COUNT:-0}
+        if ! [[ "$DOC_COUNT" =~ ^[0-9]+$ ]]; then
             DOC_COUNT=0
         fi
         DOCUMENTED_FUNCTIONS=$((DOCUMENTED_FUNCTIONS + DOC_COUNT))
@@ -74,11 +81,18 @@ for file in $HOOK_FILES; do
     if [ -f "$file" ]; then
         # Count hook functions
         HOOK_COUNT=$(grep -c "export.*use[A-Z]" "$file" 2>/dev/null || echo "0")
+        HOOK_COUNT=$(echo "$HOOK_COUNT" | tr -d '\n')
+        HOOK_COUNT=${HOOK_COUNT:-0}
+        if ! [[ "$HOOK_COUNT" =~ ^[0-9]+$ ]]; then
+            HOOK_COUNT=0
+        fi
         TOTAL_FUNCTIONS=$((TOTAL_FUNCTIONS + HOOK_COUNT))
         
         # Count documented hooks
         HOOK_DOC_COUNT=$(grep -B3 "export.*use[A-Z]" "$file" | grep -c "\/\*\*\|\/\/ @" 2>/dev/null || echo "0")
-        if [ "$HOOK_DOC_COUNT" = "" ]; then
+        HOOK_DOC_COUNT=$(echo "$HOOK_DOC_COUNT" | tr -d '\n')
+        HOOK_DOC_COUNT=${HOOK_DOC_COUNT:-0}
+        if ! [[ "$HOOK_DOC_COUNT" =~ ^[0-9]+$ ]]; then
             HOOK_DOC_COUNT=0
         fi
         DOCUMENTED_FUNCTIONS=$((DOCUMENTED_FUNCTIONS + HOOK_DOC_COUNT))

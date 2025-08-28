@@ -5,6 +5,7 @@
 Here's how to use the new shared Button component in both web and React Native:
 
 ### Web Usage (in React app)
+
 ```tsx
 import { Button } from '@cheforg/shared/ui';
 
@@ -22,6 +23,7 @@ function MyComponent() {
 ```
 
 ### React Native Usage
+
 ```tsx
 import { NativeButton } from '../components/NativeButton';
 
@@ -41,6 +43,7 @@ export const MyScreen = () => {
 ## Testing Shared Constants
 
 ### Import shared constants
+
 ```tsx
 import { COLORS, SPACING, ROUTES } from '@cheforg/shared/constants';
 
@@ -67,11 +70,11 @@ import type { MenuItem, Reserva } from '@cheforg/shared/types';
 const item: MenuItem = {
   id: '1',
   nome: 'Hambúrguer Gourmet',
-  preco: 28.50,
+  preco: 28.5,
   categoria: 'principais',
   disponivel: true,
   tempo_preparo: 15,
-  ingredientes: ['pão', 'carne', 'queijo']
+  ingredientes: ['pão', 'carne', 'queijo'],
 };
 
 const reserva: Reserva = {
@@ -81,7 +84,7 @@ const reserva: Reserva = {
   clienteTelefone: '(11) 99999-9999',
   dataHora: new Date(),
   numeroConvidados: 4,
-  status: 'confirmada'
+  status: 'confirmada',
 };
 ```
 

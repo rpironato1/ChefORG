@@ -1,5 +1,18 @@
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+} from 'recharts';
 import { Download, TrendingUp, DollarSign, Users, ShoppingCart } from 'lucide-react';
 
 const mockVendasData = [
@@ -89,14 +102,12 @@ function Relatorios() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Relatórios</h1>
-          <p className="text-gray-600 mt-1">
-            Análise detalhada do desempenho do restaurante
-          </p>
+          <p className="text-gray-600 mt-1">Análise detalhada do desempenho do restaurante</p>
         </div>
         <div className="flex items-center gap-4">
           <select
             value={selectedPeriod}
-            onChange={(e) => setSelectedPeriod(e.target.value)}
+            onChange={e => setSelectedPeriod(e.target.value)}
             className="input-field"
           >
             {periodOptions.map(option => (
@@ -230,12 +241,47 @@ function Relatorios() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {[
-                { pos: 1, prato: 'Hambúrguer Artesanal', categoria: 'Lanches', vendas: 245, receita: 7080.50, margem: 65 },
-                { pos: 2, prato: 'Risotto de Camarão', categoria: 'Pratos Principais', vendas: 189, receita: 8599.50, margem: 72 },
-                { pos: 3, prato: 'Pasta ao Pesto', categoria: 'Pratos Principais', vendas: 156, receita: 5053.40, margem: 68 },
-                { pos: 4, prato: 'Tiramisu', categoria: 'Sobremesas', vendas: 142, receita: 2400.38, margem: 78 },
-                { pos: 5, prato: 'Suco de Laranja', categoria: 'Bebidas', vendas: 298, receita: 2533.00, margem: 82 },
-              ].map((item) => (
+                {
+                  pos: 1,
+                  prato: 'Hambúrguer Artesanal',
+                  categoria: 'Lanches',
+                  vendas: 245,
+                  receita: 7080.5,
+                  margem: 65,
+                },
+                {
+                  pos: 2,
+                  prato: 'Risotto de Camarão',
+                  categoria: 'Pratos Principais',
+                  vendas: 189,
+                  receita: 8599.5,
+                  margem: 72,
+                },
+                {
+                  pos: 3,
+                  prato: 'Pasta ao Pesto',
+                  categoria: 'Pratos Principais',
+                  vendas: 156,
+                  receita: 5053.4,
+                  margem: 68,
+                },
+                {
+                  pos: 4,
+                  prato: 'Tiramisu',
+                  categoria: 'Sobremesas',
+                  vendas: 142,
+                  receita: 2400.38,
+                  margem: 78,
+                },
+                {
+                  pos: 5,
+                  prato: 'Suco de Laranja',
+                  categoria: 'Bebidas',
+                  vendas: 298,
+                  receita: 2533.0,
+                  margem: 82,
+                },
+              ].map(item => (
                 <tr key={item.pos} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">{item.pos}º</div>
@@ -273,7 +319,9 @@ function Relatorios() {
               <div className="h-2 w-2 bg-green-500 rounded-full mt-2"></div>
               <div>
                 <p className="text-sm font-medium text-gray-900">Crescimento Consistente</p>
-                <p className="text-sm text-gray-600">Vendas aumentaram 12.5% em relação ao mês anterior</p>
+                <p className="text-sm text-gray-600">
+                  Vendas aumentaram 12.5% em relação ao mês anterior
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -287,7 +335,9 @@ function Relatorios() {
               <div className="h-2 w-2 bg-purple-500 rounded-full mt-2"></div>
               <div>
                 <p className="text-sm font-medium text-gray-900">Categoria Líder</p>
-                <p className="text-sm text-gray-600">Pratos Principais respondem por 45% das vendas</p>
+                <p className="text-sm text-gray-600">
+                  Pratos Principais respondem por 45% das vendas
+                </p>
               </div>
             </div>
           </div>
@@ -314,7 +364,9 @@ function Relatorios() {
               <div className="h-2 w-2 bg-yellow-500 rounded-full mt-2"></div>
               <div>
                 <p className="text-sm font-medium text-gray-900">Promoções</p>
-                <p className="text-sm text-gray-600">Criar ofertas para horários de baixo movimento</p>
+                <p className="text-sm text-gray-600">
+                  Criar ofertas para horários de baixo movimento
+                </p>
               </div>
             </div>
           </div>
@@ -324,4 +376,4 @@ function Relatorios() {
   );
 }
 
-export default Relatorios; 
+export default Relatorios;
