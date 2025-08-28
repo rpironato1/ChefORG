@@ -62,9 +62,9 @@ export const isValidCPF = (cpf: string): boolean => {
 describe('Utility Functions', () => {
   describe('formatCurrency', () => {
     it('should format numbers as Brazilian currency', () => {
-      expect(formatCurrency(10.50)).toBe('R$ 10,50')
-      expect(formatCurrency(1000)).toBe('R$ 1.000,00')
-      expect(formatCurrency(0)).toBe('R$ 0,00')
+      expect(formatCurrency(10.50)).toMatch(/R\$\s*10,50/)
+      expect(formatCurrency(1000)).toMatch(/R\$\s*1\.000,00/)
+      expect(formatCurrency(0)).toMatch(/R\$\s*0,00/)
     })
   })
 

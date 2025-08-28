@@ -1,0 +1,41 @@
+{
+  "urls": [
+    "http://localhost:8110/",
+    "http://localhost:8110/menu",
+    "http://localhost:8110/reservas",
+    "http://localhost:8110/admin",
+    "http://localhost:8110/admin/dashboard",
+    "http://localhost:8110/admin/recepcao",
+    "http://localhost:8110/admin/garcom",
+    "http://localhost:8110/admin/cozinha",
+    "http://localhost:8110/admin/caixa"
+  ],
+  "standard": "WCAG2AA",
+  "reporter": "json",
+  "outputFile": "./test-results/a11y-report.json",
+  "threshold": 0,
+  "ignore": [
+    "color-contrast"
+  ],
+  "chromeLaunchConfig": {
+    "headless": true,
+    "args": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage"
+    ]
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 1024
+  },
+  "wait": 2000,
+  "timeout": 30000,
+  "hideElements": [
+    ".ad-banner",
+    ".popup-overlay"
+  ],
+  "actions": [
+    "wait for element body to be visible"
+  ]
+}

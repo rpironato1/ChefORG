@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-28T12:32:14.422Z",
+  "timestamp": "2025-08-28T12:48:39.272Z",
   "apis": {
     "totalModules": 12,
     "validatedModules": 12,
@@ -208,7 +208,7 @@
   "components": {
     "totalComponents": 42,
     "createdComponents": 0,
-    "existingComponents": 23,
+    "existingComponents": 21,
     "componentDetails": [
       {
         "name": "LoadingSpinner",
@@ -292,24 +292,10 @@
         "directory": "src/pages/admin"
       },
       {
-        "name": "CheckinQR",
-        "type": "page",
-        "status": "exists",
-        "path": "./src/pages/cliente/CheckinQR.tsx",
-        "directory": "src/pages/cliente"
-      },
-      {
         "name": "ChegadaSemReserva",
         "type": "page",
         "status": "exists",
         "path": "./src/pages/cliente/ChegadaSemReserva.tsx",
-        "directory": "src/pages/cliente"
-      },
-      {
-        "name": "Feedback",
-        "type": "page",
-        "status": "exists",
-        "path": "./src/pages/cliente/Feedback.tsx",
         "directory": "src/pages/cliente"
       },
       {
@@ -371,9 +357,9 @@
     ]
   },
   "coverage": {
-    "overall": 81.90476190476191,
+    "overall": 80,
     "apis": 100,
-    "components": 54.761904761904766
+    "components": 50
   },
   "success": false
 }
