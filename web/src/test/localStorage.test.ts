@@ -1,6 +1,6 @@
 // Comprehensive tests for localStorage implementation and Supabase compatibility
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { LocalStorageClient } from '../lib/localStorage';
+import { SimpleLocalStorageClient } from '../lib/localStorageSimple';
 
 // Mock localStorage for testing
 const mockLocalStorage = (() => {
@@ -29,11 +29,11 @@ Object.defineProperty(global, 'localStorage', {
 });
 
 describe('LocalStorageClient', () => {
-  let client: LocalStorageClient;
+  let client: SimpleLocalStorageClient;
 
   beforeEach(() => {
     mockLocalStorage.clear();
-    client = new LocalStorageClient();
+    client = new SimpleLocalStorageClient();
   });
 
   describe('Basic CRUD Operations', () => {
@@ -222,7 +222,7 @@ describe('LocalStorageClient', () => {
       await client.from('users').insert(userData);
 
       // Create new client instance and verify data exists
-      const newClient = new LocalStorageClient();
+      const newClient = new SimpleLocalStorageClient();
       const result = await newClient.from('users').select('*').eq('email', 'persist@test.com');
 
       expect(result.data).toHaveLength(1);

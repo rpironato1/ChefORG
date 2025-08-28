@@ -1,4 +1,4 @@
-// localStorage service that mimics Supabase structure
+// Simplified localStorage implementation - completely avoiding circular references
 import { Database } from './supabase';
 
 // Storage keys
@@ -46,8 +46,8 @@ type TableRow<T extends TableName> = Database['public']['Tables'][T]['Row'];
 type TableInsert<T extends TableName> = Database['public']['Tables'][T]['Insert'];
 type TableUpdate<T extends TableName> = Database['public']['Tables'][T]['Update'];
 
-// Optimized query builder - fixed circular reference issue
-class OptimizedQueryBuilder<T extends TableName> {
+// Simplified query builder - no circular references
+class SimpleQueryBuilder<T extends TableName> {
   private table: T;
   private filters: Array<(item: any) => boolean> = [];
   private orderConfig: { column: string; ascending: boolean } | null = null;
@@ -55,66 +55,13 @@ class OptimizedQueryBuilder<T extends TableName> {
   private rangeConfig: { from: number; to: number } | null = null;
   private singleMode = false;
 
-  constructor(
-    table: T,
-    private client: LocalStorageClient
-  ) {
+  constructor(table: T) {
     this.table = table;
   }
 
-  // Chainable filter methods that return new instances to avoid circular references
-  eq(column: string, value: any): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.filters.push((item: any) => item[column] === value);
-    return newBuilder;
-  }
-
-  gte(column: string, value: any): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.filters.push((item: any) => item[column] >= value);
-    return newBuilder;
-  }
-
-  lte(column: string, value: any): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.filters.push((item: any) => item[column] <= value);
-    return newBuilder;
-  }
-
-  in(column: string, values: any[]): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.filters.push((item: any) => values.includes(item[column]));
-    return newBuilder;
-  }
-
-  order(column: string, options?: { ascending?: boolean }): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.orderConfig = { column, ascending: options?.ascending ?? true };
-    return newBuilder;
-  }
-
-  limit(count: number): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.limitConfig = count;
-    return newBuilder;
-  }
-
-  range(from: number, to: number): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.rangeConfig = { from, to };
-    return newBuilder;
-  }
-
-  single(): OptimizedQueryBuilder<T> {
-    const newBuilder = this.clone();
-    newBuilder.singleMode = true;
-    return newBuilder;
-  }
-
-  // Clone method to avoid circular references
-  private clone(): OptimizedQueryBuilder<T> {
-    const newBuilder = new OptimizedQueryBuilder(this.table, this.client);
-    newBuilder.filters = [...this.filters];
+  eq(column: string, value: any): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters, (item: any) => item[column] === value];
     newBuilder.orderConfig = this.orderConfig;
     newBuilder.limitConfig = this.limitConfig;
     newBuilder.rangeConfig = this.rangeConfig;
@@ -122,27 +69,97 @@ class OptimizedQueryBuilder<T extends TableName> {
     return newBuilder;
   }
 
-  // Execute the query - simplified to avoid circular reference issues
+  gte(column: string, value: any): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters, (item: any) => item[column] >= value];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.rangeConfig = this.rangeConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
+  }
+
+  lte(column: string, value: any): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters, (item: any) => item[column] <= value];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.rangeConfig = this.rangeConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
+  }
+
+  in(column: string, values: any[]): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters, (item: any) => values.includes(item[column])];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.rangeConfig = this.rangeConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
+  }
+
+  order(column: string, options?: { ascending?: boolean }): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = { column, ascending: options?.ascending ?? true };
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.rangeConfig = this.rangeConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
+  }
+
+  limit(count: number): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = count;
+    newBuilder.rangeConfig = this.rangeConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
+  }
+
+  range(from: number, to: number): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.rangeConfig = { from, to };
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
+  }
+
+  single(): SimpleQueryBuilder<T> {
+    const newBuilder = new SimpleQueryBuilder(this.table);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.rangeConfig = this.rangeConfig;
+    newBuilder.singleMode = true;
+    return newBuilder;
+  }
+
+  // Promise implementation - single method, no circular references
   then<TResult1 = { data: any; error: any }, TResult2 = never>(
     onFulfilled?: ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>) | null,
     onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
   ): Promise<TResult1 | TResult2> {
-    const promise = this.execute();
-    return promise.then(onFulfilled, onRejected);
+    return this.execute().then(onFulfilled, onRejected);
   }
 
-  // Execute method that does the actual work
+  // Execute the query
   private execute(): Promise<{ data: any; error: any }> {
     return new Promise(resolve => {
       try {
-        let data = this.client.selectAll(this.table);
+        const key = STORAGE_KEYS[this.table as keyof typeof STORAGE_KEYS] || `cheforg_${this.table}`;
+        let data = getFromStorage<TableRow<T>>(key);
 
-        // Apply filters (optimized with short-circuiting)
+        // Apply filters
         if (this.filters.length > 0) {
           data = data.filter(item => this.filters.every(filter => filter(item)));
         }
 
-        // Apply ordering (optimized for common patterns)
+        // Apply ordering
         if (this.orderConfig) {
           const { column, ascending } = this.orderConfig;
           data = [...data].sort((a, b) => {
@@ -153,7 +170,7 @@ class OptimizedQueryBuilder<T extends TableName> {
           });
         }
 
-        // Apply range/limit (optimized memory usage)
+        // Apply range/limit
         if (this.rangeConfig) {
           const { from, to } = this.rangeConfig;
           data = data.slice(from, to + 1);
@@ -171,110 +188,24 @@ class OptimizedQueryBuilder<T extends TableName> {
   }
 }
 
-// Main localStorage client class with graph-optimized queries
-export class LocalStorageClient {
-  // Pre-computed indexes for graph optimization
-  private indexes: Map<string, Map<any, any[]>> = new Map();
-
-  // Build index for frequently queried fields
-  private buildIndex<T extends TableName>(table: T, column: string) {
-    const key = `${table}.${column}`;
-    if (this.indexes.has(key)) return;
-
-    const data = this.selectAll(table);
-    const index = new Map();
-
-    data.forEach(item => {
-      const value = (item as any)[column];
-      if (!index.has(value)) {
-        index.set(value, []);
-      }
-      index.get(value).push(item);
-    });
-
-    this.indexes.set(key, index);
-  }
-
-  // Optimized select with graph-based query building
+// Main localStorage client class - simplified
+export class SimpleLocalStorageClient {
   from<T extends TableName>(table: T) {
     return {
-      select: (_columns = '*') => new OptimizedQueryBuilder(table, this),
+      select: (_columns = '*') => new SimpleQueryBuilder(table),
 
       insert: (values: TableInsert<T> | TableInsert<T>[]) => this.insert(table, values),
 
       update: (values: TableUpdate<T>) => ({
         eq: (column: string, value: any) => this.update(table, values, column, value),
         match: (filters: Record<string, any>) => this.updateWithMatch(table, values, filters),
-        select: () => ({
-          single: () => this.updateAndReturn(table, values),
-        }),
       }),
 
       delete: () => ({
-        eq: (column: string, value: any) => {
-          const deleteQuery = this.delete(table, column, value);
-          return {
-            then: <TResult1 = { data: any; error: any }, TResult2 = never>(
-              onFulfilled?: ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>) | null,
-              onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
-            ): Promise<TResult1 | TResult2> => {
-              return deleteQuery.then(onFulfilled, onRejected);
-            }
-          };
-        },
-        match: (filters: Record<string, any>) => {
-          const deleteQuery = this.deleteWithMatch(table, filters);
-          return {
-            then: <TResult1 = { data: any; error: any }, TResult2 = never>(
-              onFulfilled?: ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>) | null,
-              onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
-            ): Promise<TResult1 | TResult2> => {
-              return deleteQuery.then(onFulfilled, onRejected);
-            }
-          };
-        },
+        eq: (column: string, value: any) => this.delete(table, column, value),
+        match: (filters: Record<string, any>) => this.deleteWithMatch(table, filters),
       }),
     };
-  }
-
-  // Add return functionality for updates
-  private async updateAndReturn<T extends TableName>(
-    table: T,
-    values: TableUpdate<T>
-  ): Promise<{ data: TableRow<T> | null; error: any }> {
-    return new Promise(resolve => {
-      try {
-        const allData = this.selectAll(table);
-        const updated = allData[0]
-          ? { ...allData[0], ...values, updated_at: new Date().toISOString() }
-          : null;
-        resolve({ data: updated as TableRow<T>, error: null });
-      } catch (error) {
-        resolve({ data: null, error });
-      }
-    });
-  }
-
-  // Public method for accessing data (used by query builder)
-  selectAll<T extends TableName>(table: T): TableRow<T>[] {
-    const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
-
-    // Build commonly used indexes on first access
-    this.buildIndex(table, 'id');
-    if (table === 'reservations') {
-      this.buildIndex(table, 'status');
-      this.buildIndex(table, 'data_hora');
-    }
-    if (table === 'tables') {
-      this.buildIndex(table, 'status');
-      this.buildIndex(table, 'qr_code');
-    }
-    if (table === 'orders') {
-      this.buildIndex(table, 'status');
-      this.buildIndex(table, 'table_id');
-    }
-
-    return getFromStorage<TableRow<T>>(key);
   }
 
   private async insert<T extends TableName>(
@@ -453,14 +384,14 @@ export class LocalStorageClient {
     },
   };
 
-  // Create improved RPC that matches expected pattern
+  // RPC methods
   rpc = (
     functionName: string,
     _params: Record<string, any>
   ): Promise<{ data: any; error: any }> => {
     return new Promise(resolve => {
       try {
-        // Mock RPC responses for common functions with proper graph-based data
+        // Mock RPC responses for common functions
         if (functionName === 'get_sales_dashboard_data') {
           const mockData = {
             total_sales: 1250.75,
@@ -507,7 +438,7 @@ export class LocalStorageClient {
 }
 
 // Create and export the client instance
-export const localStorageClient = new LocalStorageClient();
+export const simpleLocalStorageClient = new SimpleLocalStorageClient();
 
 // Export for backward compatibility
-export const supabase = localStorageClient;
+export const supabase = simpleLocalStorageClient;
