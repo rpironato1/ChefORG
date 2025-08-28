@@ -13,14 +13,6 @@ export * from './api';
 export * from './errors';
 
 // Re-export key utilities for convenience
-export { 
-  clearAllCaches, 
-  getCacheStatus 
-} from './stores';
+export { clearAllCaches, getCacheStatus } from './stores';
 
-export { 
-  apiClient, 
-  apiCache,
-  API_ENDPOINTS,
-  API_CONFIG
-} from './api';
+export { apiClient, apiCache, API_ENDPOINTS, API_CONFIG } from './api';

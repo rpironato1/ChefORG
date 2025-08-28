@@ -25,15 +25,13 @@ export const PWAInstallBanner: React.FC = () => {
             <Smartphone className="w-6 h-6" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium">
-              Instalar ChefORG
-            </p>
+            <p className="text-sm font-medium">Instalar ChefORG</p>
             <p className="text-xs text-primary-100 mt-1">
               Acesse rapidamente direto da sua tela inicial
             </p>
           </div>
         </div>
-        
+
         <div className="flex items-center space-x-2 ml-4">
           <button
             onClick={handleInstall}
@@ -42,7 +40,7 @@ export const PWAInstallBanner: React.FC = () => {
             <Download className="w-4 h-4" />
             <span>Instalar</span>
           </button>
-          
+
           <button
             onClick={() => setIsDismissed(true)}
             className="text-primary-100 hover:text-white p-1 transition-colors"

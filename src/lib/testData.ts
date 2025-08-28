@@ -12,7 +12,7 @@ const testUsers = [
     role: 'gerente' as const,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const testUsers = [
     role: 'recepcao' as const,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const testUsers = [
     role: 'garcom' as const,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const testUsers = [
     role: 'cozinheiro' as const,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const testUsers = [
     role: 'caixa' as const,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 6,
@@ -67,8 +67,8 @@ const testUsers = [
     role: 'cliente' as const,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test tables data
@@ -85,7 +85,7 @@ const testTables = [
     pedido_atual_id: null,
     observacoes: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 2,
@@ -99,7 +99,7 @@ const testTables = [
     pedido_atual_id: 1,
     observacoes: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 3,
@@ -113,7 +113,7 @@ const testTables = [
     pedido_atual_id: null,
     observacoes: 'Reserva para 19h',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 4,
@@ -127,7 +127,7 @@ const testTables = [
     pedido_atual_id: null,
     observacoes: 'Aguardando limpeza',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 5,
@@ -141,8 +141,8 @@ const testTables = [
     pedido_atual_id: null,
     observacoes: 'Fila de espera',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test menu items data
@@ -151,7 +151,7 @@ const testMenuItems = [
     id: 1,
     nome: 'Hambúrguer Artesanal',
     descricao: 'Hambúrguer 180g com queijo, alface, tomate e molho especial',
-    preco: 25.90,
+    preco: 25.9,
     categoria: 'Hambúrgueres',
     disponivel: true,
     tempo_preparo: 15,
@@ -159,13 +159,13 @@ const testMenuItems = [
     imagem: '/images/hamburguer.jpg',
     restricoes: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 2,
     nome: 'Pizza Margherita',
     descricao: 'Pizza tradicional com molho de tomate, mussarela e manjericão',
-    preco: 32.50,
+    preco: 32.5,
     categoria: 'Pizzas',
     disponivel: true,
     tempo_preparo: 20,
@@ -173,13 +173,13 @@ const testMenuItems = [
     imagem: '/images/pizza-margherita.jpg',
     restricoes: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 3,
     nome: 'Salada Caesar',
     descricao: 'Alface romana, croutons, parmesão e molho caesar',
-    preco: 18.90,
+    preco: 18.9,
     categoria: 'Saladas',
     disponivel: true,
     tempo_preparo: 10,
@@ -187,13 +187,13 @@ const testMenuItems = [
     imagem: '/images/salada-caesar.jpg',
     restricoes: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 4,
     nome: 'Suco de Laranja',
     descricao: 'Suco natural de laranja 300ml',
-    preco: 8.50,
+    preco: 8.5,
     categoria: 'Bebidas',
     disponivel: true,
     tempo_preparo: 5,
@@ -201,13 +201,13 @@ const testMenuItems = [
     imagem: '/images/suco-laranja.jpg',
     restricoes: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 5,
     nome: 'Brownie com Sorvete',
     descricao: 'Brownie de chocolate quente com sorvete de baunilha',
-    preco: 15.90,
+    preco: 15.9,
     categoria: 'Sobremesas',
     disponivel: true,
     tempo_preparo: 8,
@@ -215,8 +215,8 @@ const testMenuItems = [
     imagem: '/images/brownie.jpg',
     restricoes: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test orders data
@@ -226,11 +226,11 @@ const testOrders = [
     table_id: 2,
     customer_name: 'Cliente Teste',
     status: 'preparando' as const,
-    total: 44.40,
+    total: 44.4,
     observacoes: 'Sem cebola no hambúrguer',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test order items data
@@ -240,23 +240,23 @@ const testOrderItems = [
     order_id: 1,
     menu_item_id: 1,
     quantidade: 1,
-    preco_unitario: 25.90,
+    preco_unitario: 25.9,
     observacoes: 'Sem cebola',
     status: 'preparando' as const,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 2,
     order_id: 1,
     menu_item_id: 4,
     quantidade: 2,
-    preco_unitario: 8.50,
+    preco_unitario: 8.5,
     observacoes: null,
     status: 'pronto' as const,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test reservations data
@@ -273,7 +273,7 @@ const testReservations = [
     mesa_id: 3,
     posicao_fila: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 2,
@@ -287,8 +287,8 @@ const testReservations = [
     mesa_id: null,
     posicao_fila: null,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test payments data
@@ -296,13 +296,13 @@ const testPayments = [
   {
     id: 1,
     order_id: 1,
-    valor: 44.40,
+    valor: 44.4,
     metodo: 'pix' as const,
     status: 'confirmado' as const,
     codigo_pagamento: 'PIX_12345',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test feedback data
@@ -314,8 +314,8 @@ const testFeedback = [
     estrelas: 5,
     comentario: 'Excelente atendimento e comida deliciosa!',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test menu categories data
@@ -327,7 +327,7 @@ const testMenuCategories = [
     ordem: 1,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 2,
@@ -336,7 +336,7 @@ const testMenuCategories = [
     ordem: 2,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 3,
@@ -345,7 +345,7 @@ const testMenuCategories = [
     ordem: 3,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 4,
@@ -354,7 +354,7 @@ const testMenuCategories = [
     ordem: 4,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   },
   {
     id: 5,
@@ -363,8 +363,8 @@ const testMenuCategories = [
     ordem: 5,
     ativo: true,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Test loyalty data
@@ -375,22 +375,22 @@ const testLoyalty = [
     pontos: 150,
     nivel: 'Bronze',
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  }
+    updated_at: new Date().toISOString(),
+  },
 ];
 
 // Function to initialize test data
 export const initializeTestData = async () => {
   console.log('Initializing ChefORG test data...');
-  
+
   try {
     // Clear existing data
     localStorage.clear();
-    
+
     // Insert test data
     await localStorageClient.from('users').insert(testUsers);
     await localStorageClient.from('tables').insert(testTables);
-    
+
     // Note: menu_items, orders, etc. might need to be added to the Database type
     // For now, we'll store them directly in localStorage
     localStorage.setItem('cheforg_menu_items', JSON.stringify(testMenuItems));
@@ -401,7 +401,7 @@ export const initializeTestData = async () => {
     localStorage.setItem('cheforg_payments', JSON.stringify(testPayments));
     localStorage.setItem('cheforg_feedback', JSON.stringify(testFeedback));
     localStorage.setItem('cheforg_loyalty', JSON.stringify(testLoyalty));
-    
+
     console.log('Test data initialized successfully!');
     console.log('Available test accounts:');
     console.log('- Admin: admin@cheforg.com');
@@ -410,7 +410,7 @@ export const initializeTestData = async () => {
     console.log('- Cozinha: cozinha@cheforg.com');
     console.log('- Caixa: caixa@cheforg.com');
     console.log('- Cliente: cliente@test.com');
-    
+
     return true;
   } catch (error) {
     console.error('Error initializing test data:', error);
@@ -435,19 +435,19 @@ export const getDataState = () => {
     reservations: JSON.parse(localStorage.getItem('cheforg_reservations') || '[]'),
     payments: JSON.parse(localStorage.getItem('cheforg_payments') || '[]'),
     feedback: JSON.parse(localStorage.getItem('cheforg_feedback') || '[]'),
-    loyalty: JSON.parse(localStorage.getItem('cheforg_loyalty') || '[]')
+    loyalty: JSON.parse(localStorage.getItem('cheforg_loyalty') || '[]'),
   };
 };
 
-export { 
-  testUsers, 
-  testTables, 
-  testMenuItems, 
+export {
+  testUsers,
+  testTables,
+  testMenuItems,
   testMenuCategories,
-  testOrders, 
-  testOrderItems, 
-  testReservations, 
-  testPayments, 
+  testOrders,
+  testOrderItems,
+  testReservations,
+  testPayments,
   testFeedback,
-  testLoyalty
+  testLoyalty,
 };

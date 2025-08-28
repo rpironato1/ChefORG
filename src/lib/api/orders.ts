@@ -40,24 +40,22 @@ export const createOrder = async (
       // totais podem ser calculados por triggers no DB ou aqui
     };
 
-    const insertResult = await (supabase as any)
-      .from('orders')
-      .insert(orderInsertData);
+    const insertResult = await (supabase as any).from('orders').insert(orderInsertData);
 
     if (insertResult.error) throw insertResult.error;
-    
+
     // Get the created order by reading back from storage
-    const { data: orders, error: fetchError } = await new Promise((resolve) => {
+    const { data: orders, error: fetchError } = (await new Promise(resolve => {
       const result = supabase.from('orders').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
       } else {
         resolve({ data: [], error: null });
       }
-    }) as { data: any[] | null; error: any };
-      
+    })) as { data: any[] | null; error: any };
+
     if (fetchError) throw fetchError;
-    
+
     // Find the most recently created order (since localStorage doesn't return the inserted record)
     const order = orders?.[orders.length - 1];
     if (!order) throw new Error('Failed to create order');
@@ -73,7 +71,7 @@ export const createOrder = async (
       await supabase.from('orders').delete().eq('id', order.id);
       throw itemsError;
     }
-    
+
     // 3. Atualizar a mesa para associar ao novo pedido
     await supabase.from('tables').update({ pedido_atual_id: order.id }).eq('id', tableId);
 
@@ -87,7 +85,10 @@ export const createOrder = async (
  * Atualiza o status de um pedido. (Endpoint 6.5)
  * Usado pelos painéis da Cozinha e do Garçom.
  */
-export const updateOrderStatus = async (orderId: number, status: OrderStatus): Promise<ApiResponse<Order>> => {
+export const updateOrderStatus = async (
+  orderId: number,
+  status: OrderStatus
+): Promise<ApiResponse<Order>> => {
   try {
     const updateResult = await (supabase as any)
       .from('orders')
@@ -97,17 +98,17 @@ export const updateOrderStatus = async (orderId: number, status: OrderStatus): P
     if (updateResult.error) throw updateResult.error;
 
     // Get the updated order
-    const { data: orders, error } = await new Promise((resolve) => {
+    const { data: orders, error } = (await new Promise(resolve => {
       const result = supabase.from('orders').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
       } else {
         resolve({ data: [], error: null });
       }
-    }) as { data: any[] | null; error: any };
+    })) as { data: any[] | null; error: any };
 
     if (error) throw error;
-    
+
     const data = orders?.find(o => o.id === orderId);
     if (!data) throw new Error('Order not found after update');
 
@@ -128,40 +129,43 @@ export const updateOrderStatus = async (orderId: number, status: OrderStatus): P
 /**
  * Busca um pedido ativo para uma determinada mesa.
  */
-export const getActiveOrderByTable = async (tableId: number): Promise<ApiResponse<OrderWithItems>> => {
+export const getActiveOrderByTable = async (
+  tableId: number
+): Promise<ApiResponse<OrderWithItems>> => {
   try {
     // Simplified query - get orders and manually join data if needed
-    const { data: orders, error } = await new Promise((resolve) => {
+    const { data: orders, error } = (await new Promise(resolve => {
       const result = supabase.from('orders').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
       } else {
         resolve({ data: [], error: null });
       }
-    }) as { data: any[] | null; error: any };
-    
+    })) as { data: any[] | null; error: any };
+
     if (error) throw error;
-    
+
     // Filter for active orders for this table
-    const activeOrders = (orders || []).filter(order => 
-      order.table_id === tableId && 
-      ['confirmado', 'preparando', 'pronto', 'entregue'].includes(order.status)
+    const activeOrders = (orders || []).filter(
+      order =>
+        order.table_id === tableId &&
+        ['confirmado', 'preparando', 'pronto', 'entregue'].includes(order.status)
     );
-    
+
     if (activeOrders.length === 0) {
       throw new Error('Nenhum pedido ativo encontrado para esta mesa.');
     }
-    
+
     // Get the most recent order
     const data = activeOrders[activeOrders.length - 1];
-    
+
     // Add empty arrays for related data (simplified for localStorage)
     const orderWithItems = {
       ...data,
       order_items: [],
-      tables: { numero: tableId }
+      tables: { numero: tableId },
     };
-    
+
     return createSuccessResponse(orderWithItems as OrderWithItems);
   } catch (error) {
     return handleApiError(error, 'Nenhum pedido ativo encontrado para esta mesa.');
@@ -172,27 +176,29 @@ export const getActiveOrderByTable = async (tableId: number): Promise<ApiRespons
  * Busca pedidos com base em uma lista de status.
  * Essencial para os painéis da Cozinha e do Garçom.
  */
-export const getOrdersByStatus = async (statuses: OrderStatus[]): Promise<ApiResponse<OrderWithItems[]>> => {
+export const getOrdersByStatus = async (
+  statuses: OrderStatus[]
+): Promise<ApiResponse<OrderWithItems[]>> => {
   try {
     // Simplified query - get orders and manually filter
-    const { data: orders, error } = await new Promise((resolve) => {
+    const { data: orders, error } = (await new Promise(resolve => {
       const result = supabase.from('orders').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
       } else {
         resolve({ data: [], error: null });
       }
-    }) as { data: any[] | null; error: any };
+    })) as { data: any[] | null; error: any };
 
     if (error) throw error;
-    
+
     // Filter by status and add simplified related data
     const filteredOrders = (orders || [])
       .filter(order => statuses.includes(order.status))
       .map(order => ({
         ...order,
         order_items: [],
-        tables: { numero: order.table_id }
+        tables: { numero: order.table_id },
       }));
 
     return createSuccessResponse(filteredOrders as OrderWithItems[]);
@@ -204,41 +210,43 @@ export const getOrdersByStatus = async (statuses: OrderStatus[]): Promise<ApiRes
 /**
  * Busca um pedido pelo código da mesa (para o caixa).
  */
-export const getOrderByMesaCode = async (_codigoMesa: string): Promise<ApiResponse<OrderWithItems>> => {
-    try {
-        // Simplified query - get orders and manually filter
-        const { data: orders, error } = await new Promise((resolve) => {
-          const result = supabase.from('orders').select('*');
-          if (result && typeof result.then === 'function') {
-            result.then(resolve);
-          } else {
-            resolve({ data: [], error: null });
-          }
-        }) as { data: any[] | null; error: any };
+export const getOrderByMesaCode = async (
+  _codigoMesa: string
+): Promise<ApiResponse<OrderWithItems>> => {
+  try {
+    // Simplified query - get orders and manually filter
+    const { data: orders, error } = (await new Promise(resolve => {
+      const result = supabase.from('orders').select('*');
+      if (result && typeof result.then === 'function') {
+        result.then(resolve);
+      } else {
+        resolve({ data: [], error: null });
+      }
+    })) as { data: any[] | null; error: any };
 
-        if (error) throw error;
-        
-        // Filter by mesa code (simplified - using table_id for now)
-        const validOrders = (orders || []).filter(order => 
-          ['entregue', 'pendente_pagamento'].includes(order.status)
-        );
-        
-        if (validOrders.length === 0) {
-          throw new Error('Nenhum pedido aberto encontrado para este código.');
-        }
-        
-        // Get the most recent valid order
-        const data = validOrders[validOrders.length - 1];
-        
-        // Add simplified related data
-        const orderWithItems = {
-          ...data,
-          order_items: [],
-          tables: { numero: data.table_id }
-        };
+    if (error) throw error;
 
-        return createSuccessResponse(orderWithItems as OrderWithItems);
-    } catch (error) {
-        return handleApiError(error, 'Nenhum pedido aberto encontrado para este código.');
+    // Filter by mesa code (simplified - using table_id for now)
+    const validOrders = (orders || []).filter(order =>
+      ['entregue', 'pendente_pagamento'].includes(order.status)
+    );
+
+    if (validOrders.length === 0) {
+      throw new Error('Nenhum pedido aberto encontrado para este código.');
     }
+
+    // Get the most recent valid order
+    const data = validOrders[validOrders.length - 1];
+
+    // Add simplified related data
+    const orderWithItems = {
+      ...data,
+      order_items: [],
+      tables: { numero: data.table_id },
+    };
+
+    return createSuccessResponse(orderWithItems as OrderWithItems);
+  } catch (error) {
+    return handleApiError(error, 'Nenhum pedido aberto encontrado para este código.');
+  }
 };

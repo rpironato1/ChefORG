@@ -10,26 +10,26 @@ function PinMesa() {
   const [isValidating, setIsValidating] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const maxAttempts = 3;
-  
+
   const { mesaAtual, autorizarMesa } = useMesa();
   const { showSuccess, showError, showWarning, ToastContainer } = useToast();
   const navigate = useNavigate();
 
   // PINs mockados para demonstração
-  const mockPins: { [mesa: string]: string } = {
-    '1': '1234',
-    '2': '5678',
-    '3': '9012',
-    '4': '3456',
-    '5': '7890',
-    '6': '2468',
-    '7': '1357',
-    '8': '8642',
-    '9': '9753',
-    '10': '1598',
-    '11': '7531',
-    '12': '9514',
-  };
+  // const mockPins: { [mesa: string]: string } = {
+  //   '1': '1234',
+  //   '2': '5678',
+  //   '3': '9012',
+  //   '4': '3456',
+  //   '5': '7890',
+  //   '6': '2468',
+  //   '7': '1357',
+  //   '8': '8642',
+  //   '9': '9753',
+  //   '10': '1598',
+  //   '11': '7531',
+  //   '12': '9514',
+  // };
 
   useEffect(() => {
     // Se não há número da mesa na URL, redireciona
@@ -44,15 +44,15 @@ function PinMesa() {
     }
   }, [numeroMesa, mesaAtual.isAutorizado, navigate]);
 
-  const handlePinChange = (value: string) => {
-    // Permitir apenas números e máximo 4 dígitos
-    const numbersOnly = value.replace(/\D/g, '').slice(0, 4);
-    setPin(numbersOnly);
-  };
+  // const handlePinChange = (value: string) => {
+  //   // Permitir apenas números e máximo 4 dígitos
+  //   const numbersOnly = value.replace(/\D/g, '').slice(0, 4);
+  //   setPin(numbersOnly);
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (pin.length !== 4) {
       showError('PIN Inválido', 'O PIN deve ter 4 dígitos');
       return;
@@ -87,7 +87,7 @@ function PinMesa() {
         // PIN correto - autorizar mesa
         autorizarMesa(pin); // O contexto pode precisar do objeto da mesa, não apenas do PIN
         showSuccess('Acesso Liberado!', 'Bem-vindo(a)!');
-        
+
         // Redirecionar para cardápio após 1 segundo
         setTimeout(() => {
           navigate(`/mesa/${numeroMesa}/cardapio`);
@@ -96,17 +96,16 @@ function PinMesa() {
         // PIN incorreto ou outro erro da API
         const tentativasRestantes = maxAttempts - attempts - 1;
         setAttempts(prev => prev + 1);
-        
+
         if (tentativasRestantes > 0) {
           showWarning(
-            'PIN Incorreto', 
-            result.error || `Restam ${tentativasRestantes} tentativa(s)`
+            'PIN Incorreto',
+            !result.success
+              ? `Restam ${tentativasRestantes} tentativa(s)`
+              : `Restam ${tentativasRestantes} tentativa(s)`
           );
         } else {
-          showError(
-            'Mesa Bloqueada', 
-            'Muitas tentativas incorretas. Solicite ajuda ao garçom.'
-          );
+          showError('Mesa Bloqueada', 'Muitas tentativas incorretas. Solicite ajuda ao garçom.');
         }
         setPin('');
       }
@@ -136,13 +135,16 @@ function PinMesa() {
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
-      
+
       {/* Header */}
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Link to="/checkin" className="flex items-center text-gray-600 hover:text-gray-900 mr-4">
+              <Link
+                to="/checkin"
+                className="flex items-center text-gray-600 hover:text-gray-900 mr-4"
+              >
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Voltar
               </Link>
@@ -151,9 +153,7 @@ function PinMesa() {
                 <span className="ml-2 text-2xl font-bold text-gray-900">ChefORG</span>
               </div>
             </div>
-            <div className="text-lg font-semibold text-primary-600">
-              Mesa {numeroMesa}
-            </div>
+            <div className="text-lg font-semibold text-primary-600">Mesa {numeroMesa}</div>
           </div>
         </div>
       </nav>
@@ -162,9 +162,11 @@ function PinMesa() {
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-center">
             <div className="mb-6">
-              <div className={`mx-auto h-16 w-16 rounded-full flex items-center justify-center ${
-                isBlocked ? 'bg-red-100' : 'bg-primary-100'
-              }`}>
+              <div
+                className={`mx-auto h-16 w-16 rounded-full flex items-center justify-center ${
+                  isBlocked ? 'bg-red-100' : 'bg-primary-100'
+                }`}
+              >
                 {isBlocked ? (
                   <AlertCircle className="h-8 w-8 text-red-600" />
                 ) : (
@@ -172,15 +174,14 @@ function PinMesa() {
                 )}
               </div>
             </div>
-            
+
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               {isBlocked ? 'Mesa Bloqueada' : 'Digite o PIN da Mesa'}
             </h1>
             <p className="text-gray-600 mb-8">
-              {isBlocked 
+              {isBlocked
                 ? 'Muitas tentativas incorretas. Solicite ajuda ao garçom.'
-                : `Mesa ${numeroMesa} - Digite o PIN de 4 dígitos para continuar`
-              }
+                : `Mesa ${numeroMesa} - Digite o PIN de 4 dígitos para continuar`}
             </p>
           </div>
 
@@ -215,7 +216,7 @@ function PinMesa() {
                     {number}
                   </button>
                 ))}
-                
+
                 <button
                   type="button"
                   onClick={handleClear}
@@ -223,7 +224,7 @@ function PinMesa() {
                 >
                   Limpar
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={() => handleNumberClick('0')}
@@ -232,7 +233,7 @@ function PinMesa() {
                 >
                   0
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={handleBackspace}
@@ -266,14 +267,12 @@ function PinMesa() {
 
           {/* Informações de Ajuda */}
           <div className="mt-8 text-center">
-            <h3 className="text-sm font-medium text-gray-900 mb-2">
-              Precisa de ajuda?
-            </h3>
+            <h3 className="text-sm font-medium text-gray-900 mb-2">Precisa de ajuda?</h3>
             <p className="text-xs text-gray-600 mb-4">
-              O PIN é fornecido pela recepção ou enviado por WhatsApp. 
-              Se não recebeu, chame um garçom.
+              O PIN é fornecido pela recepção ou enviado por WhatsApp. Se não recebeu, chame um
+              garçom.
             </p>
-            
+
             <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
               <button className="text-primary-600 hover:text-primary-700 underline">
                 Chamar Garçom
@@ -284,12 +283,10 @@ function PinMesa() {
               </button>
             </div>
           </div>
-
-          
         </div>
       </div>
     </div>
   );
 }
 
-export default PinMesa; 
+export default PinMesa;

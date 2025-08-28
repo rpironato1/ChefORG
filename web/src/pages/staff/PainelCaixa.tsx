@@ -19,7 +19,7 @@ const PainelCaixa: React.FC = () => {
 
   const handleBuscarMesa = async () => {
     if (!codigoMesa) {
-      showError("Entrada Inválida", "Por favor, digite o código da mesa.");
+      showError('Entrada Inválida', 'Por favor, digite o código da mesa.');
       return;
     }
     setIsLoading(true);
@@ -29,10 +29,10 @@ const PainelCaixa: React.FC = () => {
       if (result.success && result.data) {
         setPedido(result.data);
       } else {
-        showError("Não Encontrado", result.error || "Nenhum pedido aberto para este código.");
+        showError('Não Encontrado', result.error || 'Nenhum pedido aberto para este código.');
       }
     } catch (err) {
-      showError("Erro de Conexão", "Não foi possível buscar o pedido.");
+      showError('Erro de Conexão', 'Não foi possível buscar o pedido.');
     } finally {
       setIsLoading(false);
     }
@@ -46,21 +46,23 @@ const PainelCaixa: React.FC = () => {
       // 1. Cria o registro de pagamento
       const paymentResult = await createPayment(pedido.id, metodo, Number(pedido.total));
       if (!paymentResult.success || !paymentResult.data) {
-        throw new Error(paymentResult.error || "Falha ao criar registro de pagamento.");
+        throw new Error(paymentResult.error || 'Falha ao criar registro de pagamento.');
       }
 
       // 2. Confirma o pagamento (pois é manual)
       const confirmResult = await confirmPayment(paymentResult.data.id);
       if (!confirmResult.success) {
-        throw new Error(confirmResult.error || "Falha ao confirmar o pagamento.");
+        throw new Error(confirmResult.error || 'Falha ao confirmar o pagamento.');
       }
 
-      showSuccess("Pagamento Registrado!", `Pagamento de R$ ${Number(pedido.total).toFixed(2)} via ${metodo} confirmado.`);
+      showSuccess(
+        'Pagamento Registrado!',
+        `Pagamento de R$ ${Number(pedido.total).toFixed(2)} via ${metodo} confirmado.`
+      );
       setPedido(null);
       setCodigoMesa('');
-
     } catch (err: any) {
-      showError("Erro no Pagamento", err.message);
+      showError('Erro no Pagamento', err.message);
     } finally {
       setIsProcessing(false);
     }
@@ -72,18 +74,24 @@ const PainelCaixa: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card>
-          <CardHeader><CardTitle>Buscar Mesa</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Buscar Mesa</CardTitle>
+          </CardHeader>
           <CardContent>
             <div className="flex space-x-2">
               <input
                 type="text"
                 value={codigoMesa}
-                onChange={(e) => setCodigoMesa(e.target.value)}
+                onChange={e => setCodigoMesa(e.target.value)}
                 placeholder="Digite o nº ou código da mesa"
                 className="flex-grow p-2 border rounded-md"
-                onKeyDown={(e) => e.key === 'Enter' && handleBuscarMesa()}
+                onKeyDown={e => e.key === 'Enter' && handleBuscarMesa()}
               />
-              <button onClick={handleBuscarMesa} disabled={isLoading} className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 disabled:bg-blue-300">
+              <button
+                onClick={handleBuscarMesa}
+                disabled={isLoading}
+                className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 disabled:bg-blue-300"
+              >
                 {isLoading ? <Loader2 className="animate-spin" /> : 'Buscar'}
               </button>
             </div>
@@ -92,7 +100,9 @@ const PainelCaixa: React.FC = () => {
 
         {pedido ? (
           <Card>
-            <CardHeader><CardTitle>Comanda - Mesa {pedido.tables?.numero}</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Comanda - Mesa {pedido.tables?.numero}</CardTitle>
+            </CardHeader>
             <CardContent>
               <div className="mb-4">
                 <TabelaResponsiva
@@ -100,7 +110,7 @@ const PainelCaixa: React.FC = () => {
                   rows={pedido.order_items.map(item => [
                     item.menu_items?.nome || 'Item desconhecido',
                     item.quantidade,
-                    `R$ ${Number(item.preco_unitario).toFixed(2)}`
+                    `R$ ${Number(item.preco_unitario).toFixed(2)}`,
                   ])}
                 />
               </div>
@@ -113,14 +123,36 @@ const PainelCaixa: React.FC = () => {
               <div className="mt-6">
                 <h3 className="font-semibold mb-2">Registrar Pagamento Manual</h3>
                 {isProcessing ? (
-                    <div className="text-center p-4"><Loader2 className="animate-spin mx-auto" /></div>
+                  <div className="text-center p-4">
+                    <Loader2 className="animate-spin mx-auto" />
+                  </div>
                 ) : (
-                    <div className="grid grid-cols-2 gap-2">
-                        <button onClick={() => handleRegistrarPagamento('dinheiro')} className="p-3 bg-green-500 text-white rounded-md hover:bg-green-600">Dinheiro</button>
-                        <button onClick={() => handleRegistrarPagamento('cartao')} className="p-3 bg-orange-500 text-white rounded-md hover:bg-orange-600">Cartão</button>
-                        <button onClick={() => handleRegistrarPagamento('pix')} className="p-3 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">PIX Manual</button>
-                        <button onClick={() => handleRegistrarPagamento('apple_pay')} className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-600">Apple Pay</button>
-                    </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => handleRegistrarPagamento('dinheiro')}
+                      className="p-3 bg-green-500 text-white rounded-md hover:bg-green-600"
+                    >
+                      Dinheiro
+                    </button>
+                    <button
+                      onClick={() => handleRegistrarPagamento('cartao')}
+                      className="p-3 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+                    >
+                      Cartão
+                    </button>
+                    <button
+                      onClick={() => handleRegistrarPagamento('pix')}
+                      className="p-3 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+                    >
+                      PIX Manual
+                    </button>
+                    <button
+                      onClick={() => handleRegistrarPagamento('apple_pay')}
+                      className="p-3 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+                    >
+                      Apple Pay
+                    </button>
+                  </div>
                 )}
               </div>
             </CardContent>

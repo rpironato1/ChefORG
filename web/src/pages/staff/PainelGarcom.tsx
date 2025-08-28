@@ -19,24 +19,24 @@ function PainelGarcom() {
 
   const fetchData = async () => {
     // Não mostra o loader em atualizações silenciosas
-    if(!isLoading) setIsLoading(true);
+    if (!isLoading) setIsLoading(true);
     setError(null);
     try {
       const [ordersResult, tablesResult] = await Promise.all([
         getOrdersByStatus(['pronto', 'confirmado', 'preparando', 'entregue']),
-        getAllTables()
+        getAllTables(),
       ]);
 
       if (ordersResult.success && ordersResult.data) {
         setOrders(ordersResult.data);
       } else {
-        throw new Error(ordersResult.error || "Falha ao buscar pedidos.");
+        throw new Error(ordersResult.error || 'Falha ao buscar pedidos.');
       }
 
       if (tablesResult.success && tablesResult.data) {
         setTables(tablesResult.data);
       } else {
-        throw new Error(tablesResult.error || "Falha ao buscar mesas.");
+        throw new Error(tablesResult.error || 'Falha ao buscar mesas.');
       }
     } catch (err: any) {
       setError(err.message);
@@ -54,48 +54,62 @@ function PainelGarcom() {
   const handleUpdateOrderStatus = async (orderId: number, status: OrderStatus) => {
     const result = await updateOrderStatus(orderId, status);
     if (result.success) {
-      showSuccess("Status do Pedido Atualizado!");
+      showSuccess('Status do Pedido Atualizado!');
       fetchData();
     } else {
-      showError("Erro", result.error);
+      showError('Erro', result.error);
     }
   };
 
   const handleUpdateTableStatus = async (tableId: number, status: TableStatus) => {
     const result = await updateTableStatus(tableId, status);
     if (result.success) {
-      showSuccess("Status da Mesa Atualizado!");
+      showSuccess('Status da Mesa Atualizado!');
       fetchData();
     } else {
-      showError("Erro", result.error);
+      showError('Erro', result.error);
     }
   };
 
   const pedidosProntos = orders.filter(p => p.status === 'pronto');
   const pedidosEmAndamento = orders.filter(p => ['confirmado', 'preparando'].includes(p.status));
-  
+
   const mesasOcupadas = tables.filter(m => m.status === 'ocupada');
   const mesasLimpeza = tables.filter(m => m.status === 'limpeza');
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen"><Loader2 className="h-12 w-12 animate-spin" /></div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="h-12 w-12 animate-spin" />
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="p-6"><AlertTriangle className="h-8 w-8 text-red-500" /> <p>{error}</p></div>;
+    return (
+      <div className="p-6">
+        <AlertTriangle className="h-8 w-8 text-red-500" /> <p>{error}</p>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <ToastContainer />
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Painel do Garçom</h1>
-      
+
       <div className="mb-6">
         <div className="flex border-b">
-          <button onClick={() => setActiveTab('pedidos')} className={`px-6 py-3 font-medium ${activeTab === 'pedidos' ? 'border-b-2 border-primary-600 text-primary-600' : 'text-gray-500'}`}>
+          <button
+            onClick={() => setActiveTab('pedidos')}
+            className={`px-6 py-3 font-medium ${activeTab === 'pedidos' ? 'border-b-2 border-primary-600 text-primary-600' : 'text-gray-500'}`}
+          >
             Pedidos ({pedidosProntos.length + pedidosEmAndamento.length})
           </button>
-          <button onClick={() => setActiveTab('mesas')} className={`px-6 py-3 font-medium ${activeTab === 'mesas' ? 'border-b-2 border-primary-600 text-primary-600' : 'text-gray-500'}`}>
+          <button
+            onClick={() => setActiveTab('mesas')}
+            className={`px-6 py-3 font-medium ${activeTab === 'mesas' ? 'border-b-2 border-primary-600 text-primary-600' : 'text-gray-500'}`}
+          >
             Mesas ({mesasOcupadas.length + mesasLimpeza.length})
           </button>
         </div>
@@ -108,10 +122,26 @@ function PainelGarcom() {
               <h2 className="text-lg font-semibold mb-4">Pedidos Prontos para Entrega</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {pedidosProntos.map(pedido => (
-                  <div key={pedido.id} className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
-                    <h3 className="font-bold">Mesa {pedido.tables?.numero} - Pedido #{pedido.id}</h3>
-                    <ul>{pedido.order_items.map(item => <li key={item.id}>{item.quantidade}x {item.menu_items?.nome}</li>)}</ul>
-                    <button onClick={() => handleUpdateOrderStatus(pedido.id, 'entregue')} className="mt-2 btn-primary w-full">Marcar como Entregue</button>
+                  <div
+                    key={pedido.id}
+                    className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500"
+                  >
+                    <h3 className="font-bold">
+                      Mesa {pedido.tables?.numero} - Pedido #{pedido.id}
+                    </h3>
+                    <ul>
+                      {pedido.order_items.map(item => (
+                        <li key={item.id}>
+                          {item.quantidade}x {item.menu_items?.nome}
+                        </li>
+                      ))}
+                    </ul>
+                    <button
+                      onClick={() => handleUpdateOrderStatus(pedido.id, 'entregue')}
+                      className="mt-2 btn-primary w-full"
+                    >
+                      Marcar como Entregue
+                    </button>
                   </div>
                 ))}
               </div>
@@ -122,8 +152,13 @@ function PainelGarcom() {
               <h2 className="text-lg font-semibold mb-4">Pedidos em Andamento</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {pedidosEmAndamento.map(pedido => (
-                  <div key={pedido.id} className="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500">
-                    <h3 className="font-bold">Mesa {pedido.tables?.numero} - Pedido #{pedido.id}</h3>
+                  <div
+                    key={pedido.id}
+                    className="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500"
+                  >
+                    <h3 className="font-bold">
+                      Mesa {pedido.tables?.numero} - Pedido #{pedido.id}
+                    </h3>
                     <p>Status: {pedido.status}</p>
                   </div>
                 ))}
@@ -143,7 +178,12 @@ function PainelGarcom() {
                   <div key={mesa.id} className="bg-white rounded-lg shadow p-4">
                     <h3 className="font-bold">Mesa {mesa.numero}</h3>
                     <p>Cliente: {mesa.cliente_atual || 'N/A'}</p>
-                    <button onClick={() => handleUpdateTableStatus(mesa.id, 'limpeza')} className="mt-2 btn-secondary w-full">Marcar para Limpeza</button>
+                    <button
+                      onClick={() => handleUpdateTableStatus(mesa.id, 'limpeza')}
+                      className="mt-2 btn-secondary w-full"
+                    >
+                      Marcar para Limpeza
+                    </button>
                   </div>
                 ))}
               </div>
@@ -154,9 +194,17 @@ function PainelGarcom() {
               <h2 className="text-lg font-semibold mb-4">Mesas para Limpeza</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {mesasLimpeza.map(mesa => (
-                  <div key={mesa.id} className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
+                  <div
+                    key={mesa.id}
+                    className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500"
+                  >
                     <h3 className="font-bold">Mesa {mesa.numero}</h3>
-                    <button onClick={() => handleUpdateTableStatus(mesa.id, 'livre')} className="mt-2 btn-primary w-full">Marcar como Limpa</button>
+                    <button
+                      onClick={() => handleUpdateTableStatus(mesa.id, 'livre')}
+                      className="mt-2 btn-primary w-full"
+                    >
+                      Marcar como Limpa
+                    </button>
                   </div>
                 ))}
               </div>

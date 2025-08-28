@@ -10,7 +10,9 @@ import { sendNotification } from '../../lib/api/notifications';
 import { Database } from '../../lib/supabase';
 
 type Table = Database['public']['Tables']['tables']['Row'];
-type Reservation = Database['public']['Tables']['reservations']['Row'] & { users?: { telefone: string | null } };
+type Reservation = Database['public']['Tables']['reservations']['Row'] & {
+  users?: { telefone: string | null };
+};
 
 const PainelRecepcao: React.FC = () => {
   const [tables, setTables] = useState<Table[]>([]);
@@ -32,10 +34,10 @@ const PainelRecepcao: React.FC = () => {
     setError(null);
     try {
       const today = new Date().toISOString().split('T')[0];
-      
+
       const [tablesResult, reservationsResult] = await Promise.all([
         getAllTables(),
-        getAllReservations(today)
+        getAllReservations(today),
       ]);
 
       if (tablesResult.success && tablesResult.data) {
@@ -49,7 +51,6 @@ const PainelRecepcao: React.FC = () => {
       } else {
         throw new Error(reservationsResult.error || 'Falha ao buscar reservas.');
       }
-
     } catch (err: any) {
       setError(err.message || 'Ocorreu um erro de conexão.');
     } finally {
@@ -74,7 +75,7 @@ const PainelRecepcao: React.FC = () => {
     setIsAllocating(true);
     try {
       const result = await allocateTableToWaitingClient(selectedReservation.id, tableId);
-      
+
       if (result.success && result.data) {
         const pin = result.data.pin;
         const clientName = selectedReservation.cliente_nome;
@@ -86,7 +87,7 @@ const PainelRecepcao: React.FC = () => {
           const message = `Olá ${clientName}, sua mesa está pronta! Dirija-se à recepção. Sua mesa é a de número ${tableNumber} e seu PIN de acesso é: ${pin}`;
           await sendNotification(clientPhone, message);
         }
-        
+
         showSuccess('Sucesso!', `Mesa ${tableNumber} alocada para ${clientName}.`);
         setIsModalOpen(false);
         fetchData(); // Atualiza os dados
@@ -102,20 +103,29 @@ const PainelRecepcao: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'livre': return 'bg-green-100 text-green-800';
-      case 'ocupada': return 'bg-red-100 text-red-800';
-      case 'reservada': return 'bg-blue-100 text-blue-800';
-      case 'limpeza': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'livre':
+        return 'bg-green-100 text-green-800';
+      case 'ocupada':
+        return 'bg-red-100 text-red-800';
+      case 'reservada':
+        return 'bg-blue-100 text-blue-800';
+      case 'limpeza':
+        return 'bg-yellow-100 text-yellow-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
-  
+
   const filaDeEspera = reservations.filter(r => r.status === 'aguardando');
   const reservasDeHoje = reservations.filter(r => r.status !== 'aguardando');
   const mesasLivres = tables.filter(t => t.status === 'livre');
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen"><Loader2 className="h-12 w-12 animate-spin text-primary-600" /></div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="h-12 w-12 animate-spin text-primary-600" />
+      </div>
+    );
   }
 
   if (error) {
@@ -134,11 +144,13 @@ const PainelRecepcao: React.FC = () => {
     <div className="p-6 bg-gray-50 min-h-screen">
       <ToastContainer />
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Painel da Recepção</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-6">
           <Card>
-            <CardHeader><CardTitle>Fila de Espera ({filaDeEspera.length})</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Fila de Espera ({filaDeEspera.length})</CardTitle>
+            </CardHeader>
             <CardContent>
               <TabelaResponsiva
                 headers={['Pos.', 'Nome', 'Qtd', 'Ações']}
@@ -146,22 +158,32 @@ const PainelRecepcao: React.FC = () => {
                   index + 1,
                   item.cliente_nome,
                   item.numero_convidados,
-                  <button onClick={() => handleOpenAllocationModal(item)} className="btn-primary-sm">Alocar</button>
+                  <button
+                    onClick={() => handleOpenAllocationModal(item)}
+                    className="btn-primary-sm"
+                  >
+                    Alocar
+                  </button>,
                 ])}
               />
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader><CardTitle>Reservas de Hoje ({reservasDeHoje.length})</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Reservas de Hoje ({reservasDeHoje.length})</CardTitle>
+            </CardHeader>
             <CardContent>
               <TabelaResponsiva
                 headers={['Nome', 'Horário', 'Status', 'Ações']}
                 rows={reservasDeHoje.map(reserva => [
                   reserva.cliente_nome,
-                  new Date(reserva.data_hora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+                  new Date(reserva.data_hora).toLocaleTimeString('pt-BR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }),
                   reserva.status,
-                  <button className="text-blue-600 hover:underline">Check-in</button>
+                  <button className="text-blue-600 hover:underline">Check-in</button>,
                 ])}
               />
             </CardContent>
@@ -170,11 +192,16 @@ const PainelRecepcao: React.FC = () => {
 
         <div className="lg:col-span-2">
           <Card>
-            <CardHeader><CardTitle>Status das Mesas</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Status das Mesas</CardTitle>
+            </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {tables.map(mesa => (
-                  <div key={mesa.id} className={`p-4 rounded-lg shadow text-center ${getStatusColor(mesa.status)}`}>
+                  <div
+                    key={mesa.id}
+                    className={`p-4 rounded-lg shadow text-center ${getStatusColor(mesa.status)}`}
+                  >
                     <p className="font-bold text-xl">Mesa {mesa.numero}</p>
                     <p className="text-sm capitalize">{mesa.status}</p>
                     <p className="text-xs text-gray-600">({mesa.lugares} lugares)</p>
@@ -186,16 +213,25 @@ const PainelRecepcao: React.FC = () => {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} titulo={`Alocar Mesa para ${selectedReservation?.cliente_nome}`}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        titulo={`Alocar Mesa para ${selectedReservation?.cliente_nome}`}
+      >
         <div className="p-4">
-          <p className="mb-4">Selecione uma mesa livre para alocar para <strong>{selectedReservation?.numero_convidados}</strong> pessoa(s).</p>
+          <p className="mb-4">
+            Selecione uma mesa livre para alocar para{' '}
+            <strong>{selectedReservation?.numero_convidados}</strong> pessoa(s).
+          </p>
           {isAllocating ? (
-            <div className="flex justify-center items-center h-32"><Loader2 className="h-8 w-8 animate-spin" /></div>
+            <div className="flex justify-center items-center h-32">
+              <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
           ) : (
             <div className="grid grid-cols-3 gap-3">
               {mesasLivres.length > 0 ? (
                 mesasLivres.map(mesa => (
-                  <button 
+                  <button
                     key={mesa.id}
                     onClick={() => handleAllocateTable(mesa.id)}
                     className="p-4 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
@@ -206,7 +242,9 @@ const PainelRecepcao: React.FC = () => {
                   </button>
                 ))
               ) : (
-                <p className="col-span-3 text-center text-gray-500">Nenhuma mesa livre no momento.</p>
+                <p className="col-span-3 text-center text-gray-500">
+                  Nenhuma mesa livre no momento.
+                </p>
               )}
             </div>
           )}

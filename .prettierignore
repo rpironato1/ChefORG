@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+.next
+.nuxt
+.vite
+.turbo
+coverage
+test-results
+playwright-report
+*.log
+*.min.js
+*.min.css

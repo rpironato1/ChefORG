@@ -15,9 +15,9 @@ export interface SalesReportData {
 }
 
 export interface GeneralStatsData {
-    mesas_ocupadas: number;
-    reservas_hoje: number;
-    fila_espera: number;
+  mesas_ocupadas: number;
+  reservas_hoje: number;
+  fila_espera: number;
 }
 
 // Novos tipos para dashboards especializados
@@ -58,10 +58,10 @@ export const getSalesReport = async (
   endDate: string
 ): Promise<ApiResponse<SalesReportData>> => {
   try {
-    const { data, error } = await supabase.rpc('get_sales_report', {
+    const { data, error } = (await supabase.rpc('get_sales_report', {
       start_date: startDate,
       end_date: endDate,
-    }) as { data: any; error: any };
+    })) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -75,14 +75,17 @@ export const getSalesReport = async (
  * Chama uma função RPC no Supabase.
  */
 export const getGeneralStats = async (): Promise<ApiResponse<GeneralStatsData>> => {
-    try {
-        const { data, error } = await supabase.rpc('get_general_stats', {}) as { data: any; error: any };
+  try {
+    const { data, error } = (await supabase.rpc('get_general_stats', {})) as {
+      data: any;
+      error: any;
+    };
 
-        if (error) throw error;
-        return createSuccessResponse(data);
-    } catch (error) {
-        return handleApiError(error, 'Falha ao buscar estatísticas gerais.');
-    }
+    if (error) throw error;
+    return createSuccessResponse(data);
+  } catch (error) {
+    return handleApiError(error, 'Falha ao buscar estatísticas gerais.');
+  }
 };
 
 /**
@@ -93,10 +96,10 @@ export const getSalesDashboardData = async (
   endDate: string
 ): Promise<ApiResponse<SalesDashboardData>> => {
   try {
-    const { data, error } = await supabase.rpc('get_sales_dashboard_data', {
+    const { data, error } = (await supabase.rpc('get_sales_dashboard_data', {
       start_date: startDate,
       end_date: endDate,
-    }) as { data: any; error: any };
+    })) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -112,9 +115,9 @@ export const getReservationsDashboardData = async (
   date: string
 ): Promise<ApiResponse<ReservationsDashboardData>> => {
   try {
-    const { data, error } = await supabase.rpc('get_reservations_dashboard_data', {
+    const { data, error } = (await supabase.rpc('get_reservations_dashboard_data', {
       p_date: date,
-    }) as { data: any; error: any };
+    })) as { data: any; error: any };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -128,7 +131,10 @@ export const getReservationsDashboardData = async (
  */
 export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboardData>> => {
   try {
-    const { data, error } = await supabase.rpc('get_stock_dashboard_data', {}) as { data: any; error: any };
+    const { data, error } = (await supabase.rpc('get_stock_dashboard_data', {})) as {
+      data: any;
+      error: any;
+    };
 
     if (error) throw error;
     return createSuccessResponse(data);
@@ -142,7 +148,10 @@ export const getStockDashboardData = async (): Promise<ApiResponse<StockDashboar
  */
 export const getLoyaltyDashboardData = async (): Promise<ApiResponse<LoyaltyDashboardData>> => {
   try {
-    const { data, error } = await supabase.rpc('get_loyalty_dashboard_data', {}) as { data: any; error: any };
+    const { data, error } = (await supabase.rpc('get_loyalty_dashboard_data', {})) as {
+      data: any;
+      error: any;
+    };
 
     if (error) throw error;
     return createSuccessResponse(data);

@@ -13,17 +13,17 @@ export default function App() {
       try {
         // Register for push notifications
         await notificationService.registerForPushNotificationsAsync();
-        
+
         // Set up notification handlers
-        notificationService.setupForegroundNotificationHandler((notification) => {
+        notificationService.setupForegroundNotificationHandler(notification => {
           console.log('Foreground notification received:', notification);
         });
-        
-        notificationService.setupNotificationResponseHandler((response) => {
+
+        notificationService.setupNotificationResponseHandler(response => {
           console.log('Notification response:', response);
           // Handle notification tap - navigate to appropriate screen
           const { data } = response.notification.request.content;
-          
+
           if (data?.type === 'order_update' && data?.orderId) {
             // Navigate to order details
           } else if (data?.type === 'table_service' && data?.tableId) {
@@ -32,16 +32,15 @@ export default function App() {
             // Navigate to reservations
           }
         });
-        
+
         // Check biometric availability
         const biometricAvailable = await biometricService.isAvailable();
         console.log('Biometric authentication available:', biometricAvailable);
-        
+
         if (biometricAvailable) {
           const biometricTypes = await biometricService.getBiometricTypeNames();
           console.log('Available biometric types:', biometricTypes);
         }
-        
       } catch (error) {
         console.error('Error initializing app:', error);
       }

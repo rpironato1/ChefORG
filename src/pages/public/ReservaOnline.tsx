@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Users, Phone, User, FileText, Utensils, CheckCircle } from 'lucide-react';
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  Users,
+  Phone,
+  User,
+  FileText,
+  Utensils,
+  CheckCircle,
+} from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { createReservation } from '../../lib/api/reservations';
 import { sendNotification } from '../../lib/api/notifications';
@@ -16,8 +26,23 @@ interface FormData {
 }
 
 const horariosDisponiveis = [
-  '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
-  '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00'
+  '11:00',
+  '11:30',
+  '12:00',
+  '12:30',
+  '13:00',
+  '13:30',
+  '14:00',
+  '14:30',
+  '18:00',
+  '18:30',
+  '19:00',
+  '19:30',
+  '20:00',
+  '20:30',
+  '21:00',
+  '21:30',
+  '22:00',
 ];
 
 function ReservaOnline() {
@@ -28,9 +53,9 @@ function ReservaOnline() {
     data: '',
     hora: '',
     quantidade: 2,
-    restricoes: ''
+    restricoes: '',
   });
-  
+
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -39,7 +64,7 @@ function ReservaOnline() {
   const handleInputChange = (field: keyof FormData, value: string | number) => {
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -61,52 +86,52 @@ function ReservaOnline() {
 
   const validateStep1 = () => {
     const { nome, cpf, telefone } = formData;
-    
+
     if (!nome.trim()) {
       showError('Erro', 'Nome é obrigatório');
       return false;
     }
-    
+
     if (!cpf.trim() || cpf.replace(/\D/g, '').length !== 11) {
       showError('Erro', 'CPF deve ter 11 dígitos');
       return false;
     }
-    
+
     if (!telefone.trim() || telefone.replace(/\D/g, '').length < 10) {
       showError('Erro', 'Telefone inválido');
       return false;
     }
-    
+
     return true;
   };
 
   const validateStep2 = () => {
     const { data, hora, quantidade } = formData;
-    
+
     if (!data) {
       showError('Erro', 'Data é obrigatória');
       return false;
     }
-    
+
     const dataReserva = new Date(data);
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
-    
+
     if (dataReserva < hoje) {
       showError('Erro', 'Data não pode ser anterior a hoje');
       return false;
     }
-    
+
     if (!hora) {
       showError('Erro', 'Horário é obrigatório');
       return false;
     }
-    
+
     if (quantidade < 1 || quantidade > 20) {
       showError('Erro', 'Quantidade deve ser entre 1 e 20 pessoas');
       return false;
     }
-    
+
     return true;
   };
 
@@ -120,7 +145,7 @@ function ReservaOnline() {
 
   const handleSubmit = async () => {
     if (!validateStep2()) return;
-    
+
     setIsSubmitting(true);
 
     // Combina data e hora para o formato ISO que o Supabase espera
@@ -129,6 +154,7 @@ function ReservaOnline() {
     try {
       const result = await createReservation({
         cliente_nome: formData.nome,
+        nome_cliente: formData.nome, // Add required field
         cliente_cpf: formData.cpf.replace(/\D/g, ''),
         cliente_telefone: formData.telefone.replace(/\D/g, ''),
         data_hora: dataHora.toISOString(),
@@ -139,13 +165,12 @@ function ReservaOnline() {
       if (result.success && result.data) {
         setIsSubmitted(true);
         showSuccess('Sucesso!', result.message || 'Reserva realizada com sucesso!');
-        
+
         // Envia notificação de confirmação
         const reservationDetails = result.data;
         const messageBody = `Olá ${reservationDetails.cliente_nome}, sua reserva no ChefORG para ${reservationDetails.numero_convidados} pessoa(s) no dia ${new Date(reservationDetails.data_hora).toLocaleDateString('pt-BR')} às ${new Date(reservationDetails.data_hora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} foi confirmada!`;
-        
-        await sendNotification(formData.telefone.replace(/\D/g, ''), messageBody);
 
+        await sendNotification(formData.telefone.replace(/\D/g, ''), messageBody);
       } else {
         showError('Erro', result.error || 'Falha ao processar reserva. Tente novamente.');
       }
@@ -166,7 +191,7 @@ function ReservaOnline() {
     return (
       <div className="min-h-screen bg-gray-50">
         <ToastContainer />
-        
+
         {/* Header */}
         <nav className="bg-white shadow-sm border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -185,11 +210,9 @@ function ReservaOnline() {
             <div className="mb-6">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
             </div>
-            
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Reserva Confirmada!
-            </h1>
-            
+
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Reserva Confirmada!</h1>
+
             <p className="text-lg text-gray-600 mb-8">
               Sua reserva foi realizada com sucesso. Você receberá uma confirmação por WhatsApp.
             </p>
@@ -204,7 +227,9 @@ function ReservaOnline() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Data:</span>
-                  <span className="font-medium">{new Date(formData.data).toLocaleDateString('pt-BR')}</span>
+                  <span className="font-medium">
+                    {new Date(formData.data).toLocaleDateString('pt-BR')}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Horário:</span>
@@ -238,7 +263,7 @@ function ReservaOnline() {
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
-      
+
       {/* Header */}
       <nav className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -261,17 +286,19 @@ function ReservaOnline() {
         {/* Progress Indicator */}
         <div className="mb-8">
           <div className="flex items-center justify-center">
-            {[1, 2, 3].map((stepNumber) => (
+            {[1, 2, 3].map(stepNumber => (
               <React.Fragment key={stepNumber}>
-                <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
-                  step >= stepNumber ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-600'
-                }`}>
+                <div
+                  className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                    step >= stepNumber ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-600'
+                  }`}
+                >
                   {stepNumber}
                 </div>
                 {stepNumber < 3 && (
-                  <div className={`w-16 h-1 ${
-                    step > stepNumber ? 'bg-primary-600' : 'bg-gray-200'
-                  }`} />
+                  <div
+                    className={`w-16 h-1 ${step > stepNumber ? 'bg-primary-600' : 'bg-gray-200'}`}
+                  />
                 )}
               </React.Fragment>
             ))}
@@ -284,17 +311,13 @@ function ReservaOnline() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-            Reservar Mesa
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Reservar Mesa</h1>
 
           {/* Step 1: Dados Pessoais */}
           {step === 1 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Seus Dados Pessoais
-              </h2>
-              
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Seus Dados Pessoais</h2>
+
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -304,7 +327,7 @@ function ReservaOnline() {
                   <input
                     type="text"
                     value={formData.nome}
-                    onChange={(e) => handleInputChange('nome', e.target.value)}
+                    onChange={e => handleInputChange('nome', e.target.value)}
                     className="input-field"
                     placeholder="Digite seu nome completo"
                   />
@@ -318,7 +341,7 @@ function ReservaOnline() {
                   <input
                     type="text"
                     value={formData.cpf}
-                    onChange={(e) => handleInputChange('cpf', formatCPF(e.target.value))}
+                    onChange={e => handleInputChange('cpf', formatCPF(e.target.value))}
                     className="input-field"
                     placeholder="000.000.000-00"
                     maxLength={14}
@@ -333,7 +356,7 @@ function ReservaOnline() {
                   <input
                     type="tel"
                     value={formData.telefone}
-                    onChange={(e) => handleInputChange('telefone', formatTelefone(e.target.value))}
+                    onChange={e => handleInputChange('telefone', formatTelefone(e.target.value))}
                     className="input-field"
                     placeholder="(11) 99999-9999"
                     maxLength={15}
@@ -352,10 +375,8 @@ function ReservaOnline() {
           {/* Step 2: Data e Horário */}
           {step === 2 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Data e Horário
-              </h2>
-              
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Data e Horário</h2>
+
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -365,7 +386,7 @@ function ReservaOnline() {
                   <input
                     type="date"
                     value={formData.data}
-                    onChange={(e) => handleInputChange('data', e.target.value)}
+                    onChange={e => handleInputChange('data', e.target.value)}
                     className="input-field"
                     min={getTodayDate()}
                   />
@@ -401,7 +422,7 @@ function ReservaOnline() {
                   </label>
                   <select
                     value={formData.quantidade}
-                    onChange={(e) => handleInputChange('quantidade', parseInt(e.target.value))}
+                    onChange={e => handleInputChange('quantidade', parseInt(e.target.value))}
                     className="input-field"
                   >
                     {Array.from({ length: 20 }, (_, i) => i + 1).map(num => (
@@ -418,7 +439,7 @@ function ReservaOnline() {
                   </label>
                   <textarea
                     value={formData.restricoes}
-                    onChange={(e) => handleInputChange('restricoes', e.target.value)}
+                    onChange={e => handleInputChange('restricoes', e.target.value)}
                     className="input-field h-24 resize-none"
                     placeholder="Ex: vegetariano, alergia a frutos do mar, cadeirante, etc."
                   />
@@ -439,10 +460,8 @@ function ReservaOnline() {
           {/* Step 3: Confirmação */}
           {step === 3 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Confirme seus Dados
-              </h2>
-              
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Confirme seus Dados</h2>
+
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -459,7 +478,9 @@ function ReservaOnline() {
                   </div>
                   <div>
                     <span className="text-sm text-gray-600">Data:</span>
-                    <p className="font-medium">{new Date(formData.data).toLocaleDateString('pt-BR')}</p>
+                    <p className="font-medium">
+                      {new Date(formData.data).toLocaleDateString('pt-BR')}
+                    </p>
                   </div>
                   <div>
                     <span className="text-sm text-gray-600">Horário:</span>
@@ -480,8 +501,8 @@ function ReservaOnline() {
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-blue-800">
-                  <strong>Importante:</strong> Sua reserva será confirmada por WhatsApp. 
-                  Mantenha seu telefone ligado para receber a confirmação.
+                  <strong>Importante:</strong> Sua reserva será confirmada por WhatsApp. Mantenha
+                  seu telefone ligado para receber a confirmação.
                 </p>
               </div>
 
@@ -489,11 +510,7 @@ function ReservaOnline() {
                 <button onClick={() => setStep(2)} className="btn-secondary">
                   Voltar
                 </button>
-                <button 
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="btn-primary"
-                >
+                <button onClick={handleSubmit} disabled={isSubmitting} className="btn-primary">
                   {isSubmitting ? 'Processando...' : 'Confirmar Reserva'}
                 </button>
               </div>
@@ -505,4 +522,4 @@ function ReservaOnline() {
   );
 }
 
-export default ReservaOnline; 
+export default ReservaOnline;

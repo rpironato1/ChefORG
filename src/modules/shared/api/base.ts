@@ -63,14 +63,18 @@ export class BaseApiClient {
 
     for (let attempt = 0; attempt <= retries; attempt++) {
       try {
-        const response = await this.fetchWithTimeout(url, {
-          method: options.method,
-          headers: {
-            ...this.config.headers,
-            ...options.headers,
+        const response = await this.fetchWithTimeout(
+          url,
+          {
+            method: options.method,
+            headers: {
+              ...this.config.headers,
+              ...options.headers,
+            },
+            body: options.body ? JSON.stringify(options.body) : undefined,
           },
-          body: options.body ? JSON.stringify(options.body) : undefined,
-        }, options.timeout ?? this.config.timeout);
+          options.timeout ?? this.config.timeout
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -83,7 +87,7 @@ export class BaseApiClient {
         };
       } catch (error) {
         console.error(`Attempt ${attempt + 1} failed:`, error);
-        
+
         if (attempt === retries) {
           return {
             success: false,
@@ -128,11 +132,19 @@ export class BaseApiClient {
     return this.request<T>(endpoint, { method: 'GET', headers });
   }
 
-  async post<T>(endpoint: string, body?: any, headers?: Record<string, string>): Promise<ApiResponse<T>> {
+  async post<T>(
+    endpoint: string,
+    body?: any,
+    headers?: Record<string, string>
+  ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'POST', body, headers });
   }
 
-  async put<T>(endpoint: string, body?: any, headers?: Record<string, string>): Promise<ApiResponse<T>> {
+  async put<T>(
+    endpoint: string,
+    body?: any,
+    headers?: Record<string, string>
+  ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'PUT', body, headers });
   }
 
@@ -140,7 +152,11 @@ export class BaseApiClient {
     return this.request<T>(endpoint, { method: 'DELETE', headers });
   }
 
-  async patch<T>(endpoint: string, body?: any, headers?: Record<string, string>): Promise<ApiResponse<T>> {
+  async patch<T>(
+    endpoint: string,
+    body?: any,
+    headers?: Record<string, string>
+  ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'PATCH', body, headers });
   }
 
@@ -172,7 +188,7 @@ export const apiClient = new BaseApiClient();
 // Utility functions for error handling
 export const handleApiError = (error: any, customMessage?: string): ApiResponse<any> => {
   console.error('API Error:', error);
-  
+
   return {
     success: false,
     error: customMessage || error.message || 'Erro interno do servidor.',

@@ -53,7 +53,7 @@ export const SPACING = {
 // Business constants
 export const MESA_STATUS = {
   LIVRE: 'livre',
-  OCUPADA: 'ocupada', 
+  OCUPADA: 'ocupada',
   RESERVADA: 'reservada',
   LIMPEZA: 'limpeza',
   AGUARDANDO: 'aguardando',

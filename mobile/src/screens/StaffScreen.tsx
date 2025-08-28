@@ -196,46 +196,34 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('pt-BR', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
+    return date.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
   const handleUpdateTaskStatus = (taskId: number, newStatus: string) => {
     setTasks(prev =>
-      prev.map(task =>
-        task.id === taskId
-          ? { ...task, status: newStatus as any }
-          : task
-      )
+      prev.map(task => (task.id === taskId ? { ...task, status: newStatus as any } : task))
     );
   };
 
   const handleDeleteTask = (taskId: number) => {
-    Alert.alert(
-      'Confirmar Exclusão',
-      'Tem certeza que deseja excluir esta tarefa?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Excluir',
-          style: 'destructive',
-          onPress: () => {
-            setTasks(prev => prev.filter(task => task.id !== taskId));
-          },
+    Alert.alert('Confirmar Exclusão', 'Tem certeza que deseja excluir esta tarefa?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Excluir',
+        style: 'destructive',
+        onPress: () => {
+          setTasks(prev => prev.filter(task => task.id !== taskId));
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleStaffStatusChange = (staffId: number, newStatus: string) => {
     setStaff(prev =>
-      prev.map(member =>
-        member.id === staffId
-          ? { ...member, status: newStatus as any }
-          : member
-      )
+      prev.map(member => (member.id === staffId ? { ...member, status: newStatus as any } : member))
     );
   };
 
@@ -244,7 +232,9 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
       <View style={styles.taskHeader}>
         <Text style={styles.taskTitle}>{item.title}</Text>
         <View style={styles.taskBadges}>
-          <View style={[styles.priorityBadge, { backgroundColor: getPriorityColor(item.priority) }]}>
+          <View
+            style={[styles.priorityBadge, { backgroundColor: getPriorityColor(item.priority) }]}
+          >
             <Text style={styles.badgeText}>{item.priority.toUpperCase()}</Text>
           </View>
           <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
@@ -254,17 +244,11 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
       </View>
 
       <Text style={styles.taskDescription}>{item.description}</Text>
-      
+
       <View style={styles.taskMeta}>
-        {item.table_id && (
-          <Text style={styles.taskMetaText}>🪑 Mesa {item.table_id}</Text>
-        )}
-        {item.order_id && (
-          <Text style={styles.taskMetaText}>📋 Pedido #{item.order_id}</Text>
-        )}
-        {item.assigned_to && (
-          <Text style={styles.taskMetaText}>👤 {item.assigned_to}</Text>
-        )}
+        {item.table_id && <Text style={styles.taskMetaText}>🪑 Mesa {item.table_id}</Text>}
+        {item.order_id && <Text style={styles.taskMetaText}>📋 Pedido #{item.order_id}</Text>}
+        {item.assigned_to && <Text style={styles.taskMetaText}>👤 {item.assigned_to}</Text>}
         <Text style={styles.taskTime}>{formatTime(item.created_at)}</Text>
       </View>
 
@@ -277,7 +261,7 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
             <Text style={styles.actionButtonText}>Iniciar</Text>
           </TouchableOpacity>
         )}
-        
+
         {item.status === 'em_andamento' && (
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: COLORS.green[600] }]}
@@ -286,7 +270,7 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
             <Text style={styles.actionButtonText}>Concluir</Text>
           </TouchableOpacity>
         )}
-        
+
         <TouchableOpacity
           style={[styles.actionButton, { backgroundColor: COLORS.red[600] }]}
           onPress={() => handleDeleteTask(item.id)}
@@ -302,20 +286,32 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
       <View style={styles.staffHeader}>
         <View style={styles.staffAvatar}>
           <Text style={styles.staffAvatarText}>
-            {item.nome.split(' ').map(n => n[0]).join('').toUpperCase()}
+            {item.nome
+              .split(' ')
+              .map(n => n[0])
+              .join('')
+              .toUpperCase()}
           </Text>
         </View>
-        
+
         <View style={styles.staffInfo}>
           <Text style={styles.staffName}>{item.nome}</Text>
           <Text style={styles.staffRole}>{getRoleDisplayName(item.role)}</Text>
         </View>
 
-        <View style={[
-          styles.staffStatusBadge,
-          { backgroundColor: item.status === 'ativo' ? COLORS.green[600] : 
-                           item.status === 'pausa' ? COLORS.yellow[600] : COLORS.red[600] }
-        ]}>
+        <View
+          style={[
+            styles.staffStatusBadge,
+            {
+              backgroundColor:
+                item.status === 'ativo'
+                  ? COLORS.green[600]
+                  : item.status === 'pausa'
+                    ? COLORS.yellow[600]
+                    : COLORS.red[600],
+            },
+          ]}
+        >
           <Text style={styles.badgeText}>{getStatusDisplayName(item.status)}</Text>
         </View>
       </View>
@@ -329,7 +325,7 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
             <Text style={styles.actionButtonText}>Pausa</Text>
           </TouchableOpacity>
         )}
-        
+
         {item.status === 'pausa' && (
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: COLORS.green[600] }]}
@@ -338,7 +334,7 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
             <Text style={styles.actionButtonText}>Ativar</Text>
           </TouchableOpacity>
         )}
-        
+
         {item.status === 'inativo' && (
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: COLORS.green[600] }]}
@@ -371,7 +367,7 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
             Tarefas ({tasks.filter(t => t.status !== 'concluida').length})
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.tab, selectedTab === 'team' && styles.activeTab]}
           onPress={() => setSelectedTab('team')}
@@ -393,7 +389,9 @@ export const StaffScreen: React.FC<StaffScreenProps> = ({ navigation }) => {
           ListEmptyComponent={
             <View style={styles.emptyState}>
               <Text style={styles.emptyText}>Nenhuma tarefa encontrada</Text>
-              <Text style={styles.emptySubtext}>As tarefas aparecerão aqui quando forem criadas</Text>
+              <Text style={styles.emptySubtext}>
+                As tarefas aparecerão aqui quando forem criadas
+              </Text>
             </View>
           }
         />

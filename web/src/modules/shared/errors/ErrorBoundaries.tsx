@@ -26,10 +26,10 @@ export class ModuleErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error(`Error in ${this.props.moduleName} module:`, error, errorInfo);
-    
+
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     });
 
     // Call custom error handler if provided
@@ -49,7 +49,7 @@ export class ModuleErrorBoundary extends Component<Props, State> {
       module: this.props.moduleName,
       error: error.message,
       stack: error.stack,
-      componentStack: errorInfo.componentStack
+      componentStack: errorInfo.componentStack,
     });
   };
 
@@ -71,16 +71,19 @@ export class ModuleErrorBoundary extends Component<Props, State> {
             <div className="text-center">
               <div className="mx-auto h-16 w-16 text-red-500 mb-4">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
                 </svg>
               </div>
-              <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                Ops! Algo deu errado
-              </h2>
+              <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Ops! Algo deu errado</h2>
               <p className="mt-2 text-sm text-gray-600">
                 Ocorreu um erro no módulo <strong>{this.props.moduleName}</strong>
               </p>
-              
+
               {process.env.NODE_ENV === 'development' && this.state.error && (
                 <details className="mt-4 text-left">
                   <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
@@ -93,7 +96,7 @@ export class ModuleErrorBoundary extends Component<Props, State> {
                 </details>
               )}
             </div>
-            
+
             <div className="space-y-4">
               <button
                 onClick={this.handleRetry}
@@ -101,7 +104,7 @@ export class ModuleErrorBoundary extends Component<Props, State> {
               >
                 Tentar novamente
               </button>
-              
+
               <button
                 onClick={() => window.location.reload()}
                 className="group relative w-full flex justify-center py-2 px-4 border border-gray-500 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
@@ -121,39 +124,27 @@ export class ModuleErrorBoundary extends Component<Props, State> {
 // Specific error boundaries for different modules
 
 export const ReservationsErrorBoundary: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <ModuleErrorBoundary moduleName="Reservas">
-    {children}
-  </ModuleErrorBoundary>
+  <ModuleErrorBoundary moduleName="Reservas">{children}</ModuleErrorBoundary>
 );
 
 export const TablesErrorBoundary: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <ModuleErrorBoundary moduleName="Mesas">
-    {children}
-  </ModuleErrorBoundary>
+  <ModuleErrorBoundary moduleName="Mesas">{children}</ModuleErrorBoundary>
 );
 
 export const MenuErrorBoundary: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <ModuleErrorBoundary moduleName="Menu">
-    {children}
-  </ModuleErrorBoundary>
+  <ModuleErrorBoundary moduleName="Menu">{children}</ModuleErrorBoundary>
 );
 
 export const OrdersErrorBoundary: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <ModuleErrorBoundary moduleName="Pedidos">
-    {children}
-  </ModuleErrorBoundary>
+  <ModuleErrorBoundary moduleName="Pedidos">{children}</ModuleErrorBoundary>
 );
 
 export const PaymentsErrorBoundary: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <ModuleErrorBoundary moduleName="Pagamentos">
-    {children}
-  </ModuleErrorBoundary>
+  <ModuleErrorBoundary moduleName="Pagamentos">{children}</ModuleErrorBoundary>
 );
 
 export const AuthErrorBoundary: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <ModuleErrorBoundary moduleName="Autenticação">
-    {children}
-  </ModuleErrorBoundary>
+  <ModuleErrorBoundary moduleName="Autenticação">{children}</ModuleErrorBoundary>
 );
 
 // Higher-order component for wrapping components with error boundaries
@@ -166,8 +157,8 @@ export const withErrorBoundary = <P extends object>(
       <Component {...props} />
     </ModuleErrorBoundary>
   );
-  
+
   WrappedComponent.displayName = `withErrorBoundary(${Component.displayName || Component.name})`;
-  
+
   return WrappedComponent;
 };

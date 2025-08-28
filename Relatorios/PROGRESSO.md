@@ -5,6 +5,7 @@
 ### ✅ **1. INTERFACE VISUAL - PÁGINAS PÚBLICAS**
 
 #### 1.1 Páginas Públicas
+
 - ✅ **Home** (`/`) - Página inicial com:
   - Apresentação completa do restaurante
   - Botão "Reservar Mesa" prominente
@@ -29,6 +30,7 @@
   - Página de sucesso com resumo da reserva
 
 #### 1.2 Páginas Fluxo de Chegada
+
 - ✅ **Leitura QR Check-in** (`/checkin`) - Tela de check-in com:
   - Interface de scanner QR simulada
   - Exibição de dados da mesa e reserva
@@ -45,6 +47,7 @@
 - ⏳ **Tela Aguardando Mesa** - Em desenvolvimento
 
 #### 1.3 Páginas Cliente na Mesa
+
 - ✅ **PIN para Mesa** (`/mesa/:numeroMesa/pin`) - Desbloqueio da mesa com:
   - Teclado numérico interativo
   - Validação de PIN com tentativas limitadas
@@ -66,6 +69,7 @@
 - ⏳ **Feedback** - Em desenvolvimento
 
 #### 1.4 Páginas Staff
+
 - ✅ **Dashboard Administrativo** (`/admin/dashboard`) - Painel básico implementado
 - ⏳ **Painel Recepção** - Em desenvolvimento
 - ⏳ **Painel Garçom** - Em desenvolvimento
@@ -184,6 +188,7 @@
 ## Próximos Passos
 
 ### Fase 2: Fluxo Completo do Cliente
+
 1. Implementar PIN para desbloqueio da mesa
 2. Criar cardápio interativo com carrinho
 3. Desenvolver sistema de acompanhamento de pedidos
@@ -191,6 +196,7 @@
 5. Criar sistema de feedback
 
 ### Fase 3: Painéis Staff
+
 1. Painel de recepção com fila e reservas
 2. Painel do garçom com mesas ativas
 3. Painel da cozinha com pedidos por categoria
@@ -198,6 +204,7 @@
 5. Painel do gerente com dashboards completos
 
 ### Fase 4: Backend e Integração
+
 1. Modelar banco de dados
 2. Criar APIs REST
 3. Implementar autenticação
@@ -230,17 +237,20 @@ http://localhost:3000
 ## Estrutura de Navegação
 
 ### Páginas Públicas
+
 - `/` - Página inicial
 - `/menu` - Cardápio público
 - `/reserva` - Formulário de reserva
 
 ### Fluxo Cliente
+
 - `/checkin` - Check-in QR
 - `/chegada-sem-reserva` - Formulário fila de espera
 - `/mesa/:numeroMesa/pin` - Desbloqueio da mesa
 - `/mesa/:numeroMesa/cardapio` - Cardápio interativo
 
 ### Área Administrativa
+
 - `/admin/login` - Login funcionários
 - `/admin/dashboard` - Dashboard geral
 - `/admin/recepcao` - Painel recepção
@@ -252,4 +262,4 @@ http://localhost:3000
 ---
 
 **Status**: Em desenvolvimento ativo
-**Última atualização**: Janeiro 2024 
+**Última atualização**: Janeiro 2024

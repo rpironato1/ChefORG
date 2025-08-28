@@ -10,7 +10,7 @@ export const MobileBottomNavigation: React.FC = () => {
     { icon: Home, label: 'Início', path: '/' },
     { icon: ChefHat, label: 'Cardápio', path: '/menu' },
     { icon: Calendar, label: 'Reservas', path: '/reserva' },
-    { icon: User, label: 'Conta', path: '/login' }
+    { icon: User, label: 'Conta', path: '/login' },
   ];
 
   const handleNavigation = (path: string) => {
@@ -23,19 +23,23 @@ export const MobileBottomNavigation: React.FC = () => {
         {navItems.map((item, index) => {
           const IconComponent = item.icon;
           const isActive = location.pathname === item.path;
-          
+
           return (
             <button
               key={index}
               onClick={() => handleNavigation(item.path)}
               className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg transition-colors ${
-                isActive 
-                  ? 'text-primary-600 bg-primary-50' 
+                isActive
+                  ? 'text-primary-600 bg-primary-50'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               }`}
             >
-              <IconComponent className={`w-6 h-6 mb-1 ${isActive ? 'text-primary-600' : 'text-gray-600'}`} />
-              <span className={`text-xs font-medium ${isActive ? 'text-primary-600' : 'text-gray-600'}`}>
+              <IconComponent
+                className={`w-6 h-6 mb-1 ${isActive ? 'text-primary-600' : 'text-gray-600'}`}
+              />
+              <span
+                className={`text-xs font-medium ${isActive ? 'text-primary-600' : 'text-gray-600'}`}
+              >
                 {item.label}
               </span>
             </button>

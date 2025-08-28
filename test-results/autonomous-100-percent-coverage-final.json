@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-24T19:57:54.478Z",
+  "timestamp": "2025-08-28T18:17:31.547Z",
   "apis": {
     "totalModules": 12,
     "validatedModules": 12,
@@ -16,7 +16,7 @@
         "functionCount": 3,
         "interfaces": 1,
         "types": 1,
-        "linesOfCode": 108,
+        "linesOfCode": 116,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -33,7 +33,7 @@
         "functionCount": 4,
         "interfaces": 4,
         "types": 0,
-        "linesOfCode": 110,
+        "linesOfCode": 120,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -49,7 +49,7 @@
         "functionCount": 3,
         "interfaces": 0,
         "types": 2,
-        "linesOfCode": 108,
+        "linesOfCode": 114,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -63,7 +63,7 @@
         "functionCount": 1,
         "interfaces": 0,
         "types": 3,
-        "linesOfCode": 55,
+        "linesOfCode": 57,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "medium"
@@ -93,7 +93,7 @@
         "functionCount": 1,
         "interfaces": 1,
         "types": 0,
-        "linesOfCode": 36,
+        "linesOfCode": 37,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "low"
@@ -111,7 +111,7 @@
         "functionCount": 5,
         "interfaces": 0,
         "types": 5,
-        "linesOfCode": 245,
+        "linesOfCode": 253,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -128,7 +128,7 @@
         "functionCount": 4,
         "interfaces": 0,
         "types": 3,
-        "linesOfCode": 128,
+        "linesOfCode": 131,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -147,7 +147,7 @@
         "functionCount": 6,
         "interfaces": 6,
         "types": 0,
-        "linesOfCode": 152,
+        "linesOfCode": 162,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -166,7 +166,7 @@
         "functionCount": 6,
         "interfaces": 0,
         "types": 3,
-        "linesOfCode": 174,
+        "linesOfCode": 190,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -180,10 +180,10 @@
         "functionCount": 1,
         "interfaces": 0,
         "types": 2,
-        "linesOfCode": 38,
+        "linesOfCode": 61,
         "hasErrorHandling": true,
         "hasDocumentation": true,
-        "complexity": "low"
+        "complexity": "medium"
       },
       {
         "name": "tables",
@@ -198,7 +198,7 @@
         "functionCount": 5,
         "interfaces": 0,
         "types": 1,
-        "linesOfCode": 113,
+        "linesOfCode": 127,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -206,9 +206,9 @@
     ]
   },
   "components": {
-    "totalComponents": 41,
+    "totalComponents": 42,
     "createdComponents": 0,
-    "existingComponents": 22,
+    "existingComponents": 21,
     "componentDetails": [
       {
         "name": "LoadingSpinner",
@@ -250,6 +250,13 @@
         "directory": "src/components/ui"
       },
       {
+        "name": "LazyImage",
+        "type": "component",
+        "status": "exists",
+        "path": "./src/components/ui/LazyImage.tsx",
+        "directory": "src/components/ui"
+      },
+      {
         "name": "LoadingSpinner",
         "type": "component",
         "status": "exists",
@@ -285,24 +292,10 @@
         "directory": "src/pages/admin"
       },
       {
-        "name": "CheckinQR",
-        "type": "page",
-        "status": "exists",
-        "path": "./src/pages/cliente/CheckinQR.tsx",
-        "directory": "src/pages/cliente"
-      },
-      {
         "name": "ChegadaSemReserva",
         "type": "page",
         "status": "exists",
         "path": "./src/pages/cliente/ChegadaSemReserva.tsx",
-        "directory": "src/pages/cliente"
-      },
-      {
-        "name": "Feedback",
-        "type": "page",
-        "status": "exists",
-        "path": "./src/pages/cliente/Feedback.tsx",
         "directory": "src/pages/cliente"
       },
       {
@@ -364,9 +357,9 @@
     ]
   },
   "coverage": {
-    "overall": 81.46341463414635,
+    "overall": 80,
     "apis": 100,
-    "components": 53.65853658536586
+    "components": 50
   },
   "success": false
 }

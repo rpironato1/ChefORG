@@ -1,6 +1,6 @@
 CRIE UMA APLICAÇÃO VOLTADA PARA SISTEMA DE BARES E RESTAURANTES
 
-ESCOPO OPERACIONAL 
+ESCOPO OPERACIONAL
 
 0 ORIENTACAO GERAL
 0.1 Crie toda a interface visual completa antes de implementar a logica.

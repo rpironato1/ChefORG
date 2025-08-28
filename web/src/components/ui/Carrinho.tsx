@@ -54,23 +54,41 @@ const Carrinho: React.FC<CarrinhoProps> = ({
             </div>
           ) : (
             <ul className="space-y-4">
-              {itens.map((item) => (
+              {itens.map(item => (
                 <li key={item.id} className="flex items-start space-x-4 p-2 rounded-lg border">
                   <div className="flex-grow">
                     <p className="font-semibold text-gray-800">{item.nome}</p>
                     <p className="text-sm text-gray-600">R$ {item.preco.toFixed(2)}</p>
-                    {item.observacao && <p className="text-xs text-gray-500 italic">Obs: {item.observacao}</p>}
+                    {item.observacao && (
+                      <p className="text-xs text-gray-500 italic">Obs: {item.observacao}</p>
+                    )}
                     <div className="flex items-center mt-2">
-                      <button onClick={() => onUpdateQuantidade(item.id, item.quantidade - 1)} disabled={item.quantidade <= 1} className="px-2 py-1 border rounded-l hover:bg-gray-100 disabled:opacity-50">-</button>
+                      <button
+                        onClick={() => onUpdateQuantidade(item.id, item.quantidade - 1)}
+                        disabled={item.quantidade <= 1}
+                        className="px-2 py-1 border rounded-l hover:bg-gray-100 disabled:opacity-50"
+                      >
+                        -
+                      </button>
                       <span className="px-3 py-1 border-t border-b">{item.quantidade}</span>
-                      <button onClick={() => onUpdateQuantidade(item.id, item.quantidade + 1)} className="px-2 py-1 border rounded-r hover:bg-gray-100">+</button>
+                      <button
+                        onClick={() => onUpdateQuantidade(item.id, item.quantidade + 1)}
+                        className="px-2 py-1 border rounded-r hover:bg-gray-100"
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                   <div className="flex flex-col items-end">
-                     <p className="font-bold text-lg text-gray-900">R$ {(item.preco * item.quantidade).toFixed(2)}</p>
-                     <button onClick={() => onRemoveItem(item.id)} className="text-red-500 hover:text-red-700 mt-2">
-                        <Trash2 size={20} />
-                     </button>
+                    <p className="font-bold text-lg text-gray-900">
+                      R$ {(item.preco * item.quantidade).toFixed(2)}
+                    </p>
+                    <button
+                      onClick={() => onRemoveItem(item.id)}
+                      className="text-red-500 hover:text-red-700 mt-2"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
                 </li>
               ))}

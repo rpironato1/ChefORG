@@ -15,31 +15,37 @@ export const usePullToRefresh = ({
   const [pullDistance, setPullDistance] = useState(0);
   const [startY, setStartY] = useState(0);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (disabled || isRefreshing) return;
-    
-    // Only trigger if scrolled to top
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    if (scrollTop === 0) {
-      setStartY(e.touches[0].clientY);
-    }
-  }, [disabled, isRefreshing]);
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (disabled || isRefreshing) return;
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (disabled || isRefreshing || startY === 0) return;
-
-    const currentY = e.touches[0].clientY;
-    const distance = Math.max(0, currentY - startY);
-    
-    if (distance > 0) {
-      setPullDistance(distance);
-      
-      // Prevent default scrolling when pulling down
-      if (distance > 10) {
-        e.preventDefault();
+      // Only trigger if scrolled to top
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop === 0) {
+        setStartY(e.touches[0].clientY);
       }
-    }
-  }, [disabled, isRefreshing, startY]);
+    },
+    [disabled, isRefreshing]
+  );
+
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (disabled || isRefreshing || startY === 0) return;
+
+      const currentY = e.touches[0].clientY;
+      const distance = Math.max(0, currentY - startY);
+
+      if (distance > 0) {
+        setPullDistance(distance);
+
+        // Prevent default scrolling when pulling down
+        if (distance > 10) {
+          e.preventDefault();
+        }
+      }
+    },
+    [disabled, isRefreshing, startY]
+  );
 
   const handleTouchEnd = useCallback(async () => {
     if (disabled || isRefreshing) return;
@@ -52,7 +58,7 @@ export const usePullToRefresh = ({
         setIsRefreshing(false);
       }
     }
-    
+
     setPullDistance(0);
     setStartY(0);
   }, [disabled, isRefreshing, pullDistance, threshold, onRefresh]);

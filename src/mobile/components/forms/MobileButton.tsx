@@ -31,21 +31,24 @@ export const MobileButton: React.FC<MobileButtonProps> = ({
     active:scale-95
     touch-manipulation
     ${fullWidth ? 'w-full' : ''}
-  `.trim().replace(/\s+/g, ' ');
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
 
   const sizeClasses = {
     sm: 'h-9 px-3 text-sm gap-1.5',
     md: 'h-11 px-4 text-sm gap-2',
     lg: 'h-12 px-6 text-base gap-2',
-    xl: 'h-14 px-8 text-lg gap-3'
+    xl: 'h-14 px-8 text-lg gap-3',
   };
 
   const variantClasses = {
     primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm',
     secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500 shadow-sm',
-    outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
+    outline:
+      'border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
     ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-sm'
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-sm',
   };
 
   const buttonClasses = `
@@ -53,24 +56,22 @@ export const MobileButton: React.FC<MobileButtonProps> = ({
     ${sizeClasses[size]}
     ${variantClasses[variant]}
     ${className}
-  `.trim().replace(/\s+/g, ' ');
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
 
   const isDisabled = disabled || loading;
 
   return (
-    <button
-      className={buttonClasses}
-      disabled={isDisabled}
-      {...props}
-    >
+    <button className={buttonClasses} disabled={isDisabled} {...props}>
       {loading ? (
         <Loader2 className="animate-spin" size={size === 'sm' ? 16 : size === 'xl' ? 24 : 20} />
       ) : (
         leftIcon
       )}
-      
+
       {children}
-      
+
       {!loading && rightIcon}
     </button>
   );

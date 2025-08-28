@@ -5,7 +5,7 @@ const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
 const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
 
 if (!accountSid || !authToken) {
-  throw new Error("Twilio credentials are not set in environment variables.");
+  throw new Error('Twilio credentials are not set in environment variables.');
 }
 
 export const twilio = new Twilio(accountSid, authToken);

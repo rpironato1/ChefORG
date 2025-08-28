@@ -9,7 +9,7 @@ const routes = [
   // Public routes
   { path: '/reserva', name: 'reserva-online' },
   { path: '/sprint3-demo', name: 'sprint3-demo' },
-  
+
   // Client routes
   { path: '/checkin', name: 'checkin-qr' },
   { path: '/chegada-sem-reserva', name: 'chegada-sem-reserva' },
@@ -18,11 +18,11 @@ const routes = [
   { path: '/mesa/1/acompanhar', name: 'mesa-acompanhar' },
   { path: '/mesa/1/pagamento', name: 'mesa-pagamento' },
   { path: '/mesa/1/feedback', name: 'mesa-feedback' },
-  
+
   // Auth routes
   { path: '/login', name: 'login' },
   { path: '/admin/login', name: 'admin-login' },
-  
+
   // Admin routes
   { path: '/admin', name: 'admin-dashboard' },
   { path: '/admin/dashboard', name: 'admin-dashboard-explicit' },
@@ -30,13 +30,13 @@ const routes = [
   { path: '/admin/garcom', name: 'admin-garcom' },
   { path: '/admin/cozinha', name: 'admin-cozinha' },
   { path: '/admin/caixa', name: 'admin-caixa' },
-  { path: '/admin/gerencia', name: 'admin-gerencia' }
+  { path: '/admin/gerencia', name: 'admin-gerencia' },
 ];
 
 const devices = [
   { name: 'desktop', width: 1920, height: 1080 },
   { name: 'tablet', width: 768, height: 1024 },
-  { name: 'mobile', width: 375, height: 667 }
+  { name: 'mobile', width: 375, height: 667 },
 ];
 
 console.log(`

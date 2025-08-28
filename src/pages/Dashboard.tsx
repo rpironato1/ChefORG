@@ -1,10 +1,15 @@
-import { 
-  ShoppingCart, 
-  DollarSign,
-  Clock,
-  Utensils
-} from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { ShoppingCart, DollarSign, Clock, Utensils } from 'lucide-react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from 'recharts';
 
 const mockSalesData = [
   { name: 'Seg', vendas: 1200, pedidos: 45 },
@@ -80,10 +85,15 @@ function Dashboard() {
                 <div>
                   <p className="text-sm text-gray-600 mb-1">{stat.title}</p>
                   <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                  <p className={`text-sm mt-1 ${
-                    stat.changeType === 'positive' ? 'text-green-600' : 
-                    stat.changeType === 'negative' ? 'text-red-600' : 'text-gray-600'
-                  }`}>
+                  <p
+                    className={`text-sm mt-1 ${
+                      stat.changeType === 'positive'
+                        ? 'text-green-600'
+                        : stat.changeType === 'negative'
+                          ? 'text-red-600'
+                          : 'text-gray-600'
+                    }`}
+                  >
                     {stat.change}
                   </p>
                 </div>
@@ -135,19 +145,27 @@ function Dashboard() {
               { id: '#002', mesa: '12', status: 'pronto', tempo: '12 min' },
               { id: '#003', mesa: '08', status: 'entregue', tempo: '18 min' },
               { id: '#004', mesa: '03', status: 'pendente', tempo: '2 min' },
-            ].map((pedido) => (
-              <div key={pedido.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            ].map(pedido => (
+              <div
+                key={pedido.id}
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+              >
                 <div className="flex items-center gap-3">
                   <div className="font-medium text-gray-900">{pedido.id}</div>
                   <div className="text-sm text-gray-600">Mesa {pedido.mesa}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    pedido.status === 'pronto' ? 'bg-green-100 text-green-700' :
-                    pedido.status === 'preparando' ? 'bg-yellow-100 text-yellow-700' :
-                    pedido.status === 'entregue' ? 'bg-blue-100 text-blue-700' :
-                    'bg-gray-100 text-gray-700'
-                  }`}>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      pedido.status === 'pronto'
+                        ? 'bg-green-100 text-green-700'
+                        : pedido.status === 'preparando'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : pedido.status === 'entregue'
+                            ? 'bg-blue-100 text-blue-700'
+                            : 'bg-gray-100 text-gray-700'
+                    }`}
+                  >
                     {pedido.status}
                   </span>
                   <span className="text-sm text-gray-500">{pedido.tempo}</span>
@@ -160,17 +178,19 @@ function Dashboard() {
         <div className="card">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Mesas Disponíveis</h3>
           <div className="grid grid-cols-4 gap-3">
-            {Array.from({ length: 24 }, (_, i) => i + 1).map((mesa) => {
+            {Array.from({ length: 24 }, (_, i) => i + 1).map(mesa => {
               const isOccupied = mesa <= 18;
               const isReserved = mesa === 19 || mesa === 20;
-              
+
               return (
                 <div
                   key={mesa}
                   className={`p-4 rounded-lg border-2 text-center font-medium ${
-                    isOccupied ? 'bg-red-100 border-red-200 text-red-700' :
-                    isReserved ? 'bg-yellow-100 border-yellow-200 text-yellow-700' :
-                    'bg-green-100 border-green-200 text-green-700'
+                    isOccupied
+                      ? 'bg-red-100 border-red-200 text-red-700'
+                      : isReserved
+                        ? 'bg-yellow-100 border-yellow-200 text-yellow-700'
+                        : 'bg-green-100 border-green-200 text-green-700'
                   }`}
                 >
                   {mesa}
@@ -198,4 +218,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard; 
+export default Dashboard;

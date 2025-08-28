@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Plus, Minus, Search, Utensils, Loader2, AlertTriangle } from 'lucide-react';
+import {
+  ArrowLeft,
+  ShoppingCart,
+  Plus,
+  Minus,
+  Search,
+  Utensils,
+  Loader2,
+  AlertTriangle,
+} from 'lucide-react';
 import { useMesa } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
 import CardMenuItem from '../../components/ui/CardMenuItem';
@@ -25,7 +34,7 @@ function CardapioMesa() {
   const [menu, setMenu] = useState<CategoryWithItems[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [categoriaAtiva, setCategoriaAtiva] = useState('Todas');
   const [busca, setBusca] = useState('');
   const [carrinho, setCarrinho] = useState<CarrinhoItem[]>([]);
@@ -62,15 +71,17 @@ function CardapioMesa() {
   const itemsFiltrados = menu
     .map(category => ({
       ...category,
-      menu_items: category.menu_items.filter(item => 
-        (item.nome.toLowerCase().includes(busca.toLowerCase()) ||
-        (item.descricao && item.descricao.toLowerCase().includes(busca.toLowerCase()))) &&
-        item.disponivel
+      menu_items: category.menu_items.filter(
+        item =>
+          (item.nome.toLowerCase().includes(busca.toLowerCase()) ||
+            (item.descricao && item.descricao.toLowerCase().includes(busca.toLowerCase()))) &&
+          item.disponivel
       ),
     }))
-    .filter(category => 
-      (categoriaAtiva === 'Todas' || category.nome === categoriaAtiva) &&
-      category.menu_items.length > 0
+    .filter(
+      category =>
+        (categoriaAtiva === 'Todas' || category.nome === categoriaAtiva) &&
+        category.menu_items.length > 0
     );
 
   const getQuantidadeNoCarrinho = (itemId: number) => {
@@ -82,11 +93,7 @@ function CardapioMesa() {
     setCarrinho(prev => {
       const existente = prev.find(c => c.item.id === item.id);
       if (existente) {
-        return prev.map(c => 
-          c.item.id === item.id 
-            ? { ...c, quantidade: c.quantidade + 1 }
-            : c
-        );
+        return prev.map(c => (c.item.id === item.id ? { ...c, quantidade: c.quantidade + 1 } : c));
       } else {
         return [...prev, { item, quantidade: 1, observacoes: '' }];
       }
@@ -97,11 +104,7 @@ function CardapioMesa() {
     setCarrinho(prev => {
       const existente = prev.find(c => c.item.id === item.id);
       if (existente && existente.quantidade > 1) {
-        return prev.map(c => 
-          c.item.id === item.id 
-            ? { ...c, quantidade: c.quantidade - 1 }
-            : c
-        );
+        return prev.map(c => (c.item.id === item.id ? { ...c, quantidade: c.quantidade - 1 } : c));
       } else {
         return prev.filter(c => c.item.id !== item.id);
       }
@@ -109,7 +112,7 @@ function CardapioMesa() {
   };
 
   const getTotalCarrinho = () => {
-    return carrinho.reduce((total, item) => total + (Number(item.item.preco) * item.quantidade), 0);
+    return carrinho.reduce((total, item) => total + Number(item.item.preco) * item.quantidade, 0);
   };
 
   const getQuantidadeTotalItens = () => {
@@ -121,7 +124,7 @@ function CardapioMesa() {
       showError('Carrinho Vazio', 'Adicione itens ao carrinho antes de confirmar');
       return;
     }
-    
+
     setIsSubmitting(true);
     try {
       const tableId = parseInt(numeroMesa!, 10);
@@ -129,7 +132,7 @@ function CardapioMesa() {
         menu_item_id: c.item.id,
         quantidade: c.quantidade,
         observacoes: c.observacoes,
-        preco_unitario: Number(c.item.preco)
+        preco_unitario: Number(c.item.preco),
       }));
 
       const result = await createOrder(tableId, orderItems);
@@ -172,14 +175,17 @@ function CardapioMesa() {
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
-      
+
       <nav className="bg-white shadow-sm border-b sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center text-gray-600 hover:text-gray-900 mr-4">
               <ArrowLeft className="h-5 w-5 mr-2" /> Sair
             </Link>
-            <button onClick={() => setShowCarrinho(true)} className="relative bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 flex items-center gap-2">
+            <button
+              onClick={() => setShowCarrinho(true)}
+              className="relative bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 flex items-center gap-2"
+            >
               <ShoppingCart className="h-5 w-5" />
               <span className="hidden sm:inline">Carrinho</span>
               {getQuantidadeTotalItens() > 0 && (
@@ -196,11 +202,21 @@ function CardapioMesa() {
         <div className="mb-6">
           <div className="relative max-w-md mb-4">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <input type="text" placeholder="Buscar pratos..." value={busca} onChange={(e) => setBusca(e.target.value)} className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+            <input
+              type="text"
+              placeholder="Buscar pratos..."
+              value={busca}
+              onChange={e => setBusca(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+            />
           </div>
           <div className="flex flex-wrap gap-2">
             {allCategories.map(categoria => (
-              <button key={categoria} onClick={() => setCategoriaAtiva(categoria)} className={`px-4 py-2 rounded-lg font-medium transition-colors ${categoriaAtiva === categoria ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}>
+              <button
+                key={categoria}
+                onClick={() => setCategoriaAtiva(categoria)}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${categoriaAtiva === categoria ? 'bg-primary-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
+              >
                 {categoria}
               </button>
             ))}
@@ -214,7 +230,7 @@ function CardapioMesa() {
               {category.menu_items.map(item => {
                 // Mapear item do banco para tipo MenuItem
                 const menuItem: MenuItem = {
-                  id: item.id,
+                  id: typeof item.id === 'string' ? parseInt(item.id, 10) : item.id,
                   nome: item.nome,
                   descricao: item.descricao,
                   preco: item.preco,
@@ -223,9 +239,20 @@ function CardapioMesa() {
                   tempo_preparo: item.tempo_preparo,
                   ingredientes: item.ingredientes,
                   imagem: item.imagem,
-                  restricoes: item.restricoes
+                  restricoes: item.restricoes,
+                  created_at: item.created_at,
+                  updated_at: item.updated_at,
                 };
-                return <CardMenuItem key={item.id} item={menuItem} quantidade={getQuantidadeNoCarrinho(item.id.toString())} onAdicionar={(item) => adicionarItem({...item, id: item.id.toString()})} onRemover={(item) => removerItem({...item, id: item.id.toString()})} showControles={true} />;
+                return (
+                  <CardMenuItem
+                    key={item.id}
+                    item={menuItem}
+                    quantidade={getQuantidadeNoCarrinho(typeof item.id === 'string' ? parseInt(item.id, 10) : item.id)}
+                    onAdicionar={() => adicionarItem(menuItem)}
+                    onRemover={() => removerItem(menuItem)}
+                    showControles={true}
+                  />
+                );
               })}
             </div>
           </div>
@@ -235,7 +262,9 @@ function CardapioMesa() {
           <div className="text-center py-16">
             <Utensils className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-medium text-gray-900 mb-2">Nenhum prato encontrado</h3>
-            <p className="text-gray-600">Tente ajustar sua busca ou selecionar uma categoria diferente.</p>
+            <p className="text-gray-600">
+              Tente ajustar sua busca ou selecionar uma categoria diferente.
+            </p>
           </div>
         )}
       </div>
@@ -245,7 +274,12 @@ function CardapioMesa() {
           <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between p-6 border-b">
               <h2 className="text-xl font-bold text-gray-900">Seu Pedido</h2>
-              <button onClick={() => setShowCarrinho(false)} className="p-2 hover:bg-gray-100 rounded-full">✕</button>
+              <button
+                onClick={() => setShowCarrinho(false)}
+                className="p-2 hover:bg-gray-100 rounded-full"
+              >
+                ✕
+              </button>
             </div>
             <div className="flex-1 overflow-y-auto p-6">
               {carrinho.length === 0 ? (
@@ -255,19 +289,39 @@ function CardapioMesa() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {carrinho.map((carrinhoItem) => (
-                    <div key={carrinhoItem.item.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  {carrinho.map(carrinhoItem => (
+                    <div
+                      key={carrinhoItem.item.id}
+                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    >
                       <div className="flex-1">
                         <h4 className="font-medium text-gray-900">{carrinhoItem.item.nome}</h4>
-                        <p className="text-sm text-gray-600">R$ {Number(carrinhoItem.item.preco).toFixed(2)}</p>
+                        <p className="text-sm text-gray-600">
+                          R$ {Number(carrinhoItem.item.preco).toFixed(2)}
+                        </p>
                       </div>
                       <div className="flex items-center gap-3">
-                        <button onClick={() => removerItem(carrinhoItem.item)} className="p-1 bg-red-100 text-red-600 rounded-full hover:bg-red-200"><Minus className="h-4 w-4" /></button>
-                        <span className="font-medium min-w-[2rem] text-center">{carrinhoItem.quantidade}</span>
-                        <button onClick={() => adicionarItem(carrinhoItem.item)} className="p-1 bg-green-100 text-green-600 rounded-full hover:bg-green-200"><Plus className="h-4 w-4" /></button>
+                        <button
+                          onClick={() => removerItem(carrinhoItem.item)}
+                          className="p-1 bg-red-100 text-red-600 rounded-full hover:bg-red-200"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </button>
+                        <span className="font-medium min-w-[2rem] text-center">
+                          {carrinhoItem.quantidade}
+                        </span>
+                        <button
+                          onClick={() => adicionarItem(carrinhoItem.item)}
+                          className="p-1 bg-green-100 text-green-600 rounded-full hover:bg-green-200"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </button>
                       </div>
                       <div className="text-right ml-4 w-20">
-                        <p className="font-bold text-primary-600">R$ {(Number(carrinhoItem.item.preco) * carrinhoItem.quantidade).toFixed(2)}</p>
+                        <p className="font-bold text-primary-600">
+                          R${' '}
+                          {(Number(carrinhoItem.item.preco) * carrinhoItem.quantidade).toFixed(2)}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -278,12 +332,24 @@ function CardapioMesa() {
               <div className="border-t p-6">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-medium text-gray-900">Total:</span>
-                  <span className="text-2xl font-bold text-primary-600">R$ {getTotalCarrinho().toFixed(2)}</span>
+                  <span className="text-2xl font-bold text-primary-600">
+                    R$ {getTotalCarrinho().toFixed(2)}
+                  </span>
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => setShowCarrinho(false)} className="flex-1 btn-secondary">Continuar Pedindo</button>
-                  <button onClick={handleConfirmarPedido} disabled={isSubmitting} className="flex-1 btn-primary">
-                    {isSubmitting ? <Loader2 className="animate-spin mx-auto" /> : 'Confirmar Pedido'}
+                  <button onClick={() => setShowCarrinho(false)} className="flex-1 btn-secondary">
+                    Continuar Pedindo
+                  </button>
+                  <button
+                    onClick={handleConfirmarPedido}
+                    disabled={isSubmitting}
+                    className="flex-1 btn-primary"
+                  >
+                    {isSubmitting ? (
+                      <Loader2 className="animate-spin mx-auto" />
+                    ) : (
+                      'Confirmar Pedido'
+                    )}
                   </button>
                 </div>
               </div>

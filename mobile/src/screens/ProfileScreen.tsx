@@ -104,21 +104,17 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   };
 
   const handleLogout = () => {
-    Alert.alert(
-      'Confirmar Logout',
-      'Tem certeza que deseja sair da sua conta?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { 
-          text: 'Sair', 
-          style: 'destructive',
-          onPress: () => {
-            // In production, this would call auth.signOut()
-            Alert.alert('Logout', 'Você foi desconectado com sucesso.');
-          }
+    Alert.alert('Confirmar Logout', 'Tem certeza que deseja sair da sua conta?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Sair',
+        style: 'destructive',
+        onPress: () => {
+          // In production, this would call auth.signOut()
+          Alert.alert('Logout', 'Você foi desconectado com sucesso.');
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleDeleteAccount = () => {
@@ -127,12 +123,12 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
       'Esta ação é irreversível. Tem certeza que deseja excluir sua conta?',
       [
         { text: 'Cancelar', style: 'cancel' },
-        { 
-          text: 'Excluir', 
+        {
+          text: 'Excluir',
           style: 'destructive',
           onPress: () => {
             Alert.alert('Conta Excluída', 'Sua conta foi excluída com sucesso.');
-          }
+          },
         },
       ]
     );
@@ -152,7 +148,11 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
       <View style={styles.header}>
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>
-            {user.nome.split(' ').map(n => n[0]).join('').toUpperCase()}
+            {user.nome
+              .split(' ')
+              .map(n => n[0])
+              .join('')
+              .toUpperCase()}
           </Text>
         </View>
         <Text style={styles.userName}>{user.nome}</Text>
@@ -163,13 +163,8 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Informações Pessoais</Text>
-          <TouchableOpacity
-            onPress={() => setIsEditing(!isEditing)}
-            style={styles.editButton}
-          >
-            <Text style={styles.editButtonText}>
-              {isEditing ? 'Cancelar' : 'Editar'}
-            </Text>
+          <TouchableOpacity onPress={() => setIsEditing(!isEditing)} style={styles.editButton}>
+            <Text style={styles.editButtonText}>{isEditing ? 'Cancelar' : 'Editar'}</Text>
           </TouchableOpacity>
         </View>
 
@@ -179,7 +174,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={editedUser.nome || ''}
-              onChangeText={(text) => setEditedUser(prev => ({ ...prev, nome: text }))}
+              onChangeText={text => setEditedUser(prev => ({ ...prev, nome: text }))}
               placeholder="Digite seu nome completo"
             />
           ) : (
@@ -193,7 +188,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={editedUser.email || ''}
-              onChangeText={(text) => setEditedUser(prev => ({ ...prev, email: text }))}
+              onChangeText={text => setEditedUser(prev => ({ ...prev, email: text }))}
               placeholder="Digite seu email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -209,7 +204,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={editedUser.telefone || ''}
-              onChangeText={(text) => setEditedUser(prev => ({ ...prev, telefone: text }))}
+              onChangeText={text => setEditedUser(prev => ({ ...prev, telefone: text }))}
               placeholder="(11) 99999-9999"
               keyboardType="phone-pad"
             />
@@ -224,7 +219,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={editedUser.cpf || ''}
-              onChangeText={(text) => setEditedUser(prev => ({ ...prev, cpf: text }))}
+              onChangeText={text => setEditedUser(prev => ({ ...prev, cpf: text }))}
               placeholder="123.456.789-00"
               keyboardType="numeric"
             />
@@ -321,13 +316,10 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
             variant="secondary"
             size="large"
           />
-          
+
           <View style={styles.buttonSpacer} />
-          
-          <TouchableOpacity 
-            style={styles.deleteButton}
-            onPress={handleDeleteAccount}
-          >
+
+          <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAccount}>
             <Text style={styles.deleteButtonText}>🗑️ Excluir Conta</Text>
           </TouchableOpacity>
         </View>

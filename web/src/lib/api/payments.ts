@@ -23,24 +23,22 @@ export const createPayment = async (
       status: 'pendente', // O status inicial é sempre pendente
     };
 
-    const insertResult = await (supabase as any)
-      .from('payments')
-      .insert(paymentData);
+    const insertResult = await (supabase as any).from('payments').insert(paymentData);
 
     if (insertResult.error) throw insertResult.error;
 
     // Get the created payment by reading back from storage
-    const { data: allPayments, error } = await new Promise((resolve) => {
+    const { data: allPayments, error } = (await new Promise(resolve => {
       const result = supabase.from('payments').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
       } else {
         resolve({ data: [], error: null });
       }
-    }) as { data: any[] | null; error: any };
+    })) as { data: any[] | null; error: any };
 
     if (error) throw error;
-    
+
     // Find the most recently created payment
     const data = allPayments?.[allPayments.length - 1];
     if (!data) throw new Error('Failed to create payment');
@@ -57,12 +55,14 @@ export const createPayment = async (
  * Processa a confirmação de um pagamento. (Simula Endpoint 6.7 - Webhook)
  * Esta função chama um RPC no Supabase para garantir a atomicidade.
  */
-export const confirmPayment = async (paymentId: number): Promise<ApiResponse<{ success: boolean }>> => {
+export const confirmPayment = async (
+  paymentId: number
+): Promise<ApiResponse<{ success: boolean }>> => {
   try {
     // Chama a função do banco de dados que executa a transação
-    const result = await supabase.rpc('process_payment_confirmation', {
+    const result = (await supabase.rpc('process_payment_confirmation', {
       p_payment_id: paymentId,
-    }) as { error: any };
+    })) as { error: any };
 
     if (result.error) throw result.error;
 
@@ -81,21 +81,23 @@ export const confirmPayment = async (paymentId: number): Promise<ApiResponse<{ s
 export const getPaymentByOrder = async (orderId: number): Promise<ApiResponse<Payment | null>> => {
   try {
     // Get all payments and filter in memory
-    const { data: allPayments, error } = await new Promise((resolve) => {
+    const { data: allPayments, error } = (await new Promise(resolve => {
       const result = supabase.from('payments').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
       } else {
         resolve({ data: [], error: null });
       }
-    }) as { data: any[] | null; error: any };
-    
+    })) as { data: any[] | null; error: any };
+
     if (error) throw error;
 
     // Filter by order_id and get the most recent
     const orderPayments = (allPayments || [])
       .filter(payment => payment.order_id === orderId)
-      .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
+      .sort(
+        (a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()
+      );
 
     const data = orderPayments.length > 0 ? orderPayments[0] : null;
 
@@ -114,9 +116,9 @@ export const createPaymentIntent = async (
   orderId: number
 ): Promise<ApiResponse<{ clientSecret: string }>> => {
   try {
-    const { data, error } = await supabase.functions.invoke('payment-intent', {
+    const { data, error } = (await supabase.functions.invoke('payment-intent', {
       body: { amount, orderId },
-    }) as { data: any; error: any };
+    })) as { data: any; error: any };
 
     if (error) throw error;
     if (data?.error) throw new Error(data.error);

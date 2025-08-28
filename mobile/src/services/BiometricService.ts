@@ -27,7 +27,7 @@ export class BiometricService {
     try {
       const hasHardware = await LocalAuthentication.hasHardwareAsync();
       const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-      
+
       return hasHardware && isEnrolled;
     } catch (error) {
       console.error('Error checking biometric availability:', error);
@@ -100,7 +100,8 @@ export class BiometricService {
 
       // Perform authentication
       const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: options?.promptMessage || `Use sua ${biometricType.toLowerCase()} para entrar`,
+        promptMessage:
+          options?.promptMessage || `Use sua ${biometricType.toLowerCase()} para entrar`,
         cancelLabel: options?.cancelLabel || 'Cancelar',
         fallbackLabel: options?.fallbackLabel || 'Usar senha',
         disableDeviceFallback: options?.disableDeviceFallback || false,
@@ -113,7 +114,7 @@ export class BiometricService {
         };
       } else {
         let errorMessage = 'Falha na autenticação';
-        
+
         if (result.error === 'UserCancel') {
           errorMessage = 'Autenticação cancelada pelo usuário';
         } else if (result.error === 'UserFallback') {
@@ -170,10 +171,8 @@ export class BiometricService {
    */
   async authenticateForPayment(amount: number): Promise<boolean> {
     const formattedAmount = amount.toFixed(2).replace('.', ',');
-    
-    return await this.authenticateForAction(
-      `processar pagamento de R$ ${formattedAmount}`
-    );
+
+    return await this.authenticateForAction(`processar pagamento de R$ ${formattedAmount}`);
   }
 
   /**
@@ -248,10 +247,13 @@ export class BiometricService {
       'Para usar a autenticação biométrica, acesse as configurações do seu dispositivo e configure sua impressão digital ou reconhecimento facial.',
       [
         { text: 'Depois', style: 'cancel' },
-        { text: 'Abrir Configurações', onPress: () => {
-          // In a real app, you might open device settings
-          // Linking.openSettings();
-        }},
+        {
+          text: 'Abrir Configurações',
+          onPress: () => {
+            // In a real app, you might open device settings
+            // Linking.openSettings();
+          },
+        },
       ]
     );
   }
@@ -261,13 +263,13 @@ export class BiometricService {
    */
   async promptToEnable(): Promise<boolean> {
     const isAvailable = await this.isAvailable();
-    
+
     if (isAvailable) {
       return true;
     }
 
     const hasHardware = await LocalAuthentication.hasHardwareAsync();
-    
+
     if (!hasHardware) {
       Alert.alert(
         'Biometria Não Suportada',
@@ -277,20 +279,20 @@ export class BiometricService {
     }
 
     const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-    
+
     if (!isEnrolled) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         Alert.alert(
           'Configurar Biometria',
           'Para usar esta funcionalidade, você precisa configurar a autenticação biométrica no seu dispositivo.',
           [
             { text: 'Cancelar', style: 'cancel', onPress: () => resolve(false) },
-            { 
-              text: 'Configurar', 
+            {
+              text: 'Configurar',
               onPress: () => {
                 this.showSetupInstructions();
                 resolve(false);
-              }
+              },
             },
           ]
         );

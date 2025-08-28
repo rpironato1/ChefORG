@@ -14,22 +14,22 @@ export type CategoryWithItems = MenuCategory & {
  */
 export const getAllCategories = async (): Promise<ApiResponse<MenuCategory[]>> => {
   try {
-    const { data, error } = await new Promise((resolve) => {
+    const { data, error } = (await new Promise(resolve => {
       const result = supabase.from('menu_categories').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
       } else {
         resolve({ data: [], error: null });
       }
-    }) as { data: any[] | null; error: any };
+    })) as { data: any[] | null; error: any };
 
     if (error) throw error;
-    
+
     // Filter and sort in memory since localStorage doesn't support chaining
     const filteredData = (data || [])
       .filter((cat: any) => cat.ativo === true)
       .sort((a: any, b: any) => a.ordem - b.ordem);
-    
+
     return createSuccessResponse(filteredData);
   } catch (error) {
     return handleApiError(error);
@@ -40,27 +40,27 @@ export const getAllCategories = async (): Promise<ApiResponse<MenuCategory[]>> =
  * Busca todos os itens de menu ativos.
  */
 export const getAllMenuItems = async (): Promise<ApiResponse<MenuItem[]>> => {
-    try {
-        const { data, error } = await new Promise((resolve) => {
-          const result = supabase.from('menu_items').select('*');
-          if (result && typeof result.then === 'function') {
-            result.then(resolve);
-          } else {
-            resolve({ data: [], error: null });
-          }
-        }) as { data: any[] | null; error: any };
+  try {
+    const { data, error } = (await new Promise(resolve => {
+      const result = supabase.from('menu_items').select('*');
+      if (result && typeof result.then === 'function') {
+        result.then(resolve);
+      } else {
+        resolve({ data: [], error: null });
+      }
+    })) as { data: any[] | null; error: any };
 
-        if (error) throw error;
-        
-        // Filter and sort in memory since localStorage doesn't support chaining
-        const filteredData = (data || [])
-            .filter((item: any) => item.disponivel === true)
-            .sort((a: any, b: any) => a.nome.localeCompare(b.nome));
-        
-        return createSuccessResponse(filteredData);
-    } catch (error) {
-        return handleApiError(error);
-    }
+    if (error) throw error;
+
+    // Filter and sort in memory since localStorage doesn't support chaining
+    const filteredData = (data || [])
+      .filter((item: any) => item.disponivel === true)
+      .sort((a: any, b: any) => a.nome.localeCompare(b.nome));
+
+    return createSuccessResponse(filteredData);
+  } catch (error) {
+    return handleApiError(error);
+  }
 };
 
 /**
@@ -70,7 +70,7 @@ export const getAllMenuItems = async (): Promise<ApiResponse<MenuItem[]>> => {
 export const getMenuWithItems = async (): Promise<ApiResponse<CategoryWithItems[]>> => {
   try {
     // For localStorage implementation, we need to handle joins manually
-    const categoriesPromise = new Promise((resolve) => {
+    const categoriesPromise = new Promise(resolve => {
       const result = supabase.from('menu_categories').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
@@ -79,7 +79,7 @@ export const getMenuWithItems = async (): Promise<ApiResponse<CategoryWithItems[
       }
     }) as Promise<{ data: any[] | null; error: any }>;
 
-    const itemsPromise = new Promise((resolve) => {
+    const itemsPromise = new Promise(resolve => {
       const result = supabase.from('menu_items').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
@@ -98,13 +98,12 @@ export const getMenuWithItems = async (): Promise<ApiResponse<CategoryWithItems[
       .filter((cat: any) => cat.ativo === true)
       .sort((a: any, b: any) => a.ordem - b.ordem);
 
-    const availableItems = (itemsResult.data || [])
-      .filter((item: any) => item.disponivel === true);
+    const availableItems = (itemsResult.data || []).filter((item: any) => item.disponivel === true);
 
     // Group items by category
     const categoriesWithItems = activeCategories.map((category: any) => ({
       ...category,
-      menu_items: availableItems.filter((item: any) => item.categoria === category.nome)
+      menu_items: availableItems.filter((item: any) => item.categoria === category.nome),
     }));
 
     return createSuccessResponse(categoriesWithItems as CategoryWithItems[]);

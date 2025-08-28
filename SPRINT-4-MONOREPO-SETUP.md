@@ -8,7 +8,7 @@ ChefORG/
 │   ├── src/               # Web-specific source code
 │   ├── package.json       # Web dependencies
 │   └── vite.config.ts     # Web build configuration
-├── mobile/                # React Native Mobile Application  
+├── mobile/                # React Native Mobile Application
 │   ├── src/               # Mobile-specific source code
 │   ├── App.tsx            # Mobile app entry point
 │   └── package.json       # Mobile dependencies
@@ -25,18 +25,21 @@ ChefORG/
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm 8+
 - Expo CLI (for mobile development)
 
 ### Development Setup
 
 1. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Start Web Development Server**
+
    ```bash
    npm run dev:web
    # or
@@ -53,13 +56,15 @@ ChefORG/
 ## 📱 Platform-Specific Development
 
 ### Web Application
+
 - **Framework:** React 18 + Vite + TypeScript
 - **Styling:** Tailwind CSS
 - **State:** Zustand stores from shared module
 - **Build:** `npm run build:web`
 - **URL:** http://localhost:3000
 
-### Mobile Application  
+### Mobile Application
+
 - **Framework:** React Native + Expo + TypeScript
 - **Navigation:** React Navigation 7
 - **Styling:** StyleSheet with shared constants
@@ -69,11 +74,12 @@ ChefORG/
 ## 🔧 Shared Components
 
 ### UI Components
+
 ```typescript
 import { Button, Input, Card } from '@cheforg/shared/ui';
 
 // Platform-agnostic usage
-<Button 
+<Button
   title="Reservar Mesa"
   onPress={handleReservation}
   variant="primary"
@@ -82,6 +88,7 @@ import { Button, Input, Card } from '@cheforg/shared/ui';
 ```
 
 ### Types & Constants
+
 ```typescript
 import { MenuItem, COLORS, ROUTES } from '@cheforg/shared';
 
@@ -89,12 +96,13 @@ import { MenuItem, COLORS, ROUTES } from '@cheforg/shared';
 const item: MenuItem = {
   id: '1',
   nome: 'Hambúrguer',
-  preco: 25.00,
+  preco: 25.0,
   // ...
 };
 ```
 
 ### API Layer
+
 ```typescript
 import { API_ENDPOINTS, ApiClient } from '@cheforg/shared/api';
 
@@ -107,14 +115,14 @@ const reservations = await ApiClient.get(API_ENDPOINTS.RESERVATIONS.LIST);
 ### ✅ Completed Tasks
 
 1. **Shared Logic Extraction**
-   - [x] Moved types to `/shared/types` 
+   - [x] Moved types to `/shared/types`
    - [x] Created cross-platform API layer
    - [x] Extracted utilities to `/shared/utils`
    - [x] Centralized constants in `/shared/constants`
 
 2. **UI Abstractions**
    - [x] Created generic `Button` component
-   - [x] Created generic `Input` component  
+   - [x] Created generic `Input` component
    - [x] Created generic `Card` component
    - [x] Platform adapters for web/native styling
 
@@ -148,7 +156,7 @@ const reservations = await ApiClient.get(API_ENDPOINTS.RESERVATIONS.LIST);
 
 1. **Complete Screen Migration**
    - [ ] Menu screen for React Native
-   - [ ] Reservation screen for React Native  
+   - [ ] Reservation screen for React Native
    - [ ] Profile/Settings screens
 
 2. **Native Features**
@@ -159,18 +167,20 @@ const reservations = await ApiClient.get(API_ENDPOINTS.RESERVATIONS.LIST);
 
 3. **Build Pipeline**
    - [ ] Android build configuration
-   - [ ] iOS build configuration  
+   - [ ] iOS build configuration
    - [ ] App store deployment setup
 
 ## 🧪 Testing
 
 ### Web Testing
+
 ```bash
 cd web
 npm run test
 ```
 
 ### Mobile Testing
+
 ```bash
 cd mobile
 npm run test

@@ -5,7 +5,7 @@ import { playAudit } from 'playwright-lighthouse';
 /**
  * Comprehensive Lighthouse Test Suite for ChefORG
  * Tests all modules: Public, Client, Admin, Staff, Mobile, and Shared components
- * 
+ *
  * Performance, Accessibility, SEO, Best Practices, and PWA testing
  */
 
@@ -108,7 +108,8 @@ const LIGHTHOUSE_CONFIG = {
       deviceScaleFactor: 1,
       disabled: false,
     },
-    emulatedUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.109 Safari/537.36',
+    emulatedUserAgent:
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.109 Safari/537.36',
   },
   categories: {
     performance: { weight: 1 },
@@ -167,7 +168,7 @@ class LighthouseTestRunner {
       args: ['--remote-debugging-port=9222'],
     });
     this.page = await this.browser.newPage();
-    
+
     // Set up basic auth mock data for testing
     await this.setupTestEnvironment();
   }
@@ -177,27 +178,34 @@ class LighthouseTestRunner {
 
     // Mock authentication for admin routes
     await this.page.addInitScript(() => {
-      localStorage.setItem('cheforg_auth', JSON.stringify({
-        user: {
-          id: 'test-admin',
-          email: 'admin@cheforg.com',
-          role: 'admin',
-          nome: 'Test Admin'
-        },
-        token: 'test-token'
-      }));
+      localStorage.setItem(
+        'cheforg_auth',
+        JSON.stringify({
+          user: {
+            id: 'test-admin',
+            email: 'admin@cheforg.com',
+            role: 'admin',
+            nome: 'Test Admin',
+          },
+          token: 'test-token',
+        })
+      );
     });
   }
 
-  async runLighthouseAudit(url: string, routeName: string, isMobile = false): Promise<LighthouseResult> {
+  async runLighthouseAudit(
+    url: string,
+    routeName: string,
+    isMobile = false
+  ): Promise<LighthouseResult> {
     if (!this.page) throw new Error('Page not initialized');
 
     console.log(`🔍 Testing ${routeName}: ${url}`);
-    
+
     try {
       // Navigate to the page
       await this.page.goto(url, { waitUntil: 'networkidle' });
-      
+
       // Wait for potential dynamic content
       await this.page.waitForTimeout(2000);
 
@@ -224,7 +232,7 @@ class LighthouseTestRunner {
 
   private processLighthouseResults(url: string, routeName: string, audit: any): LighthouseResult {
     const lhr = audit.lhr;
-    
+
     const result: LighthouseResult = {
       url,
       route: routeName,
@@ -247,7 +255,7 @@ class LighthouseTestRunner {
 
     // Extract issues and recommendations
     this.extractIssues(lhr, result);
-    
+
     return result;
   }
 
@@ -339,12 +347,14 @@ class LighthouseTestRunner {
         bestPractices: 0,
         seo: 0,
       },
-      issues: [{
-        category: 'error',
-        description: `Test failed: ${error.message}`,
-        severity: 'error',
-        recommendation: 'Fix the underlying issue causing the test failure',
-      }],
+      issues: [
+        {
+          category: 'error',
+          description: `Test failed: ${error.message}`,
+          severity: 'error',
+          recommendation: 'Fix the underlying issue causing the test failure',
+        },
+      ],
       metrics: {
         firstContentfulPaint: 0,
         largestContentfulPaint: 0,
@@ -357,7 +367,7 @@ class LighthouseTestRunner {
 
   async runComprehensiveTests(): Promise<TestSuiteResults> {
     console.log('🚀 Starting Comprehensive Lighthouse Test Suite for ChefORG');
-    console.log('=' .repeat(80));
+    console.log('='.repeat(80));
 
     // Test all route categories
     const allRoutes = [
@@ -371,15 +381,23 @@ class LighthouseTestRunner {
 
     for (const route of allRoutes) {
       const fullUrl = `http://localhost:8110${route.path}`;
-      
+
       try {
         // Test desktop version
-        const desktopResult = await this.runLighthouseAudit(fullUrl, `${route.name} (Desktop)`, false);
+        const desktopResult = await this.runLighthouseAudit(
+          fullUrl,
+          `${route.name} (Desktop)`,
+          false
+        );
         this.results.results.push(desktopResult);
 
         // Test mobile version for critical routes
         if (route.critical) {
-          const mobileResult = await this.runLighthouseAudit(fullUrl, `${route.name} (Mobile)`, true);
+          const mobileResult = await this.runLighthouseAudit(
+            fullUrl,
+            `${route.name} (Mobile)`,
+            true
+          );
           this.results.results.push(mobileResult);
         }
 
@@ -403,11 +421,21 @@ class LighthouseTestRunner {
     if (totalResults === 0) return;
 
     this.results.overallScores = {
-      performance: Math.round(this.results.results.reduce((sum, r) => sum + r.scores.performance, 0) / totalResults),
-      accessibility: Math.round(this.results.results.reduce((sum, r) => sum + r.scores.accessibility, 0) / totalResults),
-      bestPractices: Math.round(this.results.results.reduce((sum, r) => sum + r.scores.bestPractices, 0) / totalResults),
-      seo: Math.round(this.results.results.reduce((sum, r) => sum + r.scores.seo, 0) / totalResults),
-      pwa: Math.round(this.results.results.reduce((sum, r) => sum + (r.scores.pwa || 0), 0) / totalResults),
+      performance: Math.round(
+        this.results.results.reduce((sum, r) => sum + r.scores.performance, 0) / totalResults
+      ),
+      accessibility: Math.round(
+        this.results.results.reduce((sum, r) => sum + r.scores.accessibility, 0) / totalResults
+      ),
+      bestPractices: Math.round(
+        this.results.results.reduce((sum, r) => sum + r.scores.bestPractices, 0) / totalResults
+      ),
+      seo: Math.round(
+        this.results.results.reduce((sum, r) => sum + r.scores.seo, 0) / totalResults
+      ),
+      pwa: Math.round(
+        this.results.results.reduce((sum, r) => sum + (r.scores.pwa || 0), 0) / totalResults
+      ),
     };
   }
 
@@ -443,14 +471,19 @@ class LighthouseTestRunner {
 
 ## 🚨 Critical Issues Summary
 
-${this.results.criticalIssues.length === 0 ? 'No critical issues found!' : 
-  this.results.criticalIssues.map(issue => 
-    `### ${issue.route}\n${issue.issues.map(i => `- ❌ ${i}`).join('\n')}`
-  ).join('\n\n')}
+${
+  this.results.criticalIssues.length === 0
+    ? 'No critical issues found!'
+    : this.results.criticalIssues
+        .map(issue => `### ${issue.route}\n${issue.issues.map(i => `- ❌ ${i}`).join('\n')}`)
+        .join('\n\n')
+}
 
 ## 📋 Detailed Results
 
-${this.results.results.map(result => `
+${this.results.results
+  .map(
+    result => `
 ### ${result.route}
 **URL:** ${result.url}
 **Scores:** Performance: ${result.scores.performance}, Accessibility: ${result.scores.accessibility}, Best Practices: ${result.scores.bestPractices}, SEO: ${result.scores.seo}
@@ -461,9 +494,19 @@ ${this.results.results.map(result => `
 - Cumulative Layout Shift: ${result.metrics.cumulativeLayoutShift.toFixed(3)}
 
 **Issues:**
-${result.issues.length === 0 ? 'No issues found!' : 
-  result.issues.map(issue => `- ${issue.severity === 'error' ? '❌' : issue.severity === 'warning' ? '⚠️' : 'ℹ️'} **${issue.category}:** ${issue.description} - ${issue.recommendation}`).join('\n')}
-`).join('\n')}
+${
+  result.issues.length === 0
+    ? 'No issues found!'
+    : result.issues
+        .map(
+          issue =>
+            `- ${issue.severity === 'error' ? '❌' : issue.severity === 'warning' ? '⚠️' : 'ℹ️'} **${issue.category}:** ${issue.description} - ${issue.recommendation}`
+        )
+        .join('\n')
+}
+`
+  )
+  .join('\n')}
 
 ## 🎯 Recommendations
 
@@ -489,13 +532,13 @@ ${result.issues.length === 0 ? 'No issues found!' :
     // Save report
     const fs = await import('fs');
     const path = await import('path');
-    
+
     const reportDir = path.join(process.cwd(), 'test-results', 'lighthouse');
     fs.mkdirSync(reportDir, { recursive: true });
-    
+
     const reportPath = path.join(reportDir, 'comprehensive-lighthouse-report.md');
     fs.writeFileSync(reportPath, report);
-    
+
     const jsonPath = path.join(reportDir, 'lighthouse-results.json');
     fs.writeFileSync(jsonPath, JSON.stringify(this.results, null, 2));
 
@@ -526,12 +569,12 @@ test.describe('ChefORG Comprehensive Lighthouse Testing', () => {
 
   test('Execute Comprehensive Lighthouse Tests for All Modules', async () => {
     console.log('🎯 Starting comprehensive Lighthouse testing for ChefORG...');
-    
+
     const results = await testRunner.runComprehensiveTests();
-    
+
     // Generate and save report
     const reportPath = await testRunner.generateReport();
-    
+
     console.log('\n📊 Test Summary:');
     console.log(`Total Routes: ${results.totalRoutes}`);
     console.log(`Passed: ${results.passedRoutes}`);
@@ -539,12 +582,12 @@ test.describe('ChefORG Comprehensive Lighthouse Testing', () => {
     console.log(`Overall Performance: ${results.overallScores.performance}/100`);
     console.log(`Overall Accessibility: ${results.overallScores.accessibility}/100`);
     console.log(`Critical Issues: ${results.criticalIssues.length}`);
-    
+
     // Assertions for test success
     expect(results.passedRoutes).toBeGreaterThan(0);
     expect(results.overallScores.accessibility).toBeGreaterThanOrEqual(50); // Minimum accessibility
     expect(results.criticalIssues.length).toBeLessThan(results.totalRoutes); // Not all routes can have critical issues
-    
+
     console.log(`\n✅ Comprehensive Lighthouse testing completed!`);
     console.log(`📄 Report: ${reportPath}`);
   });

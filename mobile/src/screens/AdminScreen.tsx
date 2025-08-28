@@ -1,13 +1,6 @@
 // Admin Screen for React Native app
 import React, { useState, useEffect } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { NativeButton } from '../components/NativeButton';
 
 const COLORS = {
@@ -63,9 +56,9 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
   // Mock data - In production, this would come from the admin API
   useEffect(() => {
     const mockStats: DashboardStats = {
-      totalSales: 2847.50,
+      totalSales: 2847.5,
       ordersToday: 47,
-      avgOrderValue: 60.50,
+      avgOrderValue: 60.5,
       tablesOccupied: 8,
       totalTables: 15,
       activeReservations: 12,
@@ -75,7 +68,12 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
     setLoading(false);
   }, []);
 
-  const StatCard = ({ title, value, subtitle, color = COLORS.primary[600] }: {
+  const StatCard = ({
+    title,
+    value,
+    subtitle,
+    color = COLORS.primary[600],
+  }: {
     title: string;
     value: string;
     subtitle?: string;
@@ -88,16 +86,18 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
     </View>
   );
 
-  const ActionButton = ({ title, icon, onPress, color = COLORS.primary[600] }: {
+  const ActionButton = ({
+    title,
+    icon,
+    onPress,
+    color = COLORS.primary[600],
+  }: {
     title: string;
     icon: string;
     onPress: () => void;
     color?: string;
   }) => (
-    <TouchableOpacity 
-      style={[styles.actionButton, { borderColor: color }]}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={[styles.actionButton, { borderColor: color }]} onPress={onPress}>
       <Text style={styles.actionIcon}>{icon}</Text>
       <Text style={[styles.actionTitle, { color }]}>{title}</Text>
     </TouchableOpacity>
@@ -117,11 +117,11 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Dashboard Administrativo</Text>
         <Text style={styles.headerSubtitle}>
-          {new Date().toLocaleDateString('pt-BR', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+          {new Date().toLocaleDateString('pt-BR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
           })}
         </Text>
       </View>
@@ -129,7 +129,7 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
       {/* Stats Overview */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Resumo do Dia</Text>
-        
+
         <View style={styles.statsGrid}>
           <StatCard
             title="Vendas Hoje"
@@ -137,21 +137,21 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
             subtitle="↗️ +12% vs ontem"
             color={COLORS.green[600]}
           />
-          
+
           <StatCard
             title="Pedidos"
             value={stats.ordersToday.toString()}
             subtitle="🎯 Meta: 50"
             color={COLORS.blue[600]}
           />
-          
+
           <StatCard
             title="Ticket Médio"
             value={`R$ ${stats.avgOrderValue.toFixed(2).replace('.', ',')}`}
             subtitle="💰 Por pedido"
             color={COLORS.yellow[600]}
           />
-          
+
           <StatCard
             title="Ocupação"
             value={`${stats.tablesOccupied}/${stats.totalTables}`}
@@ -164,47 +164,51 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
       {/* Quick Actions */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Ações Rápidas</Text>
-        
+
         <View style={styles.actionsGrid}>
           <ActionButton
             title="Gerenciar Mesas"
             icon="🪑"
-            onPress={() => {/* Navigate to table management */}}
+            onPress={() => {
+              /* Navigate to table management */
+            }}
             color={COLORS.blue[600]}
           />
-          
+
           <ActionButton
             title="Ver Pedidos"
             icon="📋"
             onPress={() => navigation.navigate('Orders')}
             color={COLORS.green[600]}
           />
-          
+
           <ActionButton
             title="Reservas"
             icon="📅"
             onPress={() => navigation.navigate('Reservations')}
             color={COLORS.yellow[600]}
           />
-          
+
           <ActionButton
             title="Cardápio"
             icon="🍽️"
             onPress={() => navigation.navigate('Menu')}
             color={COLORS.red[600]}
           />
-          
+
           <ActionButton
             title="Equipe"
             icon="👥"
             onPress={() => navigation.navigate('Staff')}
             color={COLORS.primary[600]}
           />
-          
+
           <ActionButton
             title="Relatórios"
             icon="📊"
-            onPress={() => {/* Navigate to reports */}}
+            onPress={() => {
+              /* Navigate to reports */
+            }}
             color={COLORS.gray[700]}
           />
         </View>
@@ -213,7 +217,7 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
       {/* Recent Activity */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Atividade Recente</Text>
-        
+
         <View style={styles.activityList}>
           <View style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: COLORS.green[600] }]}>
@@ -225,7 +229,7 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
               <Text style={styles.activityTime}>há 2 minutos</Text>
             </View>
           </View>
-          
+
           <View style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: COLORS.blue[600] }]}>
               <Text style={styles.activityIconText}>🛎️</Text>
@@ -236,7 +240,7 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
               <Text style={styles.activityTime}>há 5 minutos</Text>
             </View>
           </View>
-          
+
           <View style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: COLORS.yellow[600] }]}>
               <Text style={styles.activityIconText}>📅</Text>
@@ -247,7 +251,7 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
               <Text style={styles.activityTime}>há 10 minutos</Text>
             </View>
           </View>
-          
+
           <View style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: COLORS.red[600] }]}>
               <Text style={styles.activityIconText}>⚠️</Text>
@@ -264,43 +268,43 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
       {/* Performance Indicators */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Indicadores</Text>
-        
+
         <View style={styles.indicatorsList}>
           <View style={styles.indicator}>
             <View style={styles.indicatorHeader}>
               <Text style={styles.indicatorTitle}>Tempo Médio de Atendimento</Text>
-              <Text style={[styles.indicatorValue, { color: COLORS.green[600] }]}>
-                18 min
-              </Text>
+              <Text style={[styles.indicatorValue, { color: COLORS.green[600] }]}>18 min</Text>
             </View>
             <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: '75%', backgroundColor: COLORS.green[600] }]} />
+              <View
+                style={[styles.progressFill, { width: '75%', backgroundColor: COLORS.green[600] }]}
+              />
             </View>
             <Text style={styles.indicatorDescription}>Meta: 20 min</Text>
           </View>
-          
+
           <View style={styles.indicator}>
             <View style={styles.indicatorHeader}>
               <Text style={styles.indicatorTitle}>Satisfação do Cliente</Text>
-              <Text style={[styles.indicatorValue, { color: COLORS.blue[600] }]}>
-                4.7/5
-              </Text>
+              <Text style={[styles.indicatorValue, { color: COLORS.blue[600] }]}>4.7/5</Text>
             </View>
             <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: '94%', backgroundColor: COLORS.blue[600] }]} />
+              <View
+                style={[styles.progressFill, { width: '94%', backgroundColor: COLORS.blue[600] }]}
+              />
             </View>
             <Text style={styles.indicatorDescription}>📊 Base: 23 avaliações</Text>
           </View>
-          
+
           <View style={styles.indicator}>
             <View style={styles.indicatorHeader}>
               <Text style={styles.indicatorTitle}>Ocupação Média</Text>
-              <Text style={[styles.indicatorValue, { color: COLORS.yellow[600] }]}>
-                67%
-              </Text>
+              <Text style={[styles.indicatorValue, { color: COLORS.yellow[600] }]}>67%</Text>
             </View>
             <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: '67%', backgroundColor: COLORS.yellow[600] }]} />
+              <View
+                style={[styles.progressFill, { width: '67%', backgroundColor: COLORS.yellow[600] }]}
+              />
             </View>
             <Text style={styles.indicatorDescription}>Meta: 80%</Text>
           </View>
@@ -310,20 +314,24 @@ export const AdminScreen: React.FC<AdminScreenProps> = ({ navigation }) => {
       {/* System Actions */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Sistema</Text>
-        
+
         <View style={styles.systemActions}>
           <NativeButton
             title="🔄 Sincronizar Dados"
-            onPress={() => {/* Sync data */}}
+            onPress={() => {
+              /* Sync data */
+            }}
             variant="secondary"
             size="large"
           />
-          
+
           <View style={styles.buttonSpacer} />
-          
+
           <NativeButton
             title="⚙️ Configurações"
-            onPress={() => {/* Navigate to settings */}}
+            onPress={() => {
+              /* Navigate to settings */
+            }}
             variant="secondary"
             size="large"
           />

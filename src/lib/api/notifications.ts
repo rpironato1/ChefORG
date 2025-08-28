@@ -19,9 +19,9 @@ export const sendNotification = async (
     // Adiciona o código do país (Brasil) se não estiver presente
     const formattedTo = to.startsWith('+') ? to : `+55${to}`;
 
-    const { data, error } = await supabase.functions.invoke('send-notification', {
+    const { data, error } = (await supabase.functions.invoke('send-notification', {
       body: { to: formattedTo, body },
-    }) as { data: any; error: any };
+    })) as { data: any; error: any };
 
     if (error) throw error;
     if (data?.error) throw new Error(data.error);

@@ -143,8 +143,13 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
 
   const handleCreateReservation = () => {
     // Validate form
-    if (!newReservation.cliente_nome || !newReservation.cliente_telefone || 
-        !newReservation.data_reserva || !newReservation.horario || !newReservation.pessoas) {
+    if (
+      !newReservation.cliente_nome ||
+      !newReservation.cliente_telefone ||
+      !newReservation.data_reserva ||
+      !newReservation.horario ||
+      !newReservation.pessoas
+    ) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
       return;
     }
@@ -198,7 +203,9 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
 
       <View style={styles.reservationDetails}>
         <Text style={styles.detailText}>📞 {reservation.cliente_telefone}</Text>
-        <Text style={styles.detailText}>📅 {formatDate(reservation.data_reserva)} às {reservation.horario}</Text>
+        <Text style={styles.detailText}>
+          📅 {formatDate(reservation.data_reserva)} às {reservation.horario}
+        </Text>
         <Text style={styles.detailText}>👥 {reservation.pessoas} pessoas</Text>
         {reservation.observacoes && (
           <Text style={styles.detailText}>📝 {reservation.observacoes}</Text>
@@ -260,10 +267,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
       {/* Header with Add Button */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Minhas Reservas</Text>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => setShowForm(true)}
-        >
+        <TouchableOpacity style={styles.addButton} onPress={() => setShowForm(true)}>
           <Text style={styles.addButtonText}>+ Nova Reserva</Text>
         </TouchableOpacity>
       </View>
@@ -281,11 +285,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
       </ScrollView>
 
       {/* New Reservation Modal */}
-      <Modal
-        visible={showForm}
-        animationType="slide"
-        presentationStyle="pageSheet"
-      >
+      <Modal visible={showForm} animationType="slide" presentationStyle="pageSheet">
         <View style={styles.modalContainer}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Nova Reserva</Text>
@@ -300,7 +300,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
               <TextInput
                 style={styles.textInput}
                 value={newReservation.cliente_nome}
-                onChangeText={(text) => setNewReservation(prev => ({ ...prev, cliente_nome: text }))}
+                onChangeText={text => setNewReservation(prev => ({ ...prev, cliente_nome: text }))}
                 placeholder="Digite o nome completo"
               />
             </View>
@@ -310,7 +310,9 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
               <TextInput
                 style={styles.textInput}
                 value={newReservation.cliente_telefone}
-                onChangeText={(text) => setNewReservation(prev => ({ ...prev, cliente_telefone: text }))}
+                onChangeText={text =>
+                  setNewReservation(prev => ({ ...prev, cliente_telefone: text }))
+                }
                 placeholder="(11) 99999-9999"
                 keyboardType="phone-pad"
               />
@@ -321,7 +323,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
               <TextInput
                 style={styles.textInput}
                 value={newReservation.cliente_cpf}
-                onChangeText={(text) => setNewReservation(prev => ({ ...prev, cliente_cpf: text }))}
+                onChangeText={text => setNewReservation(prev => ({ ...prev, cliente_cpf: text }))}
                 placeholder="123.456.789-00"
                 keyboardType="numeric"
               />
@@ -332,7 +334,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
               <TextInput
                 style={styles.textInput}
                 value={newReservation.data_reserva}
-                onChangeText={(text) => setNewReservation(prev => ({ ...prev, data_reserva: text }))}
+                onChangeText={text => setNewReservation(prev => ({ ...prev, data_reserva: text }))}
                 placeholder="AAAA-MM-DD"
               />
             </View>
@@ -342,7 +344,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
               <TextInput
                 style={styles.textInput}
                 value={newReservation.horario}
-                onChangeText={(text) => setNewReservation(prev => ({ ...prev, horario: text }))}
+                onChangeText={text => setNewReservation(prev => ({ ...prev, horario: text }))}
                 placeholder="19:30"
               />
             </View>
@@ -352,7 +354,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
               <TextInput
                 style={styles.textInput}
                 value={newReservation.pessoas}
-                onChangeText={(text) => setNewReservation(prev => ({ ...prev, pessoas: text }))}
+                onChangeText={text => setNewReservation(prev => ({ ...prev, pessoas: text }))}
                 placeholder="4"
                 keyboardType="numeric"
               />
@@ -363,7 +365,7 @@ export const ReservationScreen: React.FC<ReservationScreenProps> = ({ navigation
               <TextInput
                 style={[styles.textInput, styles.textArea]}
                 value={newReservation.observacoes}
-                onChangeText={(text) => setNewReservation(prev => ({ ...prev, observacoes: text }))}
+                onChangeText={text => setNewReservation(prev => ({ ...prev, observacoes: text }))}
                 placeholder="Preferências especiais..."
                 multiline
                 numberOfLines={3}

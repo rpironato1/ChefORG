@@ -33,7 +33,7 @@ O ChefORG, embora funcionalmente robusto, foi desenvolvido com arquitetura **des
 src/pages/
 ├── public/         (3 páginas - 42KB total)
 │   ├── Home.tsx           (12KB) ⚠️ MUITO GRANDE
-│   ├── MenuPublico.tsx    (11KB) ⚠️ MUITO GRANDE  
+│   ├── MenuPublico.tsx    (11KB) ⚠️ MUITO GRANDE
 │   └── ReservaOnline.tsx  (19KB) 🔴 CRÍTICO
 ├── cliente/        (6 páginas - 61KB total)
 │   ├── CardapioMesa.tsx   (13KB) ⚠️ MUITO GRANDE
@@ -54,7 +54,7 @@ src/components/
 │   └── Header.tsx       (sem mobile menu)
 ├── ui/             ⚠️ COMPONENTIZAÇÃO PARCIAL
 │   ├── TabelaResponsiva.tsx (6KB)
-│   ├── CardMenuItem.tsx     (6KB) 
+│   ├── CardMenuItem.tsx     (6KB)
 │   └── Toast.tsx           (5KB)
 └── auth/           ✅ ADEQUADO
 ```
@@ -74,16 +74,17 @@ src/hooks/
 
 ### Problemas de Carregamento
 
-| Categoria | Tamanho Atual | Ideal Mobile | Status |
-|-----------|---------------|--------------|---------|
-| **Página Inicial** | 12KB | < 5KB | 🔴 140% acima |
-| **Bundle JS Total** | ~415KB | < 200KB | 🔴 107% acima |
-| **First Paint** | ~2.3s | < 1s | 🔴 130% acima |
-| **Componentes por Página** | Todos | Lazy Load | 🔴 Não implementado |
+| Categoria                  | Tamanho Atual | Ideal Mobile | Status              |
+| -------------------------- | ------------- | ------------ | ------------------- |
+| **Página Inicial**         | 12KB          | < 5KB        | 🔴 140% acima       |
+| **Bundle JS Total**        | ~415KB        | < 200KB      | 🔴 107% acima       |
+| **First Paint**            | ~2.3s         | < 1s         | 🔴 130% acima       |
+| **Componentes por Página** | Todos         | Lazy Load    | 🔴 Não implementado |
 
 ### Teste de Responsividade (375x667 - iPhone SE)
 
 **Resultados dos Testes com MCP Playwright:**
+
 - ✅ **Home**: Botões visíveis, texto legível
 - ✅ **Menu**: Categorias funcionais, cards organizados
 - ❌ **Admin**: Sidebar sobrepõe conteúdo
@@ -120,7 +121,7 @@ src/modules/home/
 // ANTES (atual)
 src/hooks/useBusinessLogic.ts (19KB)
 
-// DEPOIS (proposto) 
+// DEPOIS (proposto)
 src/modules/shared/hooks/
 ├── useReservations.ts         (3KB)
 ├── useOrders.ts              (3KB)
@@ -152,7 +153,7 @@ src/
 │   ├── utils/
 │   ├── types/
 │   └── constants/
-├── mobile/                   🆕 NOVO  
+├── mobile/                   🆕 NOVO
 │   ├── navigation/
 │   ├── gestures/
 │   └── responsive/
@@ -169,20 +170,22 @@ src/
 ### 1. LAYOUT RESPONSIVO
 
 #### Problema Atual - Layout Desktop
+
 ```tsx
 // src/components/layout/Layout.tsx (PROBLEMÁTICO)
 <div className="min-h-screen bg-gray-50">
   <Sidebar />
-  <div className="ml-64"> {/* ❌ QUEBRA EM MOBILE */}
+  <div className="ml-64">
+    {' '}
+    {/* ❌ QUEBRA EM MOBILE */}
     <Header />
-    <main className="p-6">
-      {children}
-    </main>
+    <main className="p-6">{children}</main>
   </div>
 </div>
 ```
 
 #### Solução Mobile-First
+
 ```tsx
 // NOVO: src/mobile/layout/ResponsiveLayout.tsx
 <div className="min-h-screen bg-gray-50">
@@ -191,22 +194,21 @@ src/
     <MobileHeader onMenuToggle={setMenuOpen} />
     <MobileDrawer isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
   </div>
-  
+
   {/* Desktop: Sidebar fixa */}
   <div className="hidden md:block">
     <Sidebar />
   </div>
-  
+
   {/* Conteúdo adaptativo */}
-  <main className="md:ml-64 p-4 md:p-6">
-    {children}
-  </main>
+  <main className="md:ml-64 p-4 md:p-6">{children}</main>
 </div>
 ```
 
 ### 2. NAVEGAÇÃO MOBILE
 
 #### Implementação de Gestos e Touch
+
 ```tsx
 // NOVO: src/mobile/navigation/MobileNavigation.tsx
 export const MobileNavigation = () => {
@@ -226,6 +228,7 @@ export const MobileNavigation = () => {
 ### 3. OTIMIZAÇÃO DE CARREGAMENTO
 
 #### Code Splitting por Módulo
+
 ```tsx
 // NOVO: src/App.tsx com Lazy Loading
 const HomePage = lazy(() => import('./modules/home'));
@@ -239,10 +242,11 @@ const ReservationPage = lazy(() => import('./modules/reservation'));
     <Route path="/menu" element={<MenuPage />} />
     <Route path="/reserva" element={<ReservationPage />} />
   </Routes>
-</Suspense>
+</Suspense>;
 ```
 
 #### Progressive Web App (PWA)
+
 ```typescript
 // NOVO: src/pwa/manifest.json
 {
@@ -284,6 +288,7 @@ projeto-cheforg/
 ### 2. COMPONENTES COMPARTILHADOS
 
 #### Web Component -> Native Screen
+
 ```tsx
 // WEB: src/modules/menu/index.tsx
 export const MenuPage = () => {
@@ -300,7 +305,7 @@ export const MenuScreen = () => {
   const { menuItems, loading } = useMenu(); // MESMO HOOK
   return (
     <ScrollView style={styles.container}>
-      <MenuGrid items={menuItems} />     {/* MESMO COMPONENTE */}
+      <MenuGrid items={menuItems} /> {/* MESMO COMPONENTE */}
     </ScrollView>
   );
 };
@@ -309,6 +314,7 @@ export const MenuScreen = () => {
 ### 3. NAVEGAÇÃO NATIVA
 
 #### React Router -> React Navigation
+
 ```tsx
 // ATUAL: React Router (Web)
 <Routes>
@@ -326,6 +332,7 @@ export const MenuScreen = () => {
 ### 4. FUNCIONALIDADES NATIVAS
 
 #### QR Code Scanner Nativo
+
 ```tsx
 // NATIVE: mobile/src/components/QRScanner.tsx
 import { Camera } from 'expo-camera';
@@ -344,6 +351,7 @@ export const QRScanner = ({ onScan }) => {
 ```
 
 #### Push Notifications
+
 ```tsx
 // NATIVE: mobile/src/services/notifications.ts
 import * as Notifications from 'expo-notifications';
@@ -364,13 +372,15 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 ## 🚀 ROADMAP DE IMPLEMENTAÇÃO
 
 ### SPRINT 1 (1-2 semanas): Fundação Mobile-First
+
 - [ ] **Criar nova estrutura modular** (src/modules/)
 - [ ] **Implementar layout responsivo** com menu hambúrguer
 - [ ] **Quebrar componentes monolíticos** (Home, Menu, Reserva)
 - [ ] **Configurar code splitting** com React.lazy()
 - [ ] **Otimizar bundle** para < 200KB initial load
 
-### SPRINT 2 (1-2 semanas): UX Mobile Completa  
+### SPRINT 2 (1-2 semanas): UX Mobile Completa
+
 - [ ] **Implementar navegação bottom tab** para mobile
 - [ ] **Adicionar gestos touch** (swipe, pull-to-refresh)
 - [ ] **Otimizar formulários** para teclados móveis
@@ -378,6 +388,7 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 - [ ] **Testar performance** em dispositivos low-end
 
 ### SPRINT 3 (2-3 semanas): Business Logic Modular
+
 - [ ] **Quebrar useBusinessLogic** em hooks específicos
 - [ ] **Criar camada de API compartilhada** (web/native)
 - [ ] **Implementar state management** otimizado (Zustand/Redux Toolkit)
@@ -385,6 +396,7 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 - [ ] **Configurar error boundaries** específicos por módulo
 
 ### SPRINT 4 (3-4 semanas): Preparação Cross-Platform
+
 - [ ] **Extrair lógica para /shared** (APIs, types, utils)
 - [ ] **Criar abstrações de UI** (Button, Input, Card genéricos)
 - [ ] **Configurar monorepo** (web + mobile)
@@ -392,6 +404,7 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 - [ ] **Migrar primeira tela** (Home) para Native
 
 ### SPRINT 5 (4-6 semanas): Apps Nativos
+
 - [ ] **Desenvolver todas as screens** principais no React Native
 - [ ] **Implementar navegação nativa** (React Navigation)
 - [ ] **Adicionar funcionalidades nativas** (Camera, Push, Biometria)
@@ -403,24 +416,28 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 ## 📈 BENEFÍCIOS ESPERADOS
 
 ### Performance Mobile
+
 - ⚡ **70% redução** no tempo de carregamento inicial
-- ⚡ **60% redução** no tamanho do bundle JavaScript  
+- ⚡ **60% redução** no tamanho do bundle JavaScript
 - ⚡ **90% melhoria** na responsividade mobile
 - ⚡ **85% melhoria** na experiência de navegação
 
 ### Experiência do Usuário
+
 - 📱 **Interface 100% otimizada** para touch
 - 📱 **Navegação intuitiva** com gestos naturais
 - 📱 **Carregamento progressivo** de conteúdo
 - 📱 **Funcionalidades offline** básicas (PWA)
 
 ### Potencial Cross-Platform
+
 - 🔄 **80% de código compartilhado** entre web e mobile
 - 🔄 **APIs unificadas** para todas as plataformas
 - 🔄 **Deploy simultâneo** web + Android + iOS
 - 🔄 **Manutenção simplificada** com lógica centralizada
 
 ### Escalabilidade Técnica
+
 - 🏗️ **Arquitetura modular** facilita manutenção
 - 🏗️ **Code splitting** permite crescimento do app
 - 🏗️ **Componentes reutilizáveis** aceleram desenvolvimento
@@ -433,20 +450,24 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 ### Riscos Técnicos
 
 **RISCO ALTO: Quebra de funcionalidades existentes**
+
 - **Mitigação:** Desenvolvimento incremental com feature flags
 - **Mitigação:** Testes abrangentes antes de cada deploy
 
 **RISCO MÉDIO: Aumento da complexidade inicial**
+
 - **Mitigação:** Documentação detalhada da nova arquitetura
 - **Mitigação:** Treinamento da equipe em padrões modulares
 
 **RISCO BAIXO: Performance inicial durante refatoramento**
+
 - **Mitigação:** Manter versão atual funcionando em paralelo
 - **Mitigação:** Migration gradual página por página
 
 ### Riscos de Negócio
 
 **RISCO MÉDIO: Tempo de desenvolvimento estendido**
+
 - **Mitigação:** Priorizar páginas de maior uso (cliente/menu)
 - **Mitigação:** Releases incrementais com valor imediato
 
@@ -466,7 +487,7 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 ### PRIORIDADES IMEDIATAS
 
 1. **🔥 CRÍTICO:** Layout responsivo (SPRINT 1)
-2. **🔥 CRÍTICO:** Code splitting e performance (SPRINT 1-2)  
+2. **🔥 CRÍTICO:** Code splitting e performance (SPRINT 1-2)
 3. **⚡ ALTA:** Modularização de componentes (SPRINT 2-3)
 4. **⚡ ALTA:** Preparação cross-platform (SPRINT 4)
 5. **📱 MÉDIA:** Apps nativos (SPRINT 5+)
@@ -483,5 +504,5 @@ export const sendOrderUpdate = async (orderId: string, status: string) => {
 
 ---
 
-*Relatório gerado automaticamente pela análise de código e testes de responsividade com MCP Playwright*
-*Data: 22 de Agosto de 2025*
+_Relatório gerado automaticamente pela análise de código e testes de responsividade com MCP Playwright_
+_Data: 22 de Agosto de 2025_

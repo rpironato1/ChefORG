@@ -6,8 +6,8 @@ type Loyalty = Database['public']['Tables']['loyalty']['Row'];
 type User = Database['public']['Tables']['users']['Row'];
 
 export type LoyaltyWithUser = Loyalty & {
-    users: Pick<User, 'nome'> | null;
-}
+  users: Pick<User, 'nome'> | null;
+};
 
 /**
  * Busca o ranking de clientes por pontos de fidelidade.
@@ -15,7 +15,7 @@ export type LoyaltyWithUser = Loyalty & {
 export const getLoyaltyRanking = async (limit = 10): Promise<ApiResponse<LoyaltyWithUser[]>> => {
   try {
     // Get loyalty data and users separately, then join in memory
-    const loyaltyPromise = new Promise((resolve) => {
+    const loyaltyPromise = new Promise(resolve => {
       const result = supabase.from('loyalty').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
@@ -24,7 +24,7 @@ export const getLoyaltyRanking = async (limit = 10): Promise<ApiResponse<Loyalty
       }
     }) as Promise<{ data: any[] | null; error: any }>;
 
-    const usersPromise = new Promise((resolve) => {
+    const usersPromise = new Promise(resolve => {
       const result = supabase.from('users').select('*');
       if (result && typeof result.then === 'function') {
         result.then(resolve);
@@ -42,7 +42,9 @@ export const getLoyaltyRanking = async (limit = 10): Promise<ApiResponse<Loyalty
     const loyaltyWithUsers = (loyaltyResult.data || [])
       .map(loyalty => ({
         ...loyalty,
-        users: usersResult.data?.find(user => user.id === loyalty.user_id) || { nome: 'Usuário Desconhecido' }
+        users: usersResult.data?.find(user => user.id === loyalty.user_id) || {
+          nome: 'Usuário Desconhecido',
+        },
       }))
       .sort((a, b) => b.pontos - a.pontos)
       .slice(0, limit);

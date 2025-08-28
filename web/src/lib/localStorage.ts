@@ -14,7 +14,7 @@ const STORAGE_KEYS = {
   feedback: 'cheforg_feedback',
   loyalty: 'cheforg_loyalty',
   current_user: 'cheforg_current_user',
-  auth_session: 'cheforg_auth_session'
+  auth_session: 'cheforg_auth_session',
 } as const;
 
 // Helper functions for localStorage operations
@@ -46,7 +46,7 @@ type TableRow<T extends TableName> = Database['public']['Tables'][T]['Row'];
 type TableInsert<T extends TableName> = Database['public']['Tables'][T]['Insert'];
 type TableUpdate<T extends TableName> = Database['public']['Tables'][T]['Update'];
 
-// Optimized query builder using graph theory principles - with await compatibility
+// Optimized query builder - fixed circular reference issue
 class OptimizedQueryBuilder<T extends TableName> {
   private table: T;
   private filters: Array<(item: any) => boolean> = [];
@@ -55,54 +55,85 @@ class OptimizedQueryBuilder<T extends TableName> {
   private rangeConfig: { from: number; to: number } | null = null;
   private singleMode = false;
 
-  constructor(table: T, private client: LocalStorageClient) {
+  constructor(
+    table: T,
+    private client: LocalStorageClient
+  ) {
     this.table = table;
   }
 
-  // Chainable filter methods that return promises for await compatibility
-  eq(column: string, value: any) {
-    this.filters.push((item: any) => item[column] === value);
-    return this;
+  // Chainable filter methods that return new instances to avoid circular references
+  eq(column: string, value: any): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.filters.push((item: any) => item[column] === value);
+    return newBuilder;
   }
 
-  gte(column: string, value: any) {
-    this.filters.push((item: any) => item[column] >= value);
-    return this;
+  gte(column: string, value: any): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.filters.push((item: any) => item[column] >= value);
+    return newBuilder;
   }
 
-  lte(column: string, value: any) {
-    this.filters.push((item: any) => item[column] <= value);
-    return this;
+  lte(column: string, value: any): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.filters.push((item: any) => item[column] <= value);
+    return newBuilder;
   }
 
-  in(column: string, values: any[]) {
-    this.filters.push((item: any) => values.includes(item[column]));
-    return this;
+  in(column: string, values: any[]): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.filters.push((item: any) => values.includes(item[column]));
+    return newBuilder;
   }
 
-  order(column: string, options?: { ascending?: boolean }) {
-    this.orderConfig = { column, ascending: options?.ascending ?? true };
-    return this;
+  order(column: string, options?: { ascending?: boolean }): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.orderConfig = { column, ascending: options?.ascending ?? true };
+    return newBuilder;
   }
 
-  limit(count: number) {
-    this.limitConfig = count;
-    return this;
+  limit(count: number): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.limitConfig = count;
+    return newBuilder;
   }
 
-  range(from: number, to: number) {
-    this.rangeConfig = { from, to };
-    return this;
+  range(from: number, to: number): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.rangeConfig = { from, to };
+    return newBuilder;
   }
 
-  single() {
-    this.singleMode = true;
-    return this;
+  single(): OptimizedQueryBuilder<T> {
+    const newBuilder = this.clone();
+    newBuilder.singleMode = true;
+    return newBuilder;
   }
 
-  // Execute the query with optimized graph-based processing
-  then(callback?: Function): Promise<{ data: any; error: any }> {
-    return new Promise((resolve) => {
+  // Clone method to avoid circular references
+  private clone(): OptimizedQueryBuilder<T> {
+    const newBuilder = new OptimizedQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.rangeConfig = this.rangeConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
+  }
+
+  // Execute the query - simplified to avoid circular reference issues
+  then<TResult1 = { data: any; error: any }, TResult2 = never>(
+    onFulfilled?: ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>) | null,
+    onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
+  ): Promise<TResult1 | TResult2> {
+    const promise = this.execute();
+    return promise.then(onFulfilled, onRejected);
+  }
+
+  // Execute method that does the actual work
+  private execute(): Promise<{ data: any; error: any }> {
+    return new Promise(resolve => {
       try {
         let data = this.client.selectAll(this.table);
 
@@ -131,19 +162,10 @@ class OptimizedQueryBuilder<T extends TableName> {
         }
 
         // Return single item or array
-        const result = this.singleMode ? (data[0] || null) : data;
-        const response = { data: result, error: null };
-
-        if (callback) {
-          callback(response);
-        }
-        resolve(response);
+        const result = this.singleMode ? data[0] || null : data;
+        resolve({ data: result, error: null });
       } catch (error) {
-        const errorResponse = { data: null, error };
-        if (callback) {
-          callback(errorResponse);
-        }
-        resolve(errorResponse);
+        resolve({ data: null, error });
       }
     });
   }
@@ -161,7 +183,7 @@ export class LocalStorageClient {
 
     const data = this.selectAll(table);
     const index = new Map();
-    
+
     data.forEach(item => {
       const value = (item as any)[column];
       if (!index.has(value)) {
@@ -177,30 +199,59 @@ export class LocalStorageClient {
   from<T extends TableName>(table: T) {
     return {
       select: (_columns = '*') => new OptimizedQueryBuilder(table, this),
-      
+
       insert: (values: TableInsert<T> | TableInsert<T>[]) => this.insert(table, values),
-      
+
       update: (values: TableUpdate<T>) => ({
         eq: (column: string, value: any) => this.update(table, values, column, value),
         match: (filters: Record<string, any>) => this.updateWithMatch(table, values, filters),
         select: () => ({
-          single: () => this.updateAndReturn(table, values)
-        })
+          single: () => this.updateAndReturn(table, values),
+        }),
       }),
-      
+
       delete: () => ({
-        eq: (column: string, value: any) => this.delete(table, column, value),
-        match: (filters: Record<string, any>) => this.deleteWithMatch(table, filters)
-      })
+        eq: (column: string, value: any) => {
+          const deleteQuery = this.delete(table, column, value);
+          return {
+            then: <TResult1 = { data: any; error: any }, TResult2 = never>(
+              onFulfilled?:
+                | ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>)
+                | null,
+              onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
+            ): Promise<TResult1 | TResult2> => {
+              return deleteQuery.then(onFulfilled, onRejected);
+            },
+          };
+        },
+        match: (filters: Record<string, any>) => {
+          const deleteQuery = this.deleteWithMatch(table, filters);
+          return {
+            then: <TResult1 = { data: any; error: any }, TResult2 = never>(
+              onFulfilled?:
+                | ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>)
+                | null,
+              onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
+            ): Promise<TResult1 | TResult2> => {
+              return deleteQuery.then(onFulfilled, onRejected);
+            },
+          };
+        },
+      }),
     };
   }
 
-  // Add return functionality for updates  
-  private async updateAndReturn<T extends TableName>(table: T, values: TableUpdate<T>): Promise<{ data: TableRow<T> | null; error: any }> {
-    return new Promise((resolve) => {
+  // Add return functionality for updates
+  private async updateAndReturn<T extends TableName>(
+    table: T,
+    values: TableUpdate<T>
+  ): Promise<{ data: TableRow<T> | null; error: any }> {
+    return new Promise(resolve => {
       try {
         const allData = this.selectAll(table);
-        const updated = allData[0] ? { ...allData[0], ...values, updated_at: new Date().toISOString() } : null;
+        const updated = allData[0]
+          ? { ...allData[0], ...values, updated_at: new Date().toISOString() }
+          : null;
         resolve({ data: updated as TableRow<T>, error: null });
       } catch (error) {
         resolve({ data: null, error });
@@ -211,7 +262,7 @@ export class LocalStorageClient {
   // Public method for accessing data (used by query builder)
   selectAll<T extends TableName>(table: T): TableRow<T>[] {
     const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
-    
+
     // Build commonly used indexes on first access
     this.buildIndex(table, 'id');
     if (table === 'reservations') {
@@ -226,27 +277,30 @@ export class LocalStorageClient {
       this.buildIndex(table, 'status');
       this.buildIndex(table, 'table_id');
     }
-    
+
     return getFromStorage<TableRow<T>>(key);
   }
 
-  private async insert<T extends TableName>(table: T, values: TableInsert<T> | TableInsert<T>[]): Promise<{ data: TableRow<T>[] | null; error: any }> {
-    return new Promise((resolve) => {
+  private async insert<T extends TableName>(
+    table: T,
+    values: TableInsert<T> | TableInsert<T>[]
+  ): Promise<{ data: TableRow<T>[] | null; error: any }> {
+    return new Promise(resolve => {
       try {
         const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
         const existingData = getFromStorage<TableRow<T>>(key);
-        
+
         const newRecords = Array.isArray(values) ? values : [values];
         const recordsWithIds = newRecords.map(record => ({
           ...record,
           id: (record as any).id || generateId(),
           created_at: (record as any).created_at || new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })) as TableRow<T>[];
 
         const updatedData = [...existingData, ...recordsWithIds];
         saveToStorage(key, updatedData);
-        
+
         resolve({ data: recordsWithIds, error: null });
       } catch (error) {
         resolve({ data: null, error });
@@ -254,21 +308,26 @@ export class LocalStorageClient {
     });
   }
 
-  private async update<T extends TableName>(table: T, values: TableUpdate<T>, column: string, value: any): Promise<{ data: TableRow<T>[] | null; error: any }> {
-    return new Promise((resolve) => {
+  private async update<T extends TableName>(
+    table: T,
+    values: TableUpdate<T>,
+    column: string,
+    value: any
+  ): Promise<{ data: TableRow<T>[] | null; error: any }> {
+    return new Promise(resolve => {
       try {
         const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
         const existingData = getFromStorage<TableRow<T>>(key);
-        
-        const updatedData = existingData.map(item => 
-          (item as any)[column] === value 
+
+        const updatedData = existingData.map(item =>
+          (item as any)[column] === value
             ? { ...item, ...values, updated_at: new Date().toISOString() }
             : item
         );
-        
+
         saveToStorage(key, updatedData);
         const updated = updatedData.filter(item => (item as any)[column] === value);
-        
+
         resolve({ data: updated, error: null });
       } catch (error) {
         resolve({ data: null, error });
@@ -276,28 +335,30 @@ export class LocalStorageClient {
     });
   }
 
-  private async updateWithMatch<T extends TableName>(table: T, values: TableUpdate<T>, filters: Record<string, any>): Promise<{ data: TableRow<T>[] | null; error: any }> {
-    return new Promise((resolve) => {
+  private async updateWithMatch<T extends TableName>(
+    table: T,
+    values: TableUpdate<T>,
+    filters: Record<string, any>
+  ): Promise<{ data: TableRow<T>[] | null; error: any }> {
+    return new Promise(resolve => {
       try {
         const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
         const existingData = getFromStorage<TableRow<T>>(key);
-        
+
         const updatedData = existingData.map(item => {
-          const matches = Object.entries(filters).every(([filterKey, filterValue]) => 
-            (item as any)[filterKey] === filterValue
+          const matches = Object.entries(filters).every(
+            ([filterKey, filterValue]) => (item as any)[filterKey] === filterValue
           );
-          return matches 
-            ? { ...item, ...values, updated_at: new Date().toISOString() }
-            : item;
+          return matches ? { ...item, ...values, updated_at: new Date().toISOString() } : item;
         });
-        
+
         saveToStorage(key, updatedData);
-        const updated = updatedData.filter(item => 
-          Object.entries(filters).every(([filterKey, filterValue]) => 
-            (item as any)[filterKey] === filterValue
+        const updated = updatedData.filter(item =>
+          Object.entries(filters).every(
+            ([filterKey, filterValue]) => (item as any)[filterKey] === filterValue
           )
         );
-        
+
         resolve({ data: updated, error: null });
       } catch (error) {
         resolve({ data: null, error });
@@ -305,15 +366,19 @@ export class LocalStorageClient {
     });
   }
 
-  private async delete<T extends TableName>(table: T, column: string, value: any): Promise<{ data: null; error: any }> {
-    return new Promise((resolve) => {
+  private async delete<T extends TableName>(
+    table: T,
+    column: string,
+    value: any
+  ): Promise<{ data: null; error: any }> {
+    return new Promise(resolve => {
       try {
         const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
         const existingData = getFromStorage<TableRow<T>>(key);
-        
+
         const filteredData = existingData.filter(item => (item as any)[column] !== value);
         saveToStorage(key, filteredData);
-        
+
         resolve({ data: null, error: null });
       } catch (error) {
         resolve({ data: null, error });
@@ -321,20 +386,24 @@ export class LocalStorageClient {
     });
   }
 
-  private async deleteWithMatch<T extends TableName>(table: T, filters: Record<string, any>): Promise<{ data: null; error: any }> {
-    return new Promise((resolve) => {
+  private async deleteWithMatch<T extends TableName>(
+    table: T,
+    filters: Record<string, any>
+  ): Promise<{ data: null; error: any }> {
+    return new Promise(resolve => {
       try {
         const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
         const existingData = getFromStorage<TableRow<T>>(key);
-        
-        const filteredData = existingData.filter(item => 
-          !Object.entries(filters).every(([filterKey, filterValue]) => 
-            (item as any)[filterKey] === filterValue
-          )
+
+        const filteredData = existingData.filter(
+          item =>
+            !Object.entries(filters).every(
+              ([filterKey, filterValue]) => (item as any)[filterKey] === filterValue
+            )
         );
-        
+
         saveToStorage(key, filteredData);
-        
+
         resolve({ data: null, error: null });
       } catch (error) {
         resolve({ data: null, error });
@@ -344,11 +413,17 @@ export class LocalStorageClient {
 
   // Auth methods
   auth = {
-    signInWithPassword: async ({ email, password: _password }: { email: string; password: string }) => {
+    signInWithPassword: async ({
+      email,
+      password: _password,
+    }: {
+      email: string;
+      password: string;
+    }) => {
       // Simple mock authentication
       const users = getFromStorage<any>(STORAGE_KEYS.users);
       const user = users.find((u: any) => u.email === email);
-      
+
       if (!user) {
         return { data: null, error: { message: 'Usuário não encontrado' } };
       }
@@ -357,7 +432,7 @@ export class LocalStorageClient {
       const authUser = {
         id: user.id,
         email: user.email,
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
       };
 
       // Save session
@@ -379,12 +454,15 @@ export class LocalStorageClient {
         return { data: { session: { user: JSON.parse(session) } }, error: null };
       }
       return { data: { session: null }, error: null };
-    }
+    },
   };
 
   // Create improved RPC that matches expected pattern
-  rpc = (functionName: string, _params: Record<string, any>): Promise<{ data: any; error: any }> => {
-    return new Promise((resolve) => {
+  rpc = (
+    functionName: string,
+    _params: Record<string, any>
+  ): Promise<{ data: any; error: any }> => {
+    return new Promise(resolve => {
       try {
         // Mock RPC responses for common functions with proper graph-based data
         if (functionName === 'get_sales_dashboard_data') {
@@ -394,15 +472,18 @@ export class LocalStorageClient {
             avg_order_value: 27.79,
             top_items: [
               { name: 'Hambúrguer Artesanal', sales: 15 },
-              { name: 'Pizza Margherita', sales: 12 }
-            ]
+              { name: 'Pizza Margherita', sales: 12 },
+            ],
           };
           resolve({ data: mockData, error: null });
         } else if (functionName === 'check_in_reservation') {
           // Mock successful check-in response
           resolve({ data: { pin: '123456' }, error: null });
         } else {
-          resolve({ data: null, error: { message: `RPC function ${functionName} not implemented` } });
+          resolve({
+            data: null,
+            error: { message: `RPC function ${functionName} not implemented` },
+          });
         }
       } catch (error) {
         resolve({ data: null, error });
@@ -413,7 +494,7 @@ export class LocalStorageClient {
   // Functions support for edge functions
   functions = {
     invoke: (functionName: string, _options?: { body?: any }) => {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         try {
           // Mock function responses
           if (functionName === 'send-notification') {
@@ -425,7 +506,7 @@ export class LocalStorageClient {
           resolve({ data: null, error });
         }
       });
-    }
+    },
   };
 }
 

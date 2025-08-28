@@ -32,11 +32,11 @@ O MCP Playwright é um sistema de teste automatizado que:
 const DEFAULT_CONFIG = {
   agent_mode: 'autonomous',
   human_intervention: false,
-  coverage_target: 0.90,
+  coverage_target: 0.9,
   wcag_compliance: 'AA',
   parallel_execution: true,
-  self_healing: true
-}
+  self_healing: true,
+};
 ```
 
 ### Matriz de Cobertura
@@ -44,18 +44,18 @@ const DEFAULT_CONFIG = {
 ```javascript
 const COVERAGE_MATRIX = {
   functional: {
-    navigation: 0.15,    // 15%
-    forms: 0.20,         // 20%
-    interactions: 0.25,   // 25%
-    media: 0.10,         // 10%
-    multi_context: 0.10  // 10%
+    navigation: 0.15, // 15%
+    forms: 0.2, // 20%
+    interactions: 0.25, // 25%
+    media: 0.1, // 10%
+    multi_context: 0.1, // 10%
   },
   accessibility: {
-    wcag_aa: 0.15,       // 15%
-    keyboard: 0.05       // 5%
+    wcag_aa: 0.15, // 15%
+    keyboard: 0.05, // 5%
   },
-  total: 0.90            // 90%
-}
+  total: 0.9, // 90%
+};
 ```
 
 ## 🚀 Execução
@@ -111,12 +111,14 @@ tests/mcp-playwright/
 ### 1. MCPPlaywrightService (Core)
 
 **Responsabilidades:**
+
 - Inicialização do ambiente de teste
 - Descoberta automática de rotas
 - Monitoramento de rede e console
 - Mecanismos de auto-correção
 
 **Métodos Principais:**
+
 ```typescript
 async initializeTestEnvironment(browser: Browser): Promise<string>
 async discoverApplicationRoutes(): Promise<RouteTest[]>
@@ -126,11 +128,13 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean>
 ### 2. WCAGComplianceService
 
 **Responsabilidades:**
+
 - Testes de conformidade WCAG 2.1 AA
 - Validação de 17 critérios principais
 - Verificação de acessibilidade automática
 
 **Critérios Testados:**
+
 - **Perceptível**: Alt text, contraste, estrutura de cabeçalhos
 - **Operável**: Navegação por teclado, foco visível
 - **Compreensível**: Idioma da página, rótulos de formulário
@@ -139,12 +143,14 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean>
 ### 3. FormTestingService
 
 **Responsabilidades:**
+
 - Detecção automática de formulários
 - Teste de validação (campos vazios)
 - Preenchimento automático com dados válidos
 - Teste de acessibilidade de formulários
 
 **Fluxo de Teste:**
+
 1. Detectar todos os formulários na página
 2. Testar submissão vazia (validação)
 3. Preencher com dados de teste apropriados
@@ -154,6 +160,7 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean>
 ### 4. InteractionMatrixService
 
 **Responsabilidades:**
+
 - Testes de hover e tooltips
 - Testes de clique (esquerdo, direito, duplo)
 - Testes de drag and drop
@@ -164,6 +171,7 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean>
 ### 5. CoverageCalculatorService
 
 **Responsabilidades:**
+
 - Cálculo de cobertura total
 - Geração de relatórios detalhados
 - Identificação de lacunas de cobertura
@@ -192,7 +200,7 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean>
     executionTime: 45000,
     errors: 0
   },
-  
+
   functional: {
     navigation: { score: 90, details: "12 routes tested" },
     forms: { score: 85, details: "Form testing completed" },
@@ -200,12 +208,12 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean>
     media: { score: 80, details: "Media testing completed" },
     multiContext: { score: 92, details: "Multi-context completed" }
   },
-  
+
   accessibility: {
     wcag_aa: { score: 98, details: "WCAG 2.1 AA compliance" },
     keyboard: { score: 95, details: "Keyboard accessibility" }
   },
-  
+
   recommendations: [
     "Excellent test results! All metrics are within acceptable ranges."
   ]
@@ -240,14 +248,14 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean> {
   if (error.message.includes('Element not found') && selector) {
     // Tenta seletores alternativos
     const alternatives = this.generateAlternativeSelectors(selector);
-    
+
     for (const altSelector of alternatives) {
       try {
         await this.page.click(altSelector);
         return true;
       } catch (e) { continue; }
     }
-    
+
     // Fallback para coordenadas
     const element = await this.page.$(selector);
     if (element) {
@@ -258,7 +266,7 @@ async selfHealingMechanism(error: Error, selector?: string): Promise<boolean> {
       }
     }
   }
-  
+
   // Outros mecanismos de recuperação...
   return false;
 }
@@ -289,12 +297,14 @@ meetsCoverageTarget(metrics: TestMetrics, target: number = 0.9): boolean {
 ### Problemas Comuns
 
 1. **Servidor de desenvolvimento não iniciado**
+
    ```bash
    # O script inicia automaticamente, mas pode ser iniciado manualmente:
    npm run dev
    ```
 
 2. **Browsers Playwright não instalados**
+
    ```bash
    npx playwright install
    ```

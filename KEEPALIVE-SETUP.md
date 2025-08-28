@@ -3,16 +3,19 @@
 ## ✅ O que foi implementado:
 
 ### 1. **Edge Function criada**
+
 - **Nome:** `keep-alive`
 - **Status:** ✅ Ativa
 - **URL:** `https://ybefpjodbvfhfcvqsxkl.supabase.co/functions/v1/keep-alive`
 
 ### 2. **Tabela de logs criada**
+
 - **Nome:** `system_keepalive_logs`
 - **Função:** Registra todas as execuções
 - **Status:** ✅ Funcionando
 
 ### 3. **Workflow do GitHub Actions criado**
+
 - **Arquivo:** `.github/workflows/keepalive.yml`
 - **Frequência:** Diária às 08:00 UTC (05:00 BRT)
 - **Status:** ✅ Pronto para uso
@@ -30,6 +33,7 @@
    - **Value:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InliZWZwam9kYnZmaGZjdnFzeGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NTM3MzEsImV4cCI6MjA2NzMyOTczMX0.lmxQ_9yHj77NS_C56zIBy8Xp0l-OSQBn-yrC64WvfV0`
 
 2. **Faça commit dos arquivos:**
+
    ```bash
    git add .github/workflows/keepalive.yml
    git commit -m "feat: adiciona keep-alive para supabase"
@@ -46,7 +50,7 @@
 3. **Adicione novo cron job:**
    - **URL:** `https://ybefpjodbvfhfcvqsxkl.supabase.co/functions/v1/keep-alive`
    - **Método:** `POST`
-   - **Headers:** 
+   - **Headers:**
      - `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InliZWZwam9kYnZmaGZjdnFzeGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NTM3MzEsImV4cCI6MjA2NzMyOTczMX0.lmxQ_9yHj77NS_C56zIBy8Xp0l-OSQBn-yrC64WvfV0`
      - `Content-Type: application/json`
    - **Frequência:** Diária (08:00 UTC)
@@ -65,13 +69,15 @@
 ## 📊 MONITORAMENTO
 
 ### **Verificar se está funcionando:**
+
 ```sql
-SELECT * FROM system_keepalive_logs 
-ORDER BY created_at DESC 
+SELECT * FROM system_keepalive_logs
+ORDER BY created_at DESC
 LIMIT 10;
 ```
 
 ### **Logs esperados:**
+
 - `setup` - Configuração inicial
 - `manual-test` - Teste manual
 - `success` - Execuções automáticas bem-sucedidas
@@ -84,13 +90,14 @@ LIMIT 10;
 ✅ **Operação mínima** - Usa recursos mínimos do banco  
 ✅ **Logs detalhados** - Registra todas as execuções  
 ✅ **Configuração flexível** - Múltiplas opções de automação  
-✅ **100% gratuito** - Usa apenas recursos do plano gratuito  
+✅ **100% gratuito** - Usa apenas recursos do plano gratuito
 
 ---
 
 ## 🔍 TESTE MANUAL
 
 ### **Comando para teste (Linux/macOS):**
+
 ```bash
 curl -X POST "https://ybefpjodbvfhfcvqsxkl.supabase.co/functions/v1/keep-alive" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InliZWZwam9kYnZmaGZjdnFzeGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NTM3MzEsImV4cCI6MjA2NzMyOTczMX0.lmxQ_9yHj77NS_C56zIBy8Xp0l-OSQBn-yrC64WvfV0" \
@@ -99,6 +106,7 @@ curl -X POST "https://ybefpjodbvfhfcvqsxkl.supabase.co/functions/v1/keep-alive" 
 ```
 
 ### **Resposta esperada:**
+
 ```json
 {
   "success": true,
@@ -122,6 +130,6 @@ curl -X POST "https://ybefpjodbvfhfcvqsxkl.supabase.co/functions/v1/keep-alive" 
 
 ## 🎉 PRONTO!
 
-Seu sistema keep-alive está **100% configurado** e pronto para manter seu projeto Supabase ativo indefinidamente no plano gratuito! 
+Seu sistema keep-alive está **100% configurado** e pronto para manter seu projeto Supabase ativo indefinidamente no plano gratuito!
 
-**Próximo passo:** Escolha uma das opções acima e configure o cron job automático. Recomendamos o **GitHub Actions** por ser mais confiável e integrado ao seu projeto. 
+**Próximo passo:** Escolha uma das opções acima e configure o cron job automático. Recomendamos o **GitHub Actions** por ser mais confiável e integrado ao seu projeto.

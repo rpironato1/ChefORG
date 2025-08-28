@@ -12,13 +12,23 @@ import { execSync } from 'child_process';
 // Test all routes for accessibility
 function testRouteAccessibility() {
   console.log('🔍 TESTING ALL ROUTES FOR ACCESSIBILITY...');
-  
+
   const routes = [
-    '/', '/menu', '/reserva', '/sprint3-demo',
-    '/checkin', '/chegada-sem-reserva', 
-    '/mesa/1/pin', '/mesa/1/cardapio', '/mesa/1/acompanhar', 
-    '/mesa/1/pagamento', '/mesa/1/feedback',
-    '/login', '/admin/login', '/admin/', '/admin/dashboard'
+    '/',
+    '/menu',
+    '/reserva',
+    '/sprint3-demo',
+    '/checkin',
+    '/chegada-sem-reserva',
+    '/mesa/1/pin',
+    '/mesa/1/cardapio',
+    '/mesa/1/acompanhar',
+    '/mesa/1/pagamento',
+    '/mesa/1/feedback',
+    '/login',
+    '/admin/login',
+    '/admin/',
+    '/admin/dashboard',
   ];
 
   let accessibleRoutes = 0;
@@ -28,9 +38,9 @@ function testRouteAccessibility() {
     try {
       const curlCommand = `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000${route}`;
       const statusCode = execSync(curlCommand, { encoding: 'utf-8', timeout: 5000 }).trim();
-      
+
       const isAccessible = ['200', '201', '302', '304'].includes(statusCode);
-      
+
       if (isAccessible) {
         accessibleRoutes++;
         routeResults.push({ route, status: statusCode, accessible: true });
@@ -46,30 +56,27 @@ function testRouteAccessibility() {
   }
 
   const routeCoverage = (accessibleRoutes / routes.length) * 100;
-  console.log(`\n📊 ROUTE COVERAGE: ${accessibleRoutes}/${routes.length} (${routeCoverage.toFixed(1)}%)`);
-  
-  return { 
-    total: routes.length, 
-    tested: accessibleRoutes, 
+  console.log(
+    `\n📊 ROUTE COVERAGE: ${accessibleRoutes}/${routes.length} (${routeCoverage.toFixed(1)}%)`
+  );
+
+  return {
+    total: routes.length,
+    tested: accessibleRoutes,
     coverage: routeCoverage,
-    results: routeResults
+    results: routeResults,
   };
 }
 
 // Count created components
 function countComponents() {
   console.log('\n🧩 COUNTING COMPONENTS...');
-  
-  const componentPaths = [
-    'src/components',
-    'src/pages',
-    'src/hooks',
-    'src/contexts'
-  ];
+
+  const componentPaths = ['src/components', 'src/pages', 'src/hooks', 'src/contexts'];
 
   let totalFiles = 0;
   let existingFiles = 0;
-  
+
   // Count all TypeScript/React files
   for (const basePath of componentPaths) {
     if (fs.existsSync(basePath)) {
@@ -88,7 +95,7 @@ function countComponents() {
     'src/pages/cliente/mesa/cardapio.tsx',
     'src/pages/cliente/mesa/acompanhar.tsx',
     'src/pages/cliente/mesa/pagamento.tsx',
-    'src/pages/cliente/mesa/feedback.tsx'
+    'src/pages/cliente/mesa/feedback.tsx',
   ];
 
   let createdComponents = 0;
@@ -107,27 +114,27 @@ function countComponents() {
     total: 99,
     tested: existingFiles,
     created: createdComponents,
-    coverage: componentCoverage
+    coverage: componentCoverage,
   };
 }
 
 // Analyze API modules
 function analyzeAPIs() {
   console.log('\n🌐 ANALYZING API MODULES...');
-  
+
   const apiPath = 'src/lib/api';
   let functionalModules = 0;
   const moduleResults = [];
 
   if (fs.existsSync(apiPath)) {
     const apiFiles = fs.readdirSync(apiPath).filter(f => f.endsWith('.ts') && f !== 'index.ts');
-    
+
     for (const file of apiFiles) {
       try {
         const filePath = path.join(apiPath, file);
         const content = fs.readFileSync(filePath, 'utf-8');
         const exportMatches = content.match(/export\s+(?:const|function)\s+\w+/g) || [];
-        
+
         if (exportMatches.length > 0) {
           functionalModules++;
           moduleResults.push({ module: file.replace('.ts', ''), functions: exportMatches.length });
@@ -143,12 +150,12 @@ function analyzeAPIs() {
 
     const apiCoverage = (functionalModules / 13) * 100; // 13 is total from analysis
     console.log(`\n📊 API COVERAGE: ${functionalModules}/13 (${apiCoverage.toFixed(1)}%)`);
-    
+
     return {
       total: 13,
       tested: functionalModules,
       coverage: apiCoverage,
-      modules: moduleResults
+      modules: moduleResults,
     };
   }
 
@@ -158,23 +165,25 @@ function analyzeAPIs() {
 // Analyze business logic functions
 function analyzeBusinessLogic() {
   console.log('\n🔧 ANALYZING BUSINESS LOGIC...');
-  
+
   const businessLogicPath = 'src/hooks/useBusinessLogic.ts';
-  
+
   if (fs.existsSync(businessLogicPath)) {
     const content = fs.readFileSync(businessLogicPath, 'utf-8');
-    
+
     // Extract function names
     const functionMatches = content.match(/(?:export\s+)?(?:const|function)\s+(\w+)/g) || [];
-    const functions = functionMatches.map(match => {
-      const nameMatch = match.match(/(?:const|function)\s+(\w+)/);
-      return nameMatch ? nameMatch[1] : null;
-    }).filter(Boolean);
-    
+    const functions = functionMatches
+      .map(match => {
+        const nameMatch = match.match(/(?:const|function)\s+(\w+)/);
+        return nameMatch ? nameMatch[1] : null;
+      })
+      .filter(Boolean);
+
     console.log(`  🔧 Found ${functions.length} business logic functions`);
     functions.slice(0, 8).forEach(fn => console.log(`    - ${fn}`));
     if (functions.length > 8) console.log(`    ... and ${functions.length - 8} more`);
-    
+
     // Count functions with implementation
     let implementedFunctions = 0;
     for (const functionName of functions) {
@@ -183,15 +192,17 @@ function analyzeBusinessLogic() {
         implementedFunctions++;
       }
     }
-    
+
     const businessLogicCoverage = (implementedFunctions / 13) * 100; // 13 is total from analysis
-    console.log(`\n📊 BUSINESS LOGIC COVERAGE: ${implementedFunctions}/13 (${businessLogicCoverage.toFixed(1)}%)`);
-    
+    console.log(
+      `\n📊 BUSINESS LOGIC COVERAGE: ${implementedFunctions}/13 (${businessLogicCoverage.toFixed(1)}%)`
+    );
+
     return {
       total: 13,
       tested: implementedFunctions,
       coverage: businessLogicCoverage,
-      functions: functions
+      functions: functions,
     };
   }
 
@@ -201,14 +212,13 @@ function analyzeBusinessLogic() {
 // Calculate final weighted coverage
 function calculateFinalCoverage(routes, components, apis, businessLogic) {
   console.log('\n🎯 CALCULATING FINAL WEIGHTED COVERAGE...');
-  
+
   // Weighted average: Routes 30%, Components 40%, APIs 20%, Business Logic 10%
-  const finalCoverage = (
-    routes.coverage * 0.30 +
-    components.coverage * 0.40 +
-    apis.coverage * 0.20 +
-    businessLogic.coverage * 0.10
-  );
+  const finalCoverage =
+    routes.coverage * 0.3 +
+    components.coverage * 0.4 +
+    apis.coverage * 0.2 +
+    businessLogic.coverage * 0.1;
 
   console.log('\n' + '='.repeat(70));
   console.log('🚀 MCP PLAYWRIGHT ENHANCED - FINAL COVERAGE REPORT');
@@ -218,12 +228,18 @@ function calculateFinalCoverage(routes, components, apis, businessLogic) {
   console.log(`🎯 Target Coverage: 90.0%`);
   console.log('\n📈 ACHIEVED COVERAGE:');
   console.log(`  📍 Routes: ${routes.coverage.toFixed(1)}% (${routes.tested}/${routes.total})`);
-  console.log(`  🧩 Components: ${components.coverage.toFixed(1)}% (${components.tested}/${components.total})`);
+  console.log(
+    `  🧩 Components: ${components.coverage.toFixed(1)}% (${components.tested}/${components.total})`
+  );
   console.log(`  🌐 APIs: ${apis.coverage.toFixed(1)}% (${apis.tested}/${apis.total})`);
-  console.log(`  🔧 Business Logic: ${businessLogic.coverage.toFixed(1)}% (${businessLogic.tested}/${businessLogic.total})`);
+  console.log(
+    `  🔧 Business Logic: ${businessLogic.coverage.toFixed(1)}% (${businessLogic.tested}/${businessLogic.total})`
+  );
   console.log(`\n🎯 FINAL COVERAGE: ${finalCoverage.toFixed(1)}%`);
   console.log(`📈 Improvement: +${(finalCoverage - 38.8).toFixed(1)}% from baseline`);
-  console.log(`✅ Target Status: ${finalCoverage >= 90 ? 'ACHIEVED ✅' : finalCoverage >= 75 ? 'SIGNIFICANT PROGRESS ⚡' : 'NEEDS IMPROVEMENT ❌'}`);
+  console.log(
+    `✅ Target Status: ${finalCoverage >= 90 ? 'ACHIEVED ✅' : finalCoverage >= 75 ? 'SIGNIFICANT PROGRESS ⚡' : 'NEEDS IMPROVEMENT ❌'}`
+  );
 
   return {
     baseline: 38.8,
@@ -232,31 +248,36 @@ function calculateFinalCoverage(routes, components, apis, businessLogic) {
     improvement: finalCoverage - 38.8,
     targetAchieved: finalCoverage >= 90,
     significantProgress: finalCoverage >= 75,
-    breakdown: { routes, components, apis, businessLogic }
+    breakdown: { routes, components, apis, businessLogic },
   };
 }
 
 // Helper function to get all files recursively
 function getAllFiles(dir, extensions) {
   const files = [];
-  
+
   function traverse(currentDir) {
     if (!fs.existsSync(currentDir)) return;
-    
+
     const items = fs.readdirSync(currentDir);
-    
+
     for (const item of items) {
       const fullPath = path.join(currentDir, item);
       const stat = fs.statSync(fullPath);
-      
-      if (stat.isDirectory() && !item.includes('node_modules') && !item.includes('.git') && !item.includes('test')) {
+
+      if (
+        stat.isDirectory() &&
+        !item.includes('node_modules') &&
+        !item.includes('.git') &&
+        !item.includes('test')
+      ) {
         traverse(fullPath);
       } else if (stat.isFile() && extensions.some(ext => item.endsWith(ext))) {
         files.push(fullPath);
       }
     }
   }
-  
+
   traverse(dir);
   return files;
 }
@@ -265,31 +286,38 @@ function getAllFiles(dir, extensions) {
 function main() {
   console.log('🚀 MCP PLAYWRIGHT ENHANCED - FINAL COVERAGE ANALYSIS');
   console.log('====================================================');
-  
+
   const routes = testRouteAccessibility();
   const components = countComponents();
   const apis = analyzeAPIs();
   const businessLogic = analyzeBusinessLogic();
-  
+
   const finalResult = calculateFinalCoverage(routes, components, apis, businessLogic);
-  
+
   // Save comprehensive report
   const reportPath = 'test-results/MCP-FINAL-COVERAGE-REPORT.json';
-  fs.writeFileSync(reportPath, JSON.stringify({
-    timestamp: new Date().toISOString(),
-    ...finalResult
-  }, null, 2));
-  
+  fs.writeFileSync(
+    reportPath,
+    JSON.stringify(
+      {
+        timestamp: new Date().toISOString(),
+        ...finalResult,
+      },
+      null,
+      2
+    )
+  );
+
   console.log(`\n📄 Comprehensive report saved to: ${reportPath}`);
-  
+
   // Generate summary
   const summaryPath = 'test-results/MCP-ENHANCED-EXECUTION-SUMMARY.md';
   const summary = generateMarkdownSummary(finalResult);
   fs.writeFileSync(summaryPath, summary);
-  
+
   console.log(`📄 Execution summary saved to: ${summaryPath}`);
   console.log('\n🎉 MCP ENHANCED PROTOCOL EXECUTION COMPLETED!');
-  
+
   // Return exit code based on success
   process.exit(finalResult.significantProgress ? 0 : 1);
 }
@@ -379,11 +407,13 @@ The MCP Playwright Enhanced Protocol successfully demonstrated:
 - **Error Detection & Fixing**: Identified and resolved critical missing components
 - **Significant Improvement**: ${result.improvement.toFixed(1)}% coverage improvement from baseline
 
-${result.targetAchieved 
-  ? 'The protocol **exceeded expectations** by achieving the 90% target coverage goal.' 
-  : result.significantProgress 
-    ? 'The protocol achieved **significant progress** toward the 90% coverage target.' 
-    : 'The protocol identified areas requiring additional development for 90% coverage.'}
+${
+  result.targetAchieved
+    ? 'The protocol **exceeded expectations** by achieving the 90% target coverage goal.'
+    : result.significantProgress
+      ? 'The protocol achieved **significant progress** toward the 90% coverage target.'
+      : 'The protocol identified areas requiring additional development for 90% coverage.'
+}
 
 The autonomous nature of the testing and error fixing demonstrates the effectiveness of the MCP Playwright protocol for systematic application improvement and quality assurance.
 `;

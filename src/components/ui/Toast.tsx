@@ -91,18 +91,10 @@ function Toast({ message, onRemove }: ToastProps) {
     >
       <div className="p-4">
         <div className="flex items-start">
-          <div className={`flex-shrink-0 ${getIconColors()}`}>
-            {getIcon()}
-          </div>
+          <div className={`flex-shrink-0 ${getIconColors()}`}>{getIcon()}</div>
           <div className="ml-3 w-0 flex-1">
-            <p className="text-sm font-medium">
-              {message.titulo}
-            </p>
-            {message.mensagem && (
-              <p className="mt-1 text-sm opacity-90">
-                {message.mensagem}
-              </p>
-            )}
+            <p className="text-sm font-medium">{message.titulo}</p>
+            {message.mensagem && <p className="mt-1 text-sm opacity-90">{message.mensagem}</p>}
           </div>
           <div className="ml-4 flex-shrink-0 flex">
             <button
@@ -125,12 +117,8 @@ function ToastContainer({ messages, onRemove }: ToastContainerProps) {
       className="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start z-50"
     >
       <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
-        {messages.map((message) => (
-          <Toast
-            key={message.id}
-            message={message}
-            onRemove={onRemove}
-          />
+        {messages.map(message => (
+          <Toast key={message.id} message={message} onRemove={onRemove} />
         ))}
       </div>
     </div>
@@ -153,7 +141,7 @@ export function useToast() {
       tipo,
       titulo,
       mensagem: mensagem || '',
-      duracao
+      duracao,
     };
 
     setMessages(prev => [...prev, newMessage]);
@@ -186,8 +174,8 @@ export function useToast() {
     showError,
     showWarning,
     showInfo,
-    ToastContainer: () => <ToastContainer messages={messages} onRemove={removeToast} />
+    ToastContainer: () => <ToastContainer messages={messages} onRemove={removeToast} />,
   };
 }
 
-export default Toast; 
+export default Toast;

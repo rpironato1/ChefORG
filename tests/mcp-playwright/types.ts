@@ -74,23 +74,23 @@ export interface CoverageMatrix {
 export const DEFAULT_CONFIG: MCPTestConfig = {
   agent_mode: 'autonomous',
   human_intervention: false,
-  coverage_target: 0.90,
+  coverage_target: 0.9,
   wcag_compliance: 'AA',
   parallel_execution: true,
-  self_healing: true
+  self_healing: true,
 };
 
 export const COVERAGE_MATRIX: CoverageMatrix = {
   functional: {
     navigation: 0.15,
-    forms: 0.20,
+    forms: 0.2,
     interactions: 0.25,
-    media: 0.10,
-    multi_context: 0.10
+    media: 0.1,
+    multi_context: 0.1,
   },
   accessibility: {
     wcag_aa: 0.15,
-    keyboard: 0.05
+    keyboard: 0.05,
   },
-  total: 0.90
+  total: 0.9,
 };

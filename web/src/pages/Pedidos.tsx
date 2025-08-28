@@ -27,53 +27,53 @@ const mockPedidos: Pedido[] = [
     id: '#001',
     mesa: 5,
     itens: [
-      { id: '1', nome: 'Hambúrguer Artesanal', quantidade: 2, preco: 28.90, status: 'preparando' },
-      { id: '2', nome: 'Suco de Laranja', quantidade: 2, preco: 8.50, status: 'pronto' }
+      { id: '1', nome: 'Hambúrguer Artesanal', quantidade: 2, preco: 28.9, status: 'preparando' },
+      { id: '2', nome: 'Suco de Laranja', quantidade: 2, preco: 8.5, status: 'pronto' },
     ],
     status: 'preparando',
     garcom: 'João',
     dataHora: '14:30',
-    total: 74.80,
-    tempoEspera: 15
+    total: 74.8,
+    tempoEspera: 15,
   },
   {
     id: '#002',
     mesa: 12,
     itens: [
-      { id: '3', nome: 'Risotto de Camarão', quantidade: 1, preco: 45.50, status: 'pronto' },
-      { id: '4', nome: 'Tiramisu', quantidade: 1, preco: 16.90, status: 'pronto' }
+      { id: '3', nome: 'Risotto de Camarão', quantidade: 1, preco: 45.5, status: 'pronto' },
+      { id: '4', nome: 'Tiramisu', quantidade: 1, preco: 16.9, status: 'pronto' },
     ],
     status: 'pronto',
     garcom: 'Maria',
     dataHora: '14:45',
-    total: 62.40,
-    tempoEspera: 25
+    total: 62.4,
+    tempoEspera: 25,
   },
   {
     id: '#003',
     mesa: 8,
     itens: [
-      { id: '5', nome: 'Pasta ao Pesto', quantidade: 1, preco: 32.40, status: 'pendente' },
-      { id: '6', nome: 'Salada Caesar', quantidade: 1, preco: 22.80, status: 'pendente' }
+      { id: '5', nome: 'Pasta ao Pesto', quantidade: 1, preco: 32.4, status: 'pendente' },
+      { id: '6', nome: 'Salada Caesar', quantidade: 1, preco: 22.8, status: 'pendente' },
     ],
     status: 'pendente',
     garcom: 'Pedro',
     dataHora: '15:12',
-    total: 55.20,
-    tempoEspera: 2
+    total: 55.2,
+    tempoEspera: 2,
   },
   {
     id: '#004',
     mesa: 3,
     itens: [
-      { id: '7', nome: 'Hambúrguer Artesanal', quantidade: 1, preco: 28.90, status: 'preparando' }
+      { id: '7', nome: 'Hambúrguer Artesanal', quantidade: 1, preco: 28.9, status: 'preparando' },
     ],
     status: 'preparando',
     garcom: 'Ana',
     dataHora: '15:20',
-    total: 28.90,
-    tempoEspera: 8
-  }
+    total: 28.9,
+    tempoEspera: 8,
+  },
 ];
 
 function Pedidos() {
@@ -84,43 +84,70 @@ function Pedidos() {
 
   const statusOptions = [
     { value: 'todos', label: 'Todos', count: pedidos.length },
-    { value: 'pendente', label: 'Pendentes', count: pedidos.filter(p => p.status === 'pendente').length },
-    { value: 'preparando', label: 'Preparando', count: pedidos.filter(p => p.status === 'preparando').length },
+    {
+      value: 'pendente',
+      label: 'Pendentes',
+      count: pedidos.filter(p => p.status === 'pendente').length,
+    },
+    {
+      value: 'preparando',
+      label: 'Preparando',
+      count: pedidos.filter(p => p.status === 'preparando').length,
+    },
     { value: 'pronto', label: 'Prontos', count: pedidos.filter(p => p.status === 'pronto').length },
-    { value: 'entregue', label: 'Entregues', count: pedidos.filter(p => p.status === 'entregue').length },
-    { value: 'cancelado', label: 'Cancelados', count: pedidos.filter(p => p.status === 'cancelado').length }
+    {
+      value: 'entregue',
+      label: 'Entregues',
+      count: pedidos.filter(p => p.status === 'entregue').length,
+    },
+    {
+      value: 'cancelado',
+      label: 'Cancelados',
+      count: pedidos.filter(p => p.status === 'cancelado').length,
+    },
   ];
 
-  const filteredPedidos = selectedStatus === 'todos' 
-    ? pedidos 
-    : pedidos.filter(p => p.status === selectedStatus);
+  const filteredPedidos =
+    selectedStatus === 'todos' ? pedidos : pedidos.filter(p => p.status === selectedStatus);
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pendente': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-      case 'preparando': return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'pronto': return 'bg-green-100 text-green-700 border-green-200';
-      case 'entregue': return 'bg-gray-100 text-gray-700 border-gray-200';
-      case 'cancelado': return 'bg-red-100 text-red-700 border-red-200';
-      default: return 'bg-gray-100 text-gray-700 border-gray-200';
+      case 'pendente':
+        return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+      case 'preparando':
+        return 'bg-blue-100 text-blue-700 border-blue-200';
+      case 'pronto':
+        return 'bg-green-100 text-green-700 border-green-200';
+      case 'entregue':
+        return 'bg-gray-100 text-gray-700 border-gray-200';
+      case 'cancelado':
+        return 'bg-red-100 text-red-700 border-red-200';
+      default:
+        return 'bg-gray-100 text-gray-700 border-gray-200';
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'pendente': return 'Pendente';
-      case 'preparando': return 'Preparando';
-      case 'pronto': return 'Pronto';
-      case 'entregue': return 'Entregue';
-      case 'cancelado': return 'Cancelado';
-      default: return 'Desconhecido';
+      case 'pendente':
+        return 'Pendente';
+      case 'preparando':
+        return 'Preparando';
+      case 'pronto':
+        return 'Pronto';
+      case 'entregue':
+        return 'Entregue';
+      case 'cancelado':
+        return 'Cancelado';
+      default:
+        return 'Desconhecido';
     }
   };
 
   const handleStatusChange = (pedidoId: string, newStatus: Pedido['status']) => {
-    setPedidos(pedidos.map(pedido => 
-      pedido.id === pedidoId ? { ...pedido, status: newStatus } : pedido
-    ));
+    setPedidos(
+      pedidos.map(pedido => (pedido.id === pedidoId ? { ...pedido, status: newStatus } : pedido))
+    );
   };
 
   const handleViewPedido = (pedido: Pedido) => {
@@ -140,9 +167,7 @@ function Pedidos() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Pedidos</h1>
-          <p className="text-gray-600 mt-1">
-            Acompanhe e gerencie todos os pedidos do restaurante
-          </p>
+          <p className="text-gray-600 mt-1">Acompanhe e gerencie todos os pedidos do restaurante</p>
         </div>
         <button className="btn-primary">
           <Plus className="h-4 w-4 mr-2" />
@@ -163,9 +188,11 @@ function Pedidos() {
             }`}
           >
             {option.label}
-            <span className={`px-2 py-1 rounded-full text-xs ${
-              selectedStatus === option.value ? 'bg-primary-700' : 'bg-gray-200'
-            }`}>
+            <span
+              className={`px-2 py-1 rounded-full text-xs ${
+                selectedStatus === option.value ? 'bg-primary-700' : 'bg-gray-200'
+              }`}
+            >
               {option.count}
             </span>
           </button>
@@ -179,11 +206,15 @@ function Pedidos() {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">{pedido.id}</h3>
-                <p className="text-sm text-gray-600">Mesa {pedido.mesa} • {pedido.garcom}</p>
+                <p className="text-sm text-gray-600">
+                  Mesa {pedido.mesa} • {pedido.garcom}
+                </p>
                 <p className="text-xs text-gray-500 mt-1">{pedido.dataHora}</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(pedido.status)}`}>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(pedido.status)}`}
+                >
                   {getStatusText(pedido.status)}
                 </span>
               </div>
@@ -191,22 +222,25 @@ function Pedidos() {
 
             <div className="space-y-2 mb-4">
               {pedido.itens.map(item => (
-                <div key={item.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between p-2 bg-gray-50 rounded"
+                >
                   <div className="flex-1">
                     <div className="text-sm font-medium text-gray-900">
                       {item.quantidade}x {item.nome}
                     </div>
                     {item.observacoes && (
-                      <div className="text-xs text-gray-500 mt-1">
-                        Obs: {item.observacoes}
-                      </div>
+                      <div className="text-xs text-gray-500 mt-1">Obs: {item.observacoes}</div>
                     )}
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-gray-900">
                       R$ {(item.preco * item.quantidade).toFixed(2)}
                     </span>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(item.status)}`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(item.status)}`}
+                    >
                       {getStatusText(item.status)}
                     </span>
                   </div>
@@ -219,7 +253,9 @@ function Pedidos() {
                 <div className="text-lg font-bold text-gray-900">
                   Total: R$ {pedido.total.toFixed(2)}
                 </div>
-                <div className={`text-sm flex items-center gap-1 ${getUrgencyColor(pedido.tempoEspera || 0)}`}>
+                <div
+                  className={`text-sm flex items-center gap-1 ${getUrgencyColor(pedido.tempoEspera || 0)}`}
+                >
                   <Clock className="h-4 w-4" />
                   {pedido.tempoEspera} min
                 </div>
@@ -271,16 +307,25 @@ function Pedidos() {
             <h2 className="text-xl font-bold text-gray-900 mb-6">
               Detalhes do Pedido {selectedPedido.id}
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Informações Gerais</h3>
                 <div className="space-y-2 text-sm">
-                  <div><span className="font-medium">Mesa:</span> {selectedPedido.mesa}</div>
-                  <div><span className="font-medium">Garçom:</span> {selectedPedido.garcom}</div>
-                  <div><span className="font-medium">Horário:</span> {selectedPedido.dataHora}</div>
-                  <div><span className="font-medium">Status:</span> 
-                    <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(selectedPedido.status)}`}>
+                  <div>
+                    <span className="font-medium">Mesa:</span> {selectedPedido.mesa}
+                  </div>
+                  <div>
+                    <span className="font-medium">Garçom:</span> {selectedPedido.garcom}
+                  </div>
+                  <div>
+                    <span className="font-medium">Horário:</span> {selectedPedido.dataHora}
+                  </div>
+                  <div>
+                    <span className="font-medium">Status:</span>
+                    <span
+                      className={`ml-2 px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(selectedPedido.status)}`}
+                    >
                       {getStatusText(selectedPedido.status)}
                     </span>
                   </div>
@@ -290,9 +335,18 @@ function Pedidos() {
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Resumo</h3>
                 <div className="space-y-2 text-sm">
-                  <div><span className="font-medium">Total de Itens:</span> {selectedPedido.itens.length}</div>
-                  <div><span className="font-medium">Valor Total:</span> R$ {selectedPedido.total.toFixed(2)}</div>
-                  <div><span className="font-medium">Tempo de Espera:</span> {selectedPedido.tempoEspera} min</div>
+                  <div>
+                    <span className="font-medium">Total de Itens:</span>{' '}
+                    {selectedPedido.itens.length}
+                  </div>
+                  <div>
+                    <span className="font-medium">Valor Total:</span> R${' '}
+                    {selectedPedido.total.toFixed(2)}
+                  </div>
+                  <div>
+                    <span className="font-medium">Tempo de Espera:</span>{' '}
+                    {selectedPedido.tempoEspera} min
+                  </div>
                 </div>
               </div>
             </div>
@@ -301,7 +355,10 @@ function Pedidos() {
               <h3 className="font-semibold text-gray-900 mb-3">Itens do Pedido</h3>
               <div className="space-y-3">
                 {selectedPedido.itens.map(item => (
-                  <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
                     <div className="flex-1">
                       <div className="font-medium text-gray-900">{item.nome}</div>
                       <div className="text-sm text-gray-600">Quantidade: {item.quantidade}</div>
@@ -315,7 +372,9 @@ function Pedidos() {
                       <div className="font-medium text-gray-900">
                         R$ {(item.preco * item.quantidade).toFixed(2)}
                       </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(item.status)}`}>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(item.status)}`}
+                      >
                         {getStatusText(item.status)}
                       </span>
                     </div>
@@ -337,7 +396,9 @@ function Pedidos() {
               <div className="flex gap-2">
                 <select
                   value={selectedPedido.status}
-                  onChange={(e) => handleStatusChange(selectedPedido.id, e.target.value as Pedido['status'])}
+                  onChange={e =>
+                    handleStatusChange(selectedPedido.id, e.target.value as Pedido['status'])
+                  }
                   className="input-field text-sm"
                 >
                   <option value="pendente">Pendente</option>
@@ -348,15 +409,10 @@ function Pedidos() {
                 </select>
               </div>
               <div className="flex gap-3">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="btn-secondary"
-                >
+                <button onClick={() => setIsModalOpen(false)} className="btn-secondary">
                   Fechar
                 </button>
-                <button className="btn-primary">
-                  Salvar Alterações
-                </button>
+                <button className="btn-primary">Salvar Alterações</button>
               </div>
             </div>
           </div>
@@ -366,4 +422,4 @@ function Pedidos() {
   );
 }
 
-export default Pedidos; 
+export default Pedidos;

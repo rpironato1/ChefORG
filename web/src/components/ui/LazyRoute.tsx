@@ -23,7 +23,13 @@ function RouteLoadingSpinner() {
 }
 
 // Error fallback component
-function RouteErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+function RouteErrorFallback({
+  error,
+  resetErrorBoundary,
+}: {
+  error: Error;
+  resetErrorBoundary: () => void;
+}) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center p-8">
@@ -57,13 +63,8 @@ function RouteErrorFallback({ error, resetErrorBoundary }: { error: Error; reset
 // Main lazy route wrapper
 export function LazyRoute({ children, fallback }: LazyRouteProps) {
   return (
-    <ErrorBoundary
-      FallbackComponent={RouteErrorFallback}
-      onReset={() => window.location.reload()}
-    >
-      <Suspense fallback={fallback || <RouteLoadingSpinner />}>
-        {children}
-      </Suspense>
+    <ErrorBoundary FallbackComponent={RouteErrorFallback} onReset={() => window.location.reload()}>
+      <Suspense fallback={fallback || <RouteLoadingSpinner />}>{children}</Suspense>
     </ErrorBoundary>
   );
 }
@@ -78,9 +79,10 @@ export function withLazyLoading<T extends {}>(
       <Component {...props} />
     </LazyRoute>
   );
-  
-  WrappedComponent.displayName = displayName || `LazyLoaded(${Component.displayName || Component.name})`;
-  
+
+  WrappedComponent.displayName =
+    displayName || `LazyLoaded(${Component.displayName || Component.name})`;
+
   return WrappedComponent;
 }
 
@@ -90,7 +92,7 @@ export function createLazyComponent<T extends Record<string, any>>(
   displayName?: string
 ) {
   const LazyComponent = React.lazy(factory);
-  
+
   return (props: T) => (
     <LazyRoute>
       <LazyComponent {...props} />

@@ -33,8 +33,8 @@ export const SwipeGestureDemo: React.FC = () => {
       <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
         Teste de Gestos Touch
       </h3>
-      
-      <div 
+
+      <div
         {...swipeHandlers}
         className={`
           min-h-[200px] border-2 border-dashed border-gray-300 rounded-lg
@@ -46,32 +46,36 @@ export const SwipeGestureDemo: React.FC = () => {
         `}
       >
         <div className="text-center space-y-4">
-          <p className="text-sm text-gray-600">
-            👆 Deslize ou arraste nesta área
-          </p>
-          
+          <p className="text-sm text-gray-600">👆 Deslize ou arraste nesta área</p>
+
           <div className="flex items-center justify-center space-x-8">
             <div className="flex items-center space-x-2">
-              <ArrowLeft className={`w-5 h-5 ${lastSwipe === 'right' ? 'text-green-600' : 'text-gray-400'}`} />
+              <ArrowLeft
+                className={`w-5 h-5 ${lastSwipe === 'right' ? 'text-green-600' : 'text-gray-400'}`}
+              />
               <span className="text-sm font-medium">Direita: {swipeCount.right}</span>
             </div>
-            
+
             <div className="flex items-center space-x-2">
-              <ArrowRight className={`w-5 h-5 ${lastSwipe === 'left' ? 'text-red-600' : 'text-gray-400'}`} />
+              <ArrowRight
+                className={`w-5 h-5 ${lastSwipe === 'left' ? 'text-red-600' : 'text-gray-400'}`}
+              />
               <span className="text-sm font-medium">Esquerda: {swipeCount.left}</span>
             </div>
           </div>
-          
+
           {lastSwipe && (
-            <div className={`text-sm font-medium ${
-              lastSwipe === 'left' ? 'text-red-600' : 'text-green-600'
-            }`}>
+            <div
+              className={`text-sm font-medium ${
+                lastSwipe === 'left' ? 'text-red-600' : 'text-green-600'
+              }`}
+            >
               Swipe para {lastSwipe === 'left' ? 'esquerda' : 'direita'} detectado!
             </div>
           )}
         </div>
       </div>
-      
+
       <div className="mt-4 text-center">
         <button
           onClick={reset}
@@ -81,7 +85,7 @@ export const SwipeGestureDemo: React.FC = () => {
           <span className="text-sm">Reset</span>
         </button>
       </div>
-      
+
       <div className="mt-4 text-xs text-gray-500 text-center">
         <p>💡 Em dispositivos móveis: Use os dedos para deslizar</p>
         <p>🖱️ No desktop: Clique e arraste com o mouse</p>

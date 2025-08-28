@@ -123,12 +123,12 @@ export const API_ENDPOINTS = {
 // Type-safe endpoint builder
 export const buildEndpoint = (template: string, params?: Record<string, string>): string => {
   if (!params) return template;
-  
+
   let endpoint = template;
   for (const [key, value] of Object.entries(params)) {
     endpoint = endpoint.replace(`:${key}`, encodeURIComponent(value));
   }
-  
+
   return endpoint;
 };
 
@@ -155,13 +155,13 @@ export const API_CONFIG = {
     STOCK: 5, // 5 minutes
     LOYALTY: 10, // 10 minutes
   },
-  
+
   TIMEOUTS: {
     FAST: 5000, // 5 seconds
     NORMAL: 10000, // 10 seconds
     SLOW: 30000, // 30 seconds
   },
-  
+
   RETRIES: {
     NONE: 0,
     LOW: 1,

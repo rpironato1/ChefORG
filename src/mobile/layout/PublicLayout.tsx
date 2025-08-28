@@ -33,7 +33,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
 
   const swipeHandlers = useSwipeNavigation({
     routes: getSwipeRoutes(),
-    enableSwipeNavigation: !mobileMenuOpen
+    enableSwipeNavigation: !mobileMenuOpen,
   });
 
   // Pull to refresh handler
@@ -46,7 +46,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
 
   const { touchHandlers, refreshState } = usePullToRefresh({
     onRefresh: handleRefresh,
-    disabled: mobileMenuOpen
+    disabled: mobileMenuOpen,
   });
 
   return (
@@ -54,36 +54,31 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
       {/* Mobile Layout */}
       <div className="block md:hidden">
         <MobileHeader onMenuToggle={() => setMobileMenuOpen(true)} />
-        <MobileDrawer 
-          isOpen={mobileMenuOpen} 
-          onClose={() => setMobileMenuOpen(false)} 
-        />
-        
+        <MobileDrawer isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+
         {/* Pull to refresh indicator */}
         {refreshState.isActive && (
-          <div 
+          <div
             className="fixed top-16 left-0 right-0 flex justify-center z-30 transition-transform duration-200"
             style={{ transform: `translateY(${Math.min(refreshState.pullDistance - 60, 40)}px)` }}
           >
             <div className="bg-white rounded-full shadow-lg p-2">
-              <div className={`w-6 h-6 border-2 border-primary-600 rounded-full ${
-                refreshState.isRefreshing ? 'animate-spin border-t-transparent' : ''
-              } ${refreshState.isTriggered ? 'border-t-transparent animate-pulse' : ''}`} />
+              <div
+                className={`w-6 h-6 border-2 border-primary-600 rounded-full ${
+                  refreshState.isRefreshing ? 'animate-spin border-t-transparent' : ''
+                } ${refreshState.isTriggered ? 'border-t-transparent animate-pulse' : ''}`}
+              />
             </div>
           </div>
         )}
-        
-        <main 
-          className="pb-16" 
-          {...swipeHandlers} 
-          {...touchHandlers}
-        >
+
+        <main className="pb-16" {...swipeHandlers} {...touchHandlers}>
           {children}
         </main>
         <MobileBottomNavigation />
         <PWAInstallBanner />
       </div>
-      
+
       {/* Desktop Layout - Public Header */}
       <div className="hidden md:block">
         <nav className="bg-white shadow-sm sticky top-0 z-50">
@@ -97,15 +92,24 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
                   <span className="text-xl font-bold text-gray-900">ChefORG</span>
                 </Link>
               </div>
-              
+
               <div className="hidden md:flex items-center space-x-8">
-                <Link to="#sobre" className="text-gray-700 hover:text-primary-600 transition-colors">
+                <Link
+                  to="#sobre"
+                  className="text-gray-700 hover:text-primary-600 transition-colors"
+                >
                   Sobre
                 </Link>
-                <Link to="#cardapio" className="text-gray-700 hover:text-primary-600 transition-colors">
+                <Link
+                  to="#cardapio"
+                  className="text-gray-700 hover:text-primary-600 transition-colors"
+                >
                   Cardápio
                 </Link>
-                <Link to="#contato" className="text-gray-700 hover:text-primary-600 transition-colors">
+                <Link
+                  to="#contato"
+                  className="text-gray-700 hover:text-primary-600 transition-colors"
+                >
                   Contato
                 </Link>
                 <button
@@ -118,10 +122,8 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
             </div>
           </div>
         </nav>
-        
-        <main>
-          {children}
-        </main>
+
+        <main>{children}</main>
 
         {/* Footer */}
         <footer className="bg-gray-900 text-white">
@@ -138,16 +140,31 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
                   Experiência gastronômica única com sabores excepcionais e ambiente sofisticado.
                 </p>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-4">Links Rápidos</h3>
                 <ul className="space-y-2">
-                  <li><Link to="#sobre" className="text-gray-400 hover:text-white transition-colors">Sobre</Link></li>
-                  <li><Link to="/menu" className="text-gray-400 hover:text-white transition-colors">Cardápio</Link></li>
-                  <li><Link to="/reserva" className="text-gray-400 hover:text-white transition-colors">Reservas</Link></li>
+                  <li>
+                    <Link to="#sobre" className="text-gray-400 hover:text-white transition-colors">
+                      Sobre
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/menu" className="text-gray-400 hover:text-white transition-colors">
+                      Cardápio
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/reserva"
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      Reservas
+                    </Link>
+                  </li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-4">Contato</h3>
                 <ul className="space-y-2 text-gray-400">
@@ -157,7 +174,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
               <p>© 2024 ChefORG. Todos os direitos reservados.</p>
             </div>

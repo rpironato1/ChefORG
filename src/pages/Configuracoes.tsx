@@ -10,29 +10,29 @@ function Configuracoes() {
     telefone: '(11) 3333-4444',
     email: 'contato@cheforg.com',
     cnpj: '12.345.678/0001-90',
-    
+
     // Notificações
     notificacoesPedidos: true,
     notificacoesReservas: true,
     notificacoesEstoque: false,
     emailNotificacoes: true,
     smsNotificacoes: false,
-    
+
     // Sistema
     moeda: 'BRL',
     idioma: 'pt-BR',
     timezone: 'America/Sao_Paulo',
     taxaServico: 10,
-    
+
     // Impressão
     impressoraPedidos: 'Impressora Cozinha',
     impressoraContas: 'Impressora Balcão',
     formatoPapel: 'A4',
-    
+
     // Backup
     backupAutomatico: true,
     frequenciaBackup: 'diario',
-    manterBackups: 30
+    manterBackups: 30,
   });
 
   const tabs = [
@@ -51,7 +51,7 @@ function Configuracoes() {
   const renderGeralTab = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900">Informações do Restaurante</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -60,55 +60,47 @@ function Configuracoes() {
           <input
             type="text"
             value={settings.nomeRestaurante}
-            onChange={(e) => setSettings({...settings, nomeRestaurante: e.target.value})}
+            onChange={e => setSettings({ ...settings, nomeRestaurante: e.target.value })}
             className="input-field"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            CNPJ
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">CNPJ</label>
           <input
             type="text"
             value={settings.cnpj}
-            onChange={(e) => setSettings({...settings, cnpj: e.target.value})}
+            onChange={e => setSettings({ ...settings, cnpj: e.target.value })}
             className="input-field"
           />
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Endereço
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
           <input
             type="text"
             value={settings.endereco}
-            onChange={(e) => setSettings({...settings, endereco: e.target.value})}
+            onChange={e => setSettings({ ...settings, endereco: e.target.value })}
             className="input-field"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Telefone
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
           <input
             type="tel"
             value={settings.telefone}
-            onChange={(e) => setSettings({...settings, telefone: e.target.value})}
+            onChange={e => setSettings({ ...settings, telefone: e.target.value })}
             className="input-field"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
           <input
             type="email"
             value={settings.email}
-            onChange={(e) => setSettings({...settings, email: e.target.value})}
+            onChange={e => setSettings({ ...settings, email: e.target.value })}
             className="input-field"
           />
         </div>
@@ -119,7 +111,7 @@ function Configuracoes() {
   const renderNotificacoesTab = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900">Preferências de Notificação</h3>
-      
+
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -130,7 +122,7 @@ function Configuracoes() {
             <input
               type="checkbox"
               checked={settings.notificacoesPedidos}
-              onChange={(e) => setSettings({...settings, notificacoesPedidos: e.target.checked})}
+              onChange={e => setSettings({ ...settings, notificacoesPedidos: e.target.checked })}
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -146,7 +138,7 @@ function Configuracoes() {
             <input
               type="checkbox"
               checked={settings.notificacoesReservas}
-              onChange={(e) => setSettings({...settings, notificacoesReservas: e.target.checked})}
+              onChange={e => setSettings({ ...settings, notificacoesReservas: e.target.checked })}
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -156,13 +148,15 @@ function Configuracoes() {
         <div className="flex items-center justify-between">
           <div>
             <h4 className="text-sm font-medium text-gray-900">Alertas de Estoque</h4>
-            <p className="text-sm text-gray-600">Notificar quando ingredientes estiverem em baixa</p>
+            <p className="text-sm text-gray-600">
+              Notificar quando ingredientes estiverem em baixa
+            </p>
           </div>
           <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
               checked={settings.notificacoesEstoque}
-              onChange={(e) => setSettings({...settings, notificacoesEstoque: e.target.checked})}
+              onChange={e => setSettings({ ...settings, notificacoesEstoque: e.target.checked })}
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -177,7 +171,7 @@ function Configuracoes() {
             <input
               type="checkbox"
               checked={settings.emailNotificacoes}
-              onChange={(e) => setSettings({...settings, emailNotificacoes: e.target.checked})}
+              onChange={e => setSettings({ ...settings, emailNotificacoes: e.target.checked })}
               className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <span className="ml-2 text-sm text-gray-700">Email</span>
@@ -186,7 +180,7 @@ function Configuracoes() {
             <input
               type="checkbox"
               checked={settings.smsNotificacoes}
-              onChange={(e) => setSettings({...settings, smsNotificacoes: e.target.checked})}
+              onChange={e => setSettings({ ...settings, smsNotificacoes: e.target.checked })}
               className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <span className="ml-2 text-sm text-gray-700">SMS</span>
@@ -199,15 +193,13 @@ function Configuracoes() {
   const renderSistemaTab = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900">Configurações do Sistema</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Moeda
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Moeda</label>
           <select
             value={settings.moeda}
-            onChange={(e) => setSettings({...settings, moeda: e.target.value})}
+            onChange={e => setSettings({ ...settings, moeda: e.target.value })}
             className="input-field"
           >
             <option value="BRL">Real Brasileiro (R$)</option>
@@ -217,12 +209,10 @@ function Configuracoes() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Idioma
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Idioma</label>
           <select
             value={settings.idioma}
-            onChange={(e) => setSettings({...settings, idioma: e.target.value})}
+            onChange={e => setSettings({ ...settings, idioma: e.target.value })}
             className="input-field"
           >
             <option value="pt-BR">Português (Brasil)</option>
@@ -232,12 +222,10 @@ function Configuracoes() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Fuso Horário
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Fuso Horário</label>
           <select
             value={settings.timezone}
-            onChange={(e) => setSettings({...settings, timezone: e.target.value})}
+            onChange={e => setSettings({ ...settings, timezone: e.target.value })}
             className="input-field"
           >
             <option value="America/Sao_Paulo">São Paulo (GMT-3)</option>
@@ -255,7 +243,7 @@ function Configuracoes() {
             min="0"
             max="30"
             value={settings.taxaServico}
-            onChange={(e) => setSettings({...settings, taxaServico: parseInt(e.target.value)})}
+            onChange={e => setSettings({ ...settings, taxaServico: parseInt(e.target.value) })}
             className="input-field"
           />
         </div>
@@ -268,7 +256,7 @@ function Configuracoes() {
             <input
               type="checkbox"
               checked={settings.backupAutomatico}
-              onChange={(e) => setSettings({...settings, backupAutomatico: e.target.checked})}
+              onChange={e => setSettings({ ...settings, backupAutomatico: e.target.checked })}
               className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <span className="ml-2 text-sm text-gray-700">Ativar backup automático</span>
@@ -277,12 +265,10 @@ function Configuracoes() {
           {settings.backupAutomatico && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Frequência
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Frequência</label>
                 <select
                   value={settings.frequenciaBackup}
-                  onChange={(e) => setSettings({...settings, frequenciaBackup: e.target.value})}
+                  onChange={e => setSettings({ ...settings, frequenciaBackup: e.target.value })}
                   className="input-field"
                 >
                   <option value="diario">Diário</option>
@@ -300,7 +286,9 @@ function Configuracoes() {
                   min="1"
                   max="365"
                   value={settings.manterBackups}
-                  onChange={(e) => setSettings({...settings, manterBackups: parseInt(e.target.value)})}
+                  onChange={e =>
+                    setSettings({ ...settings, manterBackups: parseInt(e.target.value) })
+                  }
                   className="input-field"
                 />
               </div>
@@ -314,7 +302,7 @@ function Configuracoes() {
   const renderImpressaoTab = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900">Configurações de Impressão</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -322,7 +310,7 @@ function Configuracoes() {
           </label>
           <select
             value={settings.impressoraPedidos}
-            onChange={(e) => setSettings({...settings, impressoraPedidos: e.target.value})}
+            onChange={e => setSettings({ ...settings, impressoraPedidos: e.target.value })}
             className="input-field"
           >
             <option value="Impressora Cozinha">Impressora Cozinha</option>
@@ -337,7 +325,7 @@ function Configuracoes() {
           </label>
           <select
             value={settings.impressoraContas}
-            onChange={(e) => setSettings({...settings, impressoraContas: e.target.value})}
+            onChange={e => setSettings({ ...settings, impressoraContas: e.target.value })}
             className="input-field"
           >
             <option value="Impressora Balcão">Impressora Balcão</option>
@@ -347,12 +335,10 @@ function Configuracoes() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Formato do Papel
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Formato do Papel</label>
           <select
             value={settings.formatoPapel}
-            onChange={(e) => setSettings({...settings, formatoPapel: e.target.value})}
+            onChange={e => setSettings({ ...settings, formatoPapel: e.target.value })}
             className="input-field"
           >
             <option value="A4">A4</option>
@@ -367,16 +353,14 @@ function Configuracoes() {
   const renderSegurancaTab = () => (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-gray-900">Configurações de Segurança</h3>
-      
+
       <div className="space-y-4">
         <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
           <h4 className="text-sm font-medium text-yellow-800 mb-2">Alterar Senha</h4>
           <p className="text-sm text-yellow-700 mb-3">
             Recomendamos alterar sua senha regularmente para manter a segurança.
           </p>
-          <button className="btn-secondary text-sm">
-            Alterar Senha
-          </button>
+          <button className="btn-secondary text-sm">Alterar Senha</button>
         </div>
 
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
@@ -384,9 +368,7 @@ function Configuracoes() {
           <p className="text-sm text-blue-700 mb-3">
             Adicione uma camada extra de segurança à sua conta.
           </p>
-          <button className="btn-secondary text-sm">
-            Configurar 2FA
-          </button>
+          <button className="btn-secondary text-sm">Configurar 2FA</button>
         </div>
 
         <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -394,9 +376,7 @@ function Configuracoes() {
           <p className="text-sm text-green-700 mb-3">
             Gerencie os dispositivos conectados à sua conta.
           </p>
-          <button className="btn-secondary text-sm">
-            Ver Sessões
-          </button>
+          <button className="btn-secondary text-sm">Ver Sessões</button>
         </div>
       </div>
     </div>
@@ -404,12 +384,18 @@ function Configuracoes() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'geral': return renderGeralTab();
-      case 'notificacoes': return renderNotificacoesTab();
-      case 'sistema': return renderSistemaTab();
-      case 'impressao': return renderImpressaoTab();
-      case 'seguranca': return renderSegurancaTab();
-      default: return renderGeralTab();
+      case 'geral':
+        return renderGeralTab();
+      case 'notificacoes':
+        return renderNotificacoesTab();
+      case 'sistema':
+        return renderSistemaTab();
+      case 'impressao':
+        return renderImpressaoTab();
+      case 'seguranca':
+        return renderSegurancaTab();
+      default:
+        return renderGeralTab();
     }
   };
 
@@ -419,9 +405,7 @@ function Configuracoes() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Configurações</h1>
-          <p className="text-gray-600 mt-1">
-            Personalize as configurações do sistema
-          </p>
+          <p className="text-gray-600 mt-1">Personalize as configurações do sistema</p>
         </div>
         <button onClick={handleSave} className="btn-primary">
           <Save className="h-4 w-4 mr-2" />
@@ -455,13 +439,11 @@ function Configuracoes() {
 
         {/* Main content */}
         <div className="lg:col-span-3">
-          <div className="card">
-            {renderTabContent()}
-          </div>
+          <div className="card">{renderTabContent()}</div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Configuracoes; 
+export default Configuracoes;

@@ -58,9 +58,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused }) => (
-          <TabBarIcon name={route.name} focused={focused} />
-        ),
+        tabBarIcon: ({ focused }) => <TabBarIcon name={route.name} focused={focused} />,
         tabBarActiveTintColor: '#2563eb',
         tabBarInactiveTintColor: '#6b7280',
         tabBarStyle: {
@@ -84,31 +82,15 @@ const TabNavigator = () => {
         },
       })}
     >
-      <Tab.Screen 
-        name="Home" 
-        component={HomeScreen} 
-        options={{ title: 'Início' }}
-      />
-      <Tab.Screen 
-        name="Menu" 
-        component={MenuScreen} 
-        options={{ title: 'Cardápio' }}
-      />
-      <Tab.Screen 
-        name="Reservations" 
-        component={ReservationScreen} 
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Início' }} />
+      <Tab.Screen name="Menu" component={MenuScreen} options={{ title: 'Cardápio' }} />
+      <Tab.Screen
+        name="Reservations"
+        component={ReservationScreen}
         options={{ title: 'Reservas' }}
       />
-      <Tab.Screen 
-        name="Orders" 
-        component={OrderScreen} 
-        options={{ title: 'Pedidos' }}
-      />
-      <Tab.Screen 
-        name="Profile" 
-        component={ProfileScreen} 
-        options={{ title: 'Perfil' }}
-      />
+      <Tab.Screen name="Orders" component={OrderScreen} options={{ title: 'Pedidos' }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Perfil' }} />
     </Tab.Navigator>
   );
 };
@@ -129,29 +111,17 @@ export const AppNavigator = () => {
           },
         }}
       >
-        <Stack.Screen 
-          name="MainTabs" 
-          component={TabNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen 
-          name="QRScanner" 
+        <Stack.Screen name="MainTabs" component={TabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="QRScanner"
           component={QRScannerScreen}
-          options={{ 
+          options={{
             title: 'Scanner QR',
             presentation: 'modal',
           }}
         />
-        <Stack.Screen 
-          name="Admin" 
-          component={AdminScreen}
-          options={{ title: 'Administração' }}
-        />
-        <Stack.Screen 
-          name="Staff" 
-          component={StaffScreen}
-          options={{ title: 'Equipe' }}
-        />
+        <Stack.Screen name="Admin" component={AdminScreen} options={{ title: 'Administração' }} />
+        <Stack.Screen name="Staff" component={StaffScreen} options={{ title: 'Equipe' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -26,7 +26,7 @@ export function LazyImage({
   sizes,
   loading = 'lazy',
   onLoad,
-  onError
+  onError,
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -52,7 +52,7 @@ export function LazyImage({
       },
       {
         rootMargin: '50px',
-        threshold: 0.1
+        threshold: 0.1,
       }
     );
 
@@ -80,17 +80,17 @@ export function LazyImage({
       const pathParts = originalSrc.split('.');
       pathParts.pop(); // Remove extension (not used)
       const basePath = pathParts.join('.');
-      
+
       // Return both WebP and original format
       return {
         webp: `${basePath}.webp`,
-        original: originalSrc
+        original: originalSrc,
       };
     }
-    
+
     return {
       webp: originalSrc,
-      original: originalSrc
+      original: originalSrc,
     };
   };
 
@@ -103,7 +103,7 @@ export function LazyImage({
 
   if (hasError) {
     return (
-      <div 
+      <div
         className={`flex items-center justify-center bg-gray-100 ${className}`}
         style={{ width, height }}
       >
@@ -113,7 +113,7 @@ export function LazyImage({
   }
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className={`relative overflow-hidden ${className}`}
       style={{ width, height }}
@@ -136,12 +136,8 @@ export function LazyImage({
       {isInView && (
         <picture>
           {/* WebP source for modern browsers */}
-          <source 
-            srcSet={sources.webp} 
-            type="image/webp"
-            sizes={sizes}
-          />
-          
+          <source srcSet={sources.webp} type="image/webp" sizes={sizes} />
+
           {/* Fallback image */}
           <img
             ref={imgRef}
@@ -161,7 +157,7 @@ export function LazyImage({
             decoding="async"
             style={{
               maxWidth: '100%',
-              height: 'auto'
+              height: 'auto',
             }}
           />
         </picture>
