@@ -1,8 +1,8 @@
-// Updated supabase.ts to use optimized localStorage with compatibility layer
-import { compatibleSupabase } from './compatibilityLayer';
+// Pure localStorage implementation - Supabase online completely removed
+import { localStorageClient } from './localStorage';
 
-// Use optimized localStorage client with Supabase-compatible interface
-export const supabase = compatibleSupabase;
+// Export localStorage client as 'supabase' for easy migration back to Supabase later
+export const supabase = localStorageClient;
 
 // Enhanced Database types to include missing tables
 export type Database = {

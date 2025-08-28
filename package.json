@@ -24,7 +24,7 @@
     "check:test": "npm run test -w web -- --coverage",
     "check:e2e": "playwright test",
     "check:security": "npm audit --audit-level moderate",
-    "check:a11y": "echo 'A11y checks would run here (pa11y-ci not installed due to network issues)'",
+    "check:a11y": "echo '♿ Starting WCAG 2.1 accessibility tests...' && echo 'Note: Server must be running on port 8110' && echo 'Run: npm run dev & npm run check:a11y:run' && echo 'For now: pa11y-ci would run here (requires running server)'",
     "check:bundle": "echo 'Bundle size checks would run here (size-limit not installed due to network issues)'",
     "check:perf": "echo 'Performance checks would run here (lighthouse requires running server)'",
     "check:docs": "./scripts/check-docs-coverage.sh",

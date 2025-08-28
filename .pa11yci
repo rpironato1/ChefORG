@@ -11,31 +11,64 @@
     "http://localhost:8110/admin/caixa"
   ],
   "standard": "WCAG2AA",
-  "reporter": "json",
+  "reporter": ["json", "cli"],
   "outputFile": "./test-results/a11y-report.json",
   "threshold": 0,
-  "ignore": [
-    "color-contrast"
+  "ignore": [],
+  "rules": [
+    "color-contrast",
+    "heading-order",
+    "label",
+    "link-name",
+    "button-name",
+    "image-alt",
+    "form-field-multiple-labels",
+    "skip-link",
+    "landmark-one-main",
+    "aria-allowed-attr",
+    "aria-hidden-focus",
+    "aria-labelledby",
+    "aria-required-children",
+    "aria-required-parent",
+    "aria-roles",
+    "aria-valid-attr-value",
+    "aria-valid-attr",
+    "input-button-name",
+    "input-image-alt",
+    "keyboard",
+    "focus-order-semantics"
+  ],
+  "actions": [
+    "wait for element body to be visible",
+    "set field #email to admin@cheforg.com",
+    "set field #password to 123456",
+    "check field #accept-terms",
+    "click element button[type='submit']",
+    "wait for path to not be /auth/login"
   ],
   "chromeLaunchConfig": {
     "headless": true,
     "args": [
       "--no-sandbox",
       "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage"
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+      "--disable-web-security",
+      "--disable-features=VizDisplayCompositor"
     ]
   },
   "viewport": {
     "width": 1280,
     "height": 1024
   },
-  "wait": 2000,
-  "timeout": 30000,
+  "wait": 3000,
+  "timeout": 45000,
   "hideElements": [
+    ".loading-spinner",
     ".ad-banner",
     ".popup-overlay"
   ],
-  "actions": [
-    "wait for element body to be visible"
-  ]
+  "headers": {
+    "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8"
+  }
 }
