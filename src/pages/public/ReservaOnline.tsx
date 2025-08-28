@@ -154,6 +154,7 @@ function ReservaOnline() {
     try {
       const result = await createReservation({
         cliente_nome: formData.nome,
+        nome_cliente: formData.nome, // Add required field
         cliente_cpf: formData.cpf.replace(/\D/g, ''),
         cliente_telefone: formData.telefone.replace(/\D/g, ''),
         data_hora: dataHora.toISOString(),

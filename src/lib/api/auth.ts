@@ -31,11 +31,13 @@ export const login = async (email: string, password: string): Promise<ApiRespons
     if (!authData.user) throw new Error('Usuário não encontrado após o login.');
 
     // Busca o perfil do usuário na tabela 'users' usando localStorage
-    const { data: profile, error: profileError } = await supabase
+    const profileQuery = supabase
       .from('users')
       .select('*')
       .eq('email', email)
       .single();
+
+    const { data: profile, error: profileError } = await profileQuery;
 
     console.log('Profile lookup:', { profile, profileError });
 
@@ -85,11 +87,13 @@ export const getCurrentUser = async (): Promise<ApiResponse<AuthUser | null>> =>
     const { user } = sessionData.session;
 
     // Busca o perfil do usuário na tabela 'users' usando o email da sessão
-    const { data: profile, error: profileError } = await supabase
+    const profileQuery = supabase
       .from('users')
       .select('*')
       .eq('email', user.email)
       .single();
+
+    const { data: profile, error: profileError } = await profileQuery;
 
     if (profileError || !profile) {
       console.warn("Sessão encontrada mas perfil não encontrado na tabela 'users'.");

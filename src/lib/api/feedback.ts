@@ -13,11 +13,13 @@ export const createFeedback = async (
 ): Promise<ApiResponse<Feedback>> => {
   try {
     // Validação para garantir que o pedido não foi avaliado ainda
-    const { data: existingFeedback, error: existingError } = (await supabase
+    const existingQuery = supabase
       .from('feedback')
       .select('id')
       .eq('order_id', details.order_id)
-      .single()) as any;
+      .single();
+
+    const { data: existingFeedback, error: existingError } = (await existingQuery) as any;
 
     if (existingError && existingError.code !== 'PGRST116') {
       throw existingError;
@@ -63,11 +65,13 @@ export const getFeedbackByOrder = async (
   orderId: number
 ): Promise<ApiResponse<Feedback | null>> => {
   try {
-    const { data, error } = (await supabase
+    const feedbackQuery = supabase
       .from('feedback')
       .select('*')
       .eq('order_id', orderId)
-      .single()) as any;
+      .single();
+
+    const { data, error } = (await feedbackQuery) as any;
 
     if (error && error.code !== 'PGRST116') {
       // PGRST116 = no rows found

@@ -64,7 +64,7 @@ export const getReservationByQR = async (
   qrCode: string
 ): Promise<ApiResponse<Reservation & { user: User | null }>> => {
   try {
-    const { data, error } = (await supabase
+    const reservationQuery = supabase
       .from('reservations')
       .select(
         `
@@ -73,7 +73,9 @@ export const getReservationByQR = async (
       `
       )
       .eq('qr_code', qrCode)
-      .single()) as any;
+      .single();
+
+    const { data, error } = (await reservationQuery) as any;
 
     if (error) throw error;
     return createSuccessResponse(data || null);
@@ -92,7 +94,8 @@ export const getAllReservations = async (date?: string): Promise<ApiResponse<Res
 
     if (date) {
       // Filtra para o dia inteiro - using optimized localStorage query
-      query = query.gte('data_hora', `${date}T00:00:00Z`).lte('data_hora', `${date}T23:59:59Z`);
+      const baseQuery = query.gte('data_hora', `${date}T00:00:00Z`);
+      query = baseQuery.lte('data_hora', `${date}T23:59:59Z`);
     }
 
     const { data, error } = await query;
@@ -139,12 +142,14 @@ export const cancelReservation = async (
   reservationId: number
 ): Promise<ApiResponse<Reservation>> => {
   try {
-    const { data, error } = (await supabase
+    const updateQuery = supabase
       .from('reservations')
       .update({ status: 'cancelada' })
       .eq('id', reservationId)
       .select()
-      .single()) as any;
+      .single();
+
+    const { data, error } = (await updateQuery) as any;
 
     if (error) throw error;
 

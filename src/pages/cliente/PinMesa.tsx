@@ -100,7 +100,7 @@ function PinMesa() {
         if (tentativasRestantes > 0) {
           showWarning(
             'PIN Incorreto',
-            result.error || `Restam ${tentativasRestantes} tentativa(s)`
+            !result.success ? `Restam ${tentativasRestantes} tentativa(s)` : `Restam ${tentativasRestantes} tentativa(s)`
           );
         } else {
           showError('Mesa Bloqueada', 'Muitas tentativas incorretas. Solicite ajuda ao garçom.');

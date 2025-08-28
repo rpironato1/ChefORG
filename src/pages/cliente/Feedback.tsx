@@ -72,9 +72,19 @@ function Feedback() {
 
     setIsSubmitting(true);
     try {
+      // Calculate average rating from all categories
+      const avgRating = Math.round((
+        avaliacao.estrelas_estabelecimento +
+        avaliacao.estrelas_servico +
+        avaliacao.estrelas_comida +
+        avaliacao.estrelas_experiencia
+      ) / 4);
+
       const result = await createFeedback({
         order_id: currentOrderId,
-        ...avaliacao,
+        mesa_id: parseInt(numeroMesa || '1'), // Convert mesa number to mesa_id
+        estrelas: avgRating,
+        comentario: avaliacao.comentario || null,
       });
 
       if (result.success) {

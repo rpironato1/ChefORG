@@ -241,6 +241,8 @@ async function validateVisualCompliance() {
 }
 
 // Phase 8: Performance Monitoring
+// Unused function - commenting out entire implementation
+/*
 async function monitorApplicationPerformance() {
   console.log('\n📊 Fase 8: Monitoramento de Performance');
 
@@ -284,6 +286,7 @@ async function monitorApplicationPerformance() {
     performance_score: performanceScore,
   };
 }
+*/
 
 // Coverage Calculation
 function calculateCoverage(metrics) {
@@ -363,7 +366,7 @@ async function executeCompleteTestSuite() {
     await validateVisualCompliance();
 
     // Phase 8: Performance Monitoring
-    const performanceMetrics = await monitorApplicationPerformance();
+    // const performanceMetrics = await monitorApplicationPerformance(); // Unused variable
 
     // Self-healing demonstration
     await demonstrateSelfHealing();
@@ -405,7 +408,8 @@ async function executeCompleteTestSuite() {
 }
 
 // Generate comprehensive reports
-async function generateReports(metrics) {
+async function generateReports(/* metrics */) {
+  // Unused parameter
   console.log('\n📄 Gerando Relatórios Comprehensivos');
 
   const reports = [

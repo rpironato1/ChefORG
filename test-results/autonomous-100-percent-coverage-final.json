@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-28T13:14:09.890Z",
+  "timestamp": "2025-08-28T15:08:28.392Z",
   "apis": {
     "totalModules": 12,
     "validatedModules": 12,
@@ -16,7 +16,7 @@
         "functionCount": 3,
         "interfaces": 1,
         "types": 1,
-        "linesOfCode": 112,
+        "linesOfCode": 116,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -49,7 +49,7 @@
         "functionCount": 3,
         "interfaces": 0,
         "types": 2,
-        "linesOfCode": 110,
+        "linesOfCode": 114,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -166,7 +166,7 @@
         "functionCount": 6,
         "interfaces": 0,
         "types": 3,
-        "linesOfCode": 185,
+        "linesOfCode": 190,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -198,7 +198,7 @@
         "functionCount": 5,
         "interfaces": 0,
         "types": 1,
-        "linesOfCode": 123,
+        "linesOfCode": 127,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"

@@ -84,12 +84,14 @@ export const validateTablePIN = async (
  */
 export const releaseTable = async (tableId: number): Promise<ApiResponse<Table>> => {
   try {
-    const { data, error } = (await supabase
+    const releaseQuery = supabase
       .from('tables')
       .update({ status: 'limpeza', pin: null, cliente_atual: null, pedido_atual_id: null })
       .eq('id', tableId)
       .select()
-      .single()) as any;
+      .single();
+
+    const { data, error } = (await releaseQuery) as any;
 
     if (error) throw error;
     return createSuccessResponse(data, 'Mesa liberada para limpeza.');
@@ -107,12 +109,14 @@ export const updateTableStatus = async (
   status: Table['status']
 ): Promise<ApiResponse<Table>> => {
   try {
-    const { data, error } = (await supabase
+    const updateQuery = supabase
       .from('tables')
       .update({ status })
       .eq('id', tableId)
       .select()
-      .single()) as any;
+      .single();
+
+    const { data, error } = (await updateQuery) as any;
 
     if (error) throw error;
     return createSuccessResponse(data, `Status da mesa atualizado para ${status}.`);
