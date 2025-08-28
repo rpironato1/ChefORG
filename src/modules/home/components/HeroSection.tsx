@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Menu } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 interface HeroSectionProps {
   onReserveClick: () => void;

@@ -46,7 +46,7 @@ function TabelaResponsiva({
     finalColunas = headers.map((header, index) => ({
       key: index.toString(),
       titulo: header,
-      render: (value: any, item: any) => rows[finalDados.indexOf(item)][index]
+      render: (_value: any, item: any) => rows[finalDados.indexOf(item)][index]
     }));
     finalDados = rows.map((row, index) => ({ _index: index, ...row }));
   }
@@ -147,19 +147,19 @@ function TabelaResponsiva({
 
       {/* Versão Mobile - Cards */}
       <div className="md:hidden">
-        {dados.length === 0 ? (
+        {dados && dados.length === 0 ? (
           <div className="p-8 text-center text-gray-500">
             {emptyMessage}
           </div>
         ) : (
           <div className="divide-y divide-gray-200">
-            {dados.map((item, index) => (
+            {dados && dados.map((item, index) => (
               <div
                 key={index}
                 className={`p-4 ${onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
                 onClick={() => onRowClick && onRowClick(item)}
               >
-                {colunas.map((coluna) => (
+                {colunas && colunas.map((coluna) => (
                   <div key={coluna.key} className="flex justify-between items-center py-1">
                     <span className="text-sm font-medium text-gray-700">
                       {coluna.titulo}:

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-24T19:57:54.478Z",
+  "timestamp": "2025-08-28T12:32:14.422Z",
   "apis": {
     "totalModules": 12,
     "validatedModules": 12,
@@ -16,7 +16,7 @@
         "functionCount": 3,
         "interfaces": 1,
         "types": 1,
-        "linesOfCode": 108,
+        "linesOfCode": 112,
         "hasErrorHandling": true,
         "hasDocumentation": true,
         "complexity": "high"
@@ -206,9 +206,9 @@
     ]
   },
   "components": {
-    "totalComponents": 41,
+    "totalComponents": 42,
     "createdComponents": 0,
-    "existingComponents": 22,
+    "existingComponents": 23,
     "componentDetails": [
       {
         "name": "LoadingSpinner",
@@ -247,6 +247,13 @@
         "type": "component",
         "status": "exists",
         "path": "./src/components/ui/CheckoutForm.tsx",
+        "directory": "src/components/ui"
+      },
+      {
+        "name": "LazyImage",
+        "type": "component",
+        "status": "exists",
+        "path": "./src/components/ui/LazyImage.tsx",
         "directory": "src/components/ui"
       },
       {
@@ -364,9 +371,9 @@
     ]
   },
   "coverage": {
-    "overall": 81.46341463414635,
+    "overall": 81.90476190476191,
     "apis": 100,
-    "components": 53.65853658536586
+    "components": 54.761904761904766
   },
   "success": false
 }

@@ -1,0 +1,232 @@
+{
+  "timestamp": "2025-08-28T12:32:11.386Z",
+  "results": {
+    "totalModules": 12,
+    "validatedModules": 12,
+    "totalFunctions": 42,
+    "validatedFunctions": 42,
+    "moduleDetails": [
+      {
+        "name": "auth",
+        "status": "valid",
+        "functions": [
+          "login",
+          "logout",
+          "getCurrentUser"
+        ],
+        "functionCount": 3,
+        "interfaces": 1,
+        "types": 1,
+        "linesOfCode": 112,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "dashboard",
+        "status": "valid",
+        "functions": [
+          "getSalesDashboardData",
+          "getReservationsDashboardData",
+          "getStockDashboardData",
+          "getLoyaltyDashboardData"
+        ],
+        "functionCount": 4,
+        "interfaces": 4,
+        "types": 0,
+        "linesOfCode": 110,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "feedback",
+        "status": "valid",
+        "functions": [
+          "createFeedback",
+          "getFeedbackByOrder",
+          "getRecentFeedbacks"
+        ],
+        "functionCount": 3,
+        "interfaces": 0,
+        "types": 2,
+        "linesOfCode": 108,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "loyalty",
+        "status": "valid",
+        "functions": [
+          "getLoyaltyRanking"
+        ],
+        "functionCount": 1,
+        "interfaces": 0,
+        "types": 3,
+        "linesOfCode": 55,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "medium"
+      },
+      {
+        "name": "menu",
+        "status": "valid",
+        "functions": [
+          "getAllCategories",
+          "getAllMenuItems",
+          "getMenuWithItems"
+        ],
+        "functionCount": 3,
+        "interfaces": 0,
+        "types": 3,
+        "linesOfCode": 114,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "notifications",
+        "status": "valid",
+        "functions": [
+          "sendNotification"
+        ],
+        "functionCount": 1,
+        "interfaces": 1,
+        "types": 0,
+        "linesOfCode": 36,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "low"
+      },
+      {
+        "name": "orders",
+        "status": "valid",
+        "functions": [
+          "createOrder",
+          "updateOrderStatus",
+          "getActiveOrderByTable",
+          "getOrdersByStatus",
+          "getOrderByMesaCode"
+        ],
+        "functionCount": 5,
+        "interfaces": 0,
+        "types": 5,
+        "linesOfCode": 245,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "payments",
+        "status": "valid",
+        "functions": [
+          "createPayment",
+          "confirmPayment",
+          "getPaymentByOrder",
+          "createPaymentIntent"
+        ],
+        "functionCount": 4,
+        "interfaces": 0,
+        "types": 3,
+        "linesOfCode": 128,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "reports",
+        "status": "valid",
+        "functions": [
+          "getSalesReport",
+          "getGeneralStats",
+          "getSalesDashboardData",
+          "getReservationsDashboardData",
+          "getStockDashboardData",
+          "getLoyaltyDashboardData"
+        ],
+        "functionCount": 6,
+        "interfaces": 6,
+        "types": 0,
+        "linesOfCode": 152,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "reservations",
+        "status": "valid",
+        "functions": [
+          "createReservation",
+          "getReservationByQR",
+          "getAllReservations",
+          "checkInReservation",
+          "cancelReservation",
+          "allocateTableToWaitingClient"
+        ],
+        "functionCount": 6,
+        "interfaces": 0,
+        "types": 3,
+        "linesOfCode": 174,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "stock",
+        "status": "valid",
+        "functions": [
+          "getStockItems"
+        ],
+        "functionCount": 1,
+        "interfaces": 0,
+        "types": 2,
+        "linesOfCode": 38,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "low"
+      },
+      {
+        "name": "tables",
+        "status": "valid",
+        "functions": [
+          "getAllTables",
+          "getTableByQR",
+          "validateTablePIN",
+          "releaseTable",
+          "updateTableStatus"
+        ],
+        "functionCount": 5,
+        "interfaces": 0,
+        "types": 1,
+        "linesOfCode": 113,
+        "hasTypes": true,
+        "hasImports": true,
+        "hasErrorHandling": true,
+        "complexity": "high"
+      },
+      {
+        "name": "index",
+        "status": "valid",
+        "exports": 5,
+        "type": "aggregator"
+      }
+    ],
+    "errors": []
+  },
+  "coverage": {
+    "modules": 100,
+    "totalFunctions": 42
+  }
+}

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Star, MessageCircle, ArrowLeft, Loader2, AlertTriangle, Heart } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Star, MessageCircle, ArrowLeft, Loader2, Heart } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 import { createFeedback } from '../../lib/api/feedback';
 import { getActiveOrderByTable } from '../../lib/api/orders';

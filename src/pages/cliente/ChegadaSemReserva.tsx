@@ -26,9 +26,9 @@ function ChegadaSemReserva() {
   const [posicaoFila, setPosicaoFila] = useState<number>(0);
   const [tempoEstimado, setTempoEstimado] = useState<number>(0);
 
-  const { state } = useApp();
+  const { state: _state } = useApp();
   const { showSuccess, showError, ToastContainer } = useToast();
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
 
   const handleInputChange = (field: keyof FormData, value: string | number) => {
     setFormData(prev => ({

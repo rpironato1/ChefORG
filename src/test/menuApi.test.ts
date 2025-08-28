@@ -1,10 +1,13 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { getAllMenuItems, getAllCategories } from '../lib/api/menu'
 
 describe('Menu API', () => {
   beforeEach(() => {
     // Clear localStorage before each test
-    localStorage.clear()
+    vi.clearAllMocks()
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.clear()
+    }
   })
 
   it('should return menu items successfully', async () => {
