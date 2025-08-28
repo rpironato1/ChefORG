@@ -53,87 +53,139 @@ class LocalStorageQueryBuilder<T extends TableName> {
   private orderConfig: { column: string; ascending: boolean } | null = null;
   private limitConfig: number | null = null;
   private singleMode = false;
+  private promise: Promise<{ data: any; error: any }>;
 
   constructor(table: T, private client: LocalStorageClient) {
     this.table = table;
+    // Create the promise immediately to avoid circular references
+    this.promise = this.createPromise();
+  }
+
+  private createPromise(): Promise<{ data: any; error: any }> {
+    return new Promise((resolve) => {
+      // Use setTimeout to defer execution and allow method chaining
+      setTimeout(() => {
+        try {
+          let data = this.client.selectAll(this.table);
+
+          // Apply filters
+          if (this.filters.length > 0) {
+            data = data.filter(item => this.filters.every(filter => filter(item)));
+          }
+
+          // Apply ordering
+          if (this.orderConfig) {
+            const { column, ascending } = this.orderConfig;
+            data = [...data].sort((a, b) => {
+              const aVal = (a as any)[column];
+              const bVal = (b as any)[column];
+              const comparison = aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+              return ascending ? comparison : -comparison;
+            });
+          }
+
+          // Apply limit
+          if (this.limitConfig) {
+            data = data.slice(0, this.limitConfig);
+          }
+
+          // Return single item or array
+          const result = this.singleMode ? data[0] || null : data;
+          resolve({ data: result, error: null });
+        } catch (error) {
+          resolve({ data: null, error });
+        }
+      }, 0);
+    });
   }
 
   eq(column: string, value: any) {
     this.filters.push((item: any) => item[column] === value);
-    return this;
+    // Return a new builder with updated state
+    const newBuilder = new LocalStorageQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
   }
 
   gte(column: string, value: any) {
     this.filters.push((item: any) => item[column] >= value);
-    return this;
+    const newBuilder = new LocalStorageQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
   }
 
   lte(column: string, value: any) {
     this.filters.push((item: any) => item[column] <= value);
-    return this;
+    const newBuilder = new LocalStorageQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
   }
 
   in(column: string, values: any[]) {
     this.filters.push((item: any) => values.includes(item[column]));
-    return this;
+    const newBuilder = new LocalStorageQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
   }
 
   order(column: string, options?: { ascending?: boolean }) {
     this.orderConfig = { column, ascending: options?.ascending ?? true };
-    return this;
+    const newBuilder = new LocalStorageQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
   }
 
   limit(count: number) {
     this.limitConfig = count;
-    return this;
+    const newBuilder = new LocalStorageQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
   }
 
   single() {
     this.singleMode = true;
-    return this;
+    const newBuilder = new LocalStorageQueryBuilder(this.table, this.client);
+    newBuilder.filters = [...this.filters];
+    newBuilder.orderConfig = this.orderConfig;
+    newBuilder.limitConfig = this.limitConfig;
+    newBuilder.singleMode = this.singleMode;
+    return newBuilder;
   }
 
-  // Execute query and return promise - simplified to avoid circular references
+  // Implement thenable interface properly
   then<TResult1 = any, TResult2 = never>(
     onfulfilled?: ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>) | null,
     onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
   ): Promise<TResult1 | TResult2> {
-    const promise = this.execute();
-    return promise.then(onfulfilled, onrejected);
+    return this.promise.then(onfulfilled, onrejected);
   }
 
-  // Internal execution method
-  private async execute(): Promise<{ data: any; error: any }> {
-    try {
-      let data = this.client.selectAll(this.table);
+  catch<TResult = never>(
+    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null
+  ): Promise<{ data: any; error: any } | TResult> {
+    return this.promise.catch(onrejected);
+  }
 
-      // Apply filters
-      if (this.filters.length > 0) {
-        data = data.filter(item => this.filters.every(filter => filter(item)));
-      }
-
-      // Apply ordering
-      if (this.orderConfig) {
-        const { column, ascending } = this.orderConfig;
-        data = [...data].sort((a, b) => {
-          const aVal = (a as any)[column];
-          const bVal = (b as any)[column];
-          const comparison = aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
-          return ascending ? comparison : -comparison;
-        });
-      }
-
-      // Apply limit
-      if (this.limitConfig) {
-        data = data.slice(0, this.limitConfig);
-      }
-
-      // Return single item or array
-      const result = this.singleMode ? data[0] || null : data;
-      return { data: result, error: null };
-    } catch (error) {
-      return { data: null, error };
-    }
+  finally(onfinally?: (() => void) | null): Promise<{ data: any; error: any }> {
+    return this.promise.finally(onfinally);
   }
 }
 
