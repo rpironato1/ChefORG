@@ -151,7 +151,8 @@ class SimpleQueryBuilder<T extends TableName> {
   private execute(): Promise<{ data: any; error: any }> {
     return new Promise(resolve => {
       try {
-        const key = STORAGE_KEYS[this.table as keyof typeof STORAGE_KEYS] || `cheforg_${this.table}`;
+        const key =
+          STORAGE_KEYS[this.table as keyof typeof STORAGE_KEYS] || `cheforg_${this.table}`;
         let data = getFromStorage<TableRow<T>>(key);
 
         // Apply filters

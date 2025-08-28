@@ -230,7 +230,7 @@ function CardapioMesa() {
               {category.menu_items.map(item => {
                 // Mapear item do banco para tipo MenuItem
                 const menuItem: MenuItem = {
-                  id: item.id,
+                  id: typeof item.id === 'string' ? parseInt(item.id, 10) : item.id,
                   nome: item.nome,
                   descricao: item.descricao,
                   preco: item.preco,
@@ -247,9 +247,9 @@ function CardapioMesa() {
                   <CardMenuItem
                     key={item.id}
                     item={menuItem}
-                    quantidade={getQuantidadeNoCarrinho(item.id)}
-                    onAdicionar={item => adicionarItem({ ...item, id: item.id })}
-                    onRemover={item => removerItem({ ...item, id: item.id })}
+                    quantidade={getQuantidadeNoCarrinho(typeof item.id === 'string' ? parseInt(item.id, 10) : item.id)}
+                    onAdicionar={() => adicionarItem(menuItem)}
+                    onRemover={() => removerItem(menuItem)}
                     showControles={true}
                   />
                 );

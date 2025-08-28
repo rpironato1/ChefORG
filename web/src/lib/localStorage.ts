@@ -215,22 +215,26 @@ export class LocalStorageClient {
           const deleteQuery = this.delete(table, column, value);
           return {
             then: <TResult1 = { data: any; error: any }, TResult2 = never>(
-              onFulfilled?: ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>) | null,
+              onFulfilled?:
+                | ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>)
+                | null,
               onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
             ): Promise<TResult1 | TResult2> => {
               return deleteQuery.then(onFulfilled, onRejected);
-            }
+            },
           };
         },
         match: (filters: Record<string, any>) => {
           const deleteQuery = this.deleteWithMatch(table, filters);
           return {
             then: <TResult1 = { data: any; error: any }, TResult2 = never>(
-              onFulfilled?: ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>) | null,
+              onFulfilled?:
+                | ((value: { data: any; error: any }) => TResult1 | PromiseLike<TResult1>)
+                | null,
               onRejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
             ): Promise<TResult1 | TResult2> => {
               return deleteQuery.then(onFulfilled, onRejected);
-            }
+            },
           };
         },
       }),

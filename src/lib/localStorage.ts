@@ -55,14 +55,17 @@ class LocalStorageQueryBuilder<T extends TableName> {
   private singleMode = false;
   private promise: Promise<{ data: any; error: any }>;
 
-  constructor(table: T, private client: LocalStorageClient) {
+  constructor(
+    table: T,
+    private client: LocalStorageClient
+  ) {
     this.table = table;
     // Create the promise immediately to avoid circular references
     this.promise = this.createPromise();
   }
 
   private createPromise(): Promise<{ data: any; error: any }> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       // Use setTimeout to defer execution and allow method chaining
       setTimeout(() => {
         try {
@@ -225,25 +228,29 @@ export class LocalStorageClient {
       },
 
       update: (values: TableUpdate<T>) => ({
-        eq: async (column: string, value: any) => {
-          try {
-            const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
-            const existingData = getFromStorage<TableRow<T>>(key);
+        eq: (column: string, value: any) => ({
+          select: () => ({
+            single: async () => {
+              try {
+                const key = STORAGE_KEYS[table as keyof typeof STORAGE_KEYS] || `cheforg_${table}`;
+                const existingData = getFromStorage<TableRow<T>>(key);
 
-            const updatedData = existingData.map(item =>
-              (item as any)[column] === value
-                ? { ...item, ...values, updated_at: new Date().toISOString() }
-                : item
-            );
+                const updatedData = existingData.map(item =>
+                  (item as any)[column] === value
+                    ? { ...item, ...values, updated_at: new Date().toISOString() }
+                    : item
+                );
 
-            saveToStorage(key, updatedData);
-            const updated = updatedData.filter(item => (item as any)[column] === value);
+                saveToStorage(key, updatedData);
+                const updated = updatedData.find(item => (item as any)[column] === value);
 
-            return { data: updated, error: null };
-          } catch (error) {
-            return { data: null, error };
-          }
-        },
+                return { data: updated || null, error: null };
+              } catch (error) {
+                return { data: null, error };
+              }
+            },
+          }),
+        }),
 
         match: async (filters: Record<string, any>) => {
           try {
@@ -363,7 +370,10 @@ export class LocalStorageClient {
   };
 
   // RPC functions
-  rpc = async (functionName: string, _params: Record<string, any>): Promise<{ data: any; error: any }> => {
+  rpc = async (
+    functionName: string,
+    _params: Record<string, any>
+  ): Promise<{ data: any; error: any }> => {
     try {
       if (functionName === 'get_sales_dashboard_data') {
         const mockData = {

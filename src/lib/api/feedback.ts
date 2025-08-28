@@ -65,11 +65,7 @@ export const getFeedbackByOrder = async (
   orderId: number
 ): Promise<ApiResponse<Feedback | null>> => {
   try {
-    const feedbackQuery = supabase
-      .from('feedback')
-      .select('*')
-      .eq('order_id', orderId)
-      .single();
+    const feedbackQuery = supabase.from('feedback').select('*').eq('order_id', orderId).single();
 
     const { data, error } = (await feedbackQuery) as any;
 

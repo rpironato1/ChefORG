@@ -4,7 +4,7 @@ import { vi, beforeEach, afterEach } from 'vitest';
 // Enhanced localStorage mock for pure localStorage client
 const createLocalStorageMock = () => {
   const storage = new Map<string, string>();
-  
+
   return {
     getItem: vi.fn((key: string) => {
       return storage.get(key) || null;
@@ -59,7 +59,7 @@ beforeEach(() => {
   localStorageMock.getItem.mockClear();
   localStorageMock.setItem.mockClear();
   localStorageMock.removeItem.mockClear();
-  
+
   // Initialize with test data for consistent testing
   const testUsers = [
     {
@@ -81,7 +81,7 @@ beforeEach(() => {
       updated_at: new Date().toISOString(),
     },
   ];
-  
+
   const testTables = [
     {
       id: 1,
@@ -93,13 +93,13 @@ beforeEach(() => {
       updated_at: new Date().toISOString(),
     },
   ];
-  
+
   const testMenuItems = [
     {
       id: 1,
       nome: 'Hambúrguer Artesanal',
       descricao: 'Delicioso hambúrguer caseiro',
-      preco: 25.90,
+      preco: 25.9,
       categoria: 'Lanches',
       disponivel: true,
       tempo_preparo: 15,
@@ -108,14 +108,14 @@ beforeEach(() => {
       updated_at: new Date().toISOString(),
     },
   ];
-  
+
   // Set up initial test data
   localStorageMock.setItem('cheforg_users', JSON.stringify(testUsers));
   localStorageMock.setItem('cheforg_tables', JSON.stringify(testTables));
   localStorageMock.setItem('cheforg_menu_items', JSON.stringify(testMenuItems));
   localStorageMock.setItem('cheforg_orders', JSON.stringify([]));
   localStorageMock.setItem('cheforg_reservations', JSON.stringify([]));
-  
+
   // Suppress console errors/warnings for cleaner test output
   console.error = vi.fn();
   console.warn = vi.fn();
@@ -125,7 +125,7 @@ afterEach(() => {
   // Restore console
   console.error = originalConsoleError;
   console.warn = originalConsoleWarn;
-  
+
   // Clear all mocks
   vi.clearAllMocks();
 });
