@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom';
 import { vi, beforeEach, afterEach } from 'vitest';
 
+// Mock lucide-react to use our mock file
+vi.mock('lucide-react', () => import('./__mocks__/lucide-react'));
+
 // Enhanced localStorage mock for pure localStorage client
 const createLocalStorageMock = () => {
   const storage = new Map<string, string>();
@@ -54,6 +57,8 @@ const originalConsoleError = console.error;
 const originalConsoleWarn = console.warn;
 
 beforeEach(() => {
+  console.log('[TEST SETUP] Initializing test environment with comprehensive lucide-react mocks...');
+  
   // Reset localStorage mock and recreate storage
   localStorageMock.clear();
   localStorageMock.getItem.mockClear();
@@ -116,12 +121,16 @@ beforeEach(() => {
   localStorageMock.setItem('cheforg_orders', JSON.stringify([]));
   localStorageMock.setItem('cheforg_reservations', JSON.stringify([]));
 
+  console.log('[TEST SETUP] Test data initialized successfully with comprehensive lucide-react mocks');
+
   // Suppress console errors/warnings for cleaner test output
   console.error = vi.fn();
   console.warn = vi.fn();
 });
 
 afterEach(() => {
+  console.log('[TEST CLEANUP] Cleaning up test environment...');
+  
   // Restore console
   console.error = originalConsoleError;
   console.warn = originalConsoleWarn;
