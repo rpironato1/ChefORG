@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { AppProvider } from '../contexts/AppContext';
 import App from '../App';
@@ -98,7 +98,8 @@ describe('Integration Tests - Core User Flows', () => {
       const { createReservation } = await import('../lib/api/reservations');
       
       const reservationData = {
-        nome_cliente: 'Test Customer',
+        cliente_nome: 'Test Customer',
+        cliente_cpf: '12345678901',
         cliente_telefone: '11999999999',
         numero_convidados: 4,
         data_hora: new Date().toISOString(),
@@ -191,7 +192,7 @@ describe('Integration Tests - Core User Flows', () => {
       });
 
       if (orderResult.success && orderResult.data) {
-        const updateResult = await updateOrderStatus(orderResult.data.id, 'em_preparo');
+        const updateResult = await updateOrderStatus(orderResult.data.id, 'preparando');
         expect(updateResult.success).toBe(true);
       }
     });
@@ -205,7 +206,7 @@ describe('Integration Tests - Core User Flows', () => {
       expect(loginResult.success).toBe(true);
       expect(loginResult.data).toBeDefined();
       if (loginResult.data) {
-        expect(loginResult.data.role).toBe('gerente');
+        expect(loginResult.data.profile?.role).toBe('gerente');
       }
     });
 
@@ -234,15 +235,7 @@ describe('Integration Tests - Core User Flows', () => {
     it('should process payment operations', async () => {
       const { createPayment } = await import('../lib/api/payments');
       
-      const paymentData = {
-        order_id: 1,
-        valor: 50.00,
-        metodo_pagamento: 'cartao_credito',
-        status: 'processando',
-        detalhes_pagamento: { card_id: 'test_card' }
-      };
-
-      const result = await createPayment(paymentData);
+      const result = await createPayment(1, 'cartao', 50.00);
       expect(result.success).toBe(true);
       expect(result.data).toBeDefined();
     });
@@ -250,7 +243,7 @@ describe('Integration Tests - Core User Flows', () => {
     it('should handle payment status updates', async () => {
       const { updatePaymentStatus } = await import('../lib/api/payments');
       
-      const updateResult = await updatePaymentStatus(1, 'aprovado');
+      const updateResult = await updatePaymentStatus(1, 'confirmado');
       expect(updateResult.success).toBe(true);
     });
   });
@@ -260,7 +253,8 @@ describe('Integration Tests - Core User Flows', () => {
       // 1. Create a reservation
       const { createReservation } = await import('../lib/api/reservations');
       const reservation = await createReservation({
-        nome_cliente: 'Integration Test Customer',
+        cliente_nome: 'Integration Test Customer',
+        cliente_cpf: '12345678901',
         cliente_telefone: '11987654321',
         numero_convidados: 2,
         data_hora: new Date().toISOString(),
@@ -295,13 +289,7 @@ describe('Integration Tests - Core User Flows', () => {
       // 4. Process payment
       const { createPayment } = await import('../lib/api/payments');
       if (order.data) {
-        const payment = await createPayment({
-          order_id: order.data.id,
-          valor: 15.90,
-          metodo_pagamento: 'cartao_credito',
-          status: 'processando',
-          detalhes_pagamento: { integration_test: true }
-        });
+        const payment = await createPayment(order.data.id, 'cartao', 15.90);
         
         expect(payment.success).toBe(true);
       }
@@ -313,7 +301,7 @@ describe('Integration Tests - Core User Flows', () => {
       const { updateOrderStatus } = await import('../lib/api/orders');
       
       // Try to update non-existent order
-      const result = await updateOrderStatus(99999, 'finalizado');
+      const result = await updateOrderStatus(99999, 'entregue');
       // Should handle gracefully (might succeed in localStorage mock)
       expect(typeof result.success).toBe('boolean');
     });
@@ -323,7 +311,8 @@ describe('Integration Tests - Core User Flows', () => {
       
       try {
         await createReservation({
-          nome_cliente: '',
+          cliente_nome: '',
+          cliente_cpf: '',
           cliente_telefone: '',
           numero_convidados: -1,
           data_hora: 'invalid-date',

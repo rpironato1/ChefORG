@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, renderHook, act, screen, fireEvent } from '@testing-library/react';
+import { render, renderHook, act, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { AppProvider, useMesa, useAuth } from '../contexts/AppContext';
 import { initializeTestData } from '../lib/testData';
@@ -105,24 +105,20 @@ describe('Context Tests', () => {
 
       await act(async () => {
         result.current.selecionarMesa({
-          id: 1,
+          id: '1',
           numero: 5,
-          lugares: 4,
+          capacidade: 4,
           status: 'livre',
-          pin: null,
-          qr_code: 'test_qr',
-          garcom_id: null,
-          cliente_atual: null,
-          pedido_atual_id: null,
-          tempo_ocupacao: null,
-          ultima_limpeza: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          pin: undefined,
+          qrCode: 'test_qr',
+          garcom: undefined,
+          pedidoAtual: undefined,
+          clienteAtual: undefined,
         });
       });
 
       expect(result.current.mesaAtual).toBeDefined();
-      expect(result.current.mesaAtual?.numero).toBe(5);
+      expect(result.current.mesaAtual.mesa?.numero).toBe(5);
     });
 
     it('should handle error states in auth', async () => {
@@ -203,19 +199,15 @@ describe('Context Tests', () => {
         // Perform concurrent operations
         const authPromise = authResult.result.current.signIn('admin@cheforg.com', 'admin123');
         const mesaPromise = mesaResult.result.current.selecionarMesa({
-          id: 2,
+          id: '2',
           numero: 10,
-          lugares: 6,
+          capacidade: 6,
           status: 'livre',
-          pin: null,
-          qr_code: 'test_qr_2',
-          garcom_id: null,
-          cliente_atual: null,
-          pedido_atual_id: null,
-          tempo_ocupacao: null,
-          ultima_limpeza: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          pin: undefined,
+          qrCode: 'test_qr_2',
+          garcom: undefined,
+          pedidoAtual: undefined,
+          clienteAtual: undefined,
         });
 
         await Promise.all([authPromise, mesaPromise]);
@@ -223,7 +215,7 @@ describe('Context Tests', () => {
 
       expect(authResult.result.current.user).toBeDefined();
       expect(mesaResult.result.current.mesaAtual).toBeDefined();
-      expect(mesaResult.result.current.mesaAtual?.numero).toBe(10);
+      expect(mesaResult.result.current.mesaAtual.mesa?.numero).toBe(10);
     });
   });
 
@@ -270,7 +262,7 @@ describe('Context Tests', () => {
       
       const TestComponent = () => {
         renderCount++;
-        const auth = useAuth();
+        useAuth();
         return <div data-testid="render-count">{renderCount}</div>;
       };
 
@@ -309,25 +301,21 @@ describe('Context Tests', () => {
       await act(async () => {
         for (let i = 1; i <= 5; i++) {
           result.current.selecionarMesa({
-            id: i,
+            id: i.toString(),
             numero: i,
-            lugares: 4,
+            capacidade: 4,
             status: 'livre',
-            pin: null,
-            qr_code: `test_qr_${i}`,
-            garcom_id: null,
-            cliente_atual: null,
-            pedido_atual_id: null,
-            tempo_ocupacao: null,
-            ultima_limpeza: null,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
+            pin: undefined,
+            qrCode: `test_qr_${i}`,
+            garcom: undefined,
+            pedidoAtual: undefined,
+            clienteAtual: undefined,
           });
         }
       });
 
       // Should end up with the last selected mesa
-      expect(result.current.mesaAtual?.numero).toBe(5);
+      expect(result.current.mesaAtual.mesa?.numero).toBe(5);
     });
   });
 });

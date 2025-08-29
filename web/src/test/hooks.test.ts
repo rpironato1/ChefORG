@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { AppProvider } from '../contexts/AppContext';
@@ -209,7 +209,7 @@ describe('Hooks Tests', () => {
     it('should handle rapid successive calls', async () => {
       const { result } = renderHook(() => useBusinessLogic(), { wrapper });
       
-      const promises = [];
+      const promises: Promise<any>[] = [];
       for (let i = 0; i < 5; i++) {
         promises.push(result.current.getAvailableTables());
       }

@@ -15,21 +15,7 @@ function PinMesa() {
   const { showSuccess, showError, showWarning, ToastContainer } = useToast();
   const navigate = useNavigate();
 
-  // PINs mockados para demonstração
-  const mockPins: { [mesa: string]: string } = {
-    '1': '1234',
-    '2': '5678',
-    '3': '9012',
-    '4': '3456',
-    '5': '7890',
-    '6': '2468',
-    '7': '1357',
-    '8': '8642',
-    '9': '9753',
-    '10': '1598',
-    '11': '7531',
-    '12': '9514',
-  };
+  // PINs estão configurados no sistema de mesas
 
   useEffect(() => {
     // Se não há número da mesa na URL, redireciona
@@ -43,12 +29,6 @@ function PinMesa() {
       navigate(`/mesa/${numeroMesa}/cardapio`);
     }
   }, [numeroMesa, mesaAtual.isAutorizado, navigate]);
-
-  const handlePinChange = (value: string) => {
-    // Permitir apenas números e máximo 4 dígitos
-    const numbersOnly = value.replace(/\D/g, '').slice(0, 4);
-    setPin(numbersOnly);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,7 +80,7 @@ function PinMesa() {
         if (tentativasRestantes > 0) {
           showWarning(
             'PIN Incorreto',
-            result.error || `Restam ${tentativasRestantes} tentativa(s)`
+            `Restam ${tentativasRestantes} tentativa(s)`
           );
         } else {
           showError('Mesa Bloqueada', 'Muitas tentativas incorretas. Solicite ajuda ao garçom.');
