@@ -1,0 +1,237 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e7]:
+      - link "ChefORG" [ref=e9] [cursor=pointer]:
+        - /url: /
+        - img [ref=e11] [cursor=pointer]
+        - generic [ref=e13] [cursor=pointer]: ChefORG
+      - generic [ref=e14]:
+        - link "Sobre" [ref=e15] [cursor=pointer]:
+          - /url: /menu#sobre
+        - link "Cardápio" [ref=e16] [cursor=pointer]:
+          - /url: /menu#cardapio
+        - link "Contato" [ref=e17] [cursor=pointer]:
+          - /url: /menu#contato
+        - button "Reservar Mesa" [ref=e18] [cursor=pointer]
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - navigation [ref=e21]:
+        - generic [ref=e23]:
+          - generic [ref=e24]:
+            - link "Voltar" [ref=e25] [cursor=pointer]:
+              - /url: /
+              - img [ref=e26] [cursor=pointer]
+              - text: Voltar
+            - generic [ref=e28]:
+              - img [ref=e29]
+              - generic [ref=e32]: ChefORG
+          - link "Reservar Mesa" [ref=e33] [cursor=pointer]:
+            - /url: /reserva
+      - generic [ref=e35]:
+        - heading "Nosso Cardápio" [level=1] [ref=e36]
+        - paragraph [ref=e37]: Descubra nossa seleção especial de pratos preparados com ingredientes frescos e técnicas culinárias refinadas
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e41]:
+            - img [ref=e42]
+            - textbox "Buscar pratos..." [ref=e45]
+          - generic [ref=e46]:
+            - button "Todas" [ref=e47] [cursor=pointer]
+            - button "Entradas" [ref=e48] [cursor=pointer]
+            - button "Pratos Principais" [ref=e49] [cursor=pointer]
+            - button "Lanches" [ref=e50] [cursor=pointer]
+            - button "Sobremesas" [ref=e51] [cursor=pointer]
+            - button "Bebidas" [ref=e52] [cursor=pointer]
+        - generic [ref=e53]:
+          - heading "Entradas" [level=2] [ref=e55]
+          - generic [ref=e57]:
+            - generic [ref=e59] [cursor=pointer]:
+              - generic [ref=e60] [cursor=pointer]:
+                - heading "Salada Caesar Gourmet" [level=3] [ref=e61] [cursor=pointer]
+                - generic [ref=e62] [cursor=pointer]: R$ 22.80
+              - paragraph [ref=e63] [cursor=pointer]: Alface romana fresca, croutons dourados, lascas de parmesão e molho caesar tradicional
+              - generic [ref=e65] [cursor=pointer]:
+                - generic [ref=e66] [cursor=pointer]: Entradas
+                - generic [ref=e67] [cursor=pointer]:
+                  - img [ref=e68] [cursor=pointer]
+                  - generic [ref=e71] [cursor=pointer]: 10 min
+              - generic [ref=e74] [cursor=pointer]: Vegetariano
+              - generic [ref=e75] [cursor=pointer]:
+                - paragraph [ref=e76] [cursor=pointer]: "Ingredientes:"
+                - paragraph [ref=e77] [cursor=pointer]: Alface romana, Croutons, Parmesão, Molho caesar
+            - generic [ref=e79] [cursor=pointer]:
+              - generic [ref=e80] [cursor=pointer]:
+                - heading "Bruschetta Italiana" [level=3] [ref=e81] [cursor=pointer]
+                - generic [ref=e82] [cursor=pointer]: R$ 18.50
+              - paragraph [ref=e83] [cursor=pointer]: Fatias de pão italiano tostado com tomates frescos, manjericão e azeite extravirgem
+              - generic [ref=e85] [cursor=pointer]:
+                - generic [ref=e86] [cursor=pointer]: Entradas
+                - generic [ref=e87] [cursor=pointer]:
+                  - img [ref=e88] [cursor=pointer]
+                  - generic [ref=e91] [cursor=pointer]: 8 min
+              - generic [ref=e93] [cursor=pointer]:
+                - generic [ref=e94] [cursor=pointer]: Vegetariano
+                - generic [ref=e95] [cursor=pointer]: Vegano
+              - generic [ref=e96] [cursor=pointer]:
+                - paragraph [ref=e97] [cursor=pointer]: "Ingredientes:"
+                - paragraph [ref=e98] [cursor=pointer]: Pão italiano, Tomates, Manjericão, Azeite, Alho
+        - generic [ref=e99]:
+          - heading "Pratos Principais" [level=2] [ref=e101]
+          - generic [ref=e103]:
+            - generic [ref=e105] [cursor=pointer]:
+              - generic [ref=e106] [cursor=pointer]:
+                - heading "Risotto de Camarão" [level=3] [ref=e107] [cursor=pointer]
+                - generic [ref=e108] [cursor=pointer]: R$ 45.50
+              - paragraph [ref=e109] [cursor=pointer]: Risotto cremoso preparado com arroz arbóreo, camarões frescos, vinho branco e temperos especiais
+              - generic [ref=e111] [cursor=pointer]:
+                - generic [ref=e112] [cursor=pointer]: Pratos Principais
+                - generic [ref=e113] [cursor=pointer]:
+                  - img [ref=e114] [cursor=pointer]
+                  - generic [ref=e117] [cursor=pointer]: 25 min
+              - generic [ref=e120] [cursor=pointer]: Frutos do mar
+              - generic [ref=e121] [cursor=pointer]:
+                - paragraph [ref=e122] [cursor=pointer]: "Ingredientes:"
+                - paragraph [ref=e123] [cursor=pointer]: Arroz arbóreo, Camarões, Vinho branco, Cebola, Alho, Parmesão
+            - generic [ref=e125] [cursor=pointer]:
+              - generic [ref=e126] [cursor=pointer]:
+                - heading "Pasta ao Pesto" [level=3] [ref=e127] [cursor=pointer]
+                - generic [ref=e128] [cursor=pointer]: R$ 32.40
+              - paragraph [ref=e129] [cursor=pointer]: Massa italiana fresca com molho pesto artesanal de manjericão e pinhões
+              - generic [ref=e131] [cursor=pointer]:
+                - generic [ref=e132] [cursor=pointer]: Pratos Principais
+                - generic [ref=e133] [cursor=pointer]:
+                  - img [ref=e134] [cursor=pointer]
+                  - generic [ref=e137] [cursor=pointer]: 18 min
+              - generic [ref=e139] [cursor=pointer]:
+                - generic [ref=e140] [cursor=pointer]: Vegetariano
+                - generic [ref=e141] [cursor=pointer]: Contém glúten
+              - generic [ref=e142] [cursor=pointer]:
+                - paragraph [ref=e143] [cursor=pointer]: "Ingredientes:"
+                - paragraph [ref=e144] [cursor=pointer]: Massa, Manjericão, Pinhões, Alho, Parmesão, Azeite
+            - generic [ref=e146] [cursor=pointer]:
+              - generic [ref=e147] [cursor=pointer]:
+                - heading "Picanha na Brasa" [level=3] [ref=e148] [cursor=pointer]
+                - generic [ref=e149] [cursor=pointer]: R$ 52.90
+              - paragraph [ref=e150] [cursor=pointer]: Picanha premium grelhada na brasa, acompanha farofa, vinagrete e mandioca
+              - generic [ref=e152] [cursor=pointer]:
+                - generic [ref=e153] [cursor=pointer]: Pratos Principais
+                - generic [ref=e154] [cursor=pointer]:
+                  - img [ref=e155] [cursor=pointer]
+                  - generic [ref=e158] [cursor=pointer]: 30 min
+              - generic [ref=e159] [cursor=pointer]:
+                - paragraph [ref=e160] [cursor=pointer]: "Ingredientes:"
+                - paragraph [ref=e161] [cursor=pointer]: Picanha, Farofa, Vinagrete, Mandioca
+        - generic [ref=e162]:
+          - heading "Lanches" [level=2] [ref=e164]
+          - generic [ref=e168] [cursor=pointer]:
+            - generic [ref=e169] [cursor=pointer]:
+              - heading "Hambúrguer Artesanal" [level=3] [ref=e170] [cursor=pointer]
+              - generic [ref=e171] [cursor=pointer]: R$ 28.90
+            - paragraph [ref=e172] [cursor=pointer]: Hambúrguer de carne bovina 180g com queijo artesanal, alface, tomate, cebola caramelizada e molho especial da casa
+            - generic [ref=e174] [cursor=pointer]:
+              - generic [ref=e175] [cursor=pointer]: Lanches
+              - generic [ref=e176] [cursor=pointer]:
+                - img [ref=e177] [cursor=pointer]
+                - generic [ref=e180] [cursor=pointer]: 15 min
+            - generic [ref=e181] [cursor=pointer]:
+              - paragraph [ref=e182] [cursor=pointer]: "Ingredientes:"
+              - paragraph [ref=e183] [cursor=pointer]: Carne bovina, Queijo artesanal, Alface, Tomate, Cebola, Molho especial
+        - generic [ref=e184]:
+          - heading "Sobremesas" [level=2] [ref=e186]
+          - generic [ref=e190] [cursor=pointer]:
+            - generic [ref=e191] [cursor=pointer]:
+              - heading "Tiramisu da Casa" [level=3] [ref=e192] [cursor=pointer]
+              - generic [ref=e193] [cursor=pointer]: R$ 16.90
+            - paragraph [ref=e194] [cursor=pointer]: Sobremesa italiana clássica com camadas de biscoito, café, mascarpone e cacau
+            - generic [ref=e196] [cursor=pointer]:
+              - generic [ref=e197] [cursor=pointer]: Sobremesas
+              - generic [ref=e198] [cursor=pointer]:
+                - img [ref=e199] [cursor=pointer]
+                - generic [ref=e202] [cursor=pointer]: 5 min
+            - generic [ref=e204] [cursor=pointer]:
+              - generic [ref=e205] [cursor=pointer]: Vegetariano
+              - generic [ref=e206] [cursor=pointer]: Contém lactose
+              - generic [ref=e207] [cursor=pointer]: Contém glúten
+            - generic [ref=e208] [cursor=pointer]:
+              - paragraph [ref=e209] [cursor=pointer]: "Ingredientes:"
+              - paragraph [ref=e210] [cursor=pointer]: Mascarpone, Café, Biscoito, Cacau, Ovos, Açúcar
+        - generic [ref=e211]:
+          - heading "Bebidas" [level=2] [ref=e213]
+          - generic [ref=e217] [cursor=pointer]:
+            - generic [ref=e218] [cursor=pointer]:
+              - heading "Suco Natural de Laranja" [level=3] [ref=e219] [cursor=pointer]
+              - generic [ref=e220] [cursor=pointer]: R$ 8.50
+            - paragraph [ref=e221] [cursor=pointer]: Suco 100% natural de laranjas selecionadas, extraído na hora
+            - generic [ref=e223] [cursor=pointer]:
+              - generic [ref=e224] [cursor=pointer]: Bebidas
+              - generic [ref=e225] [cursor=pointer]:
+                - img [ref=e226] [cursor=pointer]
+                - generic [ref=e229] [cursor=pointer]: 3 min
+            - generic [ref=e232] [cursor=pointer]: Vegano
+            - generic [ref=e233] [cursor=pointer]:
+              - paragraph [ref=e234] [cursor=pointer]: "Ingredientes:"
+              - paragraph [ref=e235] [cursor=pointer]: Laranja
+        - generic [ref=e236]:
+          - heading "Gostou do que viu?" [level=3] [ref=e237]
+          - paragraph [ref=e238]: Reserve sua mesa agora e experimente nossos pratos deliciosos
+          - link "Fazer Reserva" [ref=e239] [cursor=pointer]:
+            - /url: /reserva
+      - generic [ref=e242]:
+        - generic [ref=e243]:
+          - img [ref=e244]
+          - heading "Funcionamento" [level=4] [ref=e247]
+          - paragraph [ref=e248]:
+            - text: "Segunda a Quinta: 11h às 23h"
+            - text: "Sexta e Sábado: 11h às 24h"
+            - text: "Domingo: 11h às 22h"
+        - generic [ref=e249]:
+          - img [ref=e250]
+          - heading "Informações" [level=4] [ref=e253]
+          - paragraph [ref=e254]:
+            - text: Todos os pratos são preparados
+            - text: na hora com ingredientes frescos
+            - text: Tempos podem variar conforme movimento
+        - generic [ref=e255]:
+          - generic [ref=e256]: 💳
+          - heading "Pagamento" [level=4] [ref=e257]
+          - paragraph [ref=e258]:
+            - text: Aceitamos dinheiro, cartões
+            - text: PIX, Apple Pay, Google Pay
+            - text: e Samsung Pay
+      - generic [ref=e260]:
+        - generic [ref=e261]:
+          - img [ref=e262]
+          - generic [ref=e265]: ChefORG
+        - paragraph [ref=e266]: Experiência gastronômica única • (11) 3333-4444
+        - paragraph [ref=e267]: © 2024 ChefORG. Todos os direitos reservados.
+  - contentinfo [ref=e268]:
+    - generic [ref=e269]:
+      - generic [ref=e270]:
+        - generic [ref=e271]:
+          - generic [ref=e272]:
+            - img [ref=e274]
+            - generic [ref=e276]: ChefORG
+          - paragraph [ref=e277]: Experiência gastronômica única com sabores excepcionais e ambiente sofisticado.
+        - generic [ref=e278]:
+          - heading "Links Rápidos" [level=3] [ref=e279]
+          - list [ref=e280]:
+            - listitem [ref=e281]:
+              - link "Sobre" [ref=e282] [cursor=pointer]:
+                - /url: /menu#sobre
+            - listitem [ref=e283]:
+              - link "Cardápio" [ref=e284] [cursor=pointer]:
+                - /url: /menu
+            - listitem [ref=e285]:
+              - link "Reservas" [ref=e286] [cursor=pointer]:
+                - /url: /reserva
+        - generic [ref=e287]:
+          - heading "Contato" [level=3] [ref=e288]
+          - list [ref=e289]:
+            - listitem [ref=e290]: (11) 3333-4444
+            - listitem [ref=e291]: contato@cheforg.com
+            - listitem [ref=e292]: Rua das Flores, 123
+      - paragraph [ref=e294]: © 2024 ChefORG. Todos os direitos reservados.
+```

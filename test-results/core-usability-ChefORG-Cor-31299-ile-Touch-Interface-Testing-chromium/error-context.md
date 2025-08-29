@@ -1,0 +1,172 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - generic [ref=e7]:
+      - button "Abrir menu" [active] [ref=e8] [cursor=pointer]:
+        - img [ref=e9] [cursor=pointer]
+      - generic [ref=e10]:
+        - img [ref=e12]
+        - generic [ref=e14]: ChefORG
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - img [ref=e20]
+        - generic [ref=e22]: ChefORG
+      - button [ref=e23] [cursor=pointer]:
+        - img [ref=e24] [cursor=pointer]
+    - navigation [ref=e27]:
+      - list [ref=e28]:
+        - listitem [ref=e29]:
+          - button "Início" [ref=e30] [cursor=pointer]:
+            - img [ref=e31] [cursor=pointer]
+            - text: Início
+        - listitem [ref=e34]:
+          - button "Cardápio" [ref=e35] [cursor=pointer]:
+            - img [ref=e36] [cursor=pointer]
+            - text: Cardápio
+        - listitem [ref=e38]:
+          - button "Reservas" [ref=e39] [cursor=pointer]:
+            - img [ref=e40] [cursor=pointer]
+            - text: Reservas
+        - listitem [ref=e42]:
+          - button "Login" [ref=e43] [cursor=pointer]:
+            - img [ref=e44] [cursor=pointer]
+            - text: Login
+  - main [ref=e47]:
+    - generic [ref=e48]:
+      - generic [ref=e50]:
+        - heading "Bem-vindos ao ChefORG" [level=1] [ref=e51]
+        - paragraph [ref=e52]: Uma experiência gastronômica única que combina sabores excepcionais com um ambiente sofisticado e acolhedor.
+        - generic [ref=e53]:
+          - button "Reservar Mesa" [ref=e54] [cursor=pointer]:
+            - img [ref=e55] [cursor=pointer]
+            - text: Reservar Mesa
+          - button "Ver Cardápio" [ref=e57] [cursor=pointer]
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - heading "Por que escolher o ChefORG?" [level=2] [ref=e61]
+          - paragraph [ref=e62]: Oferecemos uma experiência gastronômica completa, onde cada detalhe é pensado para proporcionar momentos inesquecíveis.
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - img [ref=e66]
+            - heading "Culinária Premium" [level=3] [ref=e68]
+            - paragraph [ref=e69]: Pratos elaborados com ingredientes frescos e técnicas refinadas
+          - generic [ref=e70]:
+            - img [ref=e72]
+            - heading "Ambiente Acolhedor" [level=3] [ref=e74]
+            - paragraph [ref=e75]: Espaço elegante e confortável para momentos especiais
+          - generic [ref=e76]:
+            - img [ref=e78]
+            - heading "Prêmios e Reconhecimentos" [level=3] [ref=e81]
+            - paragraph [ref=e82]: Reconhecido pela excelência em gastronomia e atendimento
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - heading "O que nossos clientes dizem" [level=2] [ref=e86]
+          - paragraph [ref=e87]: Avaliações reais de quem já viviu a experiência ChefORG
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - generic [ref=e91]: M
+              - generic [ref=e92]:
+                - heading "Maria Silva" [level=4] [ref=e93]
+                - generic [ref=e94]:
+                  - img [ref=e95]
+                  - img [ref=e97]
+                  - img [ref=e99]
+                  - img [ref=e101]
+                  - img [ref=e103]
+            - paragraph [ref=e105]: "\"Experiência incrível! Comida deliciosa e atendimento excepcional.\""
+            - paragraph [ref=e106]: 2 dias atrás
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - generic [ref=e109]: J
+              - generic [ref=e110]:
+                - heading "João Santos" [level=4] [ref=e111]
+                - generic [ref=e112]:
+                  - img [ref=e113]
+                  - img [ref=e115]
+                  - img [ref=e117]
+                  - img [ref=e119]
+                  - img [ref=e121]
+            - paragraph [ref=e123]: "\"Ambiente maravilhoso e pratos surpreendentes. Voltarei com certeza!\""
+            - paragraph [ref=e124]: 1 semana atrás
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - generic [ref=e127]: A
+              - generic [ref=e128]:
+                - heading "Ana Costa" [level=4] [ref=e129]
+                - generic [ref=e130]:
+                  - img [ref=e131]
+                  - img [ref=e133]
+                  - img [ref=e135]
+                  - img [ref=e137]
+                  - img [ref=e139]
+            - paragraph [ref=e141]: "\"Ótima experiência gastronômica. Recomendo para ocasiões especiais.\""
+            - paragraph [ref=e142]: 2 semanas atrás
+      - generic [ref=e145]:
+        - generic [ref=e146]:
+          - heading "Nossa História" [level=2] [ref=e147]
+          - paragraph [ref=e148]: Fundado em 2015, o ChefORG nasceu da paixão pela gastronomia e do desejo de criar experiências memoráveis. Nossa equipe de chefs especializados trabalha incansavelmente para oferecer pratos únicos e saborosos.
+          - paragraph [ref=e149]: Utilizamos apenas ingredientes frescos e de alta qualidade, combinados com técnicas culinárias modernas para criar uma experiência gastronômica incomparável.
+          - button "Conheça nosso Cardápio" [ref=e150] [cursor=pointer]
+        - generic [ref=e151]:
+          - heading "Informações" [level=3] [ref=e152]
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - img [ref=e156]
+              - generic [ref=e159]:
+                - paragraph [ref=e160]: Endereço
+                - paragraph [ref=e161]: Rua das Flores, 123 - Centro
+                - paragraph [ref=e162]: São Paulo - SP
+            - generic [ref=e163]:
+              - img [ref=e165]
+              - generic [ref=e168]:
+                - paragraph [ref=e169]: Funcionamento
+                - paragraph [ref=e170]: "Segunda a Quinta: 11h às 23h"
+                - paragraph [ref=e171]: "Sexta e Sábado: 11h às 24h"
+                - paragraph [ref=e172]: "Domingo: 11h às 22h"
+            - generic [ref=e173]:
+              - img [ref=e175]
+              - generic [ref=e177]:
+                - paragraph [ref=e178]: Contato
+                - paragraph [ref=e179]: (11) 3333-4444
+                - paragraph [ref=e180]: contato@cheforg.com
+      - generic [ref=e182]:
+        - heading "Pronto para uma experiência única?" [level=2] [ref=e183]
+        - paragraph [ref=e184]: Reserve sua mesa agora e descubra por que somos o restaurante favorito de tantas pessoas.
+        - button "Fazer Reserva" [ref=e185] [cursor=pointer]:
+          - img [ref=e186] [cursor=pointer]
+          - text: Fazer Reserva
+      - generic [ref=e189]:
+        - heading "Teste de Gestos Touch" [level=3] [ref=e190]
+        - generic [ref=e192]:
+          - paragraph [ref=e193]: 👆 Deslize ou arraste nesta área
+          - generic [ref=e194]:
+            - generic [ref=e195]:
+              - img [ref=e196]
+              - generic [ref=e198]: "Direita: 0"
+            - generic [ref=e199]:
+              - img [ref=e200]
+              - generic [ref=e202]: "Esquerda: 0"
+        - button "Reset" [ref=e204] [cursor=pointer]:
+          - img [ref=e205] [cursor=pointer]
+          - generic [ref=e208] [cursor=pointer]: Reset
+        - generic [ref=e209]:
+          - paragraph [ref=e210]: "💡 Em dispositivos móveis: Use os dedos para deslizar"
+          - paragraph [ref=e211]: "🖱️ No desktop: Clique e arraste com o mouse"
+  - generic [ref=e213]:
+    - button "Início" [ref=e214] [cursor=pointer]:
+      - img [ref=e215] [cursor=pointer]
+      - generic [ref=e218] [cursor=pointer]: Início
+    - button "Cardápio" [ref=e219] [cursor=pointer]:
+      - img [ref=e220] [cursor=pointer]
+      - generic [ref=e222] [cursor=pointer]: Cardápio
+    - button "Reservas" [ref=e223] [cursor=pointer]:
+      - img [ref=e224] [cursor=pointer]
+      - generic [ref=e226] [cursor=pointer]: Reservas
+    - button "Conta" [ref=e227] [cursor=pointer]:
+      - img [ref=e228] [cursor=pointer]
+      - generic [ref=e231] [cursor=pointer]: Conta
+```
