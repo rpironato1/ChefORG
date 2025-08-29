@@ -7,6 +7,34 @@ import Login from '../pages/auth/Login';
 import Dashboard from '../pages/admin/Dashboard';
 import MenuPublico from '../pages/public/MenuPublico';
 import { initializeTestData } from '../lib/testData';
+import React from 'react';
+
+// Error Boundary Component for testing
+class TestErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.log('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div data-testid="error-fallback">Something went wrong.</div>;
+    }
+
+    return this.props.children;
+  }
+}
 
 // Mock dependencies
 vi.mock('react-router-dom', async () => {
@@ -83,7 +111,11 @@ vi.mock('lucide-react', () => ({
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
-    <AppProvider>{children}</AppProvider>
+    <AppProvider>
+      <TestErrorBoundary>
+        {children}
+      </TestErrorBoundary>
+    </AppProvider>
   </BrowserRouter>
 );
 

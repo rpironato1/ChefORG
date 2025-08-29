@@ -183,3 +183,21 @@ export const allocateTableToWaitingClient = async (
     return handleApiError(error, 'Falha ao alocar mesa.');
   }
 };
+
+/**
+ * Get reservation queue for waiting customers
+ */
+export const getReservationQueue = async (): Promise<ApiResponse<Reservation[]>> => {
+  try {
+    const { data, error } = await supabase
+      .from('reservations')
+      .select('*')
+      .eq('status', 'na_fila')
+      .order('data_hora', { ascending: true });
+
+    if (error) throw error;
+    return createSuccessResponse(data || []);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

@@ -105,3 +105,13 @@ export const getCurrentUser = async (): Promise<ApiResponse<AuthUser | null>> =>
     return handleApiError(error);
   }
 };
+
+/**
+ * Alias for login function (expected by tests)
+ */
+export const signIn = login;
+
+/**
+ * Alias for logout function (expected by tests)
+ */
+export const signOut = logout;

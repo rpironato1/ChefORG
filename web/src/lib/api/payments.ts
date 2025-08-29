@@ -128,3 +128,26 @@ export const createPaymentIntent = async (
     return handleApiError(error, 'Falha ao criar a intenção de pagamento.');
   }
 };
+
+/**
+ * Update payment status
+ */
+export const updatePaymentStatus = async (
+  paymentId: number,
+  status: Payment['status']
+): Promise<ApiResponse<Payment>> => {
+  try {
+    // @ts-ignore - Supabase type chain issue
+    const { data, error } = await supabase
+      .from('payments')
+      .update({ status })
+      .eq('id', paymentId)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return createSuccessResponse(data, `Status do pagamento atualizado para ${status}.`);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

@@ -122,3 +122,44 @@ export const updateTableStatus = async (
     return handleApiError(error);
   }
 };
+
+/**
+ * Get available tables (status 'livre')
+ */
+export const getAvailableTables = async (): Promise<ApiResponse<Table[]>> => {
+  try {
+    const { data, error } = await supabase
+      .from('tables')
+      .select('*')
+      .eq('status', 'livre')
+      .order('numero', { ascending: true });
+
+    if (error) throw error;
+    return createSuccessResponse(data || []);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Generate a PIN for a table
+ */
+export const generateTablePIN = async (tableId: number | string): Promise<ApiResponse<{ pin: string; tableId: number | string }>> => {
+  try {
+    const pin = Math.floor(1000 + Math.random() * 9000).toString();
+    
+    // @ts-ignore - Supabase type chain issue
+    const { data, error } = await supabase
+      .from('tables')
+      .update({ pin })
+      .eq('id', Number(tableId))
+      .select()
+      .single();
+
+    if (error) throw error;
+    
+    return createSuccessResponse({ pin, tableId }, 'PIN gerado com sucesso!');
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
