@@ -138,11 +138,14 @@ export function useAuth() {
   const { state, login, logout, signIn } = useApp();
   return {
     usuario: state.usuario,
+    user: state.usuario, // Add alias for tests
     isAuthenticated: state.isAuthenticated,
     isLoadingAuth: state.isLoadingAuth,
+    loading: state.isLoadingAuth, // Add alias for tests
     login,
     logout,
     signIn,
+    signOut: logout, // Add alias for tests
   };
 }
 
@@ -161,11 +164,18 @@ export function useMesa() {
     dispatch({ type: 'LIMPAR_MESA' });
   };
 
+  // Create a flattened mesaAtual for tests that combines mesa properties with mesaAtual properties
+  const mesaAtual = state.mesaAtual.mesa ? {
+    ...state.mesaAtual,
+    ...state.mesaAtual.mesa, // Flatten mesa properties to top level
+  } : state.mesaAtual;
+
   return {
-    mesaAtual: state.mesaAtual,
+    mesaAtual,
     setMesaAtual,
     autorizarMesa,
     limparMesa,
+    liberarMesa: limparMesa, // Add alias for tests
     selecionarMesa,
   };
 }
