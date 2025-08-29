@@ -1,5 +1,5 @@
 // src/lib/api/auth.ts
-import { supabase, Database } from '../supabase';
+import { Database } from '../supabase';
 import { handleApiError, createSuccessResponse, ApiResponse } from './index';
 
 // Re-export ApiResponse for other modules
@@ -16,7 +16,7 @@ export interface AuthUser {
 /**
  * Realiza o login do usuário com email e senha.
  */
-export const login = async (email: string, password: string): Promise<ApiResponse<AuthUser>> => {
+export const login = async (email: string, _password: string): Promise<ApiResponse<AuthUser>> => {
   try {
     // Use simple localStorage approach for reliable testing
     const user = {

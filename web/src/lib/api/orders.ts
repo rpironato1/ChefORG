@@ -3,7 +3,6 @@ import { supabase, Database } from '../supabase';
 import { handleApiError, createSuccessResponse, ApiResponse } from './index';
 
 type Order = Database['public']['Tables']['orders']['Row'];
-type OrderInsert = Database['public']['Tables']['orders']['Insert'];
 type OrderItemInsert = Database['public']['Tables']['order_items']['Insert'];
 type OrderStatus = Database['public']['Enums']['order_status'];
 

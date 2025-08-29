@@ -100,7 +100,7 @@ export const testGenerateTablePIN = async (tableId: number): Promise<ApiResponse
   }
 };
 
-export const testSignIn = async (email: string, password: string): Promise<ApiResponse<any>> => {
+export const testSignIn = async (email: string, _password: string): Promise<ApiResponse<any>> => {
   try {
     // Mock authentication for tests
     const user = {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
   Users,
@@ -10,7 +10,6 @@ import {
   Phone,
   User,
 } from 'lucide-react';
-import { useApp } from '../../contexts/AppContext';
 import { useToast } from '../../components/ui/Toast';
 import { MobileInput } from '../../mobile/components/forms/MobileInput';
 import { MobileTextArea } from '../../mobile/components/forms/MobileTextArea';

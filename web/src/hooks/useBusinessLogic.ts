@@ -144,9 +144,10 @@ export const useReservas = () => {
     restricoes?: string
   ) => {
     const novaReserva = criarReserva({
-      nome,
-      telefone,
-      convidados,
+      clienteNome: nome,
+      clienteCpf: '', // Required field, will be updated later
+      clienteTelefone: telefone,
+      numeroConvidados: convidados,
       dataHora,
       restricoes,
       mesaId: undefined // Will be assigned during check-in
@@ -819,24 +820,24 @@ export const useBusinessLogic = () => {
   const { gerarPIN, validarPIN } = useGeradorPIN();
   const { iniciarReserva, atualizarStatusReserva, cancelarReserva, obterFila } = useReservas();
   const { obterMesasDisponiveis, atualizarStatusMesa, obterTodasMesas } = useMesas();
-  const { obterMenuCompleto, obterPorCategoria } = useMenu();
+  const { listarItens: obterMenuCompleto, obterCategorias: obterPorCategoria } = useMenu();
   const { 
-    criarNovoPedido, 
-    adicionarItemPedido, 
-    removerItemPedido, 
-    atualizarQuantidadeItem,
-    obterPedidosAtivos,
-    obterHistoricoPedidos
+    criarPedido: criarNovoPedido, 
+    adicionarItem: adicionarItemPedido, 
+    removerItem: removerItemPedido, 
+    atualizarQuantidade: atualizarQuantidadeItem,
+    pedidos: obterPedidosAtivos,
+    pedidos: obterHistoricoPedidos
   } = usePedidos();
-  const { atualizarStatusPedido } = useStatusPedido();
+  const { atualizarStatus: atualizarStatusPedido } = useStatusPedido();
   const { calcularTempoEstimado } = useTempoEstimado();
-  const { processarPagamentoDigital } = usePagamentoDigital();
-  const { processarPagamentoCaixa } = usePagamentoCaixa();
+  const { criarPagamento: processarPagamentoDigital } = usePagamentoDigital();
+  const { registrarPagamentoManual: processarPagamentoCaixa } = usePagamentoCaixa();
   const { gerarRelatorioVendas, calcularMetricasDashboard } = useRelatorios();
   const { obterStatusEstoque } = useEstoque();
   const { calcularPontos, adicionarPontos } = useFidelidade();
 
-  const handleError = useCallback((error: any, context: string) => {
+  const handleError = useCallback((error: any, context: string): { success: false; error: string } => {
     const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
     console.error(`Error in ${context}:`, error);
     setError(errorMessage);
@@ -909,10 +910,12 @@ export const useBusinessLogic = () => {
 
   const processOrder = useCallback(async (orderData: any) => {
     return wrapAsync(async () => {
-      const result = await criarNovoPedido(
-        orderData.mesaId || orderData.mesa_id || '1',
-        orderData.itens || []
-      );
+      const result = await criarNovoPedido({
+        mesaId: orderData.mesaId || orderData.mesa_id || '1',
+        itens: orderData.itens || [],
+        total: 0, // Will be calculated
+        observacoes: orderData.observacoes
+      });
       return { success: true, data: result };
     }, 'processOrder');
   }, [wrapAsync, criarNovoPedido]);
@@ -920,16 +923,19 @@ export const useBusinessLogic = () => {
   const processPayment = useCallback(async (paymentData: any) => {
     return wrapAsync(async () => {
       if (paymentData.method === 'digital' || paymentData.metodo === 'digital') {
-        const result = await processarPagamentoDigital(
-          paymentData.valor || paymentData.amount,
-          paymentData.metodo || paymentData.method
-        );
+        const result = await processarPagamentoDigital({
+          pedidoId: paymentData.pedidoId || paymentData.order_id || '1',
+          valor: paymentData.valor || paymentData.amount,
+          metodo: paymentData.metodo || paymentData.method
+        });
         return { success: true, data: result };
       } else {
-        const result = await processarPagamentoCaixa(
-          paymentData.valor || paymentData.amount,
-          paymentData.metodo || paymentData.method
-        );
+        const result = await processarPagamentoCaixa({
+          pedidoId: paymentData.pedidoId || paymentData.order_id || '1',
+          valor: paymentData.valor || paymentData.amount,
+          metodo: paymentData.metodo || paymentData.method,
+          funcionarioId: paymentData.funcionarioId || 'test-staff'
+        });
         return { success: true, data: result };
       }
     }, 'processPayment');

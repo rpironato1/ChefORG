@@ -18,7 +18,7 @@ import { useToast } from '../../components/ui/Toast';
 import Modal from '../../components/ui/Modal';
 import CheckoutForm from '../../components/ui/CheckoutForm';
 import { getActiveOrderByTable, OrderWithItems } from '../../lib/api/orders';
-import { createPayment, confirmPayment, createPaymentIntent } from '../../lib/api/payments';
+import { createPayment, createPaymentIntent } from '../../lib/api/payments';
 import { Database } from '../../lib/supabase';
 
 type PaymentMethod = Database['public']['Enums']['payment_method'];

@@ -1,7 +1,6 @@
 // src/lib/api/reservations.ts
 import { supabase, Database } from '../supabase';
 import { handleApiError, createSuccessResponse, ApiResponse } from './index';
-import { testCreateReservation } from './testHelpers';
 
 type Reservation = Database['public']['Tables']['reservations']['Row'];
 type ReservationInsert = Database['public']['Tables']['reservations']['Insert'];
@@ -125,22 +124,29 @@ export const cancelReservation = async (
   reservationId: number
 ): Promise<ApiResponse<Reservation>> => {
   try {
-    // @ts-ignore - Supabase type chain issue
-    const { data, error } = await supabase
+    // First get the reservation to check if it has a mesa_id
+    const { data: reservation } = await supabase
+      .from('reservations')
+      .select('mesa_id')
+      .eq('id', reservationId)
+      .single();
+
+    // Update the reservation status
+    const result = await supabase
       .from('reservations')
       .update({ status: 'cancelada' })
-      .eq('id', reservationId)
-      .select()
-      .single();
+      .eq('id', reservationId);
+    
+    const { error } = result;
 
     if (error) throw error;
 
     // Se uma mesa estava associada, liberá-la
-    if (data?.mesa_id) {
-      await supabase.from('tables').update({ status: 'livre' }).eq('id', data.mesa_id);
+    if (reservation?.mesa_id) {
+      await supabase.from('tables').update({ status: 'livre' }).eq('id', reservation.mesa_id);
     }
 
-    return createSuccessResponse(data || null, 'Reserva cancelada.');
+    return createSuccessResponse(reservation || null, 'Reserva cancelada.');
   } catch (error) {
     return handleApiError(error);
   }

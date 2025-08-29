@@ -84,16 +84,23 @@ export const validateTablePIN = async (
  */
 export const releaseTable = async (tableId: number): Promise<ApiResponse<Table>> => {
   try {
-    // @ts-ignore - Supabase type chain issue
-    const { data, error } = await supabase
+    // Get the table first
+    const { data: table } = await supabase
       .from('tables')
-      .update({ status: 'limpeza', pin: null, cliente_atual: null, pedido_atual_id: null })
+      .select('*')
       .eq('id', tableId)
-      .select()
       .single();
 
+    // Update the table
+    const result = await supabase
+      .from('tables')
+      .update({ status: 'limpeza', pin: null, cliente_atual: null, pedido_atual_id: null })
+      .eq('id', tableId);
+    
+    const { error } = result;
+
     if (error) throw error;
-    return createSuccessResponse(data, 'Mesa liberada para limpeza.');
+    return createSuccessResponse(table, 'Mesa liberada para limpeza.');
   } catch (error) {
     return handleApiError(error);
   }

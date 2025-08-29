@@ -73,8 +73,10 @@ function Feedback() {
     setIsSubmitting(true);
     try {
       const result = await createFeedback({
+        mesa_id: parseInt(numeroMesa || '1'),
         order_id: currentOrderId,
-        ...avaliacao,
+        estrelas: Math.round((avaliacao.estrelas_estabelecimento + avaliacao.estrelas_servico + avaliacao.estrelas_comida + avaliacao.estrelas_experiencia) / 4),
+        comentario: avaliacao.comentario || null,
       });
 
       if (result.success) {

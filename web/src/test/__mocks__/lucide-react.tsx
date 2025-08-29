@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Comprehensive lucide-react mock for all icons used in the application
 export const AlertCircle = () => <div data-testid="alert-circle-icon" />;
 export const AlertTriangle = () => <div data-testid="alert-triangle-icon" />;
