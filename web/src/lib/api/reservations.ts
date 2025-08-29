@@ -139,12 +139,13 @@ export const cancelReservation = async (
   reservationId: number
 ): Promise<ApiResponse<Reservation>> => {
   try {
-    const { data, error } = (await supabase
+    // @ts-ignore - Supabase type chain issue
+    const { data, error } = await supabase
       .from('reservations')
       .update({ status: 'cancelada' })
       .eq('id', reservationId)
       .select()
-      .single()) as any;
+      .single();
 
     if (error) throw error;
 

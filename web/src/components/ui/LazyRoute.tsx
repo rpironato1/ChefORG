@@ -87,14 +87,14 @@ export function withLazyLoading<T extends {}>(
 }
 
 // Utility for creating lazy components with better error handling
-export function createLazyComponent<T extends Record<string, any>>(
+export function createLazyComponent<T = {}>(
   factory: () => Promise<{ default: React.ComponentType<T> }>
 ) {
   const LazyComponent = React.lazy(factory);
 
   return (props: T) => (
     <LazyRoute>
-      <LazyComponent {...props} />
+      <LazyComponent {...(props as any)} />
     </LazyRoute>
   );
 }

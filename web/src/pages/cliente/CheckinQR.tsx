@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { QrCode, Camera, AlertCircle, CheckCircle, Utensils, Users, Clock } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';
 
@@ -6,7 +6,7 @@ function CheckinQR() {
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<string | null>(null);
   const [mesaInfo, setMesaInfo] = useState<any>(null);
-  const { showSuccess, showError, ToastContainer } = useToast();
+  const { showSuccess, ToastContainer } = useToast();
 
   const handleScanSuccess = (result: string) => {
     setScanResult(result);
