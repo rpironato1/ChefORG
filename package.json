@@ -51,6 +51,7 @@
     "validate:help": "./validate-dependencies.sh --help"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.10.2",
     "@playwright/test": "^1.55.0",
     "@sentry/react": "^10.7.0",
     "@sentry/vite-plugin": "^4.1.1",
@@ -60,6 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitest/coverage-v8": "^3.2.4",
+    "axe-playwright": "^2.1.0",
     "lighthouse": "^12.8.1",
     "npm-run-all": "^4.1.5",
     "playwright": "^1.55.0",

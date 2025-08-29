@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TabelaResponsiva from '../../components/ui/TabelaResponsiva';
-import Modal from '../../components/ui/Modal';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '../../components/ui/Toast';

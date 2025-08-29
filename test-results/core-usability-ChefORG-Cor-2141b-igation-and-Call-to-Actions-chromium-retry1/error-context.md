@@ -1,0 +1,151 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e7]:
+      - link "ChefORG" [ref=e9] [cursor=pointer]:
+        - /url: /
+        - img [ref=e11] [cursor=pointer]
+        - generic [ref=e13] [cursor=pointer]: ChefORG
+      - generic [ref=e14]:
+        - link "Sobre" [ref=e15] [cursor=pointer]:
+          - /url: /#sobre
+        - link "Cardápio" [ref=e16] [cursor=pointer]:
+          - /url: /#cardapio
+        - link "Contato" [ref=e17] [cursor=pointer]:
+          - /url: /#contato
+        - button "Reservar Mesa" [ref=e18] [cursor=pointer]
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - generic [ref=e22]:
+        - heading "Bem-vindos ao ChefORG" [level=1] [ref=e23]
+        - paragraph [ref=e24]: Uma experiência gastronômica única que combina sabores excepcionais com um ambiente sofisticado e acolhedor.
+        - generic [ref=e25]:
+          - button "Reservar Mesa" [ref=e26] [cursor=pointer]:
+            - img [ref=e27] [cursor=pointer]
+            - text: Reservar Mesa
+          - button "Ver Cardápio" [ref=e29] [cursor=pointer]
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - heading "Por que escolher o ChefORG?" [level=2] [ref=e33]
+          - paragraph [ref=e34]: Oferecemos uma experiência gastronômica completa, onde cada detalhe é pensado para proporcionar momentos inesquecíveis.
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - img [ref=e38]
+            - heading "Culinária Premium" [level=3] [ref=e40]
+            - paragraph [ref=e41]: Pratos elaborados com ingredientes frescos e técnicas refinadas
+          - generic [ref=e42]:
+            - img [ref=e44]
+            - heading "Ambiente Acolhedor" [level=3] [ref=e46]
+            - paragraph [ref=e47]: Espaço elegante e confortável para momentos especiais
+          - generic [ref=e48]:
+            - img [ref=e50]
+            - heading "Prêmios e Reconhecimentos" [level=3] [ref=e53]
+            - paragraph [ref=e54]: Reconhecido pela excelência em gastronomia e atendimento
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - heading "O que nossos clientes dizem" [level=2] [ref=e58]
+          - paragraph [ref=e59]: Avaliações reais de quem já viviu a experiência ChefORG
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]:
+              - generic [ref=e63]: M
+              - generic [ref=e64]:
+                - heading "Maria Silva" [level=4] [ref=e65]
+                - generic [ref=e66]:
+                  - img [ref=e67]
+                  - img [ref=e69]
+                  - img [ref=e71]
+                  - img [ref=e73]
+                  - img [ref=e75]
+            - paragraph [ref=e77]: "\"Experiência incrível! Comida deliciosa e atendimento excepcional.\""
+            - paragraph [ref=e78]: 2 dias atrás
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - generic [ref=e81]: J
+              - generic [ref=e82]:
+                - heading "João Santos" [level=4] [ref=e83]
+                - generic [ref=e84]:
+                  - img [ref=e85]
+                  - img [ref=e87]
+                  - img [ref=e89]
+                  - img [ref=e91]
+                  - img [ref=e93]
+            - paragraph [ref=e95]: "\"Ambiente maravilhoso e pratos surpreendentes. Voltarei com certeza!\""
+            - paragraph [ref=e96]: 1 semana atrás
+          - generic [ref=e97]:
+            - generic [ref=e98]:
+              - generic [ref=e99]: A
+              - generic [ref=e100]:
+                - heading "Ana Costa" [level=4] [ref=e101]
+                - generic [ref=e102]:
+                  - img [ref=e103]
+                  - img [ref=e105]
+                  - img [ref=e107]
+                  - img [ref=e109]
+                  - img [ref=e111]
+            - paragraph [ref=e113]: "\"Ótima experiência gastronômica. Recomendo para ocasiões especiais.\""
+            - paragraph [ref=e114]: 2 semanas atrás
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - heading "Nossa História" [level=2] [ref=e119]
+          - paragraph [ref=e120]: Fundado em 2015, o ChefORG nasceu da paixão pela gastronomia e do desejo de criar experiências memoráveis. Nossa equipe de chefs especializados trabalha incansavelmente para oferecer pratos únicos e saborosos.
+          - paragraph [ref=e121]: Utilizamos apenas ingredientes frescos e de alta qualidade, combinados com técnicas culinárias modernas para criar uma experiência gastronômica incomparável.
+          - button "Conheça nosso Cardápio" [ref=e122] [cursor=pointer]
+        - generic [ref=e123]:
+          - heading "Informações" [level=3] [ref=e124]
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - img [ref=e128]
+              - generic [ref=e131]:
+                - paragraph [ref=e132]: Endereço
+                - paragraph [ref=e133]: Rua das Flores, 123 - Centro
+                - paragraph [ref=e134]: São Paulo - SP
+            - generic [ref=e135]:
+              - img [ref=e137]
+              - generic [ref=e140]:
+                - paragraph [ref=e141]: Funcionamento
+                - paragraph [ref=e142]: "Segunda a Quinta: 11h às 23h"
+                - paragraph [ref=e143]: "Sexta e Sábado: 11h às 24h"
+                - paragraph [ref=e144]: "Domingo: 11h às 22h"
+            - generic [ref=e145]:
+              - img [ref=e147]
+              - generic [ref=e149]:
+                - paragraph [ref=e150]: Contato
+                - paragraph [ref=e151]: (11) 3333-4444
+                - paragraph [ref=e152]: contato@cheforg.com
+      - generic [ref=e154]:
+        - heading "Pronto para uma experiência única?" [level=2] [ref=e155]
+        - paragraph [ref=e156]: Reserve sua mesa agora e descubra por que somos o restaurante favorito de tantas pessoas.
+        - button "Fazer Reserva" [ref=e157] [cursor=pointer]:
+          - img [ref=e158] [cursor=pointer]
+          - text: Fazer Reserva
+  - contentinfo [ref=e160]:
+    - generic [ref=e161]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - generic [ref=e164]:
+            - img [ref=e166]
+            - generic [ref=e168]: ChefORG
+          - paragraph [ref=e169]: Experiência gastronômica única com sabores excepcionais e ambiente sofisticado.
+        - generic [ref=e170]:
+          - heading "Links Rápidos" [level=3] [ref=e171]
+          - list [ref=e172]:
+            - listitem [ref=e173]:
+              - link "Sobre" [ref=e174] [cursor=pointer]:
+                - /url: /#sobre
+            - listitem [ref=e175]:
+              - link "Cardápio" [ref=e176] [cursor=pointer]:
+                - /url: /menu
+            - listitem [ref=e177]:
+              - link "Reservas" [ref=e178] [cursor=pointer]:
+                - /url: /reserva
+        - generic [ref=e179]:
+          - heading "Contato" [level=3] [ref=e180]
+          - list [ref=e181]:
+            - listitem [ref=e182]: (11) 3333-4444
+            - listitem [ref=e183]: contato@cheforg.com
+            - listitem [ref=e184]: Rua das Flores, 123
+      - paragraph [ref=e186]: © 2024 ChefORG. Todos os direitos reservados.
+```

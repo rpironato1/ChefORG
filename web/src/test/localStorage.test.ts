@@ -18,7 +18,7 @@ const mockLocalStorage = (() => {
       store = {};
     },
     length: 0,
-    key: (index: number) => null,
+    key: () => null,
   };
 })();
 
@@ -197,17 +197,17 @@ describe('LocalStorageClient', () => {
         body: { message: 'Test notification' },
       });
 
-      expect(result.error).toBeNull();
-      expect(result.data.success).toBe(true);
-      expect(result.data.messageId).toBeDefined();
+      expect((result as any).error).toBeNull();
+      expect((result as any).data.success).toBe(true);
+      expect((result as any).data.messageId).toBeDefined();
     });
 
     it('should handle unknown functions', async () => {
       const result = await client.functions.invoke('unknown-function', {});
 
-      expect(result.error).toBeDefined();
-      expect(result.error.message).toContain('not implemented');
-      expect(result.data).toBeNull();
+      expect((result as any).error).toBeDefined();
+      expect((result as any).error.message).toContain('not implemented');
+      expect((result as any).data).toBeNull();
     });
   });
 
@@ -277,7 +277,7 @@ describe('LocalStorageClient', () => {
         .lte('preco', 30.0);
 
       expect(result.data).toHaveLength(2);
-      expect(result.data?.every(item => item.preco >= 25.0 && item.preco <= 30.0)).toBe(true);
+      expect(result.data?.every((item: any) => item.preco >= 25.0 && item.preco <= 30.0)).toBe(true);
     });
 
     it('should handle single record queries', async () => {

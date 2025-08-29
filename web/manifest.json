@@ -1,0 +1,54 @@
+{
+  "name": "ChefORG - Sistema de Gestão para Restaurantes",
+  "short_name": "ChefORG",
+  "description": "Sistema completo de gestão para restaurantes com controle de mesas, pedidos, cardápio, reservas e muito mais.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "pt-BR",
+  "categories": ["business", "productivity", "food"],
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png", 
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Fazer Reserva",
+      "short_name": "Reserva",
+      "description": "Criar uma nova reserva",
+      "url": "/reserva",
+      "icons": [
+        {
+          "src": "/vite.svg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Ver Menu",
+      "short_name": "Menu",
+      "description": "Visualizar cardápio",
+      "url": "/menu",
+      "icons": [
+        {
+          "src": "/vite.svg",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

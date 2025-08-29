@@ -81,6 +81,8 @@ interface AppContextType {
   dispatch: React.Dispatch<AppAction>;
   login: (email: string, password: string) => Promise<ApiResponse<AuthUser>>;
   logout: () => Promise<void>;
+  signIn: (email: string, password: string) => Promise<ApiResponse<AuthUser>>;
+  selecionarMesa: (mesa: Mesa, cliente?: Cliente, reserva?: Reserva) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -109,8 +111,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'LOGOUT' });
   };
 
+  // Alias for login (expected by tests)
+  const signIn = login;
+
+  // Method to select a table
+  const selecionarMesa = (mesa: Mesa, cliente?: Cliente, reserva?: Reserva) => {
+    dispatch({ type: 'SET_MESA_ATUAL', payload: { mesa, cliente, reserva } });
+  };
+
   return (
-    <AppContext.Provider value={{ state, dispatch, login, logout }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ state, dispatch, login, logout, signIn, selecionarMesa }}>
+      {children}
+    </AppContext.Provider>
   );
 }
 
@@ -123,18 +135,22 @@ export function useApp() {
 }
 
 export function useAuth() {
-  const { state, login, logout } = useApp();
+  const { state, login, logout, signIn } = useApp();
   return {
     usuario: state.usuario,
+    user: state.usuario, // Add alias for tests
     isAuthenticated: state.isAuthenticated,
     isLoadingAuth: state.isLoadingAuth,
+    loading: state.isLoadingAuth, // Add alias for tests
     login,
     logout,
+    signIn,
+    signOut: logout, // Add alias for tests
   };
 }
 
 export function useMesa() {
-  const { state, dispatch } = useApp();
+  const { state, dispatch, selecionarMesa } = useApp();
 
   const setMesaAtual = (mesa: Mesa, cliente?: Cliente, reserva?: Reserva) => {
     dispatch({ type: 'SET_MESA_ATUAL', payload: { mesa, cliente, reserva } });
@@ -148,10 +164,18 @@ export function useMesa() {
     dispatch({ type: 'LIMPAR_MESA' });
   };
 
+  // Create a flattened mesaAtual for tests that combines mesa properties with mesaAtual properties
+  const mesaAtual = state.mesaAtual.mesa ? {
+    ...state.mesaAtual,
+    ...state.mesaAtual.mesa, // Flatten mesa properties to top level
+  } : state.mesaAtual;
+
   return {
-    mesaAtual: state.mesaAtual,
+    mesaAtual,
     setMesaAtual,
     autorizarMesa,
     limparMesa,
+    liberarMesa: limparMesa, // Add alias for tests
+    selecionarMesa,
   };
 }

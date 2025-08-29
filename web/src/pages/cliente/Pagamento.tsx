@@ -18,14 +18,14 @@ import { useToast } from '../../components/ui/Toast';
 import Modal from '../../components/ui/Modal';
 import CheckoutForm from '../../components/ui/CheckoutForm';
 import { getActiveOrderByTable, OrderWithItems } from '../../lib/api/orders';
-import { createPayment, confirmPayment, createPaymentIntent } from '../../lib/api/payments';
+import { createPayment, createPaymentIntent } from '../../lib/api/payments';
 import { Database } from '../../lib/supabase';
 
 type PaymentMethod = Database['public']['Enums']['payment_method'];
 
 // Carregue o Stripe fora do render para evitar recriá-lo a cada renderização.
 // Use uma variável de ambiente para a chave publicável.
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+const stripePromise = loadStripe('pk_test_mock_key_for_development');
 
 function PagamentoPage() {
   const { numeroMesa, orderId } = useParams<{ numeroMesa: string; orderId: string }>();
@@ -90,7 +90,7 @@ function PagamentoPage() {
       }
 
       // Lógica específica para cada método
-      if (method === 'cartao_credito') {
+      if (method === 'cartao') {
         const intentResult = await createPaymentIntent(Number(pedido.total), pedido.id);
         if (intentResult.success && intentResult.data?.clientSecret) {
           setClientSecret(intentResult.data.clientSecret);
@@ -102,8 +102,8 @@ function PagamentoPage() {
         setPixCode(paymentResult.data.codigo_pagamento || `PIX-SIMULADO-${paymentResult.data.id}`);
         setIsModalOpen(true);
         // A confirmação real viria de um webhook. Aqui simulamos.
-      } else if (method === 'caixa') {
-        setCaixaCode(pedido.codigo_mesa || `M${pedido.tables?.numero}-P${pedido.id}`);
+      } else if (method === 'dinheiro') {
+        setCaixaCode(`M${pedido.id}-P${pedido.id}`);
         setIsModalOpen(true);
       }
       // Outros métodos como Apple/Google Pay usariam uma lógica similar ao cartão.
@@ -114,7 +114,7 @@ function PagamentoPage() {
     }
   };
 
-  const handleStripeSuccess = (paymentIntentId: string) => {
+  const handleStripeSuccess = () => {
     // O webhook já deve ter atualizado o status do pedido.
     // Apenas redirecionamos o usuário.
     showSuccess('Pagamento com cartão aprovado!');

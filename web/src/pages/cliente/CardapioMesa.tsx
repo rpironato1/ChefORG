@@ -240,14 +240,17 @@ function CardapioMesa() {
                   ingredientes: item.ingredientes,
                   imagem: item.imagem,
                   restricoes: item.restricoes,
+                  // Include database fields to match type
+                  created_at: item.created_at,
+                  updated_at: item.updated_at,
                 };
                 return (
                   <CardMenuItem
                     key={item.id}
                     item={menuItem}
-                    quantidade={getQuantidadeNoCarrinho(item.id.toString())}
-                    onAdicionar={item => adicionarItem({ ...item, id: item.id.toString() })}
-                    onRemover={item => removerItem({ ...item, id: item.id.toString() })}
+                    quantidade={getQuantidadeNoCarrinho(Number(item.id))}
+                    onAdicionar={item => adicionarItem({ ...menuItem, id: Number(item.id) })}
+                    onRemover={item => removerItem({ ...menuItem, id: Number(item.id) })}
                     showControles={true}
                   />
                 );

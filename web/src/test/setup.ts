@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom';
 import { vi, beforeEach, afterEach } from 'vitest';
 
+// Mock lucide-react to use our mock file
+vi.mock('lucide-react', () => import('./__mocks__/lucide-react'));
+
 // Enhanced localStorage mock with realistic behavior and proper isolation
 class MockLocalStorage {
   private store: Record<string, string> = {};
@@ -76,6 +79,8 @@ Object.defineProperty(import.meta, 'env', {
 
 // Complete test isolation - reset before each test
 beforeEach(() => {
+  console.log('[TEST SETUP] Initializing test environment with comprehensive mocks...');
+  
   // Reset localStorage completely
   localStorageMock.reset();
 
@@ -121,10 +126,13 @@ beforeEach(() => {
     cheforg_reservations: [],
     cheforg_payments: [],
   });
+
+  console.log('[TEST SETUP] Test data initialized successfully with comprehensive lucide-react mocks');
 });
 
 // Additional cleanup after each test
 afterEach(() => {
+  console.log('[TEST CLEANUP] Cleaning up test environment...');
   localStorageMock.reset();
 });
 
