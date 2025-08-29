@@ -61,6 +61,7 @@ vi.mock('lucide-react', () => ({
   RotateCcw: () => <div data-testid="rotate-ccw-icon" />,
   Save: () => <div data-testid="save-icon" />,
   Search: () => <div data-testid="search-icon" />,
+  Settings: () => <div data-testid="settings-icon" />,
   Shield: () => <div data-testid="shield-icon" />,
   ShoppingCart: () => <div data-testid="cart-icon" />,
   Smartphone: () => <div data-testid="smartphone-icon" />,
@@ -75,6 +76,9 @@ vi.mock('lucide-react', () => ({
   // Critical missing icons from errors
   BookOpen: () => <div data-testid="book-open-icon" />,
   Box: () => <div data-testid="box-icon" />,
+  BarChart3: () => <div data-testid="bar-chart-3-icon" />,
+  Loader2: () => <div data-testid="loader2-icon" />,
+  Trash2: () => <div data-testid="trash2-icon" />,
 }));
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (

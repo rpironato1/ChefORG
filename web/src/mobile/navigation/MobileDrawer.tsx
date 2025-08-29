@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Menu, Home, Calendar, ChefHat, User } from 'lucide-react';
+import React from 'react';
+import { X, Home, Calendar, ChefHat, User } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface MobileDrawerProps {
